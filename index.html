@@ -54,7 +54,7 @@
             padding: 15px 5%;
         }
         .logo {
-            font-size: 2rem; font-weight: 900; color: var(--brand-purple);
+            font-size: 1.8rem; font-weight: 900; color: var(--brand-purple);
             text-transform: uppercase; letter-spacing: -2px; cursor: pointer;
             display: flex; align-items: center;
         }
@@ -67,8 +67,87 @@
         .nav-links a:hover { color: var(--brand-orange); }
         .lang-select {
             padding: 5px; border: 1px solid #ddd; border-radius: 4px; background: white;
+            font-size: 0.85rem;
         }
-        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+        
+        /* ========== MOBILE MENU (Hamburger) ========== */
+        .menu-toggle { 
+            display: none; 
+            font-size: 1.4rem; 
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            color: var(--brand-purple);
+            z-index: 1001;
+        }
+        
+        /* Slide-in Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 999;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+        .mobile-menu.active {
+            left: 0;
+        }
+        .mobile-menu-header {
+            background: var(--brand-purple);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .mobile-menu-header h3 {
+            font-size: 1.2rem;
+        }
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .mobile-menu-links {
+            padding: 20px 0;
+        }
+        .mobile-menu-links a {
+            display: block;
+            padding: 15px 20px;
+            color: var(--brand-dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        .mobile-menu-links a:hover {
+            background: var(--brand-gray);
+            color: var(--brand-orange);
+        }
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+        }
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        
         .page-section {
             display: none; padding-bottom: 4rem; animation: fadeUp 0.5s ease-out;
         }
@@ -172,14 +251,90 @@
         .footer-col ul li { margin-bottom: 0.5rem; }
         .footer-col a { color: #888; text-decoration: none; cursor: pointer; }
         .footer-col a:hover { color: var(--brand-orange); }
+
+        /* ================= MOBILE RESPONSIVE ================= */
         @media (max-width: 768px) {
+            /* Hide desktop nav */
             .nav-links { display: none; }
+            
+            /* Show hamburger */
             .menu-toggle { display: block; }
+            
+            /* Hero */
+            .hero { padding: 6rem 5% 4rem; }
             .hero h1 { font-size: 2rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .track-widget { flex-direction: column; }
-            .track-widget input { width: 100%; }
-            .btn-primary { width: 100%; }
+            .hero p { font-size: 1rem; }
+            
+            /* Track Widget */
+            .track-widget { 
+                flex-direction: column; 
+                padding: 1.5rem;
+            }
+            .track-widget input { 
+                width: 100%; 
+                min-width: unset;
+            }
+            .btn-primary { 
+                width: 100%; 
+            }
+            
+            /* Services */
+            .services-grid { 
+                grid-template-columns: 1fr; 
+                padding: 2rem 5%;
+            }
+            
+            /* Forms */
+            .form-row { 
+                grid-template-columns: 1fr; 
+            }
+            .quote-wrapper {
+                margin: 2rem auto;
+                padding: 2rem;
+            }
+            
+            /* Timeline */
+            .timeline-container {
+                margin: 1rem auto;
+                padding: 1.5rem;
+            }
+            
+            /* Footer */
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            /* Top Bar */
+            .top-bar {
+                justify-content: center;
+                font-size: 0.7rem;
+            }
+            
+            /* Language Selector - Move to mobile menu */
+            .lang-select {
+                display: none;
+            }
+            .mobile-lang-select {
+                display: block;
+                margin: 20px;
+                width: calc(100% - 40px);
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            
+            /* Logo smaller on mobile */
+            .logo { font-size: 1.4rem; }
+        }
+
+        /* ================= EXTRA SMALL PHONES ================= */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .logo { font-size: 1.2rem; }
+            .track-widget { padding: 1rem; }
+            .btn-primary { padding: 12px 20px; font-size: 0.85rem; }
+            .mobile-menu { width: 260px; }
         }
     </style>
 </head>
@@ -194,12 +349,15 @@
     <header>
         <div class="nav-container">
             <div class="logo" onclick="showPage('home')">Velox<span>Logistics</span></div>
-            <nav class="nav-links">
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav-links" id="navLinks">
                 <a onclick="showPage('home')" data-i18n="nav_home">Home</a>
                 <a onclick="showPage('tracking')" data-i18n="nav_track">Tracking</a>
                 <a onclick="showPage('quote')" data-i18n="nav_quote">Get Quote</a>
                 <a onclick="showPage('about')" data-i18n="nav_about">About Us</a>
             </nav>
+            
             <div style="display: flex; gap: 10px; align-items: center;">
                 <select class="lang-select" id="languageSelector" onchange="changeLanguage()">
                     <option value="en">EN</option>
@@ -207,10 +365,33 @@
                     <option value="ch">CN</option>
                     <option value="de">DE</option>
                 </select>
-                <div class="menu-toggle" onclick="toggleMobileMenu()">☰</div>
+                <!-- Hamburger Menu Button -->
+                <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Slide-in Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>Velox<span style="color: var(--brand-orange);">Logistics</span></h3>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
+        </div>
+        <div class="mobile-menu-links">
+            <a onclick="showPage('home'); toggleMobileMenu()" data-i18n="nav_home">Home</a>
+            <a onclick="showPage('tracking'); toggleMobileMenu()" data-i18n="nav_track">Tracking</a>
+            <a onclick="showPage('quote'); toggleMobileMenu()" data-i18n="nav_quote">Get Quote</a>
+            <a onclick="showPage('about'); toggleMobileMenu()" data-i18n="nav_about">About Us</a>
+        </div>
+        <!-- Language in mobile menu -->
+        <select class="mobile-lang-select" id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+            <option value="en">🇬🇧 English</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="ch">🇨🇳 中文</option>
+            <option value="de">🇩🇪 Deutsch</option>
+        </select>
+    </div>
 
     <!-- HOME PAGE -->
     <div id="home" class="page-section active">
@@ -350,13 +531,11 @@
     </footer>
 
     <script>
-        // ⚠️ MUST MATCH admin.html
         const USE_BACKEND_API = false;
         const API_BASE_URL = 'http://localhost:3000/api';
 
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Store current tracked order for re-rendering on language change
         let currentTrackedOrder = null;
 
         function showPage(pageId) {
@@ -377,9 +556,62 @@
             const hash = window.location.hash.replace('#', '') || 'home';
             showPage(hash);
         });
+
+        // Mobile menu toggle (slide in/out)
         function toggleMobileMenu() {
-            const nav = document.querySelector('.nav-links');
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('menuOverlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Language change for desktop
+        function changeLanguage() {
+            updateLanguage(document.getElementById('languageSelector').value);
+        }
+
+        // Language change for mobile
+        function changeLanguageMobile() {
+            updateLanguage(document.getElementById('mobileLanguageSelector').value);
+        }
+
+        // Update language function
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            const trackInput = document.getElementById('trackInput');
+            const trackInputPage = document.getElementById('trackInputPage');
+            
+            if (trackInput) {
+                if (lang === 'en') trackInput.placeholder = 'Enter Tracking Number (e.g. VX882910)';
+                else if (lang === 'ru') trackInput.placeholder = 'Введите номер отслеживания';
+                else if (lang === 'ch') trackInput.placeholder = '输入追踪号码';
+                else if (lang === 'de') trackInput.placeholder = 'Geben Sie die Tracking-Nummer ein (z.B. VX882910)';
+            }
+            
+            if (trackInputPage) {
+                if (lang === 'en') trackInputPage.placeholder = 'Enter Tracking Number';
+                else if (lang === 'ru') trackInputPage.placeholder = 'Введите номер отслеживания';
+                else if (lang === 'ch') trackInputPage.placeholder = '输入追踪号码';
+                else if (lang === 'de') trackInputPage.placeholder = 'Geben Sie die Tracking-Nummer ein';
+            }
+            
+            const errorMsg = document.getElementById('errorMsg');
+            if (errorMsg) {
+                if (lang === 'en') errorMsg.textContent = '❌ Tracking number not found. Please check and try again.';
+                else if (lang === 'ru') errorMsg.textContent = '❌ Номер отслеживания не найден. Проверьте и попробуйте снова.';
+                else if (lang === 'ch') errorMsg.textContent = '❌ 未找到追踪号码。请检查后重试。';
+                else if (lang === 'de') errorMsg.textContent = '❌ Tracking-Nummer nicht gefunden. Bitte überprüfen und erneut versuchen.';
+            }
+
+            if (currentTrackedOrder) {
+                renderTrackingResults(currentTrackedOrder, lang);
+            }
         }
 
         const translations = {
@@ -464,51 +696,6 @@
             de: { 'pending': '⏳ Ausstehend', 'processing': '🔄 Verarbeitung', 'in_transit': '🚚 Unterwegs', 'out_for_delivery': '📦 In Zustellung', 'delivered': '✅ Zugestellt' }
         };
 
-        function changeLanguage() {
-            const lang = document.getElementById('languageSelector').value;
-            
-            // Translate all static elements
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-            
-            // Update placeholders
-            const trackInput = document.getElementById('trackInput');
-            const trackInputPage = document.getElementById('trackInputPage');
-            
-            if (trackInput) {
-                if (lang === 'en') trackInput.placeholder = 'Enter Tracking Number (e.g. VX882910)';
-                else if (lang === 'ru') trackInput.placeholder = 'Введите номер отслеживания';
-                else if (lang === 'ch') trackInput.placeholder = '输入追踪号码';
-                else if (lang === 'de') trackInput.placeholder = 'Geben Sie die Tracking-Nummer ein (z.B. VX882910)';
-            }
-            
-            if (trackInputPage) {
-                if (lang === 'en') trackInputPage.placeholder = 'Enter Tracking Number';
-                else if (lang === 'ru') trackInputPage.placeholder = 'Введите номер отслеживания';
-                else if (lang === 'ch') trackInputPage.placeholder = '输入追踪号码';
-                else if (lang === 'de') trackInputPage.placeholder = 'Geben Sie die Tracking-Nummer ein';
-            }
-            
-            // Update error message
-            const errorMsg = document.getElementById('errorMsg');
-            if (errorMsg) {
-                if (lang === 'en') errorMsg.textContent = '❌ Tracking number not found. Please check and try again.';
-                else if (lang === 'ru') errorMsg.textContent = '❌ Номер отслеживания не найден. Проверьте и попробуйте снова.';
-                else if (lang === 'ch') errorMsg.textContent = '❌ 未找到追踪号码。请检查后重试。';
-                else if (lang === 'de') errorMsg.textContent = '❌ Tracking-Nummer nicht gefunden. Bitte überprüfen und erneut versuchen.';
-            }
-
-            // 🔥 RE-RENDER tracking results if order is tracked
-            if (currentTrackedOrder) {
-                renderTrackingResults(currentTrackedOrder, lang);
-            }
-        }
-
-        // Separate function to render tracking results (can be called on language change)
         function renderTrackingResults(order, lang) {
             const summaryBox = document.getElementById('trackingSummary');
             const timelineBox = document.getElementById('timelineContent');
@@ -580,10 +767,7 @@
                 errorMsg.style.display = 'none';
                 resultBox.style.display = 'block';
 
-                // Store order for re-rendering on language change
                 currentTrackedOrder = order;
-
-                // Render results with current language
                 renderTrackingResults(order, currentLang);
 
                 if (!document.getElementById('tracking').classList.contains('active')) {
@@ -601,12 +785,6 @@
             }
         }
 
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                const nav = document.querySelector('.nav-links');
-                if (window.innerWidth <= 768) nav.style.display = 'none';
-            });
-        });
         document.querySelectorAll('#trackInput, #trackInputPage').forEach(input => {
             input.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
