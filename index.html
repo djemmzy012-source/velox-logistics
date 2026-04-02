@@ -3,411 +3,1297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velox Logistics | Global Shipping Solutions</title>
-    <meta name="description" content="Velox Logistics: Global shipping solutions with real-time tracking.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%234D148C%22/><path d=%22M50 20 L80 35 L50 50 L20 35 Z%22 fill=%22%23FF6200%22/></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>Velox Logistics | Global Express & Freight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --brand-purple: #4D148C;
-            --brand-orange: #FF6200;
-            --brand-dark: #212121;
-            --text-color: #333;
-            --white: #ffffff;
-            --radius: 8px;
+        :root { 
+            --dhl-yellow: #FFCC00; 
+            --dhl-red: #D40000; 
+            --dhl-dark: #2c2c2c; 
+            --dhl-gray: #f2f2f2; 
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
         
-        body {
-            font-family: 'Roboto', sans-serif;
-            /* Professional Logistics Background Pattern */
-            background-color: #f4f6f9;
-            background-image: 
-                linear-gradient(rgba(77, 20, 140, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(77, 20, 140, 0.03) 1px, transparent 1px),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234D148C' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            background-attachment: fixed;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: #f5f5f5;
+            color: #333; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
         }
-
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .top-bar {
-            background: var(--brand-dark); color: #ccc; font-size: 0.8rem;
-            padding: 5px 5%; display: flex; justify-content: flex-end; gap: 15px;
-        }
-        .top-bar a { color: #ccc; text-decoration: none; }
-        .nav-container {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%;
-        }
-        .logo {
-            font-size: 1.8rem; font-weight: 900; color: var(--brand-purple);
-            text-transform: uppercase; letter-spacing: -2px; cursor: pointer;
-        }
-        .logo span { color: var(--brand-orange); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a {
-            text-decoration: none; color: var(--brand-dark); font-weight: 700;
-            font-size: 0.95rem; transition: color 0.3s; cursor: pointer;
-        }
-        .nav-links a:hover { color: var(--brand-orange); }
-        .lang-select {
-            padding: 5px; border: 1px solid #ddd; border-radius: 4px; background: white;
-        }
-        .menu-toggle { display: none; font-size: 1.4rem; cursor: pointer; background:none; border:none; color:var(--brand-purple); }
         
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed; top: 0; left: -280px; width: 280px; height: 100vh;
-            background: linear-gradient(180deg, var(--brand-purple) 0%, #3d1073 100%);
-            box-shadow: 2px 0 20px rgba(0,0,0,0.3); z-index: 9999; transition: left 0.3s ease;
-        }
-        .mobile-menu.active { left: 0; }
-        .mobile-menu-header { background: rgba(0,0,0,0.2); color: white; padding: 20px; display: flex; justify-content: space-between; }
-        .mobile-menu-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-        .mobile-menu-links a { display: block; padding: 15px 20px; color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .mobile-menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9998; display: none; }
-        .mobile-menu-overlay.active { display: block; }
-        .mobile-lang-select { width: 90%; margin: 20px; padding: 10px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; }
-
-        .page-section { display: none; padding-bottom: 4rem; animation: fadeUp 0.5s ease-out; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .page-section { display: none; }
         .page-section.active { display: block; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Header */
+        .top-bar { 
+            background: var(--dhl-yellow); 
+            padding: 8px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+        }
+        .main-nav { 
+            background: white; 
+            padding: 15px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 4px solid var(--dhl-yellow); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        .logo { 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            color: var(--dhl-red); 
+            text-transform: uppercase; 
+            display: flex; 
+            align-items: center; 
+            cursor: pointer; 
+        }
+        .logo span { 
+            color: var(--dhl-dark); 
+            background: var(--dhl-yellow); 
+            padding: 0 8px; 
+            margin-left: 2px; 
+        }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { 
+            font-weight: 700; 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+        }
+        .btn-start { 
+            background: var(--dhl-red); 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+        }
+        .menu-toggle { 
+            display: none; 
+            font-size: 1.8rem; 
+            cursor: pointer; 
+        }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(rgba(77, 20, 140, 0.85), rgba(33, 33, 33, 0.85)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: var(--white); padding: 8rem 5% 6rem; text-align: center; position: relative; overflow: hidden;
-        }
-        .hero::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:url('https://images.unsplash.com/photo-1559297434-fae8a1916a79?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover; opacity:0.15; animation: slowZoom 20s infinite; }
-        @keyframes slowZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .hero-content { position: relative; z-index: 10; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95; }
-
-        /* Track Widget */
-        .track-widget {
-            background: var(--white); max-width: 800px; margin: 0 auto; padding: 2rem;
-            border-radius: var(--radius); box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 10;
-        }
-        .track-widget input { flex: 1; padding: 15px; border: 2px solid #ddd; border-radius: 4px; font-size: 1rem; min-width: 200px; transition: border 0.3s; }
-        .track-widget input:focus { outline: none; border-color: var(--brand-orange); }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--brand-orange) 0%, #e05600 100%);
-            color: var(--white); border: none; padding: 15px 30px; font-weight: 700;
-            border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 98, 0, 0.4);
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 98, 0, 0.5); }
-
-        /* ========== PROFESSIONAL SERVICE CARDS WITH BACKGROUND ========== */
-        .services-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; padding: 4rem 5%;
-        }
-        .service-card {
-            /* White card with subtle logistics image background */
-            background: 
-                linear-gradient(to bottom right, rgba(255,255,255,0.95), rgba(255,255,255,0.98)),
-                url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 2.5rem;
-            border-radius: var(--radius);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-top: 4px solid var(--brand-purple);
-            transition: all 0.4s ease;
+        /* ✨ HERO SECTION WITH SLIDESHOW ✨ */
+        .hero { 
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px 80px;
             overflow: hidden;
         }
-        .service-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.85); /* Overlay to make text readable */
+        
+        /* Slideshow Background */
+        .slideshow-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
         }
-        .service-card > * { position: relative; z-index: 1; } /* Bring text above overlay */
         
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-top: 4px solid var(--brand-orange);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
         }
-        .service-icon { font-size: 3rem; margin-bottom: 1.5rem; display: inline-block; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-        .service-card h3 { color: var(--brand-purple); margin-bottom: 1rem; font-size: 1.5rem; }
-        .service-card p { color: #555; line-height: 1.6; }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+        
+        .track-widget { 
+            background: white; 
+            padding: 15px; 
+            display: flex; 
+            gap: 10px; 
+            max-width: 700px; 
+            margin: 0 auto; 
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+        
+        .track-widget input { 
+            flex: 1; 
+            padding: 18px; 
+            font-weight: 600; 
+            border: 2px solid #ddd; 
+            border-radius: 4px; 
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+        
+        .btn-track { 
+            background: var(--dhl-red); 
+            color: white; 
+            padding: 18px 40px; 
+            border-radius: 4px; 
+            font-weight: 900; 
+            border: none; 
+            cursor: pointer; 
+            text-transform: uppercase;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-track:hover {
+            background: #b00000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 0, 0, 0.4);
+        }
 
-        /* Tracking Results */
-        .timeline-container { max-width: 800px; margin: 2rem auto; background: var(--white); padding: 2rem; border-radius: var(--radius); box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: none; }
-        .timeline { position: relative; padding-left: 30px; border-left: 3px solid var(--brand-purple); }
-        .timeline-item { position: relative; margin-bottom: 2rem; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--brand-orange); }
-        .timeline-item::before { content: ''; position: absolute; left: -39px; top: 20px; width: 12px; height: 12px; background: var(--brand-orange); border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--brand-purple); }
-        .timeline-date { font-weight: bold; color: var(--brand-purple); font-size: 0.85rem; }
-        .timeline-status { font-weight: 700; font-size: 1.1rem; margin: 5px 0; }
-        .tracking-summary { background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid var(--brand-orange); }
-        .error-msg { background: #ffebee; color: #c62828; padding: 15px; border-radius: 5px; margin: 20px auto; max-width: 800px; display: none; text-align: center; }
-        .loading-spinner { display: none; text-align: center; padding: 20px; }
-        .loading-spinner.active { display: block; }
-        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--brand-orange); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Split Cards */
+        .split-cards { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 25px; 
+            max-width: 1200px; 
+            margin: -80px auto 60px; 
+            position: relative; 
+            z-index: 10; 
+            padding: 0 20px; 
+        }
+        
+        .card-dhl { 
+            background: white; 
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12); 
+            transition: all 0.3s;
+        }
+        
+        .card-dhl:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .card-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        }
+        
+        .card-content { padding: 30px; }
+        
+        .tag { 
+            background: var(--dhl-yellow); 
+            color: var(--dhl-dark);
+            padding: 6px 12px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin-bottom: 15px;
+        }
+        
+        .card-dhl h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dhl-dark);
+        }
+        
+        .card-dhl p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .btn-explore { 
+            color: var(--dhl-red); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            display: inline-block;
+            margin-top: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .btn-explore:hover {
+            transform: translateX(5px);
+        }
+
+        /* Services Section */
+        .services-section { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+        
+        .section-title { 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            margin-bottom: 50px; 
+            color: var(--dhl-dark);
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--dhl-red);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        .service-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+        }
+        
+        .service-item { 
+            background: white; 
+            padding: 40px 30px; 
+            border-radius: 12px; 
+            border-top: 5px solid var(--dhl-yellow);
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 204, 0, 0.2);
+            border-radius: 50%;
+        }
+        
+        .service-item h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dhl-dark);
+        }
+        
+        .service-item p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .service-link {
+            color: var(--dhl-red);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.3s;
+            display: inline-block;
+        }
+        
+        .service-link:hover {
+            transform: translateX(5px);
+        }
+
+        /* Tariff Banner */
+        .tariff-banner { 
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            padding: 80px 5%;
+            color: white;
+            text-align: center;
+        }
+        
+        .tariff-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .tariff-title { 
+            font-size: 2rem; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            margin-bottom: 20px;
+            color: var(--dhl-yellow);
+        }
+        
+        .tariff-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Updates Section */
+        .updates-section { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 80px 20px;
+            background: white;
+        }
+        
+        .updates-list { list-style: none; }
+        
+        .update-item { 
+            background: white; 
+            padding: 25px; 
+            margin-bottom: 20px; 
+            border-left: 5px solid var(--dhl-red); 
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .update-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+        
+        .update-info h4 { 
+            margin: 0 0 8px 0; 
+            color: var(--dhl-dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .update-date { 
+            font-size: 0.85rem; 
+            color: #999;
+            font-weight: 500;
+        }
+        
+        .update-btn { 
+            background: var(--dhl-red); 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            border: 2px solid var(--dhl-red);
+        }
+        
+        .update-btn:hover {
+            background: transparent;
+            color: var(--dhl-red);
+        }
 
         /* Footer */
-        footer { background: linear-gradient(180deg, var(--brand-dark) 0%, #1a1a1a 100%); color: #888; padding: 3rem 5%; margin-top: auto; border-top: 4px solid var(--brand-orange); }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
-        .footer-col h4 { color: var(--white); margin-bottom: 1rem; }
+        footer { 
+            background: var(--dhl-dark); 
+            color: #aaa; 
+            padding: 60px 5% 20px; 
+            margin-top: auto; 
+        }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 40px; 
+            margin-bottom: 40px; 
+        }
+        
+        .footer-col h4 { 
+            color: white; 
+            text-transform: uppercase; 
+            margin-bottom: 25px; 
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
         .footer-col ul { list-style: none; }
-        .footer-col a { color: #888; text-decoration: none; }
-        .footer-col a:hover { color: var(--brand-orange); }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { 
+            color: #aaa; 
+            text-decoration: none; 
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .footer-col a:hover { 
+            color: var(--dhl-yellow);
+            transform: translateX(5px);
+        }
+        
+        .copyright { 
+            text-align: center; 
+            border-top: 1px solid #444; 
+            padding-top: 25px; 
+            font-size: 0.85rem;
+            color: #888;
+        }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .menu-toggle { display: block; }
-            .lang-select { display: none; }
-            .hero { padding: 6rem 5% 4rem; }
-            .hero h1 { font-size: 2rem; }
+        /* ✨ DHL-STYLE TRACKING DISPLAY ✨ */
+        .tracking-result {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tracking-header {
+            background: var(--dhl-dark);
+            color: white;
+            padding: 20px;
+            margin: -30px -30px 30px -30px;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .tracking-number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        
+        .tracking-status {
+            font-size: 1.1rem;
+            color: var(--dhl-yellow);
+            font-weight: 600;
+        }
+        
+        .tracking-timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--dhl-red);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--dhl-red);
+            z-index: 2;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: var(--dhl-border);
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .timeline-date {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .timeline-status {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dhl-dark);
+            margin-bottom: 5px;
+        }
+        
+        .timeline-location {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .timeline-notes {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 968px) { 
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .split-cards { grid-template-columns: 1fr; margin-top: 30px; }
+            .card-image { height: 180px; }
             .track-widget { flex-direction: column; }
-            .track-widget input { width: 100%; }
-            .btn-primary { width: 100%; }
-            .services-grid { grid-template-columns: 1fr; padding: 2rem 5%; }
+            .btn-track { width: 100%; }
+        }
+        
+        @media (max-width: 768px) { 
+            .nav-links, .btn-start { display: none; } 
+            .menu-toggle { display: block; }
+            .hero { min-height: auto; padding: 100px 20px 60px; }
+            .hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+            .service-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+            .track-widget input { padding: 15px; font-size: 0.9rem; }
+            .btn-track { padding: 15px 30px; font-size: 0.9rem; }
+            .card-content { padding: 20px; }
+            .section-title { font-size: 1.5rem; }
+            .tracking-timeline { padding-left: 30px; }
+            .timeline-item { padding-left: 25px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Top Bar -->
     <div class="top-bar">
-        <a href="#" data-i18n="top_support">Support</a>
-        <a href="#" data-i18n="top_locations">Locations</a>
-        <a href="#" data-i18n="top_careers">Careers</a>
+        <div class="top-left">
+            <a href="locations.html" data-i18n="find_point">Find a Service Point</a>
+            <a href="locations.html" data-i18n="locations">Locations</a>
+            <a href="careers.html" data-i18n="careers">Careers</a>
+        </div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option>
+                <option value="ru">🇷 RU</option>
+                <option value="ch">🇨 CN</option>
+                <option value="de">🇩 DE</option>
+                <option value="fr">🇫 FR</option>
+            </select>
+            <a href="portal-logins.html" data-i18n="login">Login</a>
+        </div>
     </div>
 
-    <header>
-        <div class="nav-container">
-            <div class="logo" onclick="showPage('home')">Velox<span>Logistics</span></div>
-            <nav class="nav-links">
-                <a onclick="showPage('home')" data-i18n="nav_home">Home</a>
-                <a onclick="showPage('tracking')" data-i18n="nav_track">Tracking</a>
-                <a onclick="showPage('quote')" data-i18n="nav_quote">Get Quote</a>
-                <a onclick="showPage('about')" data-i18n="nav_about">About Us</a>
-            </nav>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <select class="lang-select" id="languageSelector" onchange="changeLanguage()">
-                    <option value="en">🇬 EN</option>
-                    <option value="ru">🇺 RU</option>
-                    <option value="ch">🇳 CN</option>
-                    <option value="de">🇩🇪 DE</option>
-                    <option value="fr">🇷 FR</option>
-                </select>
-                <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
-            </div>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="showPage('home')">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a onclick="showPage('home')" data-i18n="nav_home">Home</a>
+            <a onclick="showPage('tracking')" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="nav_quote">Get Quote</a>
+            <a href="about-velox.html" data-i18n="nav_about">About Us</a>
         </div>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <h3>Velox<span>Logistics</span></h3>
-            <button class="mobile-menu-close" onclick="toggleMobileMenu()">✕</button>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </div>
-        <div class="mobile-menu-links">
-            <a onclick="showPage('home'); toggleMobileMenu()" data-i18n="nav_home">🏠 Home</a>
-            <a onclick="showPage('tracking'); toggleMobileMenu()" data-i18n="nav_track"> Tracking</a>
-            <a onclick="showPage('quote'); toggleMobileMenu()" data-i18n="nav_quote">💰 Get Quote</a>
-            <a onclick="showPage('about'); toggleMobileMenu()" data-i18n="nav_about">ℹ️ About Us</a>
-        </div>
-        <select class="mobile-lang-select" id="mobileLanguageSelector" onchange="changeLanguageMobile()">
-            <option value="en">🇬🇧 English</option>
-            <option value="ru">🇺 Русский</option>
-            <option value="ch">🇨🇳 中文</option>
-            <option value="de">🇩 Deutsch</option>
-            <option value="fr">🇷 Français</option>
-        </select>
-    </div>
+    </nav>
 
     <!-- HOME PAGE -->
     <div id="home" class="page-section active">
+        <!-- Hero Section with Slideshow -->
         <section class="hero">
+            <div class="slideshow-background">
+                <!-- REAL logistics images -->
+                <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80');"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1494412574643-35d324698420?w=1920&q=80');"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1553413077-190dd305871c?w=1920&q=80');"></div>
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1920&q=80');"></div>
+            </div>
+            
             <div class="hero-content">
-                <h1 data-i18n="hero_title">Global Logistics Solutions</h1>
+                <h1 data-i18n="hero_title">Navigating Global Trade</h1>
                 <p data-i18n="hero_sub">Reliable shipping for a connected world.</p>
                 <div class="track-widget">
-                    <input type="text" id="trackInput" placeholder="Enter Tracking Number (e.g. VX882910)" onkeypress="if(event.key==='Enter')runTracking()">
-                    <button class="btn-primary" onclick="runTracking()" data-i18n="btn_track">🔍 Track</button>
+                    <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. VX882910)" onkeypress="if(event.key==='Enter')runTracking()">
+                    <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
                 </div>
             </div>
         </section>
-        
-        <!-- SERVICES SECTION WITH NEW BACKGROUND -->
-        <section class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">✈️</div>
-                <h3 data-i18n="srv_air">Air Freight</h3>
-                <p data-i18n="desc_air">Priority overnight and express delivery for time-sensitive cargo.</p>
+
+        <!-- Split Cards with REAL IMAGES -->
+        <section class="split-cards">
+            <!-- Card 1: Express Shipping -->
+            <div class="card-dhl">
+                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1494412574643-35d324698420?w=800&q=80');"></div>
+                <div class="card-content">
+                    <span class="tag" data-i18n="for_all">For All Shippers</span>
+                    <h3 data-i18n="srv_express_title">Document and Parcel Shipping</h3>
+                    <p data-i18n="srv_express_desc">Learn about Velox Express – the undisputed global leader in international express shipping.</p>
+                    <a href="#" class="btn-explore" onclick="showPage('tracking')" data-i18n="explore_express">Explore Velox Express →</a>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🚢</div>
-                <h3 data-i18n="srv_ocean">Ocean Freight</h3>
-                <p data-i18n="desc_ocean">Full container load (FCL) and less than container load (LCL) options.</p>
+            
+            <!-- Card 2: Cargo Shipping -->
+            <div class="card-dhl">
+                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80');"></div>
+                <div class="card-content">
+                    <span class="tag" data-i18n="biz_only">Business Only</span>
+                    <h3 data-i18n="srv_cargo_title">Cargo Shipping</h3>
+                    <p data-i18n="srv_cargo_desc">Discover shipping and logistics service options from Velox Global Forwarding.</p>
+                    <a href="quote.html" class="btn-explore" data-i18n="explore_freight">Explore Freight Services →</a>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🔗</div>
-                <h3 data-i18n="srv_supply">Supply Chain</h3>
-                <p data-i18n="desc_supply">End-to-end management of the flow of goods and services.</p>
+        </section>
+
+        <!-- Services Section with REAL IMAGES -->
+        <section class="services-section">
+            <h2 class="section-title" data-i18n="services_title">Services Available</h2>
+            <div class="service-grid">
+                <div class="service-item">
+                    <div class="service-icon" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80');"></div>
+                    <h4 data-i18n="sol_1_title">Velox for Business</h4>
+                    <p data-i18n="sol_1_desc">Frequent shippers? Learn about the benefits of opening an account.</p>
+                    <a href="quote.html" class="service-link" data-i18n="learn_more">Learn More →</a>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon" style="background-image: url('https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=400&q=80');"></div>
+                    <h4 data-i18n="sol_2_title">Customer Service</h4>
+                    <p data-i18n="sol_2_desc">Access our customer portal logins and get support.</p>
+                    <a href="customer-service.html" class="service-link" data-i18n="customer_portal">Customer Portal →</a>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&q=80');"></div>
+                    <h4 data-i18n="sol_3_title">Sustainability</h4>
+                    <p data-i18n="sol_3_desc">Sustainable business begins with low carbon supply chains.</p>
+                    <a href="#" class="service-link" data-i18n="gogreen">GoGreen Plus →</a>
+                </div>
             </div>
+        </section>
+
+        <!-- Tariff Banner -->
+        <section class="tariff-banner">
+            <div class="tariff-content">
+                <h2 class="tariff-title" data-i18n="tariff_title">Navigating Latest Tariff Developments</h2>
+                <p class="tariff-text" data-i18n="tariff_text">Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate these changes.</p>
+            </div>
+        </section>
+
+        <!-- Updates Section -->
+        <section class="updates-section">
+            <h2 class="section-title" data-i18n="updates_title">Important Service Updates</h2>
+            <ul class="updates-list">
+                <li class="update-item">
+                    <div class="update-info">
+                        <h4 data-i18n="update_1">Operational Update Middle East</h4>
+                        <span class="update-date">Oct 24, 2024</span>
+                    </div>
+                    <button class="update-btn" onclick="alert('Opening detailed bulletin...')" data-i18n="read_more">Read Bulletin</button>
+                </li>
+                <li class="update-item">
+                    <div class="update-info">
+                        <h4 data-i18n="update_2">Globalization holds firm</h4>
+                        <span class="update-date">Oct 20, 2024</span>
+                    </div>
+                    <button class="update-btn" onclick="alert('Opening detailed bulletin...')" data-i18n="read_more">Read Bulletin</button>
+                </li>
+            </ul>
         </section>
     </div>
 
     <!-- TRACKING PAGE -->
     <div id="tracking" class="page-section">
-        <div style="background: linear-gradient(135deg, var(--brand-purple) 0%, #3d1073 100%); color: white; padding: 3rem 5%; text-align: center;">
+        <div style="background:var(--dhl-dark); color:white; padding:40px; text-align:center;">
             <h2 data-i18n="nav_track">Track Your Shipment</h2>
         </div>
-        <div class="track-widget" style="margin-top: -30px; position: relative; z-index: 10;">
-            <input type="text" id="trackInputPage" placeholder="Enter Tracking Number" onkeypress="if(event.key==='Enter')runTracking()">
-            <button class="btn-primary" onclick="runTracking()" data-i18n="btn_track">🔍 Track</button>
+        <div style="padding:40px 5%; text-align:center;">
+            <div class="track-widget">
+                <input type="text" id="trackInputPage" placeholder="Enter tracking number">
+                <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
+            </div>
         </div>
-        <p class="error-msg" id="errorMsg">❌ Tracking number not found. Please check and try again.</p>
-        <div class="loading-spinner" id="loadingSpinner">
-            <div class="spinner"></div>
-            <p data-i18n="loading_text">Searching for your shipment...</p>
-        </div>
-        <div id="trackingResult" class="timeline-container">
-            <h3 style="margin-bottom: 20px; border-bottom: 2px solid var(--brand-purple); padding-bottom: 10px;" data-i18n="tracking_title">Shipment Progress</h3>
-            <div class="tracking-summary" id="trackingSummary"></div>
-            <div class="timeline" id="timelineContent"></div>
-        </div>
+        <!-- DHL-Style Tracking Result Container -->
+        <div id="trackingResult" style="display: none;"></div>
     </div>
 
-    <!-- QUOTE & ABOUT PAGES (Same as before) -->
-    <div id="quote" class="page-section">
-        <div style="max-width: 900px; margin: 4rem auto; padding: 3rem; background: white; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            <h2 style="color: var(--brand-purple); margin-bottom: 2rem;" data-i18n="nav_quote">Get a Free Quote</h2>
-            <form action="https://formspree.io/f/xnjodbjw" method="POST">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                    <div><label data-i18n="lbl_from">From Country</label><input type="text" name="from_country" required style="width:100%; padding:10px;"></div>
-                    <div><label data-i18n="lbl_to">To Country</label><input type="text" name="to_country" required style="width:100%; padding:10px;"></div>
-                </div>
-                <button type="submit" class="btn-primary" style="width:100%;" data-i18n="btn_submit">Calculate & Send</button>
-            </form>
-        </div>
-    </div>
-    <div id="about" class="page-section">
-        <div style="max-width: 800px; margin: 4rem auto; padding: 0 20px; text-align: center;">
-            <h2 style="color: var(--brand-purple);" data-i18n="nav_about">About Velox Logistics</h2>
-            <p style="margin-top: 1rem;" data-i18n="about_text">Connecting businesses worldwide.</p>
-        </div>
-    </div>
-
+    <!-- FOOTER -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-col"><h4 data-i18n="footer_services">Services</h4><ul><li><a onclick="showPage('home')">Air Freight</a></li></ul></div>
-            <div class="footer-col"><h4 data-i18n="footer_support">Support</h4><ul><li><a onclick="showPage('tracking')">Track</a></li></ul></div>
-            <div class="footer-col"><h4>Velox Logistics</h4><p data-i18n="footer_tagline">Connecting the world.</p></div>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_company">Company Info</h4>
+                <ul>
+                    <li><a href="about-velox.html" data-i18n="about_us">About Velox</a></li>
+                    <li><a href="careers.html" data-i18n="careers">Careers</a></li>
+                    <li><a href="#" onclick="alert('Press Center coming soon!')" data-i18n="press_center">Press Center</a></li>
+                </ul>
+            </div>
         </div>
-        <div style="text-align: center; margin-top: 2rem; border-top: 1px solid #333; padding-top: 1rem;">&copy; 2024 Velox Logistics.</div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
     </footer>
 
     <script>
-        // ️ CONFIGURATION: MUST MATCH ADMIN.HTML
-        const USE_BACKEND_API = false; // FALSE = Demo Mode (LocalStorage), TRUE = Backend
-        
-        document.querySelectorAll('[data-i18n]').forEach(el => { /* Init translations if needed */ });
-        
-        let currentTrackedOrder = null;
+        // Translations Object
+        const translations = {
+            en: {
+                find_point: "Find a Service Point",
+                locations: "Locations",
+                careers: "Careers",
+                login: "Login",
+                nav_home: "Home",
+                nav_track: "Track",
+                nav_quote: "Get Quote",
+                nav_about: "About Us",
+                btn_start: "Start Shipping",
+                hero_title: "Navigating Global Trade",
+                hero_sub: "Reliable shipping for a connected world.",
+                btn_track: "Track",
+                for_all: "For All Shippers",
+                srv_express_title: "Document and Parcel Shipping",
+                srv_express_desc: "Learn about Velox Express – the undisputed global leader in international express shipping.",
+                explore_express: "Explore Velox Express",
+                biz_only: "Business Only",
+                srv_cargo_title: "Cargo Shipping",
+                srv_cargo_desc: "Discover shipping and logistics service options from Velox Global Forwarding.",
+                explore_freight: "Explore Freight Services",
+                services_title: "Services Available",
+                sol_1_title: "Velox for Business",
+                sol_1_desc: "Frequent shippers? Learn about the benefits of opening an account.",
+                learn_more: "Learn More →",
+                sol_2_title: "Customer Service",
+                sol_2_desc: "Access our customer portal logins and get support.",
+                customer_portal: "Customer Portal →",
+                sol_3_title: "Sustainability",
+                sol_3_desc: "Sustainable business begins with low carbon supply chains.",
+                gogreen: "GoGreen Plus →",
+                tariff_title: "Navigating Latest Tariff Developments",
+                tariff_text: "Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate these changes.",
+                updates_title: "Important Service Updates",
+                update_1: "Operational Update Middle East",
+                update_2: "Globalization holds firm",
+                read_more: "Read Bulletin",
+                about_text: "Velox Logistics connects businesses globally.",
+                footer_quick: "Quick Links",
+                footer_support: "Support",
+                footer_company: "Company Info",
+                about_us: "About Velox",
+                press_center: "Press Center",
+                help_center: "Help Center",
+                copyright: "&copy; 2024 Velox Logistics - all rights reserved",
+                tracking_not_found: "Tracking number not found. Please check and try again."
+            },
+            ru: {
+                find_point: "Найти пункт выдачи",
+                locations: "Офисы",
+                careers: "Карьера",
+                login: "Вход",
+                nav_home: "Главная",
+                nav_track: "Отслеживание",
+                nav_quote: "Расчет",
+                nav_about: "О нас",
+                btn_start: "Начать отправку",
+                hero_title: "Глобальная Торговля",
+                hero_sub: "Надежная доставка по всему миру.",
+                btn_track: "Отследить",
+                for_all: "Для всех",
+                srv_express_title: "Документы и Посылки",
+                srv_express_desc: "Узнайте о Velox Express – лидере международной экспресс-доставки.",
+                explore_express: "Изучить Express",
+                biz_only: "Для бизнеса",
+                srv_cargo_title: "Грузоперевозки",
+                srv_cargo_desc: "Откройте для себя услуги логистики от Velox Global Forwarding.",
+                explore_freight: "Изучить Грузоперевозки",
+                services_title: "Доступные услуги",
+                sol_1_title: "Бизнесу с Velox",
+                sol_1_desc: "Частые отправки? Узнайте о преимуществах аккаунта.",
+                learn_more: "Подробнее →",
+                sol_2_title: "Сервис",
+                sol_2_desc: "Доступ к порталу и поддержка.",
+                customer_portal: "Портал клиента →",
+                sol_3_title: "Устойчивость",
+                sol_3_desc: "Зеленая логистика для вашего бизнеса.",
+                gogreen: "GoGreen Plus →",
+                tariff_title: "Таможенные Тарифы",
+                tariff_text: "Мировая торговля усложняется. Мы поможем вам адаптироваться к изменениям.",
+                updates_title: "Обновления",
+                update_1: "Операционное обновление",
+                update_2: "Глобализация",
+                read_more: "Читать далее",
+                about_text: "Velox Logistics соединяет бизнес глобально.",
+                footer_quick: "Быстрые ссылки",
+                footer_support: "Поддержка",
+                footer_company: "Информация о компании",
+                about_us: "О Velox",
+                press_center: "Пресс-центр",
+                help_center: "Помощь",
+                copyright: "&copy; 2024 Velox Logistics - все права защищены",
+                tracking_not_found: "Номер отслеживания не найден. Проверьте и повторите."
+            },
+            ch: {
+                find_point: "查找地点",
+                locations: "地点",
+                careers: "职业",
+                login: "登录",
+                nav_home: "主页",
+                nav_track: "追踪",
+                nav_quote: "报价",
+                nav_about: "关于",
+                btn_start: "开始发货",
+                hero_title: "驾驭全球贸易",
+                hero_sub: "连接世界的可靠运输。",
+                btn_track: "追踪",
+                for_all: "面向所有托运人",
+                srv_express_title: "文件与包裹运输",
+                srv_express_desc: "了解 Velox Express – 国际快递的全球领导者。",
+                explore_express: "探索 Express",
+                biz_only: "仅限企业",
+                srv_cargo_title: "货物运输",
+                srv_cargo_desc: "探索 Velox 全球货运的物流解决方案。",
+                explore_freight: "探索货运服务",
+                services_title: "可用服务",
+                sol_1_title: "商业客户",
+                sol_1_desc: "经常发货？了解开户优势。",
+                learn_more: "了解更多 →",
+                sol_2_title: "客户服务",
+                sol_2_desc: "访问客户门户和支持。",
+                customer_portal: "客户门户 →",
+                sol_3_title: "可持续发展",
+                sol_3_desc: "为您的业务提供低碳供应链。",
+                gogreen: "GoGreen Plus →",
+                tariff_title: "最新关税动态",
+                tariff_text: "全球贸易日益复杂。我们要致力于帮助您应对这些变化。",
+                updates_title: "重要更新",
+                update_1: "运营更新",
+                update_2: "全球化报告",
+                read_more: "阅读更多",
+                about_text: "Velox Logistics 连接全球企业。",
+                footer_quick: "快速链接",
+                footer_support: "支持",
+                footer_company: "公司信息",
+                about_us: "关于 Velox",
+                press_center: "新闻中心",
+                help_center: "帮助中心",
+                copyright: "&copy; 2024 Velox Logistics - 保留所有权利",
+                tracking_not_found: "未找到追踪号。请检查后重试。"
+            },
+            de: {
+                find_point: "Servicepunkt finden",
+                locations: "Standorte",
+                careers: "Karriere",
+                login: "Anmelden",
+                nav_home: "Startseite",
+                nav_track: "Verfolgung",
+                nav_quote: "Angebot",
+                nav_about: "Über Uns",
+                btn_start: "Versand starten",
+                hero_title: "Globaler Handel",
+                hero_sub: "Zuverlässiger Versand für eine vernetzte Welt.",
+                btn_track: "Verfolgen",
+                for_all: "Für alle Versender",
+                srv_express_title: "Dokumenten- & Paketversand",
+                srv_express_desc: "Erfahren Sie mehr über Velox Express – den weltweit führenden Expressdienstleister.",
+                explore_express: "Express entdecken",
+                biz_only: "Nur Geschäftskunden",
+                srv_cargo_title: "Frachtversand",
+                srv_cargo_desc: "Entdecken Sie Logistikoptionen von Velox Global Forwarding.",
+                explore_freight: "Frachtdienste entdecken",
+                services_title: "Verfügbare Dienste",
+                sol_1_title: "Für Unternehmen",
+                sol_1_desc: "Häufige Versender? Erfahren Sie mehr über Kontovorteile.",
+                learn_more: "Mehr erfahren →",
+                sol_2_title: "Kundenservice",
+                sol_2_desc: "Zugang zum Kundenportal und Support.",
+                customer_portal: "Kundenportal →",
+                sol_3_title: "Nachhaltigkeit",
+                sol_3_desc: "Nachhaltiges Geschäft mit kohlenstoffarmen Lieferketten.",
+                gogreen: "GoGreen Plus →",
+                tariff_title: "Aktuelle Zollentwicklungen",
+                tariff_text: "Der Welthandel wird komplexer. Wir helfen Ihnen, diese Änderungen zu bewältigen.",
+                updates_title: "Wichtige Updates",
+                update_1: "Betriebsupdate Nahost",
+                update_2: "Globalisierungsbericht",
+                read_more: "Mehr lesen",
+                about_text: "Velox Logistics verbindet Unternehmen global.",
+                footer_quick: "Schnellzugriff",
+                footer_support: "Support",
+                footer_company: "Unternehmensinfo",
+                about_us: "Über Velox",
+                press_center: "Pressezentrum",
+                help_center: "Hilfezentrum",
+                copyright: "&copy; 2024 Velox Logistics - Alle Rechte vorbehalten",
+                tracking_not_found: "Sendungsnummer nicht gefunden. Bitte prüfen."
+            },
+            fr: {
+                find_point: "Trouver un point de service",
+                locations: "Emplacements",
+                careers: "Carrières",
+                login: "Connexion",
+                nav_home: "Accueil",
+                nav_track: "Suivi",
+                nav_quote: "Devis",
+                nav_about: "À Propos",
+                btn_start: "Commencer l'expédition",
+                hero_title: "Commerce Mondial",
+                hero_sub: "Expédition fiable pour un monde connecté.",
+                btn_track: "Suivre",
+                for_all: "Pour tous les expéditeurs",
+                srv_express_title: "Expédition de Documents & Colis",
+                srv_express_desc: "Découvrez Velox Express – le leader mondial de l'express international.",
+                explore_express: "Découvrir Express",
+                biz_only: "Entreprises uniquement",
+                srv_cargo_title: "Expédition de Fret",
+                srv_cargo_desc: "Découvrez les options logistiques de Velox Global Forwarding.",
+                explore_freight: "Découvrir le Fret",
+                services_title: "Services Disponibles",
+                sol_1_title: "Pour les Entreprises",
+                sol_1_desc: "Expéditeurs fréquents ? Découvrez les avantages d'un compte.",
+                learn_more: "En savoir plus →",
+                sol_2_title: "Service Client",
+                sol_2_desc: "Accès au portail client et support.",
+                customer_portal: "Portail Client →",
+                sol_3_title: "Durabilité",
+                sol_3_desc: "Des chaînes d'approvisionnement à faible émission de carbone.",
+                gogreen: "GoGreen Plus →",
+                tariff_title: "Évolutions Tarifaires",
+                tariff_text: "Le commerce mondial se complexifie. Nous vous aidons à naviguer ces changements.",
+                updates_title: "Mises à jour importantes",
+                update_1: "Mise à jour Opérationnelle",
+                update_2: "La mondialisation tient bon",
+                read_more: "Lire la suite",
+                about_text: "Velox Logistics connecte les entreprises globalement.",
+                footer_quick: "Liens Rapides",
+                footer_support: "Support",
+                footer_company: "Info Entreprise",
+                about_us: "À propos de Velox",
+                press_center: "Centre de Presse",
+                help_center: "Centre d'Aide",
+                copyright: "&copy; 2024 Velox Logistics - Tous droits réservés",
+                tracking_not_found: "Numéro de suivi introuvable. Veuillez vérifier."
+            }
+        };
 
+        // Language Switching Function
+        function changeLanguage() {
+            const lang = document.querySelector('.country-select').value;
+            const t = translations[lang] || translations.en;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(t[key]) {
+                    el.textContent = t[key];
+                }
+            });
+        }
+
+        // Navigation
         function showPage(pageId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
         }
 
+        // Mobile Menu
         function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-            document.getElementById('menuOverlay').classList.toggle('active');
-        }
-
-        function changeLanguage() { updateLanguage(document.getElementById('languageSelector').value); }
-        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
-
-        function updateLanguage(lang) {
-            const t = translations[lang] || translations.en;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
-            });
-            document.getElementById('trackInput').placeholder = t.track_placeholder;
-            document.getElementById('trackInputPage').placeholder = t.track_placeholder_page;
-            if(currentTrackedOrder) renderTrackingResults(currentTrackedOrder, lang);
-        }
-
-        const translations = {
-            en: { nav_home:"Home", nav_track:"Tracking", nav_quote:"Get Quote", nav_about:"About Us", hero_title:"Global Logistics Solutions", hero_sub:"Reliable shipping.", btn_track:" Track", tracking_title:"Shipment Progress", srv_air:"Air Freight", desc_air:"Priority overnight.", srv_ocean:"Ocean Freight", desc_ocean:"FCL/LCL options.", srv_supply:"Supply Chain", desc_supply:"End-to-end management.", lbl_from:"From", lbl_to:"To", btn_submit:"Send", about_text:"Connecting businesses.", footer_services:"Services", footer_support:"Support", footer_tagline:"Connecting the world.", track_placeholder:"Enter Tracking Number (e.g. VX882910)", track_placeholder_page:"Enter Tracking Number", error_not_found:"Tracking number not found.", tracking_label:"Tracking", customer_label:"Customer", route_label:"Route", service_label:"Service", status_label:"Status", no_events:"No events yet." },
-            ru: { nav_home:"Главная", nav_track:"Отслеживание", nav_quote:"Расчет", nav_about:"О нас", hero_title:"Глобальная логистика", hero_sub:"Надежная доставка.", btn_track:" Найти", tracking_title:"Прогресс", srv_air:"Авиа", desc_air:"Срочная доставка.", srv_ocean:"Море", desc_ocean:"Контейнеры.", srv_supply:"Цепь", desc_supply:"Управление потоком.", lbl_from:"Откуда", lbl_to:"Куда", btn_submit:"Отправить", about_text:"Связываем бизнес.", footer_services:"Услуги", footer_support:"Поддержка", footer_tagline:"Связываем мир.", track_placeholder:"Введите номер", track_placeholder_page:"Введите номер", error_not_found:"Не найдено.", tracking_label:"Трекинг", customer_label:"Клиент", route_label:"Маршрут", service_label:"Услуга", status_label:"Статус", no_events:"Нет событий." },
-            ch: { nav_home:"主页", nav_track:"追踪", nav_quote:"报价", nav_about:"关于", hero_title:"全球物流", hero_sub:"可靠运输。", btn_track:"🔍 追踪", tracking_title:"进度", srv_air:"空运", desc_air:"优先隔夜。", srv_ocean:"海运", desc_ocean:"集装箱选项。", srv_supply:"供应链", desc_supply:"端到端管理。", lbl_from:"始发地", lbl_to:"目的地", btn_submit:"发送", about_text:"连接企业。", footer_services:"服务", footer_support:"支持", footer_tagline:"连接世界。", track_placeholder:"输入追踪号", track_placeholder_page:"输入追踪号", error_not_found:"未找到。", tracking_label:"追踪", customer_label:"客户", route_label:"路线", service_label:"服务", status_label:"状态", no_events:"无事件。" },
-            de: { nav_home:"Startseite", nav_track:"Verfolgung", nav_quote:"Angebot", nav_about:"Über Uns", hero_title:"Globale Logistik", hero_sub:"Zuverlässiger Versand.", btn_track:"🔍 Verfolgen", tracking_title:"Fortschritt", srv_air:"Luftfracht", desc_air:"Priorität über Nacht.", srv_ocean:"Seefracht", desc_ocean:"Container-Optionen.", srv_supply:"Lieferkette", desc_supply:"End-to-End-Management.", lbl_from:"Von", lbl_to:"Nach", btn_submit:"Senden", about_text:"Unternehmen verbinden.", footer_services:"Dienste", footer_support:"Support", footer_tagline:"Welt verbinden.", track_placeholder:"Tracking-Nr. eingeben", track_placeholder_page:"Tracking-Nr. eingeben", error_not_found:"Nicht gefunden.", tracking_label:"Verfolgung", customer_label:"Kunde", route_label:"Route", service_label:"Service", status_label:"Status", no_events:"Keine Ereignisse." },
-            fr: { nav_home:"Accueil", nav_track:"Suivi", nav_quote:"Devis", nav_about:"À Propos", hero_title:"Logistique Mondiale", hero_sub:"Expédition fiable.", btn_track:"🔍 Suivre", tracking_title:"Progression", srv_air:"Fret Aérien", desc_air:"Livraison prioritaire.", srv_ocean:"Fret Maritime", desc_ocean:"Options conteneurs.", srv_supply:"Chaîne Logistique", desc_supply:"Gestion de bout en bout.", lbl_from:"Départ", lbl_to:"Destination", btn_submit:"Envoyer", about_text:"Connecter les entreprises.", footer_services:"Services", footer_support:"Support", footer_tagline:"Connecter le monde.", track_placeholder:"Entrez le numéro", track_placeholder_page:"Entrez le numéro", error_not_found:"Introuvable.", tracking_label:"Suivi", customer_label:"Client", route_label:"Itinéraire", service_label:"Service", status_label:"Statut", no_events:"Aucun événement." }
-        };
-
-        const statusLabels = {
-            en: { 'pending': '⏳ Pending', 'processing': '🔄 Processing', 'in_transit': '🚚 In Transit', 'out_for_delivery': '📦 Out for Delivery', 'delivered': '✅ Delivered' },
-            ru: { 'pending': ' Ожидание', 'processing': '🔄 Обработка', 'in_transit': '🚚 В пути', 'out_for_delivery': ' Доставка', 'delivered': '✅ Доставлено' },
-            ch: { 'pending': ' 待处理', 'processing': '🔄 处理中', 'in_transit': ' 运输中', 'out_for_delivery': ' 配送中', 'delivered': '✅ 已送达' },
-            de: { 'pending': '⏳ Ausstehend', 'processing': ' Verarbeitung', 'in_transit': '🚚 Unterwegs', 'out_for_delivery': '📦 Zustellung', 'delivered': '✅ Zugestellt' },
-            fr: { 'pending': '⏳ En attente', 'processing': '🔄 En traitement', 'in_transit': '🚚 En transit', 'out_for_delivery': '📦 En livraison', 'delivered': '✅ Livré' }
-        };
-
-        function renderTrackingResults(order, lang) {
-            const labels = translations[lang] || translations.en;
-            const status = statusLabels[lang]?.[order.status] || order.status;
-            document.getElementById('trackingSummary').innerHTML = `
-                <p><strong>${labels.tracking_label}:</strong> ${order.trackingNumber}</p>
-                <p><strong>${labels.customer_label}:</strong> ${order.customerName}</p>
-                <p><strong>${labels.route_label}:</strong> ${order.fromCountry} → ${order.toCountry}</p>
-                <p><strong>${labels.service_label}:</strong> ${order.serviceType} | ${order.weight} kg</p>
-                <p><strong>${labels.status_label}:</strong> <span style="color:var(--brand-orange);font-weight:bold">${status}</span></p>
+            const menu = document.createElement('div');
+            menu.style.cssText = 'position:fixed;top:70px;left:0;right:0;background:white;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:999;';
+            menu.innerHTML = `
+                <a href="index.html" style="display:block;padding:15px;border-bottom:1px solid #eee;">Home</a>
+                <a href="tracking.html" style="display:block;padding:15px;border-bottom:1px solid #eee;">Track</a>
+                <a href="quote.html" style="display:block;padding:15px;border-bottom:1px solid #eee;">Get Quote</a>
+                <a href="about-velox.html" style="display:block;padding:15px;">About Us</a>
             `;
-            let html = '';
-            if(order.updates) order.updates.forEach(u => {
-                html += `<div class="timeline-item"><div class="timeline-date">${new Date(u.timestamp).toLocaleString()}</div><div class="timeline-status">${statusLabels[lang]?.[u.status] || u.status}</div><div class="timeline-loc">${u.location}</div></div>`;
-            });
-            document.getElementById('timelineContent').innerHTML = html || `<p>${labels.no_events}</p>`;
+            document.body.appendChild(menu);
+            setTimeout(() => menu.remove(), 3000);
         }
 
+        // ✅ FIXED & DEBUGGED: Tracking Function
         function runTracking() {
-            const num = (document.getElementById('trackInput').value || document.getElementById('trackInputPage').value || '').trim().toUpperCase();
-            if(!num) return alert("Enter tracking number");
+            console.log('🔍 Tracking started...');
             
-            document.getElementById('loadingSpinner').classList.add('active');
-            document.getElementById('trackingResult').style.display = 'none';
-            document.getElementById('errorMsg').style.display = 'none';
+            // Get input from either field
+            const input1 = document.getElementById('trackInput')?.value || '';
+            const input2 = document.getElementById('trackInputPage')?.value || '';
+            const num = (input1 || input2).trim().toUpperCase();
+            
+            console.log('📦 Tracking number entered:', num);
+            
+            if(!num) {
+                alert("Please enter a tracking number");
+                return;
+            }
+            
+            const btn = document.querySelector('.btn-track');
+            const originalText = btn.innerText;
+            btn.innerText = "Searching...";
+            btn.disabled = true;
 
             setTimeout(() => {
-                // 🔍 LOOKUP IN LOCALSTORAGE (Matches Admin.html exactly)
-                const orders = JSON.parse(localStorage.getItem('velox_orders')) || [];
-                const order = orders.find(o => o.trackingNumber.toUpperCase() === num);
+                btn.innerText = originalText;
+                btn.disabled = false;
                 
-                document.getElementById('loadingSpinner').classList.remove('active');
-                
-                if(!order) {
-                    document.getElementById('errorMsg').style.display = 'block';
-                    return;
+                try {
+                    // ✅ Get shipments from localStorage
+                    const stored = localStorage.getItem('velox_orders');
+                    console.log('💾 localStorage data:', stored ? 'Found' : 'Empty');
+                    
+                    const orders = stored ? JSON.parse(stored) : [];
+                    console.log('📋 Total shipments in storage:', orders.length);
+                    
+                    // ✅ Debug: Log all tracking numbers
+                    orders.forEach(o => {
+                        console.log('🔢 Available tracking:', o.trackingNumber);
+                    });
+                    
+                    // ✅ Case-insensitive matching
+                    const order = orders.find(o => {
+                        const storedNum = (o.trackingNumber || '').toUpperCase().trim();
+                        return storedNum === num;
+                    });
+                    
+                    console.log('🎯 Found order:', order ? 'YES' : 'NO');
+                    
+                    const lang = document.querySelector('.country-select')?.value || 'en';
+                    const t = translations[lang] || translations.en;
+                    
+                    if(order) {
+                        console.log('✅ Rendering tracking results...');
+                        // Clear any previous error messages
+                        const existingError = document.querySelector('#tracking .error-msg');
+                        if(existingError) existingError.remove();
+                        
+                        renderTrackingResults(order, lang);
+                    } else {
+                        console.log('❌ Order not found');
+                        // Show translated error message
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'error-msg';
+                        errorMsg.style.cssText = 'max-width:800px; margin:20px auto; padding:15px; background:#fee2e2; color:#991b1b; border-left:4px solid #991b1b; border-radius:4px; text-align:center;';
+                        errorMsg.textContent = t.tracking_not_found || "Tracking number not found. Please check and try again.";
+                        
+                        const trackingPage = document.getElementById('tracking');
+                        const resultContainer = document.getElementById('trackingResult');
+                        if(trackingPage && resultContainer) {
+                            trackingPage.insertBefore(errorMsg, resultContainer);
+                        }
+                        
+                        document.getElementById('trackingResult').style.display = 'none';
+                    }
+                } catch(err) {
+                    console.error('❌ Tracking error:', err);
+                    alert('Error loading tracking data. Please try again.');
                 }
-                
-                document.getElementById('trackingResult').style.display = 'block';
-                currentTrackedOrder = order;
-                renderTrackingResults(order, document.getElementById('languageSelector').value);
-                showPage('tracking');
-            }, 600);
+            }, 800);
         }
+
+        // ✅ ENHANCED: DHL-Style Tracking Display
+        function renderTrackingResults(order, lang) {
+            console.log('🎨 Rendering tracking for:', order.trackingNumber);
+            
+            const statusLabels = {
+                en: { 'pending': '⏳ Pending', 'processing': '🔄 Processing', 'in_transit': '🚚 In Transit', 'out_for_delivery': '📦 Out for Delivery', 'delivered': '✅ Delivered' },
+                ru: { 'pending': '⏳ Ожидание', 'processing': '🔄 Обработка', 'in_transit': '🚚 В пути', 'out_for_delivery': '📦 Доставляется', 'delivered': '✅ Доставлено' },
+                ch: { 'pending': '⏳ 待处理', 'processing': '🔄 处理中', 'in_transit': '🚚 运输中', 'out_for_delivery': '📦 配送中', 'delivered': '✅ 已送达' },
+                de: { 'pending': '⏳ Ausstehend', 'processing': '🔄 Verarbeitung', 'in_transit': '🚚 Unterwegs', 'out_for_delivery': '📦 In Zustellung', 'delivered': '✅ Zugestellt' },
+                fr: { 'pending': '⏳ En attente', 'processing': '🔄 En traitement', 'in_transit': '🚚 En transit', 'out_for_delivery': '📦 En livraison', 'delivered': '✅ Livré' }
+            };
+            
+            const currentStatus = statusLabels[lang]?.[order.status] || order.status;
+            
+            // ✅ Build full address strings (handle both old & new format)
+            const fromAddr = order.fromAddress 
+                ? `${order.fromAddress.street ? order.fromAddress.street + ', ' : ''}${order.fromAddress.city || ''}${order.fromAddress.state ? ', ' + order.fromAddress.state : ''} ${order.fromAddress.postal || ''}${order.fromAddress.country ? ', ' + order.fromAddress.country : order.fromCountry || ''}`.trim()
+                : order.fromCountry || 'Unknown';
+            
+            const toAddr = order.toAddress 
+                ? `${order.toAddress.street ? order.toAddress.street + ', ' : ''}${order.toAddress.city || ''}${order.toAddress.state ? ', ' + order.toAddress.state : ''} ${order.toAddress.postal || ''}${order.toAddress.country ? ', ' + order.toAddress.country : order.toCountry || ''}`.trim()
+                : order.toCountry || 'Unknown';
+            
+            // ✅ Extract city names for route display
+            const fromCity = order.fromAddress?.city || order.fromCountry || 'Unknown';
+            const toCity = order.toAddress?.city || order.toCountry || 'Unknown';
+            
+            // ✅ Build timeline HTML with proper sorting & formatting
+            let timelineHTML = '';
+            if(order.updates && order.updates.length > 0) {
+                // ✅ Sort by timestamp (newest first)
+                const sortedUpdates = [...order.updates].sort((a, b) => 
+                    new Date(b.timestamp) - new Date(a.timestamp)
+                );
+                
+                console.log('📜 Timeline updates:', sortedUpdates.length);
+                
+                sortedUpdates.forEach(update => {
+                    const updateStatus = statusLabels[lang]?.[update.status] || update.status;
+                    // ✅ Format date/time properly
+                    const date = new Date(update.timestamp).toLocaleString(lang === 'en' ? 'en-US' : lang === 'ru' ? 'ru-RU' : lang === 'ch' ? 'zh-CN' : lang === 'de' ? 'de-DE' : 'fr-FR');
+                    const location = update.location || fromAddr;
+                    
+                    timelineHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-status">${updateStatus}</div>
+                            <div class="timeline-location">📍 ${location}</div>
+                            ${update.notes ? `<div class="timeline-notes">💬 ${update.notes}</div>` : ''}
+                        </div>
+                    `;
+                });
+            } else {
+                timelineHTML = `
+                    <div class="timeline-item">
+                        <div class="timeline-status">No tracking updates available yet</div>
+                    </div>
+                `;
+            }
+            
+            // ✅ DHL-style tracking result HTML
+            const resultHTML = `
+                <div class="tracking-result">
+                    <div class="tracking-header">
+                        <div class="tracking-number">${order.trackingNumber}</div>
+                        <div class="tracking-status">${currentStatus}</div>
+                    </div>
+                    <div style="margin-bottom:30px; padding:20px; background:#f8f9fa; border-radius:8px;">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; font-size:0.95rem;">
+                            <div><strong>👤 Customer:</strong><br>${order.customerName}</div>
+                            <div><strong>🛣️ Route:</strong><br>${fromCity} → ${toCity}</div>
+                            <div><strong>📦 Service:</strong><br>${order.serviceType}</div>
+                            <div><strong>⚖️ Weight:</strong><br>${order.weight} kg</div>
+                        </div>
+                    </div>
+                    <h3 style="margin-bottom:20px; color:var(--dhl-dark);">📋 Shipment Progress</h3>
+                    <div class="tracking-timeline">
+                        ${timelineHTML}
+                    </div>
+                </div>
+            `;
+            
+            // ✅ Show result in container
+            let resultContainer = document.getElementById('trackingResult');
+            if(!resultContainer) {
+                resultContainer = document.createElement('div');
+                resultContainer.id = 'trackingResult';
+                const trackingSection = document.querySelector('#tracking .page-section');
+                if(trackingSection) {
+                    trackingSection.appendChild(resultContainer);
+                }
+            }
+            
+            resultContainer.innerHTML = resultHTML;
+            resultContainer.style.display = 'block';
+            
+            // ✅ Smooth scroll to results
+            resultContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
+            
+            console.log('✅ Tracking results displayed');
+        }
+
+        // Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
     </script>
 </body>
 </html>
