@@ -795,7 +795,7 @@
                 <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
             </div>
         </div>
-        <!-- DHL-Style Tracking Result Container -->
+        <!-- ✅ FIXED: Tracking Result Container (now in tracking section) -->
         <div id="trackingResult" style="display: none;"></div>
     </div>
 
@@ -1080,11 +1080,28 @@
             });
         }
 
-        // Navigation
+        // ✅ FIXED: Navigation with tracking support
         function showPage(pageId) {
+            // Hide all sections
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
+            
+            // Show selected section
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+            
+            // If navigating to tracking page, clear any previous results
+            if(pageId === 'tracking') {
+                const resultContainer = document.getElementById('trackingResult');
+                if(resultContainer) {
+                    resultContainer.style.display = 'none';
+                    resultContainer.innerHTML = '';
+                }
+                const errorMsg = document.querySelector('#tracking .error-msg');
+                if(errorMsg) errorMsg.style.display = 'none';
+            }
         }
 
         // Mobile Menu
@@ -1101,14 +1118,14 @@
             setTimeout(() => menu.remove(), 3000);
         }
 
-        // ✅ FIXED & DEBUGGED: Tracking Function
+        // ✅ FIXED: Tracking Function - Works from Hero OR Tracking Section
         function runTracking() {
-            console.log('🔍 Tracking started...');
+            console.log('🔍 Tracking started from index.html...');
             
-            // Get input from either field
-            const input1 = document.getElementById('trackInput')?.value || '';
-            const input2 = document.getElementById('trackInputPage')?.value || '';
-            const num = (input1 || input2).trim().toUpperCase();
+            // Get input from EITHER field (hero or tracking section)
+            const heroInput = document.getElementById('trackInput')?.value || '';
+            const trackingInput = document.getElementById('trackInputPage')?.value || '';
+            const num = (heroInput || trackingInput).trim().toUpperCase();
             
             console.log('📦 Tracking number entered:', num);
             
@@ -1118,16 +1135,20 @@
             }
             
             const btn = document.querySelector('.btn-track');
-            const originalText = btn.innerText;
-            btn.innerText = "Searching...";
-            btn.disabled = true;
+            const originalText = btn?.innerText || 'Track';
+            if(btn) {
+                btn.innerText = "Searching...";
+                btn.disabled = true;
+            }
 
             setTimeout(() => {
-                btn.innerText = originalText;
-                btn.disabled = false;
+                if(btn) {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                }
                 
                 try {
-                    // ✅ Get shipments from localStorage
+                    // ✅ Get shipments from localStorage (same storage as admin)
                     const stored = localStorage.getItem('velox_orders');
                     console.log('💾 localStorage data:', stored ? 'Found' : 'Empty');
                     
@@ -1139,7 +1160,7 @@
                         console.log('🔢 Available tracking:', o.trackingNumber);
                     });
                     
-                    // ✅ Case-insensitive matching
+                    // ✅ Case-insensitive matching with trim
                     const order = orders.find(o => {
                         const storedNum = (o.trackingNumber || '').toUpperCase().trim();
                         return storedNum === num;
@@ -1151,27 +1172,41 @@
                     const t = translations[lang] || translations.en;
                     
                     if(order) {
-                        console.log('✅ Rendering tracking results...');
-                        // Clear any previous error messages
-                        const existingError = document.querySelector('#tracking .error-msg');
-                        if(existingError) existingError.remove();
+                        console.log('✅ Order found, showing results...');
                         
-                        renderTrackingResults(order, lang);
+                        // ✅ Clear any previous error messages
+                        const existingError = document.querySelector('.error-msg');
+                        if(existingError) existingError.style.display = 'none';
+                        
+                        // ✅ Navigate to tracking section to show results
+                        showPage('tracking');
+                        
+                        // ✅ Small delay to ensure section is visible before rendering
+                        setTimeout(() => {
+                            renderTrackingResults(order, lang);
+                        }, 100);
+                        
                     } else {
                         console.log('❌ Order not found');
-                        // Show translated error message
-                        const errorMsg = document.createElement('div');
-                        errorMsg.className = 'error-msg';
-                        errorMsg.style.cssText = 'max-width:800px; margin:20px auto; padding:15px; background:#fee2e2; color:#991b1b; border-left:4px solid #991b1b; border-radius:4px; text-align:center;';
-                        errorMsg.textContent = t.tracking_not_found || "Tracking number not found. Please check and try again.";
                         
-                        const trackingPage = document.getElementById('tracking');
-                        const resultContainer = document.getElementById('trackingResult');
-                        if(trackingPage && resultContainer) {
-                            trackingPage.insertBefore(errorMsg, resultContainer);
-                        }
+                        // ✅ Show error in tracking section
+                        showPage('tracking');
                         
-                        document.getElementById('trackingResult').style.display = 'none';
+                        setTimeout(() => {
+                            const errorMsg = document.createElement('div');
+                            errorMsg.className = 'error-msg';
+                            errorMsg.style.cssText = 'max-width:800px; margin:20px auto; padding:15px; background:#fee2e2; color:#991b1b; border-left:4px solid #991b1b; border-radius:4px; text-align:center;';
+                            errorMsg.textContent = t.tracking_not_found || "Tracking number not found. Please check and try again.";
+                            
+                            const trackingSection = document.getElementById('tracking');
+                            const resultContainer = document.getElementById('trackingResult');
+                            if(trackingSection && resultContainer) {
+                                trackingSection.insertBefore(errorMsg, resultContainer);
+                                errorMsg.style.display = 'block';
+                            }
+                            
+                            document.getElementById('trackingResult').style.display = 'none';
+                        }, 100);
                     }
                 } catch(err) {
                     console.error('❌ Tracking error:', err);
@@ -1180,7 +1215,7 @@
             }, 800);
         }
 
-        // ✅ ENHANCED: DHL-Style Tracking Display
+        // ✅ ENHANCED: DHL-Style Tracking Display with Full Address & History
         function renderTrackingResults(order, lang) {
             console.log('🎨 Rendering tracking for:', order.trackingNumber);
             
@@ -1267,7 +1302,7 @@
             if(!resultContainer) {
                 resultContainer = document.createElement('div');
                 resultContainer.id = 'trackingResult';
-                const trackingSection = document.querySelector('#tracking .page-section');
+                const trackingSection = document.getElementById('tracking');
                 if(trackingSection) {
                     trackingSection.appendChild(resultContainer);
                 }
