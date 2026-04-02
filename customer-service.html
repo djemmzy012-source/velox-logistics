@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
+    <style>
+        :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; --dhl-gray: #f2f2f2; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { font-family: 'Roboto', sans-serif; background: var(--white); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .top-bar { background: var(--dhl-yellow); padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .main-nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dhl-yellow); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.2rem; font-weight: 900; color: var(--dhl-red); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; }
+        .logo span { color: var(--dhl-dark); background: var(--dhl-yellow); padding: 0 8px; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .btn-start { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: var(--white); z-index: 9999; transition: 0.3s; border-right: 5px solid var(--dhl-yellow); overflow-y: auto; }
+        .mobile-menu.active { left: 0; }
+        .mobile-header { background: var(--dhl-red); color: white; padding: 20px; font-weight: 900; display: flex; justify-content: space-between; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .mobile-lang select { width: 100%; padding: 10px; background: var(--dhl-gray); }
+        .hero { background: var(--dhl-dark); color: white; padding: 60px 5%; text-align: center; }
+        .content { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin: 40px 0; }
+        .contact-card { background: var(--dhl-gray); padding: 30px; border-radius: 8px; text-align: center; }
+        .contact-card h3 { color: var(--dhl-dark); margin-bottom: 15px; }
+        .contact-card p { color: #666; line-height: 1.6; }
+        footer { background: var(--dhl-dark); color: #aaa; padding: 60px 5% 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--dhl-yellow); }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
+        @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } .contact-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-left"><a href="index.html" data-i18n="back_home">Back to Home</a></div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option><option value="ru">🇷 RU</option><option value="ch">🇨 CN</option><option value="de">🇩 DE</option><option value="fr">🇫 FR</option>
+            </select>
+            <a href="#" data-i18n="support">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <div class="mobile-lang">
+            <select id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+                <option value="en">English</option><option value="ru">Русский</option><option value="ch">中文</option><option value="de">Deutsch</option><option value="fr">Français</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 data-i18n="service_title">Customer Service</h1>
+        <p data-i18n="service_sub">How can we help you?</p>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <h2 style="color:var(--dhl-red); margin-bottom:30px;" data-i18n="contact_title">Contact Us</h2>
+        <p style="margin-bottom:30px; color:#555;" data-i18n="contact_intro">Our customer service team is here to assist you with all your shipping needs, tracking inquiries, and account management.</p>
+        
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3 data-i18n="phone_title">📞 Phone Support</h3>
+                <p data-i18n="phone_details">+44 20 1234 5678 (UK)<br>+1 800 123 4567 (USA)<br>Mon-Fri: 8am - 8pm EST</p>
+            </div>
+            <div class="contact-card">
+                <h3 data-i18n="email_title">📧 Email Support</h3>
+                <p data-i18n="email_details">support@veloxlogistics.com<br>We typically respond within 24 hours.</p>
+            </div>
+            <div class="contact-card">
+                <h3 data-i18n="chat_title">💬 Live Chat</h3>
+                <p data-i18n="chat_details">Available now on our website<br>Click the chat icon in the bottom right corner.</p>
+            </div>
+            <div class="contact-card">
+                <h3 data-i18n="faq_title">❓ FAQs</h3>
+                <p data-i18n="faq_details">Find answers to common questions<br><a href="help-center.html" style="color:var(--dhl-red); font-weight:700;" data-i18n="view_faqs">View FAQs →</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="back_home">Back to Home</a></li>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() { 
+            document.getElementById('mobileMenu').classList.toggle('active'); 
+            document.getElementById('menuOverlay').classList.toggle('active'); 
+        }
+        
+        // Language Switching
+        function changeLanguage() { updateLanguage(document.querySelector('.country-select').value); }
+        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
+        
+        function updateLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n')]) el.textContent = t[el.getAttribute('data-i18n')]; 
+            });
+        }
+
+        // Complete Translations Object
+        const translations = {
+            en: {
+                back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
+                mobile_title:"Velox Logistics", service_title:"Customer Service", service_sub:"How can we help you?",
+                contact_title:"Contact Us", contact_intro:"Our customer service team is here to assist you with all your shipping needs, tracking inquiries, and account management.",
+                phone_title:"📞 Phone Support", phone_details:"+44 20 1234 5678 (UK)<br>+1 800 123 4567 (USA)<br>Mon-Fri: 8am - 8pm EST",
+                email_title:"📧 Email Support", email_details:"support@veloxlogistics.com<br>We typically respond within 24 hours.",
+                chat_title:"💬 Live Chat", chat_details:"Available now on our website<br>Click the chat icon in the bottom right corner.",
+                faq_title:"❓ FAQs", faq_details:"Find answers to common questions", view_faqs:"View FAQs →",
+                footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
+                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+            },
+            ru: {
+                back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
+                mobile_title:"Velox Logistics", service_title:"Обслуживание клиентов", service_sub:"Чем мы можем вам помочь?",
+                contact_title:"Свяжитесь с нами", contact_intro:"Наша служба поддержки клиентов готова помочь вам со всеми вашими потребностями в доставке, запросами по отслеживанию и управлением учетной записью.",
+                phone_title:"📞 Телефонная поддержка", phone_details:"+44 20 1234 5678 (Великобритания)<br>+1 800 123 4567 (США)<br>Пн-Пт: 8:00 - 20:00 EST",
+                email_title:"📧 Электронная почта", email_details:"support@veloxlogistics.com<br>Обычно мы отвечаем в течение 24 часов.",
+                chat_title:"💬 Онлайн-чат", chat_details:"Доступен сейчас на нашем сайте<br>Нажмите на значок чата в правом нижнем углу.",
+                faq_title:"❓ Часто задаваемые вопросы", faq_details:"Найдите ответы на распространенные вопросы", view_faqs:"Посмотреть вопросы →",
+                footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
+                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+            },
+            ch: {
+                back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
+                mobile_title:"Velox Logistics", service_title:"客户服务", service_sub:"我们能为您提供什么帮助？",
+                contact_title:"联系我们", contact_intro:"我们的客户服务团队随时为您提供所有运输需求、追踪查询和账户管理方面的帮助。",
+                phone_title:"📞 电话支持", phone_details:"+44 20 1234 5678 (英国)<br>+1 800 123 4567 (美国)<br>周一至周五：上午 8 点 - 晚上 8 点（美东时间）",
+                email_title:"📧 电子邮件支持", email_details:"support@veloxlogistics.com<br>我们通常在 24 小时内回复。",
+                chat_title:"💬 在线聊天", chat_details:"现在可在我们的网站上使用<br>点击右下角的聊天图标。",
+                faq_title:"❓ 常见问题", faq_details:"查找常见问题的答案", view_faqs:"查看常见问题 →",
+                footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
+                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+            },
+            de: {
+                back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
+                mobile_title:"Velox Logistics", service_title:"Kundenservice", service_sub:"Wie können wir Ihnen helfen?",
+                contact_title:"Kontaktieren Sie uns", contact_intro:"Unser Kundenservice-Team steht Ihnen bei allen Ihren Versandbedürfnissen, Sendungsverfolgungsanfragen und Kontoverwaltung zur Verfügung.",
+                phone_title:"📞 Telefon-Support", phone_details:"+44 20 1234 5678 (UK)<br>+1 800 123 4567 (USA)<br>Mo-Fr: 8:00 - 20:00 EST",
+                email_title:"📧 E-Mail-Support", email_details:"support@veloxlogistics.com<br>Wir antworten in der Regel innerhalb von 24 Stunden.",
+                chat_title:"💬 Live-Chat", chat_details:"Jetzt auf unserer Website verfügbar<br>Klicken Sie auf das Chat-Symbol in der unteren rechten Ecke.",
+                faq_title:"❓ Häufig gestellte Fragen", faq_details:"Finden Sie Antworten auf häufige Fragen", view_faqs:"FAQs ansehen →",
+                footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
+                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+            },
+            fr: {
+                back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
+                mobile_title:"Velox Logistics", service_title:"Service Client", service_sub:"Comment pouvons-nous vous aider ?",
+                contact_title:"Nous contacter", contact_intro:"Notre équipe de service client est là pour vous aider avec tous vos besoins d'expédition, demandes de suivi et gestion de compte.",
+                phone_title:"📞 Support téléphonique", phone_details:"+44 20 1234 5678 (Royaume-Uni)<br>+1 800 123 4567 (États-Unis)<br>Lun-Ven: 8h - 20h EST",
+                email_title:"📧 Support par e-mail", email_details:"support@veloxlogistics.com<br>Nous répondons généralement dans les 24 heures.",
+                chat_title:"💬 Chat en direct", chat_details:"Disponible maintenant sur notre site web<br>Cliquez sur l'icône de chat en bas à droite.",
+                faq_title:"❓ FAQ", faq_details:"Trouvez des réponses aux questions courantes", view_faqs:"Voir les FAQ →",
+                footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
+                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+            }
+        };
+    </script>
+</body>
+</html>

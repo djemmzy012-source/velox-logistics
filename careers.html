@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
+    <style>
+        :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; --dhl-gray: #f2f2f2; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { font-family: 'Roboto', sans-serif; background: var(--white); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .top-bar { background: var(--dhl-yellow); padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .main-nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dhl-yellow); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.2rem; font-weight: 900; color: var(--dhl-red); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; }
+        .logo span { color: var(--dhl-dark); background: var(--dhl-yellow); padding: 0 8px; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .btn-start { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: var(--white); z-index: 9999; transition: 0.3s; border-right: 5px solid var(--dhl-yellow); overflow-y: auto; }
+        .mobile-menu.active { left: 0; }
+        .mobile-header { background: var(--dhl-red); color: white; padding: 20px; font-weight: 900; display: flex; justify-content: space-between; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .mobile-lang select { width: 100%; padding: 10px; background: var(--dhl-gray); }
+        .hero { background: var(--dhl-dark); color: white; padding: 60px 5%; text-align: center; }
+        .jobs-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        .job-listing { background: var(--dhl-gray); padding: 25px; margin-bottom: 20px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--dhl-yellow); transition: transform 0.2s; }
+        .job-listing:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .job-info h3 { color: var(--dhl-dark); margin-bottom: 5px; font-size: 1.2rem; }
+        .job-info p { color: #666; font-size: 0.9rem; }
+        .apply-btn { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; transition: background 0.3s; }
+        .apply-btn:hover { background: #b00000; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-box { background: white; width: 90%; max-width: 500px; padding: 30px; border-radius: 8px; position: relative; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-close { position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .modal-box h3 { color: var(--dhl-red); margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+        .submit-btn { width: 100%; background: var(--dhl-yellow); color: var(--dhl-dark); padding: 12px; border: none; border-radius: 4px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background: #e6b800; }
+        .success-msg { display: none; text-align: center; color: green; font-weight: bold; margin-top: 15px; }
+        footer { background: var(--dhl-dark); color: #aaa; padding: 60px 5% 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
+        @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } .job-listing { flex-direction: column; align-items: flex-start; gap: 15px; } .apply-btn { width: 100%; text-align: center; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-left"><a href="index.html" data-i18n="back_home">Back to Home</a></div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option><option value="ru">🇷 RU</option><option value="ch">🇨 CN</option><option value="de">🇩 DE</option><option value="fr">🇫 FR</option>
+            </select>
+            <a href="#" data-i18n="support">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <div class="mobile-lang">
+            <select id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+                <option value="en">English</option><option value="ru">Русский</option><option value="ch">中文</option><option value="de">Deutsch</option><option value="fr">Français</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 data-i18n="careers_title">Join Our Team</h1>
+        <p data-i18n="careers_sub">Build your career with the world's leading logistics company.</p>
+    </section>
+
+    <!-- Job Listings -->
+    <div class="jobs-container">
+        <h2 style="margin-bottom:30px; color:var(--dhl-red);" data-i18n="open_positions">Open Positions</h2>
+        
+        <!-- Job 1 -->
+        <div class="job-listing">
+            <div class="job-info">
+                <h3 data-i18n="job_1_title">Senior Logistics Manager</h3>
+                <p data-i18n="job_1_loc">New York, USA • Full-time</p>
+            </div>
+            <button class="apply-btn" onclick="openModal('Senior Logistics Manager', 'New York, USA')" data-i18n="apply_now">Apply Now</button>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="job-listing">
+            <div class="job-info">
+                <h3 data-i18n="job_2_title">Warehouse Associate</h3>
+                <p data-i18n="job_2_loc">London, UK • Full-time</p>
+            </div>
+            <button class="apply-btn" onclick="openModal('Warehouse Associate', 'London, UK')" data-i18n="apply_now">Apply Now</button>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="job-listing">
+            <div class="job-info">
+                <h3 data-i18n="job_3_title">Customer Service Representative</h3>
+                <p data-i18n="job_3_loc">Dubai, UAE • Part-time</p>
+            </div>
+            <button class="apply-btn" onclick="openModal('Customer Service Representative', 'Dubai, UAE')" data-i18n="apply_now">Apply Now</button>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div class="modal-overlay" id="jobModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 id="modalJobTitle" data-i18n="modal_title">Apply for Position</h3>
+            <form id="applicationForm" onsubmit="submitApplication(event)">
+                <div class="form-group">
+                    <label data-i18n="lbl_name">Full Name</label>
+                    <input type="text" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="lbl_email">Email Address</label>
+                    <input type="email" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="lbl_phone">Phone Number</label>
+                    <input type="tel" name="phone" required placeholder="+1 555 000 0000">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="lbl_resume">Resume / CV (PDF)</label>
+                    <input type="file" name="resume" accept=".pdf,.doc,.docx">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="lbl_cover">Cover Letter</label>
+                    <textarea name="message" rows="3" placeholder="Tell us why you are a good fit..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="btn_submit">Send Application</button>
+                <div class="success-msg" id="successMsg" data-i18n="success_msg">✅ Application Received! We will contact you shortly.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="back_home">Back to Home</a></li>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() { 
+            document.getElementById('mobileMenu').classList.toggle('active'); 
+            document.getElementById('menuOverlay').classList.toggle('active'); 
+        }
+        
+        // Language Switching
+        function changeLanguage() { updateLanguage(document.querySelector('.country-select').value); }
+        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
+        
+        function updateLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n')]) el.textContent = t[el.getAttribute('data-i18n')]; 
+            });
+        }
+
+        // Modal Logic
+        let currentJobTitle = "";
+        const modal = document.getElementById('jobModal');
+        const form = document.getElementById('applicationForm');
+        const successMsg = document.getElementById('successMsg');
+
+        function openModal(jobTitle, location) {
+            currentJobTitle = jobTitle;
+            const labels = translations[document.querySelector('.country-select').value] || translations.en;
+            document.getElementById('modalJobTitle').textContent = (labels.modal_apply || "Apply for:") + " " + jobTitle;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            form.reset();
+            form.style.display = 'block';
+            successMsg.style.display = 'none';
+        }
+
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // Form Submission
+        function submitApplication(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const jobName = currentJobTitle;
+            const newLead = {
+                date: new Date().toISOString(),
+                job: jobName,
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                message: formData.get('message')
+            };
+            let leads = JSON.parse(localStorage.getItem('velox_leads')) || [];
+            leads.push(newLead);
+            localStorage.setItem('velox_leads', JSON.stringify(leads));
+            form.style.display = 'none';
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                closeModal();
+                alert(translations[document.querySelector('.country-select').value]?.alert_sent || "Thank you! Your application has been sent to our HR team.");
+            }, 2000);
+        }
+
+        // Complete Translations Object
+        const translations = {
+            en: {
+                back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
+                mobile_title:"Velox Logistics", careers_title:"Join Our Team", careers_sub:"Build your career with the world's leading logistics company.",
+                open_positions:"Open Positions",
+                job_1_title:"Senior Logistics Manager", job_1_loc:"New York, USA • Full-time",
+                job_2_title:"Warehouse Associate", job_2_loc:"London, UK • Full-time",
+                job_3_title:"Customer Service Representative", job_3_loc:"Dubai, UAE • Part-time",
+                apply_now:"Apply Now", modal_title:"Apply for Position", modal_apply:"Apply for:",
+                lbl_name:"Full Name", lbl_email:"Email Address", lbl_phone:"Phone Number", lbl_resume:"Resume / CV (PDF)", lbl_cover:"Cover Letter",
+                btn_submit:"Send Application", success_msg:"✅ Application Received! We will contact you shortly.", alert_sent:"Thank you! Your application has been sent to our HR team.",
+                footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
+                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+            },
+            ru: {
+                back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
+                mobile_title:"Velox Logistics", careers_title:"Присоединяйтесь к нашей команде", careers_sub:"Постройте свою карьеру с ведущей логистической компанией мира.",
+                open_positions:"Вакансии",
+                job_1_title:"Старший менеджер по логистике", job_1_loc:"Нью-Йорк, США • Полная занятость",
+                job_2_title:"Складской работник", job_2_loc:"Лондон, Великобритания • Полная занятость",
+                job_3_title:"Представитель службы поддержки", job_3_loc:"Дубай, ОАЭ • Частичная занятость",
+                apply_now:"Податься", modal_title:"Подать заявку", modal_apply:"Подать заявку на:",
+                lbl_name:"ФИО", lbl_email:"Адрес электронной почты", lbl_phone:"Телефон", lbl_resume:"Резюме / CV (PDF)", lbl_cover:"Сопроводительное письмо",
+                btn_submit:"Отправить заявку", success_msg:"✅ Заявка получена! Мы свяжемся с вами в ближайшее время.", alert_sent:"Спасибо! Ваша заявка отправлена в наш отдел кадров.",
+                footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
+                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+            },
+            ch: {
+                back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
+                mobile_title:"Velox Logistics", careers_title:"加入我们的团队", careers_sub:"与世界领先的物流公司一起建立你的职业生涯。",
+                open_positions:"开放职位",
+                job_1_title:"高级物流经理", job_1_loc:"纽约，美国 • 全职",
+                job_2_title:"仓库助理", job_2_loc:"伦敦，英国 • 全职",
+                job_3_title:"客户服务代表", job_3_loc:"迪拜，阿联酋 • 兼职",
+                apply_now:"立即申请", modal_title:"申请职位", modal_apply:"申请：",
+                lbl_name:"全名", lbl_email:"电子邮件地址", lbl_phone:"电话号码", lbl_resume:"简历/CV (PDF)", lbl_cover:"求职信",
+                btn_submit:"发送申请", success_msg:"✅ 申请已收到！我们将尽快与您联系。", alert_sent:"谢谢！您的申请已发送至我们的人力资源团队。",
+                footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
+                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+            },
+            de: {
+                back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
+                mobile_title:"Velox Logistics", careers_title:"Werden Sie Teil unseres Teams", careers_sub:"Bauen Sie Ihre Karriere mit dem weltweit führenden Logistikunternehmen auf.",
+                open_positions:"Offene Stellen",
+                job_1_title:"Senior Logistikmanager", job_1_loc:"New York, USA • Vollzeit",
+                job_2_title:"Lagermitarbeiter", job_2_loc:"London, Großbritannien • Vollzeit",
+                job_3_title:"Kundenservice-Mitarbeiter", job_3_loc:"Dubai, VAE • Teilzeit",
+                apply_now:"Jetzt bewerben", modal_title:"Bewerbung einreichen", modal_apply:"Bewerben für:",
+                lbl_name:"Vollständiger Name", lbl_email:"E-Mail-Adresse", lbl_phone:"Telefonnummer", lbl_resume:"Lebenslauf / CV (PDF)", lbl_cover:"Anschreiben",
+                btn_submit:"Bewerbung senden", success_msg:"✅ Bewerbung erhalten! Wir werden Sie in Kürze kontaktieren.", alert_sent:"Vielen Dank! Ihre Bewerbung wurde an unser HR-Team gesendet.",
+                footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
+                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+            },
+            fr: {
+                back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
+                mobile_title:"Velox Logistics", careers_title:"Rejoignez notre équipe", careers_sub:"Construisez votre carrière avec la société de logistique leader mondiale.",
+                open_positions:"Postes ouverts",
+                job_1_title:"Manager Senior en Logistique", job_1_loc:"New York, USA • Temps plein",
+                job_2_title:"Associé d'entrepôt", job_2_loc:"Londres, Royaume-Uni • Temps plein",
+                job_3_title:"Représentant du service client", job_3_loc:"Dubaï, EAU • Temps partiel",
+                apply_now:"Postuler maintenant", modal_title:"Postuler pour un poste", modal_apply:"Postuler pour:",
+                lbl_name:"Nom complet", lbl_email:"Adresse e-mail", lbl_phone:"Numéro de téléphone", lbl_resume:"CV / Résumé (PDF)", lbl_cover:"Lettre de motivation",
+                btn_submit:"Envoyer la candidature", success_msg:"✅ Candidature reçue ! Nous vous contacterons sous peu.", alert_sent:"Merci ! Votre candidature a été envoyée à notre équipe RH.",
+                footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
+                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velox for Business | Corporate Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
+    <style>
+        :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; --dhl-gray: #f2f2f2; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { font-family: 'Roboto', sans-serif; background: var(--white); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .top-bar { background: var(--dhl-yellow); padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .main-nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dhl-yellow); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.2rem; font-weight: 900; color: var(--dhl-red); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; }
+        .logo span { color: var(--dhl-dark); background: var(--dhl-yellow); padding: 0 8px; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .btn-start { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: var(--white); z-index: 9999; transition: 0.3s; border-right: 5px solid var(--dhl-yellow); overflow-y: auto; }
+        .mobile-menu.active { left: 0; }
+        .mobile-header { background: var(--dhl-red); color: white; padding: 20px; font-weight: 900; display: flex; justify-content: space-between; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .mobile-lang select { width: 100%; padding: 10px; background: var(--dhl-gray); }
+        .hero { background: linear-gradient(rgba(44,44,44,0.8), rgba(44,44,44,0.8)), url('https://images.unsplash.com/photo-1494412574643-35d324698420?w=1950'); background-size: cover; color: white; padding: 80px 5%; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+        .content { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        .benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin: 40px 0; }
+        .benefit-card { background: var(--dhl-gray); padding: 30px; border-radius: 8px; border-left: 5px solid var(--dhl-yellow); }
+        .benefit-card h3 { color: var(--dhl-dark); margin-bottom: 15px; }
+        .cta { background: var(--dhl-dark); color: white; padding: 60px 20px; text-align: center; margin-top: 60px; }
+        .cta-btn { background: var(--dhl-yellow); color: var(--dhl-dark); padding: 15px 40px; border-radius: 4px; font-weight: 900; text-transform: uppercase; display: inline-block; margin-top: 20px; }
+        footer { background: var(--dhl-dark); color: #aaa; padding: 60px 5% 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--dhl-yellow); }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
+        @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } .benefits { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-left"><a href="index.html" data-i18n="back_home">Back to Home</a></div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option><option value="ru">🇷 RU</option><option value="ch">🇨 CN</option><option value="de">🇩 DE</option><option value="fr">🇫 FR</option>
+            </select>
+            <a href="#" data-i18n="support">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <div class="mobile-lang">
+            <select id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+                <option value="en">English</option><option value="ru">Русский</option><option value="ch">中文</option><option value="de">Deutsch</option><option value="fr">Français</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 data-i18n="business_title">Velox for Business</h1>
+        <p data-i18n="business_sub">Unlock exclusive benefits for your company</p>
+    </section>
+
+    <!-- Content -->
+    <div class="content">
+        <h2 style="color:var(--dhl-red); margin-bottom:30px;" data-i18n="why_choose">Why Choose Velox for Business?</h2>
+        <div class="benefits">
+            <div class="benefit-card">
+                <h3 data-i18n="benefit_1_title">💳 Net 30 Payment Terms</h3>
+                <p data-i18n="benefit_1_desc">Manage cash flow with flexible payment options tailored to your business cycle.</p>
+            </div>
+            <div class="benefit-card">
+                <h3 data-i18n="benefit_2_title">📉 Competitive Rates</h3>
+                <p data-i18n="benefit_2_desc">Access volume-based discounts and negotiated rates across our global network.</p>
+            </div>
+            <div class="benefit-card">
+                <h3 data-i18n="benefit_3_title">👤 Dedicated Account Manager</h3>
+                <p data-i18n="benefit_3_desc">Get a personal point of contact to streamline your shipments and solve issues quickly.</p>
+            </div>
+            <div class="benefit-card">
+                <h3 data-i18n="benefit_4_title">📊 Advanced Reporting</h3>
+                <p data-i18n="benefit_4_desc">Gain insights into your shipping spend with detailed analytics and custom reports.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta">
+        <h2 data-i18n="cta_title">Ready to Scale Your Operations?</h2>
+        <p data-i18n="cta_sub">Join thousands of businesses trusting Velox for their supply chain needs.</p>
+        <a href="quote.html" class="cta-btn" data-i18n="cta_btn">Get a Quote</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="back_home">Back to Home</a></li>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() { 
+            document.getElementById('mobileMenu').classList.toggle('active'); 
+            document.getElementById('menuOverlay').classList.toggle('active'); 
+        }
+        
+        // Language Switching
+        function changeLanguage() { updateLanguage(document.querySelector('.country-select').value); }
+        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
+        
+        function updateLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n')]) el.textContent = t[el.getAttribute('data-i18n')]; 
+            });
+        }
+
+        // Complete Translations Object
+        const translations = {
+            en: {
+                back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
+                mobile_title:"Velox Logistics", business_title:"Velox for Business", business_sub:"Unlock exclusive benefits for your company",
+                why_choose:"Why Choose Velox for Business?",
+                benefit_1_title:"💳 Net 30 Payment Terms", benefit_1_desc:"Manage cash flow with flexible payment options tailored to your business cycle.",
+                benefit_2_title:"📉 Competitive Rates", benefit_2_desc:"Access volume-based discounts and negotiated rates across our global network.",
+                benefit_3_title:"👤 Dedicated Account Manager", benefit_3_desc:"Get a personal point of contact to streamline your shipments and solve issues quickly.",
+                benefit_4_title:"📊 Advanced Reporting", benefit_4_desc:"Gain insights into your shipping spend with detailed analytics and custom reports.",
+                cta_title:"Ready to Scale Your Operations?", cta_sub:"Join thousands of businesses trusting Velox for their supply chain needs.", cta_btn:"Get a Quote",
+                footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
+                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+            },
+            ru: {
+                back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
+                mobile_title:"Velox Logistics", business_title:"Velox для бизнеса", business_sub:"Разблокируйте эксклюзивные преимущества для вашей компании",
+                why_choose:"Почему выбирают Velox для бизнеса?",
+                benefit_1_title:"💳 Оплата в течение 30 дней", benefit_1_desc:"Управляйте денежным потоком с гибкими вариантами оплаты, адаптированными к вашему бизнес-циклу.",
+                benefit_2_title:"📉 Конкурентные тарифы", benefit_2_desc:"Получите доступ к скидкам на основе объема и согласованным тарифам в нашей глобальной сети.",
+                benefit_3_title:"👤 Персональный менеджер", benefit_3_desc:"Получите персонального контактное лицо для оптимизации ваших отправок и быстрого решения проблем.",
+                benefit_4_title:"📊 Расширенная отчетность", benefit_4_desc:"Получайте информацию о ваших расходах на доставку с помощью детальной аналитики и пользовательских отчетов.",
+                cta_title:"Готовы масштабировать свои операции?", cta_sub:"Присоединяйтесь к тысячам компаний, доверяющих Velox свои цепочки поставок.", cta_btn:"Получить расчет",
+                footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
+                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+            },
+            ch: {
+                back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
+                mobile_title:"Velox Logistics", business_title:"Velox 商业服务", business_sub:"为您的公司解锁专属优惠",
+                why_choose:"为什么选择 Velox 商业服务？",
+                benefit_1_title:"💳 30 天账期", benefit_1_desc:"通过根据您的业务周期定制的灵活付款选项管理现金流。",
+                benefit_2_title:"📉 有竞争力的价格", benefit_2_desc:"在我们的全球网络中享受基于数量的折扣和协商费率。",
+                benefit_3_title:"👤 专属客户经理", benefit_3_desc:"获得个人联系人以简化您的发货并快速解决问题。",
+                benefit_4_title:"📊 高级报告", benefit_4_desc:"通过详细分析和定制报告深入了解您的运输支出。",
+                cta_title:"准备好扩展您的业务？", cta_sub:"加入数千信任 Velox 满足其供应链需求的企业。", cta_btn:"获取报价",
+                footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
+                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+            },
+            de: {
+                back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
+                mobile_title:"Velox Logistics", business_title:"Velox für Unternehmen", business_sub:"Exklusive Vorteile für Ihr Unternehmen freischalten",
+                why_choose:"Warum Velox für Unternehmen wählen?",
+                benefit_1_title:"💳 30-Tage-Zahlungsziel", benefit_1_desc:"Verwalten Sie Ihren Cashflow mit flexiblen Zahlungsoptionen, die auf Ihren Geschäftszyklus zugeschnitten sind.",
+                benefit_2_title:"📉 Wettbewerbsfähige Preise", benefit_2_desc:"Zugang zu volumenbasierten Rabatten und ausgehandelten Tarifen in unserem globalen Netzwerk.",
+                benefit_3_title:"👤 Dedizierter Account Manager", benefit_3_desc:"Erhalten Sie einen persönlichen Ansprechpartner, um Ihre Sendungen zu optimieren und Probleme schnell zu lösen.",
+                benefit_4_title:"📊 Erweiterte Berichterstattung", benefit_4_desc:"Gewinnen Sie Einblicke in Ihre Versandkosten mit detaillierten Analysen und benutzerdefinierten Berichten.",
+                cta_title:"Bereit, Ihre Operationen zu skalieren?", cta_sub:"Schließen Sie sich Tausenden von Unternehmen an, die Velox für ihre Lieferketten vertrauen.", cta_btn:"Angebot anfordern",
+                footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
+                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+            },
+            fr: {
+                back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
+                mobile_title:"Velox Logistics", business_title:"Velox pour les Entreprises", business_sub:"Débloquez des avantages exclusifs pour votre entreprise",
+                why_choose:"Pourquoi choisir Velox pour les entreprises ?",
+                benefit_1_title:"💳 Conditions de paiement Net 30", benefit_1_desc:"Gérez votre trésorerie avec des options de paiement flexibles adaptées à votre cycle commercial.",
+                benefit_2_title:"📉 Tarifs compétitifs", benefit_2_desc:"Accédez à des remises basées sur le volume et des tarifs négociés dans notre réseau mondial.",
+                benefit_3_title:"👤 Gestionnaire de compte dédié", benefit_3_desc:"Obtenez un point de contact personnel pour rationaliser vos expéditions et résoudre les problèmes rapidement.",
+                benefit_4_title:"📊 Rapports avancés", benefit_4_desc:"Obtenez des informations sur vos dépenses d'expédition avec des analyses détaillées et des rapports personnalisés.",
+                cta_title:"Prêt à développer vos opérations ?", cta_sub:"Rejoignez des milliers d'entreprises qui font confiance à Velox pour leurs besoins en chaîne d'approvisionnement.", cta_btn:"Obtenir un devis",
+                footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
+                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+            }
+        };
+    </script>
+</body>
+</html>

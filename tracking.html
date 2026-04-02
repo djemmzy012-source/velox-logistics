@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Your Shipment | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
+    <style>
+        :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; --dhl-gray: #f2f2f2; --dhl-border: #e0e0e0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { font-family: 'Roboto', sans-serif; background: #f5f5f5; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .top-bar { background: var(--dhl-yellow); padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .main-nav { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dhl-yellow); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.2rem; font-weight: 900; color: var(--dhl-red); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; }
+        .logo span { color: var(--dhl-dark); background: var(--dhl-yellow); padding: 0 8px; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .btn-start { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: white; z-index: 9999; transition: 0.3s; border-right: 5px solid var(--dhl-yellow); overflow-y: auto; }
+        .mobile-menu.active { left: 0; }
+        .mobile-header { background: var(--dhl-red); color: white; padding: 20px; font-weight: 900; display: flex; justify-content: space-between; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .mobile-lang select { width: 100%; padding: 10px; background: var(--dhl-gray); }
+        .hero { background: var(--dhl-dark); color: white; padding: 60px 5%; text-align: center; }
+        .track-widget { background: white; padding: 15px; display: flex; gap: 10px; max-width: 700px; margin: 30px auto; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .track-widget input { flex: 1; padding: 15px; font-weight: 600; border: 2px solid #ddd; border-radius: 4px; text-transform: uppercase; }
+        .track-widget input:focus { border-color: var(--dhl-red); outline: none; }
+        .btn-track { background: var(--dhl-red); color: white; padding: 15px 40px; font-weight: 700; border: none; text-transform: uppercase; cursor: pointer; border-radius: 4px; transition: background 0.3s; }
+        .btn-track:hover { background: #b00000; }
+        .result-container { max-width: 900px; margin: 40px auto; padding: 0 20px; display: none; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tracking-box { background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden; }
+        .tracking-header { background: var(--dhl-dark); color: white; padding: 20px; font-weight: 700; font-size: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+        .tracking-number { font-size: 1.3rem; letter-spacing: 2px; }
+        .tracking-status { color: var(--dhl-yellow); font-weight: 600; }
+        .tracking-body { padding: 30px; }
+        .status-badge { display: inline-block; padding: 8px 15px; background: var(--dhl-yellow); color: var(--dhl-dark); font-weight: 700; text-transform: uppercase; border-radius: 20px; margin-bottom: 20px; font-size: 0.9rem; }
+        
+        /* ✅ DHL-Style Timeline */
+        .tracking-timeline { position: relative; padding-left: 40px; margin-top: 20px; }
+        .timeline-item { position: relative; padding-bottom: 30px; padding-left: 30px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -3px; top: 5px;
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--dhl-red); border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--dhl-red); z-index: 2;
+        }
+        .timeline-item::after {
+            content: ''; position: absolute; left: 3px; top: 20px;
+            width: 2px; height: calc(100% - 20px); background: var(--dhl-border);
+        }
+        .timeline-item:last-child::after { display: none; }
+        .timeline-date { font-size: 0.85rem; color: #999; margin-bottom: 5px; font-weight: 500; }
+        .timeline-status { font-size: 1.1rem; font-weight: 700; color: var(--dhl-dark); margin-bottom: 5px; }
+        .timeline-location { color: #666; font-size: 0.95rem; }
+        .timeline-notes { color: #888; font-size: 0.9rem; margin-top: 5px; font-style: italic; }
+        
+        .loading-spinner { display: none; text-align: center; padding: 40px; }
+        .loading-spinner.active { display: block; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--dhl-red); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .error-msg { max-width:900px; margin:20px auto; padding:15px; background:#fee2e2; color:#991b1b; border-left:4px solid #991b1b; border-radius:4px; text-align:center; display: none; }
+        .error-msg.active { display: block; }
+        
+        footer { background: var(--dhl-dark); color: #aaa; padding: 60px 5% 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--dhl-yellow); }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
+        
+        @media (max-width: 768px) { 
+            .nav-links, .btn-start { display: none; } 
+            .menu-toggle { display: block; }
+            .tracking-timeline { padding-left: 30px; }
+            .timeline-item { padding-left: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-left"><a href="index.html" data-i18n="back_home">Back to Home</a></div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option><option value="ru">🇷 RU</option><option value="ch">🇨 CN</option><option value="de">🇩 DE</option><option value="fr">🇫 FR</option>
+            </select>
+            <a href="#" data-i18n="support">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header"><h3>Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <div class="mobile-lang">
+            <select id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+                <option value="en">English</option><option value="ru">Русский</option><option value="ch">中文</option><option value="de">Deutsch</option><option value="fr">Français</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 data-i18n="track_title">Track Your Shipment</h1>
+        <div class="track-widget">
+            <input type="text" id="trackInputPage" placeholder="Enter tracking number (e.g. VX123456)" onkeypress="if(event.key==='Enter')runTracking()">
+            <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
+        </div>
+    </section>
+
+    <!-- Loading & Error -->
+    <div id="loadingSpinner" class="loading-spinner"><div class="spinner"></div><p style="margin-top:15px;" data-i18n="loading_text">Searching database...</p></div>
+    <div id="errorMsg" class="error-msg"></div>
+
+    <!-- Results -->
+    <div id="trackingResult" class="result-container">
+        <div class="tracking-box">
+            <div class="tracking-header">
+                <span data-i18n="tracking_title">Shipment Progress</span>
+                <span id="resultTrackingNum" class="tracking-number"></span>
+            </div>
+            <div class="tracking-body">
+                <div id="trackingSummary" style="margin-bottom:30px; padding-bottom:20px; border-bottom:1px solid var(--dhl-border);"></div>
+                <h3 style="margin-bottom:20px; color:var(--dhl-dark);" data-i18n="timeline_title">Shipment Timeline</h3>
+                <div id="timelineContent" class="tracking-timeline"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="back_home">Back to Home</a></li>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        function toggleMobileMenu() { 
+            document.getElementById('mobileMenu').classList.toggle('active'); 
+            document.getElementById('menuOverlay').classList.toggle('active'); 
+        }
+        
+        // Language Switching
+        function changeLanguage() { updateLanguage(document.querySelector('.country-select').value); }
+        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
+        
+        function updateLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n')]) el.textContent = t[el.getAttribute('data-i18n')]; 
+            });
+            if(currentTrackedOrder) renderTrackingResults(currentTrackedOrder, lang);
+        }
+
+        // Translations
+        const translations = {
+            en: { 
+                back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
+                track_title:"Track Your Shipment", btn_track:"Track", loading_text:"Searching database...", 
+                error_not_found:"Tracking number not found. Please check and try again.", 
+                tracking_title:"Shipment Progress", timeline_title:"Shipment Timeline",
+                tracking_label:"Tracking", customer_label:"Customer", 
+                route_label:"Route", service_label:"Service", status_label:"Status", no_events:"No tracking events recorded yet."
+            },
+            ru: { 
+                back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
+                track_title:"Отследить посылку", btn_track:"Отследить", loading_text:"Поиск в базе...", 
+                error_not_found:"Номер не найден. Проверьте и повторите.", 
+                tracking_title:"Прогресс доставки", timeline_title:"История отслеживания",
+                tracking_label:"Трекинг", customer_label:"Клиент", 
+                route_label:"Маршрут", service_label:"Услуга", status_label:"Статус", no_events:"Событий пока нет."
+            },
+            ch: { 
+                back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
+                track_title:"追踪您的货物", btn_track:"追踪", loading_text:"正在搜索...", 
+                error_not_found:"未找到追踪号。请检查后重试。", 
+                tracking_title:"运输进度", timeline_title:"追踪历史",
+                tracking_label:"追踪", customer_label:"客户", 
+                route_label:"路线", service_label:"服务", status_label:"状态", no_events:"暂无追踪事件。"
+            },
+            de: { 
+                back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
+                track_title:"Sendung verfolgen", btn_track:"Verfolgen", loading_text:"Suche in Datenbank...", 
+                error_not_found:"Sendungsnummer nicht gefunden. Bitte prüfen.", 
+                tracking_title:"Sendungsfortschritt", timeline_title:"Tracking-Verlauf",
+                tracking_label:"Verfolgung", customer_label:"Kunde", 
+                route_label:"Route", service_label:"Service", status_label:"Status", no_events:"Noch keine Ereignisse aufgezeichnet."
+            },
+            fr: { 
+                back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
+                track_title:"Suivre votre envoi", btn_track:"Suivre", loading_text:"Recherche en cours...", 
+                error_not_found:"Numéro introuvable. Veuillez vérifier.", 
+                tracking_title:"Progression de l'envoi", timeline_title:"Historique de suivi",
+                tracking_label:"Suivi", customer_label:"Client", 
+                route_label:"Itinéraire", service_label:"Service", status_label:"Statut", no_events:"Aucun événement enregistré."
+            }
+        };
+
+        // Status Labels
+        const statusLabels = {
+            en: { 'pending': '⏳ Pending', 'processing': '🔄 Processing', 'in_transit': '🚚 In Transit', 'out_for_delivery': '📦 Out for Delivery', 'delivered': '✅ Delivered' },
+            ru: { 'pending': '⏳ Ожидание', 'processing': '🔄 Обработка', 'in_transit': '🚚 В пути', 'out_for_delivery': '📦 Доставляется', 'delivered': '✅ Доставлено' },
+            ch: { 'pending': '⏳ 待处理', 'processing': '🔄 处理中', 'in_transit': '🚚 运输中', 'out_for_delivery': '📦 配送中', 'delivered': '✅ 已送达' },
+            de: { 'pending': '⏳ Ausstehend', 'processing': '🔄 Verarbeitung', 'in_transit': '🚚 Unterwegs', 'out_for_delivery': '📦 In Zustellung', 'delivered': '✅ Zugestellt' },
+            fr: { 'pending': '⏳ En attente', 'processing': '🔄 En traitement', 'in_transit': '🚚 En transit', 'out_for_delivery': '📦 En livraison', 'delivered': '✅ Livré' }
+        };
+
+        // ✅ FIXED: Render Tracking Results with Full Address & History Support
+        let currentTrackedOrder = null;
+        function renderTrackingResults(order, lang) {
+            console.log('🎨 Rendering tracking for:', order.trackingNumber);
+            
+            const labels = translations[lang] || translations.en;
+            const status = statusLabels[lang]?.[order.status] || order.status;
+            
+            // ✅ Build full address strings (handle both old & new format)
+            const fromAddr = order.fromAddress 
+                ? `${order.fromAddress.street ? order.fromAddress.street + ', ' : ''}${order.fromAddress.city || ''}${order.fromAddress.state ? ', ' + order.fromAddress.state : ''} ${order.fromAddress.postal || ''}${order.fromAddress.country ? ', ' + order.fromAddress.country : order.fromCountry || ''}`.trim()
+                : order.fromCountry || 'Unknown';
+            
+            const toAddr = order.toAddress 
+                ? `${order.toAddress.street ? order.toAddress.street + ', ' : ''}${order.toAddress.city || ''}${order.toAddress.state ? ', ' + order.toAddress.state : ''} ${order.toAddress.postal || ''}${order.toAddress.country ? ', ' + order.toAddress.country : order.toCountry || ''}`.trim()
+                : order.toCountry || 'Unknown';
+            
+            // ✅ Extract city names for route display
+            const fromCity = order.fromAddress?.city || order.fromCountry || 'Unknown';
+            const toCity = order.toAddress?.city || order.toCountry || 'Unknown';
+            
+            document.getElementById('resultTrackingNum').textContent = order.trackingNumber;
+            document.getElementById('trackingSummary').innerHTML = `
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; font-size:0.95rem;">
+                    <div><strong>👤 ${labels.customer_label}:</strong><br>${order.customerName}</div>
+                    <div><strong>🛣️ ${labels.route_label}:</strong><br>${fromCity} → ${toCity}</div>
+                    <div><strong>📦 ${labels.service_label}:</strong><br>${order.serviceType}</div>
+                    <div><strong>⚖️ Weight:</strong><br>${order.weight} kg</div>
+                </div>
+                <div style="margin-top:20px;"><span class="status-badge">${labels.status_label}: ${status}</span></div>
+            `;
+            
+            // ✅ Build timeline HTML with proper sorting & formatting
+            let timelineHTML = '';
+            if(order.updates && order.updates.length > 0) {
+                // ✅ Sort by timestamp (newest first)
+                const sortedUpdates = [...order.updates].sort((a, b) => 
+                    new Date(b.timestamp) - new Date(a.timestamp)
+                );
+                
+                console.log('📜 Timeline updates:', sortedUpdates.length);
+                
+                sortedUpdates.forEach(update => {
+                    const updateStatus = statusLabels[lang]?.[update.status] || update.status;
+                    // ✅ Format date/time properly for selected language
+                    const date = new Date(update.timestamp).toLocaleString(
+                        lang === 'en' ? 'en-US' : 
+                        lang === 'ru' ? 'ru-RU' : 
+                        lang === 'ch' ? 'zh-CN' : 
+                        lang === 'de' ? 'de-DE' : 'fr-FR'
+                    );
+                    const location = update.location || fromAddr;
+                    
+                    timelineHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-status">${updateStatus}</div>
+                            <div class="timeline-location">📍 ${location}</div>
+                            ${update.notes ? `<div class="timeline-notes">💬 ${update.notes}</div>` : ''}
+                        </div>
+                    `;
+                });
+            } else {
+                timelineHTML = `
+                    <div class="timeline-item">
+                        <div class="timeline-status">${labels.no_events}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('timelineContent').innerHTML = timelineHTML;
+            console.log('✅ Tracking results displayed');
+        }
+
+        // ✅ FIXED & DEBUGGED: Run Tracking Function
+        function runTracking() {
+            console.log('🔍 Tracking started...');
+            
+            // Get input and clean it
+            const input = document.getElementById('trackInputPage')?.value || '';
+            const num = input.trim().toUpperCase();
+            
+            console.log('📦 Tracking number entered:', num);
+            
+            if(!num) {
+                alert("Please enter a tracking number");
+                return;
+            }
+            
+            const langSelect = document.querySelector('.country-select');
+            const lang = langSelect ? langSelect.value : 'en';
+            const t = translations[lang] || translations.en;
+            
+            const spinner = document.getElementById('loadingSpinner');
+            const resultBox = document.getElementById('trackingResult');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // Show loading, hide others
+            spinner.classList.add('active');
+            resultBox.style.display = 'none';
+            errorMsg.classList.remove('active');
+            
+            setTimeout(() => {
+                spinner.classList.remove('active');
+                
+                try {
+                    // ✅ Get shipments from localStorage (same storage as admin)
+                    const stored = localStorage.getItem('velox_orders');
+                    console.log('💾 localStorage data:', stored ? 'Found' : 'Empty');
+                    
+                    const orders = stored ? JSON.parse(stored) : [];
+                    console.log('📋 Total shipments in storage:', orders.length);
+                    
+                    // ✅ Debug: Log all tracking numbers
+                    orders.forEach(o => {
+                        console.log('🔢 Available tracking:', o.trackingNumber);
+                    });
+                    
+                    // ✅ Case-insensitive matching with trim
+                    const order = orders.find(o => {
+                        const storedNum = (o.trackingNumber || '').toUpperCase().trim();
+                        return storedNum === num;
+                    });
+                    
+                    console.log('🎯 Found order:', order ? 'YES' : 'NO');
+                    
+                    if(order) {
+                        console.log('✅ Rendering tracking results...');
+                        resultBox.style.display = 'block';
+                        currentTrackedOrder = order;
+                        renderTrackingResults(order, lang);
+                        resultBox.scrollIntoView({behavior: 'smooth', block: 'start'});
+                    } else {
+                        console.log('❌ Order not found');
+                        errorMsg.textContent = t.error_not_found || "Tracking number not found. Please check and try again.";
+                        errorMsg.classList.add('active');
+                        resultBox.style.display = 'none';
+                    }
+                } catch(err) {
+                    console.error('❌ Tracking error:', err);
+                    errorMsg.textContent = 'Error loading tracking data. Please try again.';
+                    errorMsg.classList.add('active');
+                }
+            }, 800);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            console.log('🚀 Tracking page loaded');
+            
+            // Check if tracking number in URL hash
+            const hash = window.location.hash.replace('#', '').trim().toUpperCase();
+            if(hash) {
+                const input = document.getElementById('trackInputPage');
+                if(input) {
+                    input.value = hash;
+                    // Small delay to ensure page is fully loaded
+                    setTimeout(runTracking, 500);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
+    <style>
+        :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; --dhl-gray: #f2f2f2; }
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        body { font-family: 'Roboto', sans-serif; background: var(--white); color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; cursor: pointer; }
+        .top-bar { background: var(--dhl-yellow); padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .main-nav { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--dhl-yellow); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.2rem; font-weight: 900; color: var(--dhl-red); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; }
+        .logo span { color: var(--dhl-dark); background: var(--dhl-yellow); padding: 0 8px; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .btn-start { background: var(--dhl-red); color: white; padding: 10px 20px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+        .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+        .mobile-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: var(--white); z-index: 9999; transition: 0.3s; border-right: 5px solid var(--dhl-yellow); overflow-y: auto; }
+        .mobile-menu.active { left: 0; }
+        .mobile-header { background: var(--dhl-red); color: white; padding: 20px; font-weight: 900; display: flex; justify-content: space-between; }
+        .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .mobile-lang select { width: 100%; padding: 10px; background: var(--dhl-gray); }
+        .hero { background: var(--dhl-dark); color: white; padding: 60px 5%; text-align: center; }
+        .content-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        .faq-category { margin-bottom: 40px; }
+        .faq-category h3 { color: var(--dhl-red); margin-bottom: 20px; border-bottom: 2px solid var(--dhl-gray); padding-bottom: 10px; }
+        .faq-item { background: var(--dhl-gray); margin-bottom: 15px; border-radius: 4px; overflow: hidden; }
+        .faq-question { padding: 20px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { padding: 0 20px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; background: white; }
+        .faq-answer p { padding: 20px 0; color: #555; line-height: 1.6; }
+        .faq-item.active .faq-answer { max-height: 200px; }
+        .faq-item.active .faq-question::after { content: '−'; font-size: 1.5rem; }
+        .contact-section { background: var(--dhl-gray); padding: 40px; border-radius: 8px; margin-top: 40px; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .contact-form button { background: var(--dhl-red); color: white; padding: 12px 25px; border: none; border-radius: 4px; font-weight: 700; cursor: pointer; }
+        footer { background: var(--dhl-dark); color: #aaa; padding: 60px 5% 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: #aaa; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: var(--dhl-yellow); }
+        .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
+        @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-left"><a href="index.html" data-i18n="back_home">Back to Home</a></div>
+        <div class="top-right">
+            <select class="country-select" onchange="changeLanguage()">
+                <option value="en">🇬 EN</option><option value="ru">🇷 RU</option><option value="ch">🇨 CN</option><option value="de">🇩 DE</option><option value="fr">🇫 FR</option>
+            </select>
+            <a href="#" data-i18n="support">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="nav-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-links">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="tracking.html" data-i18n="nav_track">Track</a>
+            <a href="quote.html" data-i18n="btn_start">Start Shipping</a>
+        </div>
+        <div class="mobile-lang">
+            <select id="mobileLanguageSelector" onchange="changeLanguageMobile()">
+                <option value="en">English</option><option value="ru">Русский</option><option value="ch">中文</option><option value="de">Deutsch</option><option value="fr">Français</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1 data-i18n="help_title">Help Center</h1>
+        <p data-i18n="help_sub">Find answers to common questions or contact us directly.</p>
+    </section>
+
+    <!-- Content -->
+    <div class="content-container">
+        <div class="faq-category">
+            <h3 data-i18n="common_q">Common Questions</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)" data-i18n="faq_1_q">How do I track my shipment? <span>+</span></div>
+                <div class="faq-answer"><p data-i18n="faq_1_a">Enter your tracking number in the "Track" section on our homepage or use the link provided in your confirmation email.</p></div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)" data-i18n="faq_2_q">What are your operating hours? <span>+</span></div>
+                <div class="faq-answer"><p data-i18n="faq_2_a">Customer service is available Monday to Friday, 8:00 AM to 8:00 PM EST. Support centers in other time zones may have different hours.</p></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)" data-i18n="faq_3_q">How long does delivery take? <span>+</span></div>
+                <div class="faq-answer"><p data-i18n="faq_3_a">Delivery times vary by service level. Express services typically arrive within 1-3 business days, while standard freight may take 5-10 business days depending on the destination.</p></div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-section">
+            <h3 data-i18n="contact_title" style="margin-bottom:20px;">Contact Us</h3>
+            <form class="contact-form" onsubmit="submitContact(event)">
+                <input type="text" placeholder="Your Name" required data-i18n-ph="ph_name">
+                <input type="email" placeholder="Your Email" required data-i18n-ph="ph_email">
+                <textarea rows="4" placeholder="How can we help?" required data-i18n-ph="ph_message"></textarea>
+                <button type="submit" data-i18n="btn_send">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-i18n="footer_quick">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html" data-i18n="back_home">Back to Home</a></li>
+                    <li><a href="locations.html" data-i18n="find_point">Find a Service Point</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_support">Support</h4>
+                <ul>
+                    <li><a href="help-center.html" data-i18n="help_center">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() { 
+            document.getElementById('mobileMenu').classList.toggle('active'); 
+            document.getElementById('menuOverlay').classList.toggle('active'); 
+        }
+        
+        // Language Switching
+        function changeLanguage() { updateLanguage(document.querySelector('.country-select').value); }
+        function changeLanguageMobile() { updateLanguage(document.getElementById('mobileLanguageSelector').value); }
+        
+        function updateLanguage(lang) {
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n')]) el.textContent = t[el.getAttribute('data-i18n')]; 
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => { 
+                if(t[el.getAttribute('data-i18n-ph')]) el.placeholder = t[el.getAttribute('data-i18n-ph')]; 
+            });
+        }
+
+        // FAQ Toggle
+        function toggleFaq(element) { 
+            element.parentElement.classList.toggle('active'); 
+        }
+
+        // Contact Form Submission
+        function submitContact(e) {
+            e.preventDefault();
+            const lang = document.querySelector('.country-select').value;
+            const t = translations[lang] || translations.en;
+            alert(t.alert_sent || "Message sent! Our team will contact you shortly.");
+            e.target.reset();
+        }
+
+        // Complete Translations Object - FIXED: All quotes properly escaped
+        const translations = {
+            en: {
+                back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
+                mobile_title:"Velox Logistics", help_title:"Help Center", help_sub:"Find answers to common questions or contact us directly.",
+                common_q:"Common Questions",
+                faq_1_q:"How do I track my shipment?", faq_1_a:"Enter your tracking number in the \"Track\" section on our homepage or use the link provided in your confirmation email.",
+                faq_2_q:"What are your operating hours?", faq_2_a:"Customer service is available Monday to Friday, 8:00 AM to 8:00 PM EST. Support centers in other time zones may have different hours.",
+                faq_3_q:"How long does delivery take?", faq_3_a:"Delivery times vary by service level. Express services typically arrive within 1-3 business days, while standard freight may take 5-10 business days depending on the destination.",
+                contact_title:"Contact Us", ph_name:"Your Name", ph_email:"Your Email", ph_message:"How can we help?", btn_send:"Send Message", alert_sent:"Message sent! Our team will contact you shortly.",
+                footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
+                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+            },
+            ru: {
+                back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
+                mobile_title:"Velox Logistics", help_title:"Центр помощи", help_sub:"Найдите ответы на часто задаваемые вопросы или свяжитесь с нами напрямую.",
+                common_q:"Часто задаваемые вопросы",
+                faq_1_q:"Как отследить мою посылку?", faq_1_a:"Введите номер отслеживания в разделе \"Отслеживание\" на нашей главной странице или используйте ссылку в вашем подтверждении.",
+                faq_2_q:"Какие у вас часы работы?", faq_2_a:"Служба поддержки доступна с понедельника по пятницу, с 8:00 до 20:00 по восточному времени. Центры поддержки в других часовых поясах могут иметь другое расписание.",
+                faq_3_q:"Сколько времени занимает доставка?", faq_3_a:"Сроки доставки зависят от уровня обслуживания. Экспресс-доставка обычно прибывает в течение 1-3 рабочих дней, в то время как стандартная доставка может занять 5-10 рабочих дней в зависимости от пункта назначения.",
+                contact_title:"Свяжитесь с нами", ph_name:"Ваше имя", ph_email:"Ваш Email", ph_message:"Чем мы можем помочь?", btn_send:"Отправить сообщение", alert_sent:"Сообщение отправлено! Наша команда свяжется с вами в ближайшее время.",
+                footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
+                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+            },
+            ch: {
+                back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
+                mobile_title:"Velox Logistics", help_title:"帮助中心", help_sub:"找到常见问题的答案或直接联系我们。",
+                common_q:"常见问题",
+                faq_1_q:"如何追踪我的货物？", faq_1_a:"在我们的主页\"追踪\"部分输入您的追踪号码，或使用确认电子邮件中提供的链接。",
+                faq_2_q:"你们的营业时间是什么？", faq_2_a:"客户服务周一至周五上午 8:00 至晚上 8:00（美东时间）可用。其他时区的支援中心可能有不同的时间。",
+                faq_3_q:"配送需要多长时间？", faq_3_a:"配送时间因服务级别而异。快递服务通常在 1-3 个工作日内送达，而标准货运可能需要 5-10 个工作日，具体取决于目的地。",
+                contact_title:"联系我们", ph_name:"您的姓名", ph_email:"您的邮箱", ph_message:"我们能为您提供什么帮助？", btn_send:"发送消息", alert_sent:"消息已发送！我们的团队将尽快与您联系。",
+                footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
+                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+            },
+            de: {
+                back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
+                mobile_title:"Velox Logistics", help_title:"Hilfezentrum", help_sub:"Finden Sie Antworten auf häufig gestellte Fragen oder kontaktieren Sie uns direkt.",
+                common_q:"Häufig gestellte Fragen",
+                faq_1_q:"Wie verfolge ich meine Sendung?", faq_1_a:"Geben Sie Ihre Sendungsnummer im Bereich \"Verfolgung\" auf unserer Startseite ein oder verwenden Sie den Link in Ihrer Bestätigungs-E-Mail.",
+                faq_2_q:"Was sind Ihre Öffnungszeiten?", faq_2_a:"Der Kundenservice ist Montag bis Freitag von 8:00 bis 20:00 Uhr EST verfügbar. Support-Center in anderen Zeitzonen können unterschiedliche Öffnungszeiten haben.",
+                faq_3_q:"Wie lange dauert die Lieferung?", faq_3_a:"Lieferzeiten variieren je nach Service-Level. Express-Sendungen kommen in der Regel innerhalb von 1-3 Werktagen an, während Standardfracht je nach Zielort 5-10 Werktage dauern kann.",
+                contact_title:"Kontaktieren Sie uns", ph_name:"Ihr Name", ph_email:"Ihre E-Mail", ph_message:"Wie können wir helfen?", btn_send:"Nachricht senden", alert_sent:"Nachricht gesendet! Unser Team wird Sie in Kürze kontaktieren.",
+                footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
+                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+            },
+            fr: {
+                back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
+                mobile_title:"Velox Logistics", help_title:"Centre d'aide", help_sub:"Trouvez des réponses aux questions fréquentes ou contactez-nous directement.",
+                common_q:"Questions fréquentes",
+                faq_1_q:"Comment suivre mon envoi ?", faq_1_a:"Entrez votre numéro de suivi dans la section \"Suivi\" de notre page d'accueil ou utilisez le lien fourni dans votre e-mail de confirmation.",
+                faq_2_q:"Quelles sont vos heures d'ouverture ?", faq_2_a:"Le service client est disponible du lundi au vendredi, de 8h00 à 20h00 EST. Les centres de support dans d'autres fuseaux horaires peuvent avoir des horaires différents.",
+                faq_3_q:"Combien de temps prend la livraison ?", faq_3_a:"Les délais de livraison varient selon le niveau de service. Les services express arrivent généralement dans un délai de 1 à 3 jours ouvrables, tandis que le fret standard peut prendre 5 à 10 jours ouvrables selon la destination.",
+                contact_title:"Nous contacter", ph_name:"Votre nom", ph_email:"Votre e-mail", ph_message:"Comment pouvons-nous vous aider ?", btn_send:"Envoyer un message", alert_sent:"Message envoyé ! Notre équipe vous contactera sous peu.",
+                footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
+                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+            }
+        };
+    </script>
+</body>
+</html>
