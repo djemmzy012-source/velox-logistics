@@ -698,7 +698,7 @@
                 <h1 data-i18n="hero_title">Navigating Global Trade</h1>
                 <p data-i18n="hero_sub">Reliable shipping for a connected world.</p>
                 <div class="track-widget">
-                    <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. VX882910)" onkeypress="if(event.key==='Enter')runTracking()">
+                    <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. VX123456)" onkeypress="if(event.key==='Enter')runTracking()">
                     <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
                 </div>
             </div>
@@ -1088,7 +1088,6 @@
                 target.classList.add('active');
                 window.scrollTo(0, 0);
             }
-            // Clear tracking results when navigating away
             if(pageId !== 'tracking') {
                 const resultContainer = document.getElementById('trackingResult');
                 if(resultContainer) {
@@ -1112,11 +1111,146 @@
             setTimeout(() => menu.remove(), 3000);
         }
 
-        // ✅ ULTRA-ROBUST: Tracking Function with Fallback Data
+        // ✅ GITHUB PAGES FIX: Pre-populated test shipments (works without localStorage)
+        const defaultShipments = [
+            {
+                trackingNumber: "VX123456",
+                customerName: "John Smith",
+                fromAddress: {
+                    street: "123 Main Street",
+                    city: "London",
+                    state: "England",
+                    postal: "E14 5AB",
+                    country: "United Kingdom"
+                },
+                toAddress: {
+                    street: "456 Broadway",
+                    city: "New York",
+                    state: "NY",
+                    postal: "10001",
+                    country: "United States"
+                },
+                fromCountry: "United Kingdom",
+                toCountry: "United States",
+                weight: "5.5",
+                serviceType: "Express",
+                status: "in_transit",
+                createdAt: new Date().toISOString(),
+                updates: [
+                    {
+                        timestamp: new Date(Date.now() - 172800000).toISOString(),
+                        status: "pending",
+                        location: "London, United Kingdom",
+                        notes: "Shipment created and received at origin facility"
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 86400000).toISOString(),
+                        status: "processing",
+                        location: "Heathrow Airport, London",
+                        notes: "Package processed through sorting facility"
+                    },
+                    {
+                        timestamp: new Date().toISOString(),
+                        status: "in_transit",
+                        location: "In Transit to Destination",
+                        notes: "Departed from origin country - en route to destination"
+                    }
+                ]
+            },
+            {
+                trackingNumber: "VX789012",
+                customerName: "Sarah Johnson",
+                fromAddress: {
+                    street: "789 Market St",
+                    city: "San Francisco",
+                    state: "CA",
+                    postal: "94102",
+                    country: "United States"
+                },
+                toAddress: {
+                    street: "321 Oxford St",
+                    city: "London",
+                    state: "England",
+                    postal: "W1D 1BS",
+                    country: "United Kingdom"
+                },
+                fromCountry: "United States",
+                toCountry: "United Kingdom",
+                weight: "12.0",
+                serviceType: "Priority",
+                status: "delivered",
+                createdAt: new Date(Date.now() - 259200000).toISOString(),
+                updates: [
+                    {
+                        timestamp: new Date(Date.now() - 259200000).toISOString(),
+                        status: "pending",
+                        location: "San Francisco, CA, United States",
+                        notes: "Shipment created"
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 172800000).toISOString(),
+                        status: "in_transit",
+                        location: "International Hub",
+                        notes: "In international transit"
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 86400000).toISOString(),
+                        status: "out_for_delivery",
+                        location: "London, United Kingdom",
+                        notes: "Out for delivery"
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 43200000).toISOString(),
+                        status: "delivered",
+                        location: "London, United Kingdom",
+                        notes: "Delivered successfully - signed by recipient"
+                    }
+                ]
+            },
+            {
+                trackingNumber: "VX345678",
+                customerName: "Michael Chen",
+                fromAddress: {
+                    street: "88 Century Ave",
+                    city: "Shanghai",
+                    state: "Shanghai",
+                    postal: "200120",
+                    country: "China"
+                },
+                toAddress: {
+                    street: "555 Collins St",
+                    city: "Melbourne",
+                    state: "VIC",
+                    postal: "3000",
+                    country: "Australia"
+                },
+                fromCountry: "China",
+                toCountry: "Australia",
+                weight: "8.2",
+                serviceType: "Standard",
+                status: "processing",
+                createdAt: new Date(Date.now() - 43200000).toISOString(),
+                updates: [
+                    {
+                        timestamp: new Date(Date.now() - 43200000).toISOString(),
+                        status: "pending",
+                        location: "Shanghai, China",
+                        notes: "Shipment received at origin facility"
+                    },
+                    {
+                        timestamp: new Date().toISOString(),
+                        status: "processing",
+                        location: "Shanghai International Hub",
+                        notes: "Customs clearance in progress"
+                    }
+                ]
+            }
+        ];
+
+        // ✅ GITHUB PAGES FIX: Tracking Function with Pre-populated Data
         function runTracking() {
             console.log('🔍 Tracking started...');
             
-            // Get input from EITHER field
             const heroInput = document.getElementById('trackInput')?.value || '';
             const trackingInput = document.getElementById('trackInputPage')?.value || '';
             const num = (heroInput || trackingInput).trim().toUpperCase();
@@ -1142,78 +1276,28 @@
                 }
                 
                 try {
-                    // ✅ Get shipments from localStorage
-                    let orders = [];
-                    const stored = localStorage.getItem('velox_orders');
+                    // ✅ GITHUB PAGES: Use pre-populated data FIRST (works without localStorage)
+                    let orders = [...defaultShipments];
                     
-                    if(stored) {
-                        try {
-                            orders = JSON.parse(stored);
-                            console.log('💾 Loaded', orders.length, 'shipments from localStorage');
-                        } catch(e) {
-                            console.error('❌ Failed to parse localStorage:', e);
+                    // Also try to load from localStorage (for admin-created shipments)
+                    try {
+                        const stored = localStorage.getItem('velox_orders');
+                        if(stored) {
+                            const localOrders = JSON.parse(stored);
+                            // Merge localStorage orders with default orders
+                            orders = [...defaultShipments, ...localOrders];
+                            console.log('💾 Loaded', localOrders.length, 'additional shipments from localStorage');
                         }
-                    } else {
-                        console.log('⚠️ localStorage is empty - using fallback test data');
+                    } catch(e) {
+                        console.log('⚠️ localStorage not available (common on GitHub Pages)');
                     }
                     
-                    // ✅ FALLBACK: Add test data if localStorage is empty
-                    if(orders.length === 0) {
-                        console.log('🧪 Adding fallback test shipment...');
-                        orders = [{
-                            trackingNumber: "VX123456",
-                            customerName: "Test Customer",
-                            fromAddress: {
-                                street: "123 Main St",
-                                city: "London",
-                                state: "England",
-                                postal: "E14 5AB",
-                                country: "United Kingdom"
-                            },
-                            toAddress: {
-                                street: "456 Oak Ave",
-                                city: "New York",
-                                state: "NY",
-                                postal: "10001",
-                                country: "United States"
-                            },
-                            fromCountry: "United Kingdom",
-                            toCountry: "United States",
-                            weight: "5.5",
-                            serviceType: "Express",
-                            status: "in_transit",
-                            createdAt: new Date().toISOString(),
-                            updates: [
-                                {
-                                    timestamp: new Date(Date.now() - 86400000).toISOString(),
-                                    status: "pending",
-                                    location: "London, UK",
-                                    notes: "Shipment created"
-                                },
-                                {
-                                    timestamp: new Date().toISOString(),
-                                    status: "in_transit",
-                                    location: "Heathrow Airport, London",
-                                    notes: "Package departed facility"
-                                }
-                            ]
-                        }];
-                        // Save fallback to localStorage for next time
-                        localStorage.setItem('velox_orders', JSON.stringify(orders));
-                        console.log('✅ Fallback data saved to localStorage');
-                    }
-                    
-                    // ✅ Debug: Log all tracking numbers
+                    console.log('📋 Total available shipments:', orders.length);
                     console.log('🔢 Available tracking numbers:');
-                    orders.forEach(o => {
-                        console.log('  -', o.trackingNumber);
-                    });
+                    orders.forEach(o => console.log('  -', o.trackingNumber));
                     
-                    // ✅ ULTRA-ROBUST matching: Try multiple variations
-                    let order = null;
-                    
-                    // Try exact match first
-                    order = orders.find(o => 
+                    // ✅ Robust matching
+                    let order = orders.find(o => 
                         (o.trackingNumber || '').toUpperCase().trim() === num
                     );
                     
@@ -1221,8 +1305,7 @@
                     if(!order && num.startsWith('VX')) {
                         const withoutPrefix = num.substring(2);
                         order = orders.find(o => 
-                            (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix ||
-                            (o.trackingNumber || '').toUpperCase().trim() === 'VX' + withoutPrefix
+                            (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix
                         );
                     }
                     
@@ -1242,14 +1325,11 @@
                     if(order) {
                         console.log('✅ Order found, showing results...');
                         
-                        // Clear any previous error messages
                         const existingError = document.querySelector('.error-msg');
                         if(existingError) existingError.style.display = 'none';
                         
-                        // Navigate to tracking section to show results
                         showPage('tracking');
                         
-                        // Small delay to ensure section is visible before rendering
                         setTimeout(() => {
                             renderTrackingResults(order, lang);
                         }, 100);
@@ -1257,7 +1337,6 @@
                     } else {
                         console.log('❌ Order not found');
                         
-                        // Show error in tracking section
                         showPage('tracking');
                         
                         setTimeout(() => {
@@ -1283,7 +1362,7 @@
             }, 800);
         }
 
-        // ✅ ENHANCED: DHL-Style Tracking Display with Full Address & History
+        // ✅ ENHANCED: DHL-Style Tracking Display
         function renderTrackingResults(order, lang) {
             console.log('🎨 Rendering tracking for:', order.trackingNumber);
             
@@ -1297,7 +1376,6 @@
             
             const currentStatus = statusLabels[lang]?.[order.status] || order.status;
             
-            // ✅ Build full address strings (handle both old & new format)
             const fromAddr = order.fromAddress 
                 ? `${order.fromAddress.street ? order.fromAddress.street + ', ' : ''}${order.fromAddress.city || ''}${order.fromAddress.state ? ', ' + order.fromAddress.state : ''} ${order.fromAddress.postal || ''}${order.fromAddress.country ? ', ' + order.fromAddress.country : order.fromCountry || ''}`.trim()
                 : order.fromCountry || 'Unknown';
@@ -1306,14 +1384,11 @@
                 ? `${order.toAddress.street ? order.toAddress.street + ', ' : ''}${order.toAddress.city || ''}${order.toAddress.state ? ', ' + order.toAddress.state : ''} ${order.toAddress.postal || ''}${order.toAddress.country ? ', ' + order.toAddress.country : order.toCountry || ''}`.trim()
                 : order.toCountry || 'Unknown';
             
-            // ✅ Extract city names for route display
             const fromCity = order.fromAddress?.city || order.fromCountry || 'Unknown';
             const toCity = order.toAddress?.city || order.toCountry || 'Unknown';
             
-            // ✅ Build timeline HTML with proper sorting & formatting
             let timelineHTML = '';
             if(order.updates && order.updates.length > 0) {
-                // ✅ Sort by timestamp (newest first)
                 const sortedUpdates = [...order.updates].sort((a, b) => 
                     new Date(b.timestamp) - new Date(a.timestamp)
                 );
@@ -1322,7 +1397,6 @@
                 
                 sortedUpdates.forEach(update => {
                     const updateStatus = statusLabels[lang]?.[update.status] || update.status;
-                    // ✅ Format date/time properly
                     const date = new Date(update.timestamp).toLocaleString(lang === 'en' ? 'en-US' : lang === 'ru' ? 'ru-RU' : lang === 'ch' ? 'zh-CN' : lang === 'de' ? 'de-DE' : 'fr-FR');
                     const location = update.location || fromAddr;
                     
@@ -1343,7 +1417,6 @@
                 `;
             }
             
-            // ✅ DHL-style tracking result HTML
             const resultHTML = `
                 <div class="tracking-result">
                     <div class="tracking-header">
@@ -1365,7 +1438,6 @@
                 </div>
             `;
             
-            // ✅ Show result in container
             let resultContainer = document.getElementById('trackingResult');
             if(!resultContainer) {
                 resultContainer = document.createElement('div');
@@ -1378,8 +1450,6 @@
             
             resultContainer.innerHTML = resultHTML;
             resultContainer.style.display = 'block';
-            
-            // ✅ Smooth scroll to results
             resultContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
             
             console.log('✅ Tracking results displayed');
@@ -1395,7 +1465,6 @@
             slides[currentSlide].classList.add('active');
         }
 
-        // Change slide every 5 seconds
         setInterval(nextSlide, 5000);
     </script>
 </body>
