@@ -352,7 +352,7 @@
                 try {
                     // ✅ Get shipments from localStorage (same storage as admin)
                     const stored = localStorage.getItem('velox_orders');
-                    console.log('💾 localStorage data:', stored ? 'Found' : 'Empty');
+                    console.log('💾 localStorage ', stored ? 'Found' : 'Empty');
                     
                     const orders = stored ? JSON.parse(stored) : [];
                     console.log('📋 Total shipments in storage:', orders.length);
