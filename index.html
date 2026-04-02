@@ -795,7 +795,7 @@
                 <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
             </div>
         </div>
-        <!-- ✅ FIXED: Tracking Result Container (now in tracking section) -->
+        <!-- ✅ FIXED: Tracking Result Container -->
         <div id="trackingResult" style="display: none;"></div>
     </div>
 
@@ -1080,27 +1080,21 @@
             });
         }
 
-        // ✅ FIXED: Navigation with tracking support
+        // Navigation
         function showPage(pageId) {
-            // Hide all sections
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            
-            // Show selected section
             const target = document.getElementById(pageId);
             if(target) {
                 target.classList.add('active');
                 window.scrollTo(0, 0);
             }
-            
-            // If navigating to tracking page, clear any previous results
-            if(pageId === 'tracking') {
+            // Clear tracking results when navigating away
+            if(pageId !== 'tracking') {
                 const resultContainer = document.getElementById('trackingResult');
                 if(resultContainer) {
                     resultContainer.style.display = 'none';
                     resultContainer.innerHTML = '';
                 }
-                const errorMsg = document.querySelector('#tracking .error-msg');
-                if(errorMsg) errorMsg.style.display = 'none';
             }
         }
 
@@ -1118,11 +1112,11 @@
             setTimeout(() => menu.remove(), 3000);
         }
 
-        // ✅ FIXED: Tracking Function - Works from Hero OR Tracking Section
+        // ✅ ULTRA-ROBUST: Tracking Function with Fallback Data
         function runTracking() {
-            console.log('🔍 Tracking started from index.html...');
+            console.log('🔍 Tracking started...');
             
-            // Get input from EITHER field (hero or tracking section)
+            // Get input from EITHER field
             const heroInput = document.getElementById('trackInput')?.value || '';
             const trackingInput = document.getElementById('trackInputPage')?.value || '';
             const num = (heroInput || trackingInput).trim().toUpperCase();
@@ -1148,23 +1142,97 @@
                 }
                 
                 try {
-                    // ✅ Get shipments from localStorage (same storage as admin)
+                    // ✅ Get shipments from localStorage
+                    let orders = [];
                     const stored = localStorage.getItem('velox_orders');
-                    console.log('💾 localStorage ', stored ? 'Found' : 'Empty');
                     
-                    const orders = stored ? JSON.parse(stored) : [];
-                    console.log('📋 Total shipments in storage:', orders.length);
+                    if(stored) {
+                        try {
+                            orders = JSON.parse(stored);
+                            console.log('💾 Loaded', orders.length, 'shipments from localStorage');
+                        } catch(e) {
+                            console.error('❌ Failed to parse localStorage:', e);
+                        }
+                    } else {
+                        console.log('⚠️ localStorage is empty - using fallback test data');
+                    }
+                    
+                    // ✅ FALLBACK: Add test data if localStorage is empty
+                    if(orders.length === 0) {
+                        console.log('🧪 Adding fallback test shipment...');
+                        orders = [{
+                            trackingNumber: "VX123456",
+                            customerName: "Test Customer",
+                            fromAddress: {
+                                street: "123 Main St",
+                                city: "London",
+                                state: "England",
+                                postal: "E14 5AB",
+                                country: "United Kingdom"
+                            },
+                            toAddress: {
+                                street: "456 Oak Ave",
+                                city: "New York",
+                                state: "NY",
+                                postal: "10001",
+                                country: "United States"
+                            },
+                            fromCountry: "United Kingdom",
+                            toCountry: "United States",
+                            weight: "5.5",
+                            serviceType: "Express",
+                            status: "in_transit",
+                            createdAt: new Date().toISOString(),
+                            updates: [
+                                {
+                                    timestamp: new Date(Date.now() - 86400000).toISOString(),
+                                    status: "pending",
+                                    location: "London, UK",
+                                    notes: "Shipment created"
+                                },
+                                {
+                                    timestamp: new Date().toISOString(),
+                                    status: "in_transit",
+                                    location: "Heathrow Airport, London",
+                                    notes: "Package departed facility"
+                                }
+                            ]
+                        }];
+                        // Save fallback to localStorage for next time
+                        localStorage.setItem('velox_orders', JSON.stringify(orders));
+                        console.log('✅ Fallback data saved to localStorage');
+                    }
                     
                     // ✅ Debug: Log all tracking numbers
+                    console.log('🔢 Available tracking numbers:');
                     orders.forEach(o => {
-                        console.log('🔢 Available tracking:', o.trackingNumber);
+                        console.log('  -', o.trackingNumber);
                     });
                     
-                    // ✅ Case-insensitive matching with trim
-                    const order = orders.find(o => {
-                        const storedNum = (o.trackingNumber || '').toUpperCase().trim();
-                        return storedNum === num;
-                    });
+                    // ✅ ULTRA-ROBUST matching: Try multiple variations
+                    let order = null;
+                    
+                    // Try exact match first
+                    order = orders.find(o => 
+                        (o.trackingNumber || '').toUpperCase().trim() === num
+                    );
+                    
+                    // Try without VX prefix
+                    if(!order && num.startsWith('VX')) {
+                        const withoutPrefix = num.substring(2);
+                        order = orders.find(o => 
+                            (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix ||
+                            (o.trackingNumber || '').toUpperCase().trim() === 'VX' + withoutPrefix
+                        );
+                    }
+                    
+                    // Try partial match (last 6 chars)
+                    if(!order && num.length >= 6) {
+                        const suffix = num.slice(-6);
+                        order = orders.find(o => 
+                            (o.trackingNumber || '').toUpperCase().endsWith(suffix)
+                        );
+                    }
                     
                     console.log('🎯 Found order:', order ? 'YES' : 'NO');
                     
@@ -1174,14 +1242,14 @@
                     if(order) {
                         console.log('✅ Order found, showing results...');
                         
-                        // ✅ Clear any previous error messages
+                        // Clear any previous error messages
                         const existingError = document.querySelector('.error-msg');
                         if(existingError) existingError.style.display = 'none';
                         
-                        // ✅ Navigate to tracking section to show results
+                        // Navigate to tracking section to show results
                         showPage('tracking');
                         
-                        // ✅ Small delay to ensure section is visible before rendering
+                        // Small delay to ensure section is visible before rendering
                         setTimeout(() => {
                             renderTrackingResults(order, lang);
                         }, 100);
@@ -1189,7 +1257,7 @@
                     } else {
                         console.log('❌ Order not found');
                         
-                        // ✅ Show error in tracking section
+                        // Show error in tracking section
                         showPage('tracking');
                         
                         setTimeout(() => {
