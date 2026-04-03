@@ -725,16 +725,7 @@
             </div>
         </section>
 
-        <!-- DEBUG INFO - Shows available tracking numbers -->
-        <div class="debug-info">
-            <h4>📦 Test Tracking Numbers (Click to Copy):</h4>
-            <p style="margin:10px 0;">
-                <code onclick="navigator.clipboard.writeText('VX123456'); alert('Copied!');" style="cursor:pointer;" title="Click to copy">VX123456</code> - London → New York (In Transit)<br><br>
-                <code onclick="navigator.clipboard.writeText('VX789012'); alert('Copied!');" style="cursor:pointer;" title="Click to copy">VX789012</code> - San Francisco → London (Delivered)<br><br>
-                <code onclick="navigator.clipboard.writeText('VX345678'); alert('Copied!');" style="cursor:pointer;" title="Click to copy">VX345678</code> - Shanghai → Melbourne (Processing)
-            </p>
-        </div>
-
+       
         <!-- Split Cards -->
         <section class="split-cards">
             <div class="card-dhl">
@@ -834,6 +825,57 @@
     </footer>
 
     <script>
+        // ⚠️ === JSONBIN CONFIGURATION === ⚠️
+        // Credentials updated for your specific Bin
+        const JSONBIN_ID = '69cec123856a682189f3f0bf';
+        const JSONBIN_KEY = '$2a$10$eyuyRxPtp8fm3eAKLzdh5.CjYHIETPVk0hfUFOxpJL.pUzrfnzGC6';
+        
+        // Fallback shipments if JSONBin fails or is not configured
+        const FALLBACK_SHIPMENTS = [
+            {
+                trackingNumber: "VX123456",
+                customerName: "John Smith",
+                fromCountry: "United Kingdom",
+                toCountry: "United States",
+                weight: "5.5",
+                serviceType: "Express",
+                status: "in_transit",
+                updates: [
+                    { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "pending", location: "London, UK", notes: "Shipment created" },
+                    { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "processing", location: "Heathrow Airport", notes: "Processed at facility" },
+                    { timestamp: new Date().toISOString(), status: "in_transit", location: "In Transit", notes: "En route to destination" }
+                ]
+            },
+            {
+                trackingNumber: "VX789012",
+                customerName: "Sarah Johnson",
+                fromCountry: "United States",
+                toCountry: "United Kingdom",
+                weight: "12.0",
+                serviceType: "Priority",
+                status: "delivered",
+                updates: [
+                    { timestamp: new Date(Date.now() - 259200000).toISOString(), status: "pending", location: "San Francisco, CA", notes: "Shipment created" },
+                    { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "in_transit", location: "International Hub", notes: "In transit" },
+                    { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "out_for_delivery", location: "London, UK", notes: "Out for delivery" },
+                    { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
+                ]
+            },
+            {
+                trackingNumber: "VX345678",
+                customerName: "Michael Chen",
+                fromCountry: "China",
+                toCountry: "Australia",
+                weight: "8.2",
+                serviceType: "Standard",
+                status: "processing",
+                updates: [
+                    { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "pending", location: "Shanghai, China", notes: "Received at facility" },
+                    { timestamp: new Date().toISOString(), status: "processing", location: "Shanghai Hub", notes: "Customs clearance" }
+                ]
+            }
+        ];
+
         // Translations
         const translations = {
             en: {
@@ -1073,6 +1115,11 @@
             }
         };
 
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert('Copied: ' + text);
+        }
+
         function changeLanguage() {
             const lang = document.querySelector('.country-select').value;
             const t = translations[lang] || translations.en;
@@ -1095,54 +1142,35 @@
             alert('Mobile menu - resize browser to test');
         }
 
-        // ✅ HARDCODED SHIPMENTS - ALWAYS AVAILABLE (No localStorage needed!)
-        const HARD_CODED_SHIPMENTS = [
-            {
-                trackingNumber: "VX123456",
-                customerName: "John Smith",
-                fromCountry: "United Kingdom",
-                toCountry: "United States",
-                weight: "5.5",
-                serviceType: "Express",
-                status: "in_transit",
-                updates: [
-                    { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "pending", location: "London, UK", notes: "Shipment created" },
-                    { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "processing", location: "Heathrow Airport", notes: "Processed at facility" },
-                    { timestamp: new Date().toISOString(), status: "in_transit", location: "In Transit", notes: "En route to destination" }
-                ]
-            },
-            {
-                trackingNumber: "VX789012",
-                customerName: "Sarah Johnson",
-                fromCountry: "United States",
-                toCountry: "United Kingdom",
-                weight: "12.0",
-                serviceType: "Priority",
-                status: "delivered",
-                updates: [
-                    { timestamp: new Date(Date.now() - 259200000).toISOString(), status: "pending", location: "San Francisco, CA", notes: "Shipment created" },
-                    { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "in_transit", location: "International Hub", notes: "In transit" },
-                    { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "out_for_delivery", location: "London, UK", notes: "Out for delivery" },
-                    { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
-                ]
-            },
-            {
-                trackingNumber: "VX345678",
-                customerName: "Michael Chen",
-                fromCountry: "China",
-                toCountry: "Australia",
-                weight: "8.2",
-                serviceType: "Standard",
-                status: "processing",
-                updates: [
-                    { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "pending", location: "Shanghai, China", notes: "Received at facility" },
-                    { timestamp: new Date().toISOString(), status: "processing", location: "Shanghai Hub", notes: "Customs clearance" }
-                ]
+        // ✅ GET Shipments from JSONBin (with fallback)
+        async function getShipments() {
+            // If JSONBin not configured, use fallback
+            if(JSONBIN_ID === 'YOUR_BIN_ID_HERE' || JSONBIN_KEY === 'YOUR_API_KEY_HERE') {
+                console.log('⚠️ JSONBin not configured - using fallback shipments');
+                return FALLBACK_SHIPMENTS;
             }
-        ];
+            
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
+                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                });
+                
+                if(!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('📦 Loaded from JSONBin:', data.record.shipments?.length || 0, 'shipments');
+                return data.record.shipments || FALLBACK_SHIPMENTS;
+            } catch(err) {
+                console.error('❌ Error loading from JSONBin:', err);
+                console.log('⚠️ Falling back to test shipments');
+                return FALLBACK_SHIPMENTS;
+            }
+        }
 
-        // ✅ GITHUB PAGES FIX: Tracking Function
-        function runTracking() {
+        // ✅ Track Function - Works with JSONBin or fallback
+        async function runTracking() {
             console.log('🔍 Tracking started...');
             
             const heroInput = document.getElementById('trackInput')?.value || '';
@@ -1150,7 +1178,6 @@
             const num = (heroInput || trackingInput).trim().toUpperCase();
             
             console.log('📦 Entered:', num);
-            console.log('📋 Available:', HARD_CODED_SHIPMENTS.map(s => s.trackingNumber));
             
             if(!num) {
                 alert("Please enter a tracking number\n\nTry: VX123456");
@@ -1164,22 +1191,26 @@
                 btn.disabled = true;
             }
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 if(btn) {
                     btn.innerText = originalText;
                     btn.disabled = false;
                 }
-                
+
                 try {
-                    // ✅ USE HARDCODED DATA (works on GitHub Pages!)
-                    let order = HARD_CODED_SHIPMENTS.find(o => 
+                    // ✅ Load shipments from JSONBin (or fallback)
+                    const shipments = await getShipments();
+                    console.log('📋 Available:', shipments.map(s => s.trackingNumber));
+
+                    // ✅ Find matching shipment
+                    let order = shipments.find(o => 
                         (o.trackingNumber || '').toUpperCase().trim() === num
                     );
                     
                     // Try without VX prefix
                     if(!order && num.startsWith('VX')) {
                         const withoutPrefix = num.substring(2);
-                        order = HARD_CODED_SHIPMENTS.find(o => 
+                        order = shipments.find(o => 
                             (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix
                         );
                     }
@@ -1209,12 +1240,13 @@
                         }, 100);
                     }
                 } catch(err) {
-                    console.error('❌ Error:', err);
-                    alert('Error: ' + err.message);
+                    console.error('❌ Tracking error:', err);
+                    alert('Error loading tracking data. Please try again.');
                 }
             }, 800);
         }
 
+        // ✅ Render Tracking Results (same as before)
         function renderTrackingResults(order, lang) {
             const statusLabels = {
                 en: { 'pending': '⏳ Pending', 'processing': '🔄 Processing', 'in_transit': '🚚 In Transit', 'out_for_delivery': '📦 Out for Delivery', 'delivered': '✅ Delivered' },
