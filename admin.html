@@ -79,10 +79,42 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--dhl-gray); }
         .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; }
 
+        /* ✅ LOADING SPINNER CSS */
+        #loadingOverlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--dhl-red);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .admin-nav { display: none; } .shipments-table { display: block; overflow-x: auto; } }
     </style>
 </head>
 <body>
+
+    <!-- ✅ LOADING SPINNER HTML -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <p style="font-weight:bold; color:#333;">Loading Data from Cloud...</p>
+    </div>
 
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
@@ -274,11 +306,26 @@
             if(section !== 'create') loadAndRender();
         }
 
+        // ✅ UPDATED: Load And Render with Spinner
         async function loadAndRender() {
-            const shipments = await loadShipments();
-            renderTable(shipments, 'recentShipmentsBody', 5);
-            renderTable(shipments, 'allShipmentsBody', 100);
-            updateStats(shipments);
+            // 1. Show the spinner immediately
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            try {
+                // 2. Fetch data (this takes 1-3 seconds)
+                const shipments = await loadShipments();
+                
+                // 3. Draw the tables
+                renderTable(shipments, 'recentShipmentsBody', 5);
+                renderTable(shipments, 'allShipmentsBody', 100);
+                updateStats(shipments);
+            } catch (error) {
+                console.error(error);
+                alert("Error loading data. Please check your internet connection.");
+            } finally {
+                // 4. Hide the spinner when done (whether success or error)
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
         }
 
         async function loadShipments() {
