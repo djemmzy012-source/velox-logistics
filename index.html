@@ -231,6 +231,7 @@
         }
         
         .btn-track:hover { background: #b00000; }
+        .btn-track:disabled { background: #ccc; cursor: not-allowed; }
 
         /* Split Cards */
         .split-cards {
@@ -473,12 +474,19 @@
     <div class="top-bar">
         <div class="container">
             <div class="top-links">
-                <a href="#">Find a Service Point</a>
-                <a href="#">Locations</a>
-                <a href="#">Careers</a>
+                <a href="#" data-i18n="find_point">Find a Service Point</a>
+                <a href="#" data-i18n="locations">Locations</a>
+                <a href="#" data-i18n="careers">Careers</a>
             </div>
             <div class="top-links">
-                <a href="#">Login</a>
+                <select class="country-select" onchange="changeLanguage()" style="padding:2px; border:none; background:transparent; font-weight:700; cursor:pointer;">
+                    <option value="en">🇬 EN</option>
+                    <option value="ru">🇷 RU</option>
+                    <option value="ch">🇨 CN</option>
+                    <option value="de">🇩 DE</option>
+                    <option value="fr">🇫 FR</option>
+                </select>
+                <a href="#" data-i18n="login">Login</a>
             </div>
         </div>
     </div>
@@ -491,11 +499,11 @@
             <div class="menu-toggle" onclick="toggleMobileMenu()">☰</div>
             
             <div class="nav-links" id="navLinks">
-                <a href="#" onclick="showPage('home'); toggleMobileMenu()">Home</a>
-                <a href="#tracking" onclick="showPage('tracking'); toggleMobileMenu()">Track</a>
-                <a href="quote.html">Get Quote</a>
-                <a href="about-velox.html">About Us</a>
-                <a href="quote.html" class="btn-start">Start Shipping</a>
+                <a href="#" onclick="showPage('home'); toggleMobileMenu()" data-i18n="nav_home">Home</a>
+                <a href="#tracking" onclick="showPage('tracking'); toggleMobileMenu()" data-i18n="nav_track">Track</a>
+                <a href="quote.html" data-i18n="nav_quote">Get Quote</a>
+                <a href="about-velox.html" data-i18n="nav_about">About Us</a>
+                <a href="quote.html" class="btn-start" data-i18n="btn_start">Start Shipping</a>
             </div>
         </div>
     </nav>
@@ -511,11 +519,11 @@
             </div>
             
             <div class="hero-content">
-                <h1>Navigating Global Trade</h1>
-                <p>Reliable shipping for a connected world.</p>
+                <h1 data-i18n="hero_title">Navigating Global Trade</h1>
+                <p data-i18n="hero_sub">Reliable shipping for a connected world.</p>
                 <div class="track-widget">
-                    <input type="text" id="trackInput" placeholder="Enter Tracking Number (e.g. VX123456)">
-                    <button class="btn-track" onclick="runTracking()">Track</button>
+                    <input type="text" id="trackInput" placeholder="Enter Tracking Number (e.g. VX123456)" onkeypress="if(event.key==='Enter')runTracking()">
+                    <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
                 </div>
             </div>
         </section>
@@ -525,45 +533,45 @@
             <div class="card-dhl">
                 <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1494412574643-35d324698420?w=800&q=80');"></div>
                 <div class="card-content">
-                    <span class="tag">For All Shippers</span>
-                    <h3>Document and Parcel Shipping</h3>
-                    <p>Learn about Velox Express – the undisputed global leader in international express shipping.</p>
-                    <a href="#" class="btn-explore" onclick="showPage('tracking')">Explore Velox Express →</a>
+                    <span class="tag" data-i18n="for_all">For All Shippers</span>
+                    <h3 data-i18n="srv_express_title">Document and Parcel Shipping</h3>
+                    <p data-i18n="srv_express_desc">Learn about Velox Express – the undisputed global leader in international express shipping.</p>
+                    <a href="#" class="btn-explore" onclick="showPage('tracking')" data-i18n="explore_express">Explore Velox Express →</a>
                 </div>
             </div>
             
             <div class="card-dhl">
                 <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80');"></div>
                 <div class="card-content">
-                    <span class="tag">Business Only</span>
-                    <h3>Cargo Shipping</h3>
-                    <p>Discover shipping and logistics service options from Velox Global Forwarding.</p>
-                    <a href="quote.html" class="btn-explore">Explore Freight Services →</a>
+                    <span class="tag" data-i18n="biz_only">Business Only</span>
+                    <h3 data-i18n="srv_cargo_title">Cargo Shipping</h3>
+                    <p data-i18n="srv_cargo_desc">Discover shipping and logistics service options from Velox Global Forwarding.</p>
+                    <a href="quote.html" class="btn-explore" data-i18n="explore_freight">Explore Freight Services →</a>
                 </div>
             </div>
         </section>
 
         <!-- Services Section -->
         <section class="services-section">
-            <h2 class="section-title">Services Available</h2>
+            <h2 class="section-title" data-i18n="services_title">Services Available</h2>
             <div class="service-grid">
                 <div class="service-item">
                     <div class="service-icon">💼</div>
-                    <h4>Velox for Business</h4>
-                    <p>Frequent shippers? Learn about the benefits of opening an account.</p>
-                    <a href="quote.html" class="service-link">Learn More →</a>
+                    <h4 data-i18n="sol_1_title">Velox for Business</h4>
+                    <p data-i18n="sol_1_desc">Frequent shippers? Learn about the benefits of opening an account.</p>
+                    <a href="quote.html" class="service-link" data-i18n="learn_more">Learn More →</a>
                 </div>
                 <div class="service-item">
                     <div class="service-icon">🎧</div>
-                    <h4>Customer Service</h4>
-                    <p>Access our customer portal logins and get support.</p>
-                    <a href="customer-service.html" class="service-link">Customer Portal →</a>
+                    <h4 data-i18n="sol_2_title">Customer Service</h4>
+                    <p data-i18n="sol_2_desc">Access our customer portal logins and get support.</p>
+                    <a href="customer-service.html" class="service-link" data-i18n="customer_portal">Customer Portal →</a>
                 </div>
                 <div class="service-item">
                     <div class="service-icon">🌱</div>
-                    <h4>Sustainability</h4>
-                    <p>Sustainable business begins with low carbon supply chains.</p>
-                    <a href="#" class="service-link">GoGreen Plus →</a>
+                    <h4 data-i18n="sol_3_title">Sustainability</h4>
+                    <p data-i18n="sol_3_desc">Sustainable business begins with low carbon supply chains.</p>
+                    <a href="#" class="service-link" data-i18n="gogreen">GoGreen Plus →</a>
                 </div>
             </div>
         </section>
@@ -571,8 +579,8 @@
         <!-- Tariff Banner -->
         <section class="tariff-banner">
             <div class="tariff-content">
-                <h2 class="tariff-title">Navigating Latest Tariff Developments</h2>
-                <p class="tariff-text">Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate these changes.</p>
+                <h2 class="tariff-title" data-i18n="tariff_title">Navigating Latest Tariff Developments</h2>
+                <p class="tariff-text" data-i18n="tariff_text">Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate these changes.</p>
             </div>
         </section>
     </div>
@@ -580,12 +588,12 @@
     <!-- TRACKING PAGE -->
     <div id="tracking" class="page-section">
         <div style="background:var(--dhl-dark); color:white; padding:60px 20px; text-align:center;">
-            <h2 style="font-size:2rem; font-weight:900;">Track Your Shipment</h2>
+            <h2 style="font-size:2rem; font-weight:900;" data-i18n="nav_track">Track Your Shipment</h2>
         </div>
         <div style="padding:40px 20px; text-align:center;">
             <div class="track-widget">
                 <input type="text" id="trackInputPage" placeholder="Enter tracking number (e.g. VX123456)">
-                <button class="btn-track" onclick="runTracking()">Track</button>
+                <button class="btn-track" onclick="runTracking()" data-i18n="btn_track">Track</button>
             </div>
         </div>
         <div id="trackingResult" style="display: none;"></div>
@@ -596,27 +604,27 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="footer_quick">Quick Links</h4>
                     <ul>
-                        <li><a href="#">Find a Service Point</a></li>
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#" data-i18n="find_point">Find a Service Point</a></li>
+                        <li><a href="#" data-i18n="help_center">Help Center</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Support</h4>
+                    <h4 data-i18n="footer_support">Support</h4>
                     <ul>
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#" data-i18n="help_center">Help Center</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Company Info</h4>
+                    <h4 data-i18n="footer_company">Company Info</h4>
                     <ul>
-                        <li><a href="about-velox.html">About Velox</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="about-velox.html" data-i18n="about_us">About Velox</a></li>
+                        <li><a href="#" data-i18n="careers">Careers</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
+            <div class="copyright" data-i18n="copyright">
                 &copy; 2024 Velox Logistics - all rights reserved
             </div>
         </div>
@@ -659,7 +667,104 @@
             }
         ];
 
-        // Mobile Menu Toggle
+        // Translations
+        const translations = {
+            en: {
+                find_point: "Find a Service Point", locations: "Locations", careers: "Careers", login: "Login",
+                nav_home: "Home", nav_track: "Track", nav_quote: "Get Quote", nav_about: "About Us", btn_start: "Start Shipping",
+                hero_title: "Navigating Global Trade", hero_sub: "Reliable shipping for a connected world.", btn_track: "Track",
+                for_all: "For All Shippers", srv_express_title: "Document and Parcel Shipping", srv_express_desc: "Learn about Velox Express.",
+                explore_express: "Explore Velox Express", biz_only: "Business Only", srv_cargo_title: "Cargo Shipping",
+                srv_cargo_desc: "Discover Velox Global Forwarding.", explore_freight: "Explore Freight Services",
+                services_title: "Services Available", sol_1_title: "Velox for Business", sol_1_desc: "Frequent shippers? Learn about account benefits.",
+                learn_more: "Learn More →", sol_2_title: "Customer Service", sol_2_desc: "Access customer portal and support.",
+                customer_portal: "Customer Portal →", sol_3_title: "Sustainability", sol_3_desc: "Low carbon supply chains.",
+                gogreen: "GoGreen Plus →", tariff_title: "Navigating Latest Tariff Developments",
+                tariff_text: "Global trade is becoming increasingly complex.",
+                footer_quick: "Quick Links", footer_support: "Support", footer_company: "Company Info",
+                about_us: "About Velox", help_center: "Help Center",
+                copyright: "&copy; 2024 Velox Logistics - all rights reserved",
+                tracking_not_found: "Tracking number not found."
+            },
+            ru: {
+                find_point: "Найти пункт", locations: "Офисы", careers: "Карьера", login: "Вход",
+                nav_home: "Главная", nav_track: "Отслеживание", nav_quote: "Расчет", nav_about: "О нас", btn_start: "Начать",
+                hero_title: "Глобальная Торговля", hero_sub: "Надежная доставка.", btn_track: "Отследить",
+                for_all: "Для всех", srv_express_title: "Документы и Посылки", srv_express_desc: "Узнайте о Velox Express.",
+                explore_express: "Изучить Express", biz_only: "Для бизнеса", srv_cargo_title: "Грузоперевозки",
+                srv_cargo_desc: "Услуги логистики.", explore_freight: "Изучить Грузоперевозки",
+                services_title: "Услуги", sol_1_title: "Бизнесу", sol_1_desc: "Преимущества аккаунта.",
+                learn_more: "Подробнее →", sol_2_title: "Сервис", sol_2_desc: "Поддержка.",
+                customer_portal: "Портал →", sol_3_title: "Устойчивость", sol_3_desc: "Зеленая логистика.",
+                gogreen: "GoGreen →", tariff_title: "Тарифы",
+                tariff_text: "Мировая торговля усложняется.",
+                footer_quick: "Ссылки", footer_support: "Поддержка", footer_company: "Компания",
+                about_us: "О Velox", help_center: "Помощь",
+                copyright: "&copy; 2024 Velox Logistics",
+                tracking_not_found: "Номер не найден."
+            },
+            ch: {
+                find_point: "查找地点", locations: "地点", careers: "职业", login: "登录",
+                nav_home: "主页", nav_track: "追踪", nav_quote: "报价", nav_about: "关于", btn_start: "开始",
+                hero_title: "全球贸易", hero_sub: "可靠运输。", btn_track: "追踪",
+                for_all: "面向所有", srv_express_title: "文件与包裹", srv_express_desc: "了解 Velox Express.",
+                explore_express: "探索 Express", biz_only: "仅限企业", srv_cargo_title: "货物运输",
+                srv_cargo_desc: "物流解决方案.", explore_freight: "探索货运",
+                services_title: "可用服务", sol_1_title: "商业客户", sol_1_desc: "开户优势。",
+                learn_more: "了解更多 →", sol_2_title: "客户服务", sol_2_desc: "支持。",
+                customer_portal: "门户 →", sol_3_title: "可持续发展", sol_3_desc: "低碳供应链。",
+                gogreen: "GoGreen →", tariff_title: "关税动态",
+                tariff_text: "全球贸易日益复杂。",
+                footer_quick: "链接", footer_support: "支持", footer_company: "公司",
+                about_us: "关于 Velox", help_center: "帮助",
+                copyright: "&copy; 2024 Velox Logistics",
+                tracking_not_found: "未找到追踪号。"
+            },
+            de: {
+                find_point: "Servicepunkt", locations: "Standorte", careers: "Karriere", login: "Anmelden",
+                nav_home: "Startseite", nav_track: "Verfolgung", nav_quote: "Angebot", nav_about: "Über Uns", btn_start: "Start",
+                hero_title: "Globaler Handel", hero_sub: "Zuverlässiger Versand.", btn_track: "Verfolgen",
+                for_all: "Für alle", srv_express_title: "Dokumente & Pakete", srv_express_desc: "Erfahren Sie mehr.",
+                explore_express: "Express entdecken", biz_only: "Geschäftskunden", srv_cargo_title: "Frachtversand",
+                srv_cargo_desc: "Logistikoptionen.", explore_freight: "Fracht entdecken",
+                services_title: "Dienstleistungen", sol_1_title: "Für Unternehmen", sol_1_desc: "Kontovorteile.",
+                learn_more: "Mehr erfahren →", sol_2_title: "Kundenservice", sol_2_desc: "Support.",
+                customer_portal: "Portal →", sol_3_title: "Nachhaltigkeit", sol_3_desc: "Kohlenstoffarm.",
+                gogreen: "GoGreen →", tariff_title: "Zollentwicklungen",
+                tariff_text: "Welthandel wird komplexer.",
+                footer_quick: "Links", footer_support: "Support", footer_company: "Unternehmen",
+                about_us: "Über Velox", help_center: "Hilfe",
+                copyright: "&copy; 2024 Velox Logistics",
+                tracking_not_found: "Sendungsnummer nicht gefunden."
+            },
+            fr: {
+                find_point: "Point de service", locations: "Emplacements", careers: "Carrières", login: "Connexion",
+                nav_home: "Accueil", nav_track: "Suivi", nav_quote: "Devis", nav_about: "À Propos", btn_start: "Commencer",
+                hero_title: "Commerce Mondial", hero_sub: "Expédition fiable.", btn_track: "Suivre",
+                for_all: "Pour tous", srv_express_title: "Documents & Colis", srv_express_desc: "Découvrez Velox Express.",
+                explore_express: "Découvrir Express", biz_only: "Entreprises", srv_cargo_title: "Expédition de Fret",
+                srv_cargo_desc: "Options logistiques.", explore_freight: "Découvrir Fret",
+                services_title: "Services", sol_1_title: "Pour les Entreprises", sol_1_desc: "Avantages d'un compte.",
+                learn_more: "En savoir plus →", sol_2_title: "Service Client", sol_2_desc: "Support.",
+                customer_portal: "Portail →", sol_3_title: "Durabilité", sol_3_desc: "Faible émission.",
+                gogreen: "GoGreen →", tariff_title: "Évolutions Tarifaires",
+                tariff_text: "Le commerce se complexifie.",
+                footer_quick: "Liens", footer_support: "Support", footer_company: "Entreprise",
+                about_us: "À propos", help_center: "Aide",
+                copyright: "&copy; 2024 Velox Logistics",
+                tracking_not_found: "Numéro introuvable."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.querySelector('.country-select').value;
+            const t = translations[lang] || translations.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(t[key]) el.textContent = t[key];
+            });
+        }
+
         function toggleMobileMenu() {
             const nav = document.getElementById('navLinks');
             nav.classList.toggle('active');
@@ -676,15 +781,23 @@
 
         async function getShipments() {
             try {
+                // Add a timeout to prevent hanging forever
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
-                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                    headers: { 'X-Master-Key': JSONBIN_KEY },
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
+
                 if(!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
                 return data.record.shipments || FALLBACK_SHIPMENTS;
             } catch(err) {
                 console.error('Error loading:', err);
-                return FALLBACK_SHIPMENTS;
+                return FALLBACK_SHIPMENTS; // Fallback if API fails
             }
         }
 
@@ -700,35 +813,33 @@
             
             const btn = document.querySelector('.btn-track');
             const originalText = btn.innerText;
-            btn.innerText = "Searching...";
+            btn.innerText = "Searching..."; // Show loading state
             btn.disabled = true;
 
-            setTimeout(async () => {
+            try {
+                const shipments = await getShipments();
+                let order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === num);
+                
+                if(!order && num.startsWith('VX')) {
+                    const withoutPrefix = num.substring(2);
+                    order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix);
+                }
+                
+                showPage('tracking');
+                
+                if(order) {
+                    renderTrackingResults(order);
+                } else {
+                    const resultContainer = document.getElementById('trackingResult');
+                    resultContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#666;"><h3>❌ Tracking Not Found</h3><p>Please check the number and try again.</p></div>';
+                    resultContainer.style.display = 'block';
+                }
+            } catch(err) {
+                alert('Error loading tracking data. Please check your internet.');
+            } finally {
                 btn.innerText = originalText;
                 btn.disabled = false;
-
-                try {
-                    const shipments = await getShipments();
-                    let order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === num);
-                    
-                    if(!order && num.startsWith('VX')) {
-                        const withoutPrefix = num.substring(2);
-                        order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix);
-                    }
-                    
-                    if(order) {
-                        showPage('tracking');
-                        renderTrackingResults(order);
-                    } else {
-                        showPage('tracking');
-                        const resultContainer = document.getElementById('trackingResult');
-                        resultContainer.innerHTML = '<div style="text-align:center; padding:40px; color:#666;"><h3>❌ Tracking Not Found</h3><p>Please check the number and try again.</p></div>';
-                        resultContainer.style.display = 'block';
-                    }
-                } catch(err) {
-                    alert('Error loading tracking data.');
-                }
-            }, 800);
+            }
         }
 
         function renderTrackingResults(order) {
