@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informed Delivery | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================================
+               ROOT & RESET (exactly as in your index.html)
+        ============================================================ */
+        :root {
+            --primary: #D40000;
+            --primary-dark: #B00000;
+            --secondary: #FFCC00;
+            --secondary-dark: #E6B800;
+            --dark: #0A0A1A;
+            --dark-light: #1A1A2E;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --radius-full: 9999px;
+            --container: 1280px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================================
+               UTILITY
+        ============================================================ */
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(212, 0, 0, 0.08);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .highlight {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--gray-600);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .text-center .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(212, 0, 0, 0.20);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 0, 0, 0.30);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+            box-shadow: 0 4px 16px rgba(255, 204, 0, 0.20);
+        }
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================
+               TOP BAR
+        ============================================================ */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--secondary);
+            position: relative;
+            z-index: 1002;
+            overflow: hidden;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left a {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .top-bar-left a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-left a i {
+            color: var(--secondary);
+            font-size: 0.65rem;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-right a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        .top-bar-right a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-right .sign-in {
+            color: var(--white);
+            font-weight: 600;
+        }
+        .top-bar-right .register {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .top-bar-right .informed-delivery i {
+            color: var(--secondary);
+        }
+
+        .top-bar-right .lang-select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .top-bar-right .top-cta {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 4px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .top-bar-right .top-cta:hover {
+            background: var(--white);
+            transform: scale(1.04);
+        }
+
+        .top-bar-right .top-phone {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        /* ============================================================
+               MAIN NAV
+        ============================================================ */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            padding: 12px 0;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .main-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .logo span {
+            color: var(--dark);
+            background: var(--secondary);
+            padding: 0 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--gray-600);
+            position: relative;
+            padding: 4px 0;
+        }
+        .nav-links a:hover {
+            color: var(--dark);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .nav-actions .btn-track {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 0, 0, 0.20);
+        }
+        .nav-actions .btn-track:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-actions .btn-ship {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 0, 0, 0.25);
+        }
+        .nav-actions .btn-ship:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--dark);
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .menu-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* ============================================================
+               PAGE SPECIFIC STYLES
+        ============================================================ */
+        .page-header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--secondary));
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .benefit-card {
+            background: var(--white);
+            padding: 32px 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+        .benefit-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .benefit-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .enrollment-form {
+            background: var(--gray-50);
+            padding: 48px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            margin-top: 40px;
+        }
+        .enrollment-form h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ============================================================
+               FOOTER
+        ============================================================ */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 0 20px;
+            margin-top: auto;
+            border-top: 3px solid var(--secondary);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 28px;
+            height: 2px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        .footer-col p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            max-width: 320px;
+        }
+        .footer-col ul li {
+            margin-bottom: 6px;
+        }
+        .footer-col ul a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .footer-col ul a:hover {
+            color: var(--secondary);
+            transform: translateX(4px);
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .footer-bottom .copyright {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal {
+            display: flex;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 12px 0;
+                gap: 8px;
+                border-top: 1px solid var(--gray-200);
+                margin-top: 10px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+        .animate-delay-1 { animation-delay: 0.1s; }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    TOP BAR (phone and email updated, no user menu)
+    ============================================================ -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="tel:+1 (559) 508-3927"><i class="fas fa-phone-alt"></i> +1 (559) 508-3927</a>
+                <a href="mailto:support@velloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a href="#"><i class="fas fa-map-pin"></i> Locations</a>
+                <a href="tracking.html"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
+                <!-- Register & Sign In not inserted dynamically -->
+                <select class="lang-select" id="langSelect">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
+                <a href="quick-quote.html" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
+                <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAV -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="tracking.html">Tracking</a>
+                <a href="services.html">Services</a>
+                <a href="freight.html">Freight</a>
+                <a href="customs.html">Customs</a>
+                <a href="logistics.html">Logistics</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn-track" onclick="window.location.href='tracking.html'"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-ship" onclick="window.location.href='ship.html'"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Informed Delivery®</h1>
+            <p>See what's coming to your mailbox – before it arrives. Free, secure, and easy to use.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label"><i class="fas fa-envelope-open-text"></i> Know Before You Open</span>
+                <h2 class="section-title">Digital <span class="highlight">Mail Preview</span> & Package Tracking</h2>
+                <p class="section-subtitle">Receive daily email notifications with grayscale images of your letter‑sized mail and real‑time package updates.</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card animate-fade-up">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Mail Preview</h3>
+                    <p>See up to 10 images of your incoming mail each morning. No more guessing what's in the mailbox.</p>
+                </div>
+                <div class="benefit-card animate-fade-up animate-delay-1">
+                    <i class="fas fa-box-open"></i>
+                    <h3>Package Tracking</h3>
+                    <p>Track packages from your dashboard. Get notifications for delivery, delays, and exceptions.</p>
+                </div>
+                <div class="benefit-card animate-fade-up animate-delay-1">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Ready</h3>
+                    <p>Access your Informed Delivery on any device – desktop, tablet, or smartphone.</p>
+                </div>
+                <div class="benefit-card animate-fade-up animate-delay-1">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure & Free</h3>
+                    <p>Your data is protected with bank‑level encryption. This service is completely free.</p>
+                </div>
+            </div>
+
+            <div class="enrollment-form">
+                <h3>Sign Up for Informed Delivery</h3>
+                <form id="informedDeliveryForm" onsubmit="event.preventDefault(); alert('Thank you! You will receive a verification email shortly. (Demo)');">
+                    <div class="form-row">
+                        <div class="form-group"><label>First Name</label><input type="text" required></div>
+                        <div class="form-group"><label>Last Name</label><input type="text" required></div>
+                    </div>
+                    <div class="form-group"><label>Email Address</label><input type="email" required placeholder="you@example.com"></div>
+                    <div class="form-group"><label>Confirm Email</label><input type="email" required></div>
+                    <div class="form-group"><label>Street Address (for mail verification)</label><input type="text" placeholder="123 Logistics Avenue"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>City</label><input type="text"></div>
+                        <div class="form-group"><label>Postal Code</label><input type="text"></div>
+                    </div>
+                    <div class="form-group"><label>Country</label><select><option>United Kingdom</option><option>United States</option><option>Canada</option><option>Germany</option><option>France</option></select></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Enroll Now – Free</button>
+                </form>
+                <p class="text-center" style="margin-top: 20px; font-size: 0.8rem;">Already have an account? <a href="signin.html">Sign in to your dashboard</a></p>
+            </div>
+
+            <div style="margin-top: 60px; background: var(--gray-50); padding: 40px; border-radius: var(--radius); text-align: center;">
+                <h3>Frequently Asked Questions</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 30px;">
+                    <div><strong>Is Informed Delivery really free?</strong><br>Yes, it's a complimentary service from Velox.</div>
+                    <div><strong>How do I receive notifications?</strong><br>Daily email digests and optional mobile alerts.</div>
+                    <div><strong>Can I change my address?</strong><br>Yes, update your profile in the dashboard.</div>
+                    <div><strong>Is my privacy protected?</strong><br>Absolutely. We never share your mail data.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <p>Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="tracking.html"><i class="fas fa-search"></i> Track a Shipment</a></li><li><a href="ship.html"><i class="fas fa-shipping-fast"></i> Ship Now</a></li><li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li><li><a href="services.html"><i class="fas fa-cogs"></i> Services</a></li><li><a href="freight.html"><i class="fas fa-ship"></i> Freight</a></li><li><a href="customs.html"><i class="fas fa-file-contract"></i> Customs</a></li><li><a href="logistics.html"><i class="fas fa-truck-moving"></i> Logistics</a></li></ul></div>
+                <div class="footer-col"><h4>Customer Service</h4><ul><li><a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a></li><li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li><li><a href="#"><i class="fas fa-undo"></i> Claims & Returns</a></li><li><a href="#"><i class="fas fa-undo"></i> Initiate Return</a></li><li><a href="#"><i class="fas fa-file-invoice"></i> Get Label</a></li><li><a href="#"><i class="fas fa-comments"></i> Feedback</a></li><li><a href="#"><i class="fas fa-ticket-alt"></i> Submit a Ticket</a></li><li><a href="informed-delivery.html"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a></li></ul></div>
+                <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html"><i class="fas fa-building"></i> About Velox</a></li><li><a href="#"><i class="fas fa-bullhorn"></i> Newsroom</a></li><li><a href="#"><i class="fas fa-users"></i> Careers</a></li><li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li><li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — All rights reserved.</div><div class="legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div></div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile nav toggle (same as in index.html)
+        function toggleMobileNav() {
+            const links = document.getElementById('navLinks');
+            links.classList.toggle('open');
+            const icon = document.querySelector('.menu-toggle i');
+            icon.className = links.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+        }
+
+        // Language selector (simple demo – you can reuse your full translations from index.html)
+        const langSelect = document.getElementById('langSelect');
+        if (langSelect) {
+            langSelect.addEventListener('change', function() {
+                // In a full implementation, you would load translations.
+                // For demo purposes, we'll just show a toast or nothing.
+                console.log('Language changed to', this.value);
+                // You can extend with your full translation object from index.html.
+            });
+        }
+    </script>
+</body>
+</html>

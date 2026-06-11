@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Track & Trace | Velox Logistics</title>
+    <title>Freight Services | Velox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <!-- Leaflet CSS for the map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* ============================================================
-               ROOT & RESET — Same as Index
+               ROOT & RESET
             ============================================================ */
         :root {
             --primary: #D40000;
@@ -219,49 +217,119 @@
                ANIMATIONS
             ============================================================ */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .animate-fade-up { animation: fadeUp 0.7s ease forwards; }
-        .animate-fade-in { animation: fadeIn 0.9s ease forwards; }
-        .animate-slide-up { animation: slideUp 0.7s ease forwards; }
-        .animate-scale-in { animation: scaleIn 0.6s ease forwards; }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-pulse { animation: pulse 2.5s ease-in-out infinite; }
-        .animate-delay-1 { animation-delay: 0.1s; }
-        .animate-delay-2 { animation-delay: 0.2s; }
-        .animate-delay-3 { animation-delay: 0.3s; }
-        .animate-delay-4 { animation-delay: 0.4s; }
-        .animate-delay-5 { animation-delay: 0.5s; }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.9s ease forwards;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.7s ease forwards;
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .animate-pulse {
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-2 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-3 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-4 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-5 {
+            animation-delay: 0.5s;
+        }
 
         .reveal {
             opacity: 0;
@@ -561,34 +629,45 @@
         }
 
         /* ============================================================
-               TRACKING HERO
+               FREIGHT HERO
             ============================================================ */
-        .tracking-hero {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-            color: var(--white);
-            padding: 80px 20px 60px;
-            text-align: center;
+        .freight-hero {
             position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
             overflow: hidden;
+            background: var(--dark);
         }
 
-        .tracking-hero::before {
+        .freight-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80');
+        }
+
+        .freight-hero-bg::after {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 204, 0, 0.04) 0%, transparent 70%);
-            border-radius: 50%;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 26, 0.60) 0%, rgba(10, 10, 26, 0.20) 100%);
         }
 
-        .tracking-hero .container {
+        .freight-hero-content {
             position: relative;
             z-index: 1;
+            max-width: 820px;
+            padding: 40px 20px;
         }
 
-        .tracking-hero .badge {
+        .freight-hero-content .badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -604,385 +683,257 @@
             margin-bottom: 24px;
             color: rgba(255, 255, 255, 0.8);
         }
-        .tracking-hero .badge i {
+        .freight-hero-content .badge i {
             color: var(--secondary);
         }
 
-        .tracking-hero h1 {
+        .freight-hero-content h1 {
             font-size: 3.6rem;
             font-weight: 900;
             line-height: 1.05;
             margin-bottom: 16px;
             letter-spacing: -0.5px;
         }
-        .tracking-hero h1 .highlight {
+        .freight-hero-content h1 .highlight {
             color: var(--secondary);
         }
 
-        .tracking-hero p {
+        .freight-hero-content p {
             font-size: 1.2rem;
             font-weight: 300;
             opacity: 0.85;
-            margin-bottom: 36px;
+            margin-bottom: 32px;
             max-width: 580px;
             margin-left: auto;
             margin-right: auto;
             line-height: 1.8;
         }
 
-        .tracking-hero .track-widget {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(12px);
-            padding: 6px;
-            border-radius: var(--radius);
+        .freight-hero-content .hero-actions {
             display: flex;
-            gap: 10px;
-            max-width: 640px;
-            margin: 0 auto 32px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.20);
-        }
-
-        .tracking-hero .track-widget input {
-            flex: 1;
-            padding: 18px 22px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            font-weight: 500;
-            font-family: inherit;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--dark);
-            transition: var(--transition);
-        }
-        .tracking-hero .track-widget input::placeholder {
-            color: var(--gray-400);
-        }
-        .tracking-hero .track-widget input:focus {
-            outline: 2px solid var(--secondary);
-            box-shadow: 0 0 0 6px rgba(255, 204, 0, 0.08);
-        }
-
-        .tracking-hero .track-widget .btn-track {
-            background: var(--primary);
-            color: var(--white);
-            padding: 18px 36px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            white-space: nowrap;
-            box-shadow: 0 4px 16px rgba(212, 0, 0, 0.30);
-        }
-        .tracking-hero .track-widget .btn-track:hover {
-            background: var(--primary-dark);
-            transform: scale(1.02);
-            box-shadow: 0 8px 28px rgba(212, 0, 0, 0.40);
-        }
-
-        .tracking-hero .track-widget .btn-track:disabled {
-            background: var(--gray-400);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         /* ============================================================
-               TRACKING RESULT — Massive Section
+               FREIGHT GRID (Main)
             ============================================================ */
-        .tracking-result-section {
-            padding: 60px 0;
+        .freight-main {
+            padding: 80px 0;
             background: var(--white);
         }
 
-        .tracking-result-section .result-card {
-            background: var(--white);
+        .freight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 44px;
+        }
+
+        .freight-card {
+            background: var(--gray-50);
+            padding: 40px 32px;
             border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
+            transition: var(--transition);
             border: 1px solid var(--gray-200);
-            animation: fadeUp 0.5s ease;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .freight-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .freight-card:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            background: var(--white);
         }
 
-        .tracking-result-section .result-card .header {
-            background: var(--dark);
-            color: var(--white);
-            padding: 32px 36px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
+        .freight-card .icon {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
         }
-
-        .tracking-result-section .result-card .header .number {
-            font-size: 1.5rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .tracking-result-section .result-card .header .number i {
-            color: var(--secondary);
-        }
-
-        .tracking-result-section .result-card .header .status-badge {
-            background: var(--secondary);
+        .freight-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 8px;
             color: var(--dark);
-            padding: 6px 20px;
-            border-radius: var(--radius-full);
+        }
+        .freight-card p {
+            color: var(--gray-600);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .freight-card .link {
+            color: var(--primary);
             font-weight: 700;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-
-        .tracking-result-section .result-card .body {
-            padding: 36px;
-        }
-
-        .tracking-result-section .result-card .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 18px;
-            background: var(--gray-50);
-            padding: 24px 28px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 32px;
-        }
-
-        .tracking-result-section .result-card .details-grid .item label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--gray-400);
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 2px;
-        }
-        .tracking-result-section .result-card .details-grid .item .value {
-            font-weight: 700;
-            color: var(--dark);
-            font-size: 1rem;
+        .freight-card .link:hover {
+            gap: 12px;
         }
 
         /* ============================================================
-               MAP CONTAINER
+               FREIGHT MODES
             ============================================================ */
-        .map-container {
-            margin-bottom: 32px;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--gray-200);
-        }
-
-        #trackingMap {
-            height: 400px;
-            width: 100%;
-            background: var(--gray-100);
-        }
-
-        .map-overlay {
-            background: var(--gray-50);
-            padding: 12px 20px;
-            border-top: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--gray-600);
-        }
-        .map-overlay .status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .map-overlay .status .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--secondary);
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        /* ============================================================
-               TIMELINE
-            ============================================================ */
-        .tracking-timeline {
-            position: relative;
-            padding-left: 40px;
-            margin-top: 16px;
-        }
-
-        .tracking-timeline::before {
-            content: '';
-            position: absolute;
-            left: 14px;
-            top: 4px;
-            bottom: 4px;
-            width: 2px;
-            background: var(--gray-200);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-bottom: 28px;
-            padding-left: 24px;
-        }
-
-        .timeline-item:last-child {
-            padding-bottom: 0;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -34px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--white);
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.08);
-            z-index: 2;
-            transition: var(--transition);
-        }
-        .timeline-item:hover::before {
-            border-color: var(--secondary);
-        }
-
-        .timeline-item .date {
-            font-size: 0.75rem;
-            color: var(--gray-400);
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-        .timeline-item .status {
-            font-weight: 700;
-            color: var(--dark);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .timeline-item .status i {
-            color: var(--primary);
-        }
-        .timeline-item .location {
-            font-size: 0.85rem;
-            color: var(--gray-500);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .timeline-item .notes {
-            font-size: 0.8rem;
-            color: var(--gray-400);
-            font-style: italic;
-            margin-top: 2px;
-        }
-
-        /* ============================================================
-               FAQ & SUPPORT
-            ============================================================ */
-        .tracking-faq {
+        .freight-modes {
             background: var(--gray-50);
             padding: 80px 0;
             border-top: 1px solid var(--gray-200);
             border-bottom: 1px solid var(--gray-200);
         }
 
-        .faq-grid {
-            max-width: 820px;
-            margin: 44px auto 0;
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 44px;
         }
 
-        .faq-item {
+        .mode-item {
             background: var(--white);
-            border-radius: var(--radius-sm);
-            margin-bottom: 12px;
-            overflow: hidden;
-            border: 1px solid var(--gray-200);
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
             transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .faq-item:hover {
+        .mode-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mode-item:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: var(--shadow-md);
             border-color: var(--primary);
         }
 
-        .faq-question {
-            padding: 18px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--dark);
-            transition: var(--transition);
-            background: var(--white);
+        .mode-item .icon {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 14px;
+            display: block;
         }
-        .faq-question:hover {
-            background: var(--gray-50);
+        .mode-item h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 6px;
         }
-        .faq-question i {
-            transition: var(--transition);
-            color: var(--primary);
-        }
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0 24px;
+        .mode-item p {
             color: var(--gray-600);
-            font-size: 0.92rem;
-            line-height: 1.7;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 300px;
-            padding: 0 24px 20px;
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         /* ============================================================
-               STATS / INFO BANNER
+               FREIGHT BENEFITS
             ============================================================ */
-        .tracking-stats {
+        .freight-benefits {
+            background: var(--white);
+            padding: 80px 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 44px;
+        }
+
+        .benefit-item {
+            background: var(--gray-50);
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .benefit-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .benefit-item:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            background: var(--white);
+        }
+
+        .benefit-item .icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .benefit-item h4 {
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .benefit-item p {
+            color: var(--gray-600);
+            font-size: 0.85rem;
+        }
+
+        /* ============================================================
+               CTA BANNER
+            ============================================================ */
+        .cta-banner {
             background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
-            padding: 60px 20px;
+            padding: 70px 20px;
             color: var(--white);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .tracking-stats .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 32px;
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
-        .tracking-stats .stat-item .number {
+        .cta-banner .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-banner .cta-title {
             font-size: 2.4rem;
             font-weight: 900;
             color: var(--secondary);
-            display: block;
+            margin-bottom: 12px;
         }
-        .tracking-stats .stat-item .label {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .cta-banner p {
+            font-size: 1.05rem;
+            opacity: 0.75;
+            max-width: 600px;
+            margin: 0 auto 28px;
+            line-height: 1.8;
         }
 
         /* ============================================================
@@ -1101,7 +1052,7 @@
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .tracking-hero h1 {
+            .freight-hero h1 {
                 font-size: 2.8rem;
             }
         }
@@ -1157,38 +1108,32 @@
                 padding: 6px 12px;
             }
 
-            .tracking-hero h1 {
+            .freight-hero h1 {
                 font-size: 2.2rem;
             }
-            .tracking-hero p {
+            .freight-hero p {
                 font-size: 1rem;
             }
-            .tracking-hero .track-widget {
+            .freight-hero .hero-actions {
                 flex-direction: column;
+                align-items: center;
             }
-            .tracking-hero .track-widget input {
-                min-width: auto;
-            }
-            .tracking-hero .track-widget .btn-track {
+            .freight-hero .hero-actions .btn {
                 width: 100%;
                 justify-content: center;
             }
 
-            .tracking-result-section .result-card .header {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px 24px;
+            .section-title {
+                font-size: 2rem;
             }
-            .tracking-result-section .result-card .details-grid {
+            .freight-grid {
                 grid-template-columns: 1fr 1fr;
-                padding: 14px 16px;
             }
-            .tracking-result-section .result-card .body {
-                padding: 20px;
+            .modes-grid {
+                grid-template-columns: 1fr 1fr;
             }
-
-            #trackingMap {
-                height: 250px;
+            .benefits-grid {
+                grid-template-columns: 1fr 1fr;
             }
 
             .footer-grid {
@@ -1205,25 +1150,26 @@
         }
 
         @media (max-width: 480px) {
-            .tracking-hero h1 {
+            .freight-hero h1 {
                 font-size: 1.8rem;
             }
-            .tracking-result-section .result-card .details-grid {
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .freight-grid {
                 grid-template-columns: 1fr;
             }
-            #trackingMap {
-                height: 200px;
+            .modes-grid {
+                grid-template-columns: 1fr;
             }
-            .tracking-stats .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .tracking-stats .stat-item .number {
-                font-size: 1.8rem;
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
-<body> 
+<body>
+
     <!-- ============================================================
     TOP BAR (phone and email updated, no user menu)
     ============================================================ -->
@@ -1250,25 +1196,12 @@
                 <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
             </div>
         </div>
-        <div class="marquee-strip">
-            <div class="container">
-                <div class="marquee-content">
-                    <span><i class="fas fa-check-circle"></i> 10M+ Shipments Delivered</span>
-                    <span><i class="fas fa-check-circle"></i> 220+ Countries Served</span>
-                    <span><i class="fas fa-check-circle"></i> 99.7% On-Time Delivery</span>
-                    <span><i class="fas fa-check-circle"></i> 24/7 Customer Support</span>
-                    <span><i class="fas fa-check-circle"></i> Global Freight & Logistics</span>
-                    <span><i class="fas fa-check-circle"></i> Customs Clearance Experts</span>
-                    <span><i class="fas fa-check-circle"></i> Real-Time Tracking</span>
-                    <span><i class="fas fa-check-circle"></i> Sustainable Supply Chains</span>
-                    <span><i class="fas fa-check-circle"></i> 18+ Years of Excellence</span>
-                    <span><i class="fas fa-check-circle"></i> 50K+ Business Clients</span>
-                    <span><i class="fas fa-check-circle"></i> Click-N-Ship® Available</span>
-                    <span><i class="fas fa-check-circle"></i> Free Package Pickup</span>
+    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- ============================================================
     MAIN NAV — Sticky & Heavy (Same as Index)
     ============================================================ -->
@@ -1278,17 +1211,17 @@
 
             <nav class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
-                <a href="tracking.html" style="color:var(--primary);">Tracking</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#freight">Freight</a>
+                <a href="tracking.html">Tracking</a>
+                <a href="services.html">Services</a>
+                <a href="freight.html" style="color:var(--primary);">Freight</a>
                 <a href="customs.html">Customs</a>
-                <a href="index.html#logistics">Logistics</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#contact">Contact</a>
+                <a href="logistics.html">Logistics</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
             </nav>
 
             <div class="nav-actions">
-                <button class="btn-track" onclick="runTracking()"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-track" onclick="window.location.href='tracking.html'"><i class="fas fa-search"></i> Track</button>
                 <button class="btn-ship"><i class="fas fa-shipping-fast"></i> Ship</button>
                 <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
                     <i class="fas fa-bars"></i>
@@ -1298,105 +1231,152 @@
     </header>
 
     <!-- ============================================================
-    TRACKING HERO
+    FREIGHT HERO
     ============================================================ -->
-    <section class="tracking-hero">
-        <div class="container">
+    <section class="freight-hero">
+        <div class="freight-hero-bg"></div>
+        <div class="freight-hero-content">
             <div class="badge animate-pulse">
-                <i class="fas fa-search-location"></i> <span data-i18n="tracking_hero_badge">REAL-TIME TRACKING</span>
+                <i class="fas fa-ship"></i> <span data-i18n="freight_hero_badge">FREIGHT SERVICES</span>
             </div>
-            <h1 class="animate-fade-up"><span data-i18n="tracking_hero_title_1">Track Your</span> <span class="highlight" data-i18n="tracking_hero_title_2">Shipment</span></h1>
-            <p class="animate-fade-up animate-delay-1" data-i18n="tracking_hero_desc">Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.</p>
-            <div class="track-widget animate-fade-up animate-delay-2">
-                <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. VX123456)" onkeypress="if(event.key==='Enter')runTracking()" />
-                <button class="btn-track" onclick="runTracking()"><i class="fas fa-search"></i> <span data-i18n="track">Track</span></button>
+            <h1 class="animate-fade-up"><span data-i18n="freight_hero_title_1">Global</span> <span class="highlight" data-i18n="freight_hero_title_2">Freight</span> <span data-i18n="freight_hero_title_3">Solutions</span></h1>
+            <p class="animate-fade-up animate-delay-1" data-i18n="freight_hero_desc">Moving cargo across borders with speed, reliability, and complete visibility. From air to ocean, road to rail — we have the right solution for your business.</p>
+            <div class="hero-actions animate-fade-up animate-delay-2">
+                <a href="#freight-grid" class="btn btn-primary"><i class="fas fa-arrow-down"></i> <span data-i18n="freight_hero_cta_1">EXPLORE FREIGHT</span></a>
+                <a href="contact.html" class="btn btn-secondary"><i class="fas fa-paper-plane"></i> <span data-i18n="freight_hero_cta_2">GET A QUOTE</span></a>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    TRACKING RESULT SECTION
+    FREIGHT GRID (Main)
     ============================================================ -->
-    <section class="tracking-result-section" id="trackingResultSection" style="display:none;">
-        <div class="container">
-            <div id="trackingResult"></div>
-        </div>
-    </section>
-
-    <!-- ============================================================
-    FAQ & SUPPORT
-    ============================================================ -->
-    <section class="tracking-faq">
+    <section class="freight-main" id="freight-grid">
         <div class="container text-center">
-            <span class="section-label"><i class="fas fa-question-circle"></i> <span data-i18n="tracking_faq_label">FAQs</span></span>
-            <h2 class="section-title"><span data-i18n="tracking_faq_title_1">Frequently</span> <span class="highlight" data-i18n="tracking_faq_title_2">Asked</span> <span data-i18n="tracking_faq_title_3">Questions</span></h2>
-            <p class="section-subtitle" data-i18n="tracking_faq_sub">Find answers to the most common questions about tracking your shipments with Velox.</p>
+            <span class="section-label"><i class="fas fa-ship"></i> <span data-i18n="freight_main_label">OUR FREIGHT SERVICES</span></span>
+            <h2 class="section-title"><span data-i18n="freight_main_title_1">Comprehensive</span> <span class="highlight" data-i18n="freight_main_title_2">Freight</span> <span data-i18n="freight_main_title_3">Solutions</span></h2>
+            <p class="section-subtitle" data-i18n="freight_main_sub">We offer a full spectrum of freight services designed to move your cargo efficiently and reliably across the globe.</p>
 
-            <div class="faq-grid">
-                <div class="faq-item active">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span data-i18n="tracking_faq_1_q">How do I track my package?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="tracking_faq_1_a">
-                        Simply enter your tracking number in the search box above and click Track. You'll see real-time updates including the current location, status, and estimated delivery date.
-                    </div>
+            <div class="freight-grid">
+                <div class="freight-card" data-delay="0">
+                    <span class="icon"><i class="fas fa-plane"></i></span>
+                    <h3 data-i18n="freight_card_air_title">Air Freight</h3>
+                    <p data-i18n="freight_card_air_desc">Fast and reliable air cargo services for time-sensitive shipments. Priority handling, real-time tracking, and global network coverage for urgent deliveries.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span data-i18n="tracking_faq_2_q">What does a tracking number look like?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="tracking_faq_2_a">
-                        Velox tracking numbers typically start with "VX" followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.
-                    </div>
+                <div class="freight-card" data-delay="1">
+                    <span class="icon"><i class="fas fa-ship"></i></span>
+                    <h3 data-i18n="freight_card_ocean_title">Ocean Freight</h3>
+                    <p data-i18n="freight_card_ocean_desc">Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide with reliable transit times and complete visibility.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span data-i18n="tracking_faq_3_q">Why is my tracking number not working?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="tracking_faq_3_a">
-                        If your tracking number isn't recognized, it may not have been scanned into our system yet. Please wait 24-48 hours after shipping and try again. If the issue persists, contact our support team.
-                    </div>
+                <div class="freight-card" data-delay="2">
+                    <span class="icon"><i class="fas fa-truck"></i></span>
+                    <h3 data-i18n="freight_card_road_title">Road Freight</h3>
+                    <p data-i18n="freight_card_road_desc">Overland freight services across Europe, North America, and Asia. Full truckload (FTL) and less than truckload (LTL) options with real-time tracking.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span data-i18n="tracking_faq_4_q">Can I track multiple shipments at once?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer" data-i18n="tracking_faq_4_a">
-                        Yes, you can track up to 10 shipments simultaneously by entering multiple tracking numbers separated by commas in the search box.
-                    </div>
+                <div class="freight-card" data-delay="3">
+                    <span class="icon"><i class="fas fa-train"></i></span>
+                    <h3 data-i18n="freight_card_rail_title">Rail Freight</h3>
+                    <p data-i18n="freight_card_rail_desc">Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently with lower carbon emissions and reliable schedules.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="freight-card" data-delay="4">
+                    <span class="icon"><i class="fas fa-boxes"></i></span>
+                    <h3 data-i18n="freight_card_multimodal_title">Multimodal Freight</h3>
+                    <p data-i18n="freight_card_multimodal_desc">Combine the best of air, ocean, road, and rail for optimized cost and transit time. Customized solutions for complex supply chain requirements.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="freight-card" data-delay="5">
+                    <span class="icon"><i class="fas fa-warehouse"></i></span>
+                    <h3 data-i18n="freight_card_project_title">Project Cargo</h3>
+                    <p data-i18n="freight_card_project_desc">Specialized handling for oversized, heavy, or complex shipments. Engineering, route planning, and execution for large-scale projects.</p>
+                    <a href="contact.html" class="link"><span data-i18n="learn_more">Learn More</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    TRACKING STATS BANNER
+    FREIGHT MODES
     ============================================================ -->
-    <section class="tracking-stats">
+    <section class="freight-modes">
+        <div class="container text-center">
+            <span class="section-label"><i class="fas fa-route"></i> <span data-i18n="freight_modes_label">FREIGHT MODES</span></span>
+            <h2 class="section-title"><span data-i18n="freight_modes_title_1">Transport</span> <span class="highlight" data-i18n="freight_modes_title_2">Modes</span> <span data-i18n="freight_modes_title_3">We Offer</span></h2>
+            <p class="section-subtitle" data-i18n="freight_modes_sub">Choose the right mode of transport for your cargo, or let us design a multimodal solution for you.</p>
+
+            <div class="modes-grid">
+                <div class="mode-item" data-delay="0">
+                    <span class="icon"><i class="fas fa-plane"></i></span>
+                    <h4 data-i18n="mode_air_title">Air</h4>
+                    <p data-i18n="mode_air_desc">Fastest delivery for time-critical shipments. Priority handling and real-time tracking.</p>
+                </div>
+                <div class="mode-item" data-delay="1">
+                    <span class="icon"><i class="fas fa-ship"></i></span>
+                    <h4 data-i18n="mode_ocean_title">Ocean</h4>
+                    <p data-i18n="mode_ocean_desc">Cost-effective for large volumes. FCL, LCL, and breakbulk services worldwide.</p>
+                </div>
+                <div class="mode-item" data-delay="2">
+                    <span class="icon"><i class="fas fa-truck"></i></span>
+                    <h4 data-i18n="mode_road_title">Road</h4>
+                    <p data-i18n="mode_road_desc">Overland freight with FTL and LTL options. Real-time tracking for every shipment.</p>
+                </div>
+                <div class="mode-item" data-delay="3">
+                    <span class="icon"><i class="fas fa-train"></i></span>
+                    <h4 data-i18n="mode_rail_title">Rail</h4>
+                    <p data-i18n="mode_rail_desc">Sustainable solution for heavy cargo. Lower emissions and reliable schedules.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FREIGHT BENEFITS
+    ============================================================ -->
+    <section class="freight-benefits">
+        <div class="container text-center">
+            <span class="section-label"><i class="fas fa-star"></i> <span data-i18n="freight_benefits_label">WHY CHOOSE VELOX FREIGHT</span></span>
+            <h2 class="section-title"><span data-i18n="freight_benefits_title_1">The</span> <span class="highlight" data-i18n="freight_benefits_title_2">Velox</span> <span data-i18n="freight_benefits_title_3">Difference</span></h2>
+            <p class="section-subtitle" data-i18n="freight_benefits_sub">We go beyond standard freight services to provide strategic advantages for your cargo.</p>
+
+            <div class="benefits-grid">
+                <div class="benefit-item" data-delay="0">
+                    <span class="icon"><i class="fas fa-bolt"></i></span>
+                    <h4 data-i18n="freight_benefit_1_title">Fast Transit</h4>
+                    <p data-i18n="freight_benefit_1_desc">Priority handling and optimized routes for faster delivery times across all modes of transport.</p>
+                </div>
+                <div class="benefit-item" data-delay="1">
+                    <span class="icon"><i class="fas fa-globe"></i></span>
+                    <h4 data-i18n="freight_benefit_2_title">Global Coverage</h4>
+                    <p data-i18n="freight_benefit_2_desc">Operations in over 220 countries with local expertise in every major trade corridor.</p>
+                </div>
+                <div class="benefit-item" data-delay="2">
+                    <span class="icon"><i class="fas fa-headset"></i></span>
+                    <h4 data-i18n="freight_benefit_3_title">24/7 Support</h4>
+                    <p data-i18n="freight_benefit_3_desc">Dedicated freight support team available around the clock to assist with any shipping or customs issues.</p>
+                </div>
+                <div class="benefit-item" data-delay="3">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <h4 data-i18n="freight_benefit_4_title">Real-Time Visibility</h4>
+                    <p data-i18n="freight_benefit_4_desc">End-to-end tracking and monitoring of your cargo across every mode of transport with live updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CTA BANNER
+    ============================================================ -->
+    <section class="cta-banner">
         <div class="container">
-            <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);"><i class="fas fa-chart-line"></i> <span data-i18n="tracking_stats_label">OUR TRACKING PERFORMANCE</span></span>
-            <h2 class="section-title" style="color:var(--white);"><span data-i18n="tracking_stats_title_1">Built for</span> <span class="highlight" style="color:var(--secondary);" data-i18n="tracking_stats_title_2">Transparency</span></h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="number">99.7%</span>
-                    <span class="label" data-i18n="tracking_stat_1">Tracking Accuracy</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">24/7</span>
-                    <span class="label" data-i18n="tracking_stat_2">Live Updates</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">220+</span>
-                    <span class="label" data-i18n="tracking_stat_3">Countries Covered</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">10M+</span>
-                    <span class="label" data-i18n="tracking_stat_4">Shipments Tracked</span>
-                </div>
+            <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);"><i class="fas fa-paper-plane"></i> <span data-i18n="freight_cta_label">READY TO SHIP?</span></span>
+            <h2 class="cta-title" data-i18n="freight_cta_title">Let Us Handle Your Freight</h2>
+            <p data-i18n="freight_cta_desc">Contact our freight team today for a free consultation and discover how Velox Logistics can move your cargo efficiently and reliably.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="contact.html" class="btn btn-secondary"><i class="fas fa-envelope"></i> <span data-i18n="freight_cta_btn_1">Get a Quote</span></a>
+                <a href="tel:+442079460123" class="btn btn-primary"><i class="fas fa-phone-alt"></i> <span data-i18n="freight_cta_btn_2">Call Us Now</span></a>
             </div>
         </div>
     </section>
@@ -1423,12 +1403,12 @@
                     <h4 data-i18n="footer_quick">Quick Links</h4>
                     <ul>
                         <li><a href="tracking.html"><i class="fas fa-search"></i> <span data-i18n="nav_track">Track a Shipment</span></a></li>
-                        <li><a href="index.html#contact"><i class="fas fa-calculator"></i> <span data-i18n="nav_quote">Get a Quote</span></a></li>
-                        <li><a href="index.html#about"><i class="fas fa-info-circle"></i> <span data-i18n="nav_about">About Us</span></a></li>
-                        <li><a href="index.html#services"><i class="fas fa-cogs"></i> <span data-i18n="nav_services">Services</span></a></li>
-                        <li><a href="index.html#freight"><i class="fas fa-ship"></i> <span data-i18n="nav_freight">Freight</span></a></li>
+                        <li><a href="contact.html"><i class="fas fa-calculator"></i> <span data-i18n="nav_quote">Get a Quote</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> <span data-i18n="nav_about">About Us</span></a></li>
+                        <li><a href="services.html"><i class="fas fa-cogs"></i> <span data-i18n="nav_services">Services</span></a></li>
+                        <li><a href="freight.html"><i class="fas fa-ship"></i> <span data-i18n="nav_freight">Freight</span></a></li>
                         <li><a href="customs.html"><i class="fas fa-file-contract"></i> <span data-i18n="nav_customs">Customs</span></a></li>
-                        <li><a href="index.html#logistics"><i class="fas fa-truck-moving"></i> <span data-i18n="nav_logistics">Logistics</span></a></li>
+                        <li><a href="logistics.html"><i class="fas fa-truck-moving"></i> <span data-i18n="nav_logistics">Logistics</span></a></li>
                     </ul>
                 </div>
 
@@ -1447,7 +1427,7 @@
                 <div class="footer-col">
                     <h4 data-i18n="footer_company">Company</h4>
                     <ul>
-                        <li><a href="index.html#about"><i class="fas fa-building"></i> <span data-i18n="about_us">About Velox</span></a></li>
+                        <li><a href="about.html"><i class="fas fa-building"></i> <span data-i18n="about_us">About Velox</span></a></li>
                         <li><a href="#"><i class="fas fa-bullhorn"></i> <span data-i18n="newsroom">Newsroom</span></a></li>
                         <li><a href="#"><i class="fas fa-users"></i> <span data-i18n="careers">Careers</span></a></li>
                         <li><a href="#"><i class="fas fa-shield-alt"></i> <span data-i18n="privacy">Privacy Policy</span></a></li>
@@ -1471,11 +1451,6 @@
     <!-- ============================================================
     JAVASCRIPT
     ============================================================ -->
-
-    <!-- Leaflet JS for the map -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-    </script>
-
     <script>
         // ============================================================
         // MOBILE NAV
@@ -1488,15 +1463,43 @@
         }
 
         // ============================================================
-        // FAQ TOGGLE
+        // SCROLL REVEAL
         // ============================================================
-        function toggleFAQ(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.freight-card, .mode-item, .benefit-item');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 80;
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('visible');
+                }
+            });
         }
 
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', () => {
+            revealOnScroll();
+            setTimeout(revealOnScroll, 300);
+        });
+
         // ============================================================
-        // TRANSLATIONS (Full Index + Tracking Specific)
+        // SMOOTH SCROLL FOR ANCHOR LINKS
+        // ============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ============================================================
+        // TRANSLATIONS (Full Index + Freight Specific)
         // ============================================================
         const translations = {
             en: {
@@ -1605,31 +1608,62 @@
                 business: "Business",
                 international: "International",
                 help: "Help",
-                // New tracking-specific keys
-                tracking_hero_badge: "REAL-TIME TRACKING",
-                tracking_hero_title_1: "Track Your",
-                tracking_hero_title_2: "Shipment",
-                tracking_hero_desc: "Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.",
-                tracking_faq_label: "FAQs",
-                tracking_faq_title_1: "Frequently",
-                tracking_faq_title_2: "Asked",
-                tracking_faq_title_3: "Questions",
-                tracking_faq_sub: "Find answers to the most common questions about tracking your shipments with Velox.",
-                tracking_faq_1_q: "How do I track my package?",
-                tracking_faq_1_a: "Simply enter your tracking number in the search box above and click Track. You'll see real-time updates including the current location, status, and estimated delivery date.",
-                tracking_faq_2_q: "What does a tracking number look like?",
-                tracking_faq_2_a: "Velox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.",
-                tracking_faq_3_q: "Why is my tracking number not working?",
-                tracking_faq_3_a: "If your tracking number isn't recognized, it may not have been scanned into our system yet. Please wait 24-48 hours after shipping and try again. If the issue persists, contact our support team.",
-                tracking_faq_4_q: "Can I track multiple shipments at once?",
-                tracking_faq_4_a: "Yes, you can track up to 10 shipments simultaneously by entering multiple tracking numbers separated by commas in the search box.",
-                tracking_stats_label: "OUR TRACKING PERFORMANCE",
-                tracking_stats_title_1: "Built for",
-                tracking_stats_title_2: "Transparency",
-                tracking_stat_1: "Tracking Accuracy",
-                tracking_stat_2: "Live Updates",
-                tracking_stat_3: "Countries Covered",
-                tracking_stat_4: "Shipments Tracked",
+                // New freight-specific keys
+                freight_hero_badge: "FREIGHT SERVICES",
+                freight_hero_title_1: "Global",
+                freight_hero_title_2: "Freight",
+                freight_hero_title_3: "Solutions",
+                freight_hero_desc: "Moving cargo across borders with speed, reliability, and complete visibility. From air to ocean, road to rail — we have the right solution for your business.",
+                freight_hero_cta_1: "EXPLORE FREIGHT",
+                freight_hero_cta_2: "GET A QUOTE",
+                freight_main_label: "OUR FREIGHT SERVICES",
+                freight_main_title_1: "Comprehensive",
+                freight_main_title_2: "Freight",
+                freight_main_title_3: "Solutions",
+                freight_main_sub: "We offer a full spectrum of freight services designed to move your cargo efficiently and reliably across the globe.",
+                freight_card_air_title: "Air Freight",
+                freight_card_air_desc: "Fast and reliable air cargo services for time-sensitive shipments. Priority handling, real-time tracking, and global network coverage for urgent deliveries.",
+                freight_card_ocean_title: "Ocean Freight",
+                freight_card_ocean_desc: "Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide with reliable transit times and complete visibility.",
+                freight_card_road_title: "Road Freight",
+                freight_card_road_desc: "Overland freight services across Europe, North America, and Asia. Full truckload (FTL) and less than truckload (LTL) options with real-time tracking.",
+                freight_card_rail_title: "Rail Freight",
+                freight_card_rail_desc: "Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently with lower carbon emissions and reliable schedules.",
+                freight_card_multimodal_title: "Multimodal Freight",
+                freight_card_multimodal_desc: "Combine the best of air, ocean, road, and rail for optimized cost and transit time. Customized solutions for complex supply chain requirements.",
+                freight_card_project_title: "Project Cargo",
+                freight_card_project_desc: "Specialized handling for oversized, heavy, or complex shipments. Engineering, route planning, and execution for large-scale projects.",
+                freight_modes_label: "FREIGHT MODES",
+                freight_modes_title_1: "Transport",
+                freight_modes_title_2: "Modes",
+                freight_modes_title_3: "We Offer",
+                freight_modes_sub: "Choose the right mode of transport for your cargo, or let us design a multimodal solution for you.",
+                mode_air_title: "Air",
+                mode_air_desc: "Fastest delivery for time-critical shipments. Priority handling and real-time tracking.",
+                mode_ocean_title: "Ocean",
+                mode_ocean_desc: "Cost-effective for large volumes. FCL, LCL, and breakbulk services worldwide.",
+                mode_road_title: "Road",
+                mode_road_desc: "Overland freight with FTL and LTL options. Real-time tracking for every shipment.",
+                mode_rail_title: "Rail",
+                mode_rail_desc: "Sustainable solution for heavy cargo. Lower emissions and reliable schedules.",
+                freight_benefits_label: "WHY CHOOSE VELOX FREIGHT",
+                freight_benefits_title_1: "The",
+                freight_benefits_title_2: "Velox",
+                freight_benefits_title_3: "Difference",
+                freight_benefits_sub: "We go beyond standard freight services to provide strategic advantages for your cargo.",
+                freight_benefit_1_title: "Fast Transit",
+                freight_benefit_1_desc: "Priority handling and optimized routes for faster delivery times across all modes of transport.",
+                freight_benefit_2_title: "Global Coverage",
+                freight_benefit_2_desc: "Operations in over 220 countries with local expertise in every major trade corridor.",
+                freight_benefit_3_title: "24/7 Support",
+                freight_benefit_3_desc: "Dedicated freight support team available around the clock to assist with any shipping or customs issues.",
+                freight_benefit_4_title: "Real-Time Visibility",
+                freight_benefit_4_desc: "End-to-end tracking and monitoring of your cargo across every mode of transport with live updates.",
+                freight_cta_label: "READY TO SHIP?",
+                freight_cta_title: "Let Us Handle Your Freight",
+                freight_cta_desc: "Contact our freight team today for a free consultation and discover how Velox Logistics can move your cargo efficiently and reliably.",
+                freight_cta_btn_1: "Get a Quote",
+                freight_cta_btn_2: "Call Us Now",
                 // Footer keys
                 footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.",
                 footer_quick: "Quick Links",
@@ -1658,30 +1692,61 @@
                 accessibility: "Accessibility"
             },
             fr: {
-                tracking_hero_badge: "SUIVI EN TEMPS RÉEL",
-                tracking_hero_title_1: "Suivez votre",
-                tracking_hero_title_2: "Colis",
-                tracking_hero_desc: "Entrez votre numéro de suivi Velox pour voir les mises à jour en temps réel, l'état de la livraison et le suivi par carte.",
-                tracking_faq_label: "FAQ",
-                tracking_faq_title_1: "Questions",
-                tracking_faq_title_2: "Fréquemment",
-                tracking_faq_title_3: "Posées",
-                tracking_faq_sub: "Trouvez les réponses aux questions les plus courantes sur le suivi de vos envois avec Velox.",
-                tracking_faq_1_q: "Comment suivre mon colis ?",
-                tracking_faq_1_a: "Entrez simplement votre numéro de suivi dans la case de recherche et cliquez sur Suivre. Vous verrez des mises à jour en temps réel.",
-                tracking_faq_2_q: "À quoi ressemble un numéro de suivi ?",
-                tracking_faq_2_a: "Les numéros de suivi Velox commencent par 'VX' suivi de 6 chiffres (ex: VX123456).",
-                tracking_faq_3_q: "Pourquoi mon numéro de suivi ne fonctionne-t-il pas ?",
-                tracking_faq_3_a: "Si votre numéro n'est pas reconnu, il n'a peut-être pas encore été scanné. Attendez 24-48 heures et réessayez.",
-                tracking_faq_4_q: "Puis-je suivre plusieurs envois à la fois ?",
-                tracking_faq_4_a: "Oui, vous pouvez suivre jusqu'à 10 envois en entrant plusieurs numéros séparés par des virgules.",
-                tracking_stats_label: "NOTRE PERFORMANCE DE SUIVI",
-                tracking_stats_title_1: "Conçu pour la",
-                tracking_stats_title_2: "Transparence",
-                tracking_stat_1: "Précision de suivi",
-                tracking_stat_2: "Mises à jour en direct",
-                tracking_stat_3: "Pays couverts",
-                tracking_stat_4: "Envois suivis",
+                freight_hero_badge: "SERVICES DE FRET",
+                freight_hero_title_1: "Solutions",
+                freight_hero_title_2: "de Fret",
+                freight_hero_title_3: "Mondiales",
+                freight_hero_desc: "Déplacement de marchandises au-delà des frontières avec rapidité, fiabilité et visibilité complète.",
+                freight_hero_cta_1: "EXPLORER LE FRET",
+                freight_hero_cta_2: "OBTENIR UN DEVIS",
+                freight_main_label: "NOS SERVICES DE FRET",
+                freight_main_title_1: "Solutions",
+                freight_main_title_2: "de Fret",
+                freight_main_title_3: "Complètes",
+                freight_main_sub: "Nous offrons une gamme complète de services de fret pour déplacer votre cargaison efficacement.",
+                freight_card_air_title: "Fret Aérien",
+                freight_card_air_desc: "Services de fret aérien rapides et fiables pour les envois urgents. Suivi en temps réel.",
+                freight_card_ocean_title: "Fret Maritime",
+                freight_card_ocean_desc: "Solutions de fret maritime économiques pour grands volumes. Services FCL, LCL et breakbulk.",
+                freight_card_road_title: "Fret Routier",
+                freight_card_road_desc: "Services de fret terrestre en Europe, Amérique du Nord et Asie. Options FTL et LTL.",
+                freight_card_rail_title: "Fret Ferroviaire",
+                freight_card_rail_desc: "Solutions de fret ferroviaire durables pour le fret lourd.",
+                freight_card_multimodal_title: "Fret Multimodal",
+                freight_card_multimodal_desc: "Combinez le meilleur de l'air, de l'océan, de la route et du rail pour un coût et un temps de transit optimisés.",
+                freight_card_project_title: "Projet Cargo",
+                freight_card_project_desc: "Manutention spécialisée pour les envois surdimensionnés, lourds ou complexes.",
+                freight_modes_label: "MODES DE FRET",
+                freight_modes_title_1: "Modes de",
+                freight_modes_title_2: "Transport",
+                freight_modes_title_3: "Proposés",
+                freight_modes_sub: "Choisissez le mode de transport adapté à votre cargaison.",
+                mode_air_title: "Aérien",
+                mode_air_desc: "Livraison la plus rapide pour les envois urgents. Suivi en temps réel.",
+                mode_ocean_title: "Maritime",
+                mode_ocean_desc: "Économique pour les grands volumes. Services FCL, LCL et breakbulk.",
+                mode_road_title: "Routier",
+                mode_road_desc: "Fret terrestre avec options FTL et LTL. Suivi en temps réel.",
+                mode_rail_title: "Ferroviaire",
+                mode_rail_desc: "Solution durable pour le fret lourd. Émissions réduites et horaires fiables.",
+                freight_benefits_label: "POURQUOI CHOISIR VELOX FRET",
+                freight_benefits_title_1: "La",
+                freight_benefits_title_2: "Différence",
+                freight_benefits_title_3: "Velox",
+                freight_benefits_sub: "Nous allons au-delà des services de fret standard pour offrir des avantages stratégiques.",
+                freight_benefit_1_title: "Transit Rapide",
+                freight_benefit_1_desc: "Manutention prioritaire et itinéraires optimisés pour des délais de livraison plus rapides.",
+                freight_benefit_2_title: "Couverture Mondiale",
+                freight_benefit_2_desc: "Opérations dans plus de 220 pays avec expertise locale.",
+                freight_benefit_3_title: "Support 24/7",
+                freight_benefit_3_desc: "Équipe de support dédiée disponible 24h/24.",
+                freight_benefit_4_title: "Visibilité en Temps Réel",
+                freight_benefit_4_desc: "Suivi et surveillance de bout en bout de votre cargaison avec des mises à jour en direct.",
+                freight_cta_label: "PRÊT À EXPÉDIER ?",
+                freight_cta_title: "Laissez-nous gérer votre fret",
+                freight_cta_desc: "Contactez notre équipe fret pour une consultation gratuite.",
+                freight_cta_btn_1: "Obtenir un devis",
+                freight_cta_btn_2: "Appelez-nous",
                 footer_desc: "Solutions mondiales d'express et de fret construites sur la fiabilité, la rapidité et l'engagement pour des chaînes d'approvisionnement durables.",
                 footer_quick: "Liens rapides",
                 footer_support: "Service client",
@@ -1709,30 +1774,61 @@
                 accessibility: "Accessibilité"
             },
             de: {
-                tracking_hero_badge: "ECHTZEIT-SENDUNGSVERFOLGUNG",
-                tracking_hero_title_1: "Verfolgen Sie Ihre",
-                tracking_hero_title_2: "Sendung",
-                tracking_hero_desc: "Geben Sie Ihre Velox-Sendungsnummer ein, um Echtzeit-Updates, den Lieferstatus und die Live-Kartenverfolgung zu sehen.",
-                tracking_faq_label: "FAQ",
-                tracking_faq_title_1: "Häufig",
-                tracking_faq_title_2: "Gestellte",
-                tracking_faq_title_3: "Fragen",
-                tracking_faq_sub: "Finden Sie Antworten auf die häufigsten Fragen zur Sendungsverfolgung mit Velox.",
-                tracking_faq_1_q: "Wie verfolge ich mein Paket?",
-                tracking_faq_1_a: "Geben Sie einfach Ihre Sendungsnummer in das Suchfeld ein und klicken Sie auf Verfolgen.",
-                tracking_faq_2_q: "Wie sieht eine Sendungsnummer aus?",
-                tracking_faq_2_a: "Velox-Sendungsnummern beginnen mit 'VX' gefolgt von 6 Ziffern (z.B. VX123456).",
-                tracking_faq_3_q: "Warum funktioniert meine Sendungsnummer nicht?",
-                tracking_faq_3_a: "Wenn Ihre Nummer nicht erkannt wird, wurde sie möglicherweise noch nicht gescannt. Bitte warten Sie 24-48 Stunden.",
-                tracking_faq_4_q: "Kann ich mehrere Sendungen gleichzeitig verfolgen?",
-                tracking_faq_4_a: "Ja, Sie können bis zu 10 Sendungen verfolgen, indem Sie mehrere Nummern mit Kommas getrennt eingeben.",
-                tracking_stats_label: "UNSERE SENDUNGSVERFOLGUNGSLEISTUNG",
-                tracking_stats_title_1: "Gebaut für",
-                tracking_stats_title_2: "Transparenz",
-                tracking_stat_1: "Verfolgungsgenauigkeit",
-                tracking_stat_2: "Live-Updates",
-                tracking_stat_3: "Abgedeckte Länder",
-                tracking_stat_4: "Verfolgte Sendungen",
+                freight_hero_badge: "FRACHTDIENSTLEISTUNGEN",
+                freight_hero_title_1: "Globale",
+                freight_hero_title_2: "Fracht-",
+                freight_hero_title_3: "Lösungen",
+                freight_hero_desc: "Bewegen Sie Güter über Grenzen hinweg mit Geschwindigkeit, Zuverlässigkeit und vollständiger Transparenz.",
+                freight_hero_cta_1: "FRACHT ENTDECKEN",
+                freight_hero_cta_2: "ANGEBOT EINHOLEN",
+                freight_main_label: "UNSERE FRACHTDIENSTLEISTUNGEN",
+                freight_main_title_1: "Umfassende",
+                freight_main_title_2: "Fracht-",
+                freight_main_title_3: "Lösungen",
+                freight_main_sub: "Wir bieten ein vollständiges Spektrum an Frachtdienstleistungen.",
+                freight_card_air_title: "Luftfracht",
+                freight_card_air_desc: "Schnelle und zuverlässige Luftfrachtdienste für zeitkritische Sendungen. Echtzeit-Tracking.",
+                freight_card_ocean_title: "Seefracht",
+                freight_card_ocean_desc: "Kostengünstige Seefrachtlösungen für große Volumen. FCL-, LCL- und Breakbulk-Dienste.",
+                freight_card_road_title: "Straßenfracht",
+                freight_card_road_desc: "Landfrachtdienste in Europa, Nordamerika und Asien. FTL- und LTL-Optionen.",
+                freight_card_rail_title: "Schienenfracht",
+                freight_card_rail_desc: "Nachhaltige Schienenfrachtlösungen für Schwergut.",
+                freight_card_multimodal_title: "Multimodale Fracht",
+                freight_card_multimodal_desc: "Kombinieren Sie das Beste aus Luft, See, Straße und Schiene für optimierte Kosten und Transitzeiten.",
+                freight_card_project_title: "Projektfracht",
+                freight_card_project_desc: "Spezialisierte Handhabung für übergroße, schwere oder komplexe Sendungen.",
+                freight_modes_label: "FRACHTMODI",
+                freight_modes_title_1: "Transport-",
+                freight_modes_title_2: "Modi",
+                freight_modes_title_3: "Wir bieten",
+                freight_modes_sub: "Wählen Sie den richtigen Transportmodus für Ihre Fracht.",
+                mode_air_title: "Luft",
+                mode_air_desc: "Schnellste Lieferung für zeitkritische Sendungen. Echtzeit-Tracking.",
+                mode_ocean_title: "See",
+                mode_ocean_desc: "Kostengünstig für große Volumen. FCL-, LCL- und Breakbulk-Dienste.",
+                mode_road_title: "Straße",
+                mode_road_desc: "Landfracht mit FTL- und LTL-Optionen. Echtzeit-Tracking.",
+                mode_rail_title: "Schiene",
+                mode_rail_desc: "Nachhaltige Lösung für Schwergut. Niedrigere Emissionen und zuverlässige Fahrpläne.",
+                freight_benefits_label: "WARUM VELOX FRACHT WÄHLEN",
+                freight_benefits_title_1: "Der",
+                freight_benefits_title_2: "Velox",
+                freight_benefits_title_3: "Unterschied",
+                freight_benefits_sub: "Wir bieten strategische Vorteile über standardmäßige Frachtdienste hinaus.",
+                freight_benefit_1_title: "Schneller Transit",
+                freight_benefit_1_desc: "Priorisierte Abfertigung und optimierte Routen für schnellere Lieferzeiten.",
+                freight_benefit_2_title: "Globale Abdeckung",
+                freight_benefit_2_desc: "Operationen in über 220 Ländern mit lokaler Expertise.",
+                freight_benefit_3_title: "24/7 Support",
+                freight_benefit_3_desc: "Dediziertes Support-Team rund um die Uhr.",
+                freight_benefit_4_title: "Echtzeit-Transparenz",
+                freight_benefit_4_desc: "End-to-End-Tracking Ihrer Fracht mit Live-Updates.",
+                freight_cta_label: "BEREIT ZUM VERSAND?",
+                freight_cta_title: "Überlassen Sie uns Ihre Fracht",
+                freight_cta_desc: "Kontaktieren Sie unser Frachtteam für eine kostenlose Beratung.",
+                freight_cta_btn_1: "Angebot einholen",
+                freight_cta_btn_2: "Rufen Sie uns an",
                 footer_desc: "Globale Express- und Frachtlösungen basierend auf Zuverlässigkeit, Geschwindigkeit und Engagement für nachhaltige Lieferketten.",
                 footer_quick: "Quicklinks",
                 footer_support: "Kundenservice",
@@ -1760,30 +1856,61 @@
                 accessibility: "Barrierefreiheit"
             },
             es: {
-                tracking_hero_badge: "SEGUIMIENTO EN TIEMPO REAL",
-                tracking_hero_title_1: "Rastree su",
-                tracking_hero_title_2: "Envío",
-                tracking_hero_desc: "Ingrese su número de seguimiento de Velox para ver actualizaciones en tiempo real, estado de entrega y seguimiento en mapa.",
-                tracking_faq_label: "PREGUNTAS FRECUENTES",
-                tracking_faq_title_1: "Preguntas",
-                tracking_faq_title_2: "Frecuentes",
-                tracking_faq_title_3: "FAQ",
-                tracking_faq_sub: "Encuentre respuestas a las preguntas más comunes sobre el seguimiento de sus envíos con Velox.",
-                tracking_faq_1_q: "¿Cómo rastreo mi paquete?",
-                tracking_faq_1_a: "Simplemente ingrese su número de seguimiento en el cuadro de búsqueda y haga clic en Rastrear.",
-                tracking_faq_2_q: "¿Cómo es un número de seguimiento?",
-                tracking_faq_2_a: "Los números de seguimiento de Velox comienzan con 'VX' seguido de 6 dígitos (ej. VX123456).",
-                tracking_faq_3_q: "¿Por qué no funciona mi número de seguimiento?",
-                tracking_faq_3_a: "Si su número no es reconocido, es posible que aún no se haya escaneado. Espere 24-48 horas e intente de nuevo.",
-                tracking_faq_4_q: "¿Puedo rastrear varios envíos a la vez?",
-                tracking_faq_4_a: "Sí, puede rastrear hasta 10 envíos ingresando múltiples números separados por comas.",
-                tracking_stats_label: "NUESTRO RENDIMIENTO DE SEGUIMIENTO",
-                tracking_stats_title_1: "Construido para la",
-                tracking_stats_title_2: "Transparencia",
-                tracking_stat_1: "Precisión de seguimiento",
-                tracking_stat_2: "Actualizaciones en vivo",
-                tracking_stat_3: "Países cubiertos",
-                tracking_stat_4: "Envíos rastreados",
+                freight_hero_badge: "SERVICIOS DE CARGA",
+                freight_hero_title_1: "Soluciones",
+                freight_hero_title_2: "de Carga",
+                freight_hero_title_3: "Mundiales",
+                freight_hero_desc: "Moviendo carga a través de fronteras con rapidez, confiabilidad y visibilidad completa.",
+                freight_hero_cta_1: "EXPLORAR CARGA",
+                freight_hero_cta_2: "OBTENER PRESUPUESTO",
+                freight_main_label: "NUESTROS SERVICIOS DE CARGA",
+                freight_main_title_1: "Soluciones",
+                freight_main_title_2: "de Carga",
+                freight_main_title_3: "Completas",
+                freight_main_sub: "Ofrecemos un espectro completo de servicios de carga.",
+                freight_card_air_title: "Carga Aérea",
+                freight_card_air_desc: "Servicios de carga aérea rápidos y confiables para envíos urgentes. Seguimiento en tiempo real.",
+                freight_card_ocean_title: "Carga Marítima",
+                freight_card_ocean_desc: "Soluciones de carga marítima rentables para grandes volúmenes. Servicios FCL, LCL y breakbulk.",
+                freight_card_road_title: "Carga Terrestre",
+                freight_card_road_desc: "Servicios de carga terrestre en Europa, América del Norte y Asia. Opciones FTL y LTL.",
+                freight_card_rail_title: "Carga Ferroviaria",
+                freight_card_rail_desc: "Soluciones de carga ferroviaria sostenibles para cargas pesadas.",
+                freight_card_multimodal_title: "Carga Multimodal",
+                freight_card_multimodal_desc: "Combine lo mejor de aéreo, marítimo, terrestre y ferroviario para optimizar costos y tiempos.",
+                freight_card_project_title: "Carga de Proyecto",
+                freight_card_project_desc: "Manejo especializado para envíos sobredimensionados, pesados o complejos.",
+                freight_modes_label: "MODOS DE CARGA",
+                freight_modes_title_1: "Modos de",
+                freight_modes_title_2: "Transporte",
+                freight_modes_title_3: "Ofrecemos",
+                freight_modes_sub: "Elija el modo de transporte adecuado para su carga.",
+                mode_air_title: "Aéreo",
+                mode_air_desc: "Entrega más rápida para envíos urgentes. Seguimiento en tiempo real.",
+                mode_ocean_title: "Marítimo",
+                mode_ocean_desc: "Económico para grandes volúmenes. Servicios FCL, LCL y breakbulk.",
+                mode_road_title: "Terrestre",
+                mode_road_desc: "Carga terrestre con opciones FTL y LTL. Seguimiento en tiempo real.",
+                mode_rail_title: "Ferroviario",
+                mode_rail_desc: "Solución sostenible para cargas pesadas. Menores emisiones y horarios confiables.",
+                freight_benefits_label: "POR QUÉ ELEGIR VELOX CARGA",
+                freight_benefits_title_1: "La",
+                freight_benefits_title_2: "Diferencia",
+                freight_benefits_title_3: "Velox",
+                freight_benefits_sub: "Vamos más allá de los servicios de carga estándar para ofrecer ventajas estratégicas.",
+                freight_benefit_1_title: "Tránsito Rápido",
+                freight_benefit_1_desc: "Manejo prioritario y rutas optimizadas para tiempos de entrega más rápidos.",
+                freight_benefit_2_title: "Cobertura Global",
+                freight_benefit_2_desc: "Operaciones en más de 220 países con experiencia local.",
+                freight_benefit_3_title: "Soporte 24/7",
+                freight_benefit_3_desc: "Equipo de soporte dedicado disponible las 24 horas.",
+                freight_benefit_4_title: "Visibilidad en Tiempo Real",
+                freight_benefit_4_desc: "Seguimiento de extremo a extremo de su carga con actualizaciones en vivo.",
+                freight_cta_label: "¿LISTO PARA ENVIAR?",
+                freight_cta_title: "Deje que manejemos su carga",
+                freight_cta_desc: "Contacte a nuestro equipo de carga para una consulta gratuita.",
+                freight_cta_btn_1: "Obtener presupuesto",
+                freight_cta_btn_2: "Llámenos",
                 footer_desc: "Soluciones globales de express y carga basadas en confiabilidad, velocidad y un compromiso con cadenas de suministro sostenibles.",
                 footer_quick: "Enlaces rápidos",
                 footer_support: "Servicio al cliente",
@@ -1811,31 +1938,61 @@
                 accessibility: "Accesibilidad"
             },
             zh: {
-                tracking_hero_badge: "实时追踪",
-                tracking_hero_title_1: "追踪您的",
-                tracking_hero_title_2: "货物",
-                tracking_hero_desc: "输入您的 Velox 追踪号码，查看实时更新、配送状态和地图追踪。",
-                tracking_faq_label: "常见问题",
-                tracking_faq_title_1: "常见",
-                tracking_faq_title_2: "问题",
-                tracking_faq_title_3: "解答",
-                tracking_faq_sub: "查找关于使用 Velox 追踪货物的常见问题解答。",
-                tracking_faq_1_q: "如何追踪我的包裹？",
-                tracking_faq_1_a: "只需在上面的搜索框中输入您的追踪号码，然后点击追踪。您将看到实时更新，包括当前位置、状态和预计送达日期。",
-                tracking_faq_2_q: "追踪号码是什么样子的？",
-                tracking_faq_2_a: "Velox 追踪号码通常以 'VX' 开头，后跟 6 位数字（例如 VX123456）。",
-                tracking_faq_3_q: "为什么我的追踪号码不起作用？",
-                tracking_faq_3_a: "如果您的追踪号码无法识别，可能尚未录入系统。请等待 24-48 小时后再试。",
-                tracking_faq_4_q: "我可以同时追踪多个货物吗？",
-                tracking_faq_4_a: "是的，您可以通过输入多个用逗号分隔的追踪号码来同时追踪最多 10 个货物。",
-                tracking_stats_label: "我们的追踪表现",
-                tracking_stats_title_1: "为",
-                tracking_stats_title_2: "透明度",
-                tracking_stats_title_3: "而生",
-                tracking_stat_1: "追踪准确率",
-                tracking_stat_2: "实时更新",
-                tracking_stat_3: "覆盖国家",
-                tracking_stat_4: "追踪货物",
+                freight_hero_badge: "货运服务",
+                freight_hero_title_1: "全球",
+                freight_hero_title_2: "货运",
+                freight_hero_title_3: "解决方案",
+                freight_hero_desc: "以速度、可靠性和完全可见性跨越国界运输货物。",
+                freight_hero_cta_1: "探索货运",
+                freight_hero_cta_2: "获取报价",
+                freight_main_label: "我们的货运服务",
+                freight_main_title_1: "综合",
+                freight_main_title_2: "货运",
+                freight_main_title_3: "解决方案",
+                freight_main_sub: "我们提供全方位的货运服务，高效可靠地将您的货物运往全球。",
+                freight_card_air_title: "空运",
+                freight_card_air_desc: "为时效性货物提供快速可靠的航空货运服务，实时追踪。",
+                freight_card_ocean_title: "海运",
+                freight_card_ocean_desc: "为大宗货物提供经济高效的海运解决方案。",
+                freight_card_road_title: "陆运",
+                freight_card_road_desc: "覆盖欧洲、北美和亚洲的陆路货运服务。",
+                freight_card_rail_title: "铁路运输",
+                freight_card_rail_desc: "为重型货物提供可持续的铁路货运解决方案。",
+                freight_card_multimodal_title: "多式联运",
+                freight_card_multimodal_desc: "结合空运、海运、陆运和铁路的最佳组合，优化成本和运输时间。",
+                freight_card_project_title: "项目货物",
+                freight_card_project_desc: "为超大、重型或复杂货物提供专业处理。",
+                freight_modes_label: "货运模式",
+                freight_modes_title_1: "运输",
+                freight_modes_title_2: "模式",
+                freight_modes_title_3: "我们提供",
+                freight_modes_sub: "为您的货物选择合适的运输方式。",
+                mode_air_title: "空运",
+                mode_air_desc: "时效性货物最快交付，实时追踪。",
+                mode_ocean_title: "海运",
+                mode_ocean_desc: "大宗货物经济高效，提供 FCL、LCL 和散货服务。",
+                mode_road_title: "陆运",
+                mode_road_desc: "陆路货运，提供 FTL 和 LTL 选项，实时追踪。",
+                mode_rail_title: "铁路",
+                mode_rail_desc: "可持续的重型货物解决方案，排放更低，时刻表可靠。",
+                freight_benefits_label: "为什么选择 Velox 货运",
+                freight_benefits_title_1: "Velox",
+                freight_benefits_title_2: "的",
+                freight_benefits_title_3: "优势",
+                freight_benefits_sub: "我们超越标准货运服务，为您的货物提供战略优势。",
+                freight_benefit_1_title: "快速运输",
+                freight_benefit_1_desc: "优先处理和优化路线，实现更快的交付时间。",
+                freight_benefit_2_title: "全球覆盖",
+                freight_benefit_2_desc: "在 220 多个国家和地区运营，本地专业知识。",
+                freight_benefit_3_title: "24/7 支持",
+                freight_benefit_3_desc: "专属货运支持团队全天候为您服务。",
+                freight_benefit_4_title: "实时可见性",
+                freight_benefit_4_desc: "端到端跟踪和监控您的货物，提供实时更新。",
+                freight_cta_label: "准备好发货了吗？",
+                freight_cta_title: "让我们处理您的货运",
+                freight_cta_desc: "立即联系我们的货运团队，获取免费咨询。",
+                freight_cta_btn_1: "获取报价",
+                freight_cta_btn_2: "致电我们",
                 footer_desc: "基于可靠性、速度和对可持续供应链承诺的全球快递和货运解决方案。自2005年起连接全球企业。",
                 footer_quick: "快速链接",
                 footer_support: "客户服务",
@@ -1882,360 +2039,12 @@
         document.getElementById('langSelect')?.addEventListener('change', changeLanguage);
 
         // ============================================================
-        // TRACKING ENGINE (NOW SUPPORTS ADMIN SHIPMENTS)
-        // ============================================================
-        // Helper: convert admin location history into timeline format
-        function convertLocationHistoryToUpdates(locationHistory) {
-            if (!locationHistory || locationHistory.length === 0) return [];
-            return locationHistory.map(entry => ({
-                timestamp: entry.timestamp,
-                status: entry.event.toLowerCase().replace(/\s/g, '_'),
-                location: `${entry.city}, ${entry.country}`,
-                notes: entry.event
-            }));
-        }
-
-        // Fallback demo data – used if no admin shipments exist
-        const FALLBACK_SHIPMENTS = [{
-            trackingNumber: "VX123456",
-            customerName: "John Smith",
-            fromCountry: "United Kingdom",
-            toCountry: "United States",
-            fromLat: 51.5074,
-            fromLng: -0.1278,
-            toLat: 40.7128,
-            toLng: -74.0060,
-            weight: "5.5",
-            serviceType: "Express",
-            status: "in_transit",
-            updates: [
-                { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "pending", location: "London, UK", notes: "Shipment created" },
-                { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "processing", location: "Heathrow Airport", notes: "Processed at facility" },
-                { timestamp: new Date().toISOString(), status: "in_transit", location: "In Transit", notes: "En route to destination" }
-            ]
-        }, {
-            trackingNumber: "VX789012",
-            customerName: "Sarah Johnson",
-            fromCountry: "United States",
-            toCountry: "United Kingdom",
-            fromLat: 37.7749,
-            fromLng: -122.4194,
-            toLat: 51.5074,
-            toLng: -0.1278,
-            weight: "12.0",
-            serviceType: "Priority",
-            status: "delivered",
-            updates: [
-                { timestamp: new Date(Date.now() - 259200000).toISOString(), status: "pending", location: "San Francisco, CA", notes: "Shipment created" },
-                { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "in_transit", location: "International Hub", notes: "In transit" },
-                { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "out_for_delivery", location: "London, UK", notes: "Out for delivery" },
-                { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
-            ]
-        }];
-
-        // Main shipment loader – tries localStorage first
-        async function getShipments() {
-            try {
-                const stored = localStorage.getItem('velox_shipments');
-                if (stored && stored !== 'undefined') {
-                    const adminShipments = JSON.parse(stored);
-                    if (adminShipments && adminShipments.length) {
-                        // Map admin data to tracking format
-                        return adminShipments.map(ship => ({
-                            trackingNumber: ship.trackingNumber,
-                            customerName: ship.customer || 'Unknown',
-                            fromCountry: ship.fromCountry || 'Unknown',
-                            toCountry: ship.toCountry || 'Unknown',
-                            fromLat: null,       // admin data has no coordinates
-                            fromLng: null,
-                            toLat: null,
-                            toLng: null,
-                            weight: ship.weight || '0',
-                            serviceType: ship.service || 'Standard',
-                            status: ship.status || 'pending',
-                            updates: convertLocationHistoryToUpdates(ship.locationHistory)
-                        }));
-                    }
-                }
-            } catch(e) {
-                console.warn("Could not read admin shipments", e);
-            }
-            // Fallback to demo data if no admin shipments
-            return FALLBACK_SHIPMENTS;
-        }
-
-        let mapInstance = null;
-        let polyline = null;
-
-        async function runTracking() {
-            const input = document.getElementById('trackInput');
-            const num = input?.value?.trim()?.toUpperCase() || '';
-
-            if (!num) {
-                alert("Please enter a tracking number");
-                return;
-            }
-
-            const btn = document.querySelector('.track-widget .btn-track');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-            btn.disabled = true;
-
-            try {
-                const shipments = await getShipments();
-                let order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === num);
-
-                if (!order && num.startsWith('VX')) {
-                    const withoutPrefix = num.substring(2);
-                    order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix);
-                }
-
-                const section = document.getElementById('trackingResultSection');
-                const container = document.getElementById('trackingResult');
-
-                if (order) {
-                    section.style.display = 'block';
-                    renderTrackingResult(order, container);
-                    setTimeout(() => {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                } else {
-                    section.style.display = 'block';
-                    container.innerHTML = `
-                        <div style="text-align:center; padding:60px 20px; background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-sm); border:1px solid var(--gray-200);">
-                            <i class="fas fa-search" style="font-size:2.5rem; color:var(--gray-300); display:block; margin-bottom:16px;"></i>
-                            <h3 style="font-weight:800; color:var(--dark);">❌ Not Found</h3>
-                            <p style="color:var(--gray-500);">Tracking number "${num}" could not be found. Please check and try again.</p>
-                            <button class="btn btn-primary btn-sm" onclick="document.getElementById('trackInput').focus()" style="margin-top:16px;">
-                                <i class="fas fa-redo"></i> Try Again
-                            </button>
-                        </div>
-                    `;
-                    setTimeout(() => {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                }
-            } catch (err) {
-                alert('Error loading tracking data. Please check your internet connection.');
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-        function renderTrackingResult(order, container) {
-            const statusLabels = {
-                'pending': '⏳ Pending',
-                'processing': '🔄 Processing',
-                'in_transit': '🚚 In Transit',
-                'out_for_delivery': '📦 Out for Delivery',
-                'delivered': '✅ Delivered'
-            };
-
-            const statusIcons = {
-                'pending': 'fa-clock',
-                'processing': 'fa-sync-alt',
-                'in_transit': 'fa-truck',
-                'out_for_delivery': 'fa-box-open',
-                'delivered': 'fa-check-circle'
-            };
-
-            const currentStatus = statusLabels[order.status] || order.status;
-            const currentIcon = statusIcons[order.status] || 'fa-circle';
-
-            // Build timeline
-            let timelineHTML = '';
-            if (order.updates && order.updates.length > 0) {
-                const sorted = [...order.updates].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                sorted.forEach(u => {
-                    const uStatus = statusLabels[u.status] || u.status;
-                    const uIcon = statusIcons[u.status] || 'fa-circle';
-                    const date = new Date(u.timestamp).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    timelineHTML += `
-                        <div class="timeline-item">
-                            <div class="date">${date}</div>
-                            <div class="status"><i class="fas ${uIcon}" style="color:var(--primary);"></i> ${uStatus}</div>
-                            <div class="location"><i class="fas fa-map-pin" style="color:var(--gray-400);"></i> ${u.location}</div>
-                            ${u.notes ? `<div class="notes"><i class="fas fa-comment-dots" style="color:var(--gray-400);"></i> ${u.notes}</div>` : ''}
-                        </div>
-                    `;
-                });
-            }
-
-            // Only show map if coordinates exist (demo shipments have them)
-            const hasCoords = (order.fromLat != null && order.toLat != null);
-            let mapHTML = '';
-            if (hasCoords) {
-                mapHTML = `
-                    <div class="map-container">
-                        <div id="trackingMap"></div>
-                        <div class="map-overlay">
-                            <div class="status">
-                                <span class="dot"></span>
-                                <span>Live Tracking — ${order.fromCountry} → ${order.toCountry}</span>
-                            </div>
-                            <span>Last updated: ${new Date().toLocaleString()}</span>
-                        </div>
-                    </div>
-                `;
-            }
-
-            const html = `
-                <div class="result-card">
-                    <div class="header">
-                        <div class="number">
-                            <i class="fas fa-box"></i> ${order.trackingNumber}
-                        </div>
-                        <div class="status-badge">
-                            <i class="fas ${currentIcon}"></i> ${currentStatus}
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div class="details-grid">
-                            <div class="item">
-                                <label><i class="fas fa-user"></i> Customer</label>
-                                <div class="value">${order.customerName}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-route"></i> Route</label>
-                                <div class="value">${order.fromCountry} → ${order.toCountry}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-tag"></i> Service</label>
-                                <div class="value">${order.serviceType}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-weight"></i> Weight</label>
-                                <div class="value">${order.weight} kg</div>
-                            </div>
-                        </div>
-
-                        ${mapHTML}
-
-                        <h4 style="margin-bottom:16px; font-weight:800; color:var(--dark); display:flex; align-items:center; gap:8px;">
-                            <i class="fas fa-timeline" style="color:var(--primary);"></i> Shipment Progress
-                        </h4>
-                        <div class="tracking-timeline">
-                            ${timelineHTML}
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            container.innerHTML = html;
-
-            // Initialize map if coordinates exist
-            if (hasCoords) {
-                setTimeout(() => {
-                    initMap(order);
-                }, 100);
-            }
-        }
-
-        function initMap(order) {
-            // Remove existing map if any
-            if (mapInstance) {
-                mapInstance.remove();
-                mapInstance = null;
-            }
-
-            const mapContainer = document.getElementById('trackingMap');
-            if (!mapContainer) return;
-
-            // Calculate center point between origin and destination
-            const centerLat = (order.fromLat + order.toLat) / 2;
-            const centerLng = (order.fromLng + order.toLng) / 2;
-
-            mapInstance = L.map('trackingMap', {
-                center: [centerLat, centerLng],
-                zoom: 4,
-                zoomControl: true,
-                scrollWheelZoom: false
-            });
-
-            // Add tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(mapInstance);
-
-            // Add marker for origin
-            L.marker([order.fromLat, order.fromLng])
-                .addTo(mapInstance)
-                .bindPopup(`<strong>Origin:</strong> ${order.fromCountry}`)
-                .openPopup();
-
-            // Add marker for destination
-            L.marker([order.toLat, order.toLng])
-                .addTo(mapInstance)
-                .bindPopup(`<strong>Destination:</strong> ${order.toCountry}`);
-
-            // Draw route line
-            const latlngs = [
-                [order.fromLat, order.fromLng],
-                [order.toLat, order.toLng]
-            ];
-
-            polyline = L.polyline(latlngs, {
-                color: '#D40000',
-                weight: 4,
-                opacity: 0.7,
-                dashArray: '10, 10',
-                lineCap: 'round'
-            }).addTo(mapInstance);
-
-            // Animate the line
-            let offset = 0;
-            const animateLine = () => {
-                offset = (offset + 1) % 20;
-                polyline.setStyle({ dashOffset: -offset });
-                if (mapInstance) {
-                    requestAnimationFrame(animateLine);
-                }
-            };
-            animateLine();
-
-            // Add a moving marker along the route (simulate progress)
-            const progress = Math.random() * 0.8 + 0.1; // 10% to 90%
-            const midLat = order.fromLat + (order.toLat - order.fromLat) * progress;
-            const midLng = order.fromLng + (order.toLng - order.fromLng) * progress;
-
-            const movingMarker = L.marker([midLat, midLng], {
-                icon: L.divIcon({
-                    className: 'moving-marker',
-                    html: '<div style="background:#D40000;width:16px;height:16px;border-radius:50%;border:3px solid #FFCC00;box-shadow:0 0 20px rgba(212,0,0,0.5);"></div>',
-                    iconSize: [16, 16]
-                })
-            }).addTo(mapInstance);
-
-            // Fit bounds
-            const bounds = L.latLngBounds([
-                [order.fromLat, order.fromLng],
-                [order.toLat, order.toLng]
-            ]);
-            mapInstance.fitBounds(bounds, { padding: [50, 50] });
-
-            // Add a small delay to ensure map renders correctly
-            setTimeout(() => {
-                mapInstance.invalidateSize();
-            }, 200);
-        }
-
-        // ============================================================
         // INIT
         // ============================================================
+        // Set initial language
         changeLanguage();
-        document.getElementById('trackInput')?.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') runTracking();
-        });
 
-        console.log('Velox Tracking — Ready with map and translator (admin shipments supported)');
+        console.log('Velox Freight — Ready with translator');
     </script>
 
 </body>

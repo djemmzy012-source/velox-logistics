@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | Vellox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* ============================================================
+               EXACT SAME ROOT & RESET AS INDEX
+        ============================================================ */
+        :root {
+            --primary: #D40000;
+            --primary-dark: #B00000;
+            --secondary: #FFCC00;
+            --secondary-dark: #E6B800;
+            --dark: #0A0A1A;
+            --dark-light: #1A1A2E;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --radius-full: 9999px;
+            --container: 1280px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; width: 100%; }
+        .section-padding { padding: 80px 0; }
+        .section-label { display: inline-block; background: rgba(212, 0, 0, 0.08); color: var(--primary); padding: 6px 18px; border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 16px; }
+        .section-title { font-size: 2.8rem; font-weight: 800; line-height: 1.15; margin-bottom: 12px; color: var(--dark); letter-spacing: -0.5px; }
+        .section-title .highlight { color: var(--primary); position: relative; }
+        .section-title .highlight::after { content: ''; position: absolute; bottom: 2px; left: 0; width: 100%; height: 4px; background: var(--secondary); border-radius: 2px; }
+        .section-subtitle { font-size: 1.05rem; color: var(--gray-600); max-width: 560px; line-height: 1.7; }
+        .text-center { text-align: center; }
+        .text-center .section-subtitle { margin: 0 auto; }
+
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border: none; cursor: pointer; transition: var(--transition); font-family: inherit; }
+        .btn-primary { background: var(--primary); color: var(--white); box-shadow: 0 4px 16px rgba(212, 0, 0, 0.20); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212, 0, 0, 0.30); }
+        .btn-secondary { background: var(--secondary); color: var(--dark); box-shadow: 0 4px 16px rgba(255, 204, 0, 0.20); }
+        .btn-secondary:hover { background: var(--secondary-dark); transform: translateY(-2px); }
+
+        /* ============================================================
+               TOP BAR – same as index
+        ============================================================ */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--secondary);
+            position: relative;
+            z-index: 1002;
+            overflow: hidden;
+        }
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.04), transparent);
+            animation: shimmer 6s linear infinite;
+            background-size: 200% 100%;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .top-bar-left { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; }
+        .top-bar-left a { color: rgba(255, 255, 255, 0.7); display: flex; align-items: center; gap: 4px; white-space: nowrap; transition: var(--transition); }
+        .top-bar-left a:hover { color: var(--secondary); }
+        .top-bar-left a i { color: var(--secondary); font-size: 0.65rem; }
+        .top-bar-right { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; }
+        .top-bar-right a { color: rgba(255, 255, 255, 0.7); white-space: nowrap; transition: var(--transition); }
+        .top-bar-right a:hover { color: var(--secondary); }
+        .top-bar-right .lang-select {
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8); padding: 4px 10px; border-radius: var(--radius-sm);
+            font-size: 0.7rem; font-weight: 600; cursor: pointer; font-family: inherit;
+        }
+        .top-bar-right .top-cta {
+            background: var(--secondary); color: var(--dark); padding: 4px 14px;
+            border-radius: var(--radius-sm); font-weight: 700; font-size: 0.65rem;
+            text-transform: uppercase; letter-spacing: 0.3px; transition: var(--transition);
+        }
+        .top-bar-right .top-cta:hover { background: var(--white); transform: scale(1.04); }
+        .top-bar-right .top-phone { display: flex; align-items: center; gap: 4px; color: var(--secondary); font-weight: 700; font-size: 0.75rem; }
+        .top-bar .marquee-strip { background: rgba(255, 204, 0, 0.04); padding: 3px 0; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.03); margin-top: 4px; }
+        .top-bar .marquee-strip .marquee-content { display: flex; gap: 40px; animation: marquee 30s linear infinite; white-space: nowrap; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255, 255, 255, 0.35); }
+        .top-bar .marquee-strip .marquee-content span { display: inline-flex; align-items: center; gap: 6px; }
+        .top-bar .marquee-strip .marquee-content span i { color: var(--secondary); }
+
+        /* ============================================================
+               MAIN NAV – same as index
+        ============================================================ */
+        .main-nav {
+            background: var(--white); box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky; top: 0; z-index: 1001; padding: 12px 0;
+            border-bottom: 3px solid var(--secondary);
+        }
+        .main-nav .container { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; gap: 2px; flex-shrink: 0; }
+        .logo span { color: var(--dark); background: var(--secondary); padding: 0 8px; border-radius: var(--radius-sm); }
+        .nav-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .nav-links a { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-600); position: relative; padding: 4px 0; transition: var(--transition); }
+        .nav-links a:hover { color: var(--dark); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .nav-actions .btn-track { background: var(--primary); color: var(--white); padding: 8px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; border: none; cursor: pointer; transition: var(--transition); font-family: inherit; box-shadow: 0 4px 12px rgba(212, 0, 0, 0.20); }
+        .nav-actions .btn-track:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .nav-actions .btn-ship { background: var(--primary); color: var(--white); padding: 8px 18px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; border: none; cursor: pointer; transition: var(--transition); font-family: inherit; box-shadow: 0 4px 12px rgba(212, 0, 0, 0.25); }
+        .nav-actions .btn-ship:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .menu-toggle { display: none; font-size: 1.4rem; cursor: pointer; color: var(--dark); background: none; border: none; padding: 4px; transition: var(--transition); }
+        .menu-toggle:hover { color: var(--primary); }
+
+        /* ============================================================
+               PAGE HERO
+        ============================================================ */
+        .page-hero {
+            background: var(--dark); color: var(--white); padding: 60px 0; text-align: center; position: relative;
+        }
+        .page-hero::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--secondary));
+        }
+        .page-hero h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 8px; }
+        .page-hero p { opacity: 0.8; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* ============================================================
+               CONTACT MAIN
+        ============================================================ */
+        .contact-main { background: var(--white); padding: 80px 0; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+        .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; color: var(--dark); }
+        .contact-info p { color: var(--gray-600); line-height: 1.8; margin-bottom: 24px; }
+
+        .contact-item {
+            display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px;
+        }
+        .contact-item .icon {
+            width: 48px; height: 48px; background: var(--gray-100); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--primary);
+            font-size: 1.1rem; flex-shrink: 0; transition: var(--transition);
+        }
+        .contact-item:hover .icon { background: var(--primary); color: var(--white); }
+        .contact-item .text { font-size: 0.92rem; color: var(--gray-600); }
+        .contact-item .text strong { color: var(--dark); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
+        .contact-item .text a { color: var(--primary); font-weight: 500; }
+        .contact-item .text a:hover { text-decoration: underline; }
+
+        /* Email list styling */
+        .email-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+        .email-list a { display: flex; align-items: center; gap: 8px; }
+
+        /* Contact form */
+        .contact-form {
+            background: var(--gray-50); padding: 40px 34px; border-radius: var(--radius);
+            box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+        }
+        .contact-form h4 { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; color: var(--dark); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); display: block; margin-bottom: 4px; }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px 16px; border: 2px solid var(--gray-200); border-radius: var(--radius-sm);
+            font-size: 0.92rem; font-family: inherit; transition: var(--transition); background: var(--white); color: var(--dark);
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.04);
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .contact-form .btn { width: 100%; justify-content: center; padding: 14px; }
+
+        /* ============================================================
+               FOOTER – same as index
+        ============================================================ */
+        footer {
+            background: var(--dark); color: rgba(255, 255, 255, 0.5); padding: 60px 0 20px;
+            margin-top: auto; border-top: 3px solid var(--secondary);
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: var(--white); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; position: relative; padding-bottom: 10px; }
+        .footer-col h4::after { content: ''; position: absolute; bottom: 0; left: 0; width: 28px; height: 2px; background: var(--secondary); border-radius: 2px; }
+        .footer-col p { font-size: 0.85rem; line-height: 1.8; max-width: 320px; }
+        .footer-col ul li { margin-bottom: 6px; }
+        .footer-col ul a { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); display: flex; align-items: center; gap: 6px; transition: var(--transition); }
+        .footer-col ul a:hover { color: var(--secondary); transform: translateX(4px); }
+        .footer-social { display: flex; gap: 10px; margin-top: 14px; }
+        .footer-social a { width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.04); display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.5); transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.04); }
+        .footer-social a:hover { background: var(--secondary); color: var(--dark); transform: translateY(-3px); border-color: var(--secondary); }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .footer-bottom .copyright { font-size: 0.75rem; color: rgba(255, 255, 255, 0.25); }
+        .footer-bottom .legal { display: flex; gap: 16px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.25); }
+        .footer-bottom .legal a:hover { color: var(--secondary); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .top-bar .container { justify-content: center; flex-wrap: wrap; }
+            .top-bar-left, .top-bar-right { justify-content: center; flex-wrap: wrap; }
+            .menu-toggle { display: block; }
+            .main-nav .container { flex-wrap: wrap; }
+            .nav-links { display: none; flex-direction: column; width: 100%; padding: 12px 0; gap: 8px; border-top: 1px solid var(--gray-200); margin-top: 10px; }
+            .nav-links.open { display: flex; }
+            .nav-links a { font-size: 0.8rem; padding: 6px 0; width: 100%; }
+            .nav-links a::after { display: none; }
+            .nav-actions { margin-left: auto; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR (same as index) -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="tel:+15595083927"><i class="fas fa-phone-alt"></i> +15595083927</a>
+                <a href="mailto:support@velloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a href="#"><i class="fas fa-map-pin"></i> Locations</a>
+                <a href="tracking.html"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
+                <select class="lang-select" id="langSelect">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
+                <a href="quick-quote.html" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
+                <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
+            </div>
+        </div>
+        <div class="marquee-strip">
+            <div class="container">
+                <div class="marquee-content">
+                    <span><i class="fas fa-check-circle"></i> 10M+ Shipments Delivered</span>
+                    <span><i class="fas fa-check-circle"></i> 220+ Countries Served</span>
+                    <span><i class="fas fa-check-circle"></i> 99.7% On-Time Delivery</span>
+                    <span><i class="fas fa-check-circle"></i> 24/7 Customer Support</span>
+                    <span><i class="fas fa-check-circle"></i> Global Freight & Logistics</span>
+                    <span><i class="fas fa-check-circle"></i> Customs Clearance Experts</span>
+                    <span><i class="fas fa-check-circle"></i> Real-Time Tracking</span>
+                    <span><i class="fas fa-check-circle"></i> Sustainable Supply Chains</span>
+                    <span><i class="fas fa-check-circle"></i> 18+ Years of Excellence</span>
+                    <span><i class="fas fa-check-circle"></i> 50K+ Business Clients</span>
+                    <span><i class="fas fa-check-circle"></i> Click-N-Ship® Available</span>
+                    <span><i class="fas fa-check-circle"></i> Free Package Pickup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAV (same as index) -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="tracking.html">Tracking</a>
+                <a href="services.html">Services</a>
+                <a href="freight.html">Freight</a>
+                <a href="customs.html">Customs</a>
+                <a href="logistics.html">Logistics</a>
+                <a href="about.html">About</a>
+                <a href="contact.html" style="color:var(--primary);">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn-track" onclick="window.location.href='tracking.html'"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-ship" onclick="window.location.href='ship.html'"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>We're here to help. Reach out to our team for any shipping, logistics, or customs inquiries.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT MAIN -->
+    <section class="contact-main">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h3><i class="fas fa-address-card" style="color:var(--primary);"></i> Get in Touch</h3>
+                    <p>Use the details below to contact the appropriate department. We respond within 24 hours.</p>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="text">
+                            <strong>Headquarters</strong>
+                            123 Logistics Avenue, London, UK
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="text">
+                            <strong>Phone</strong>
+                            <a href="tel:+15595083927">+1 (559) 508-3927</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-envelope"></i></div>
+                        <div class="text">
+                            <strong>Email</strong>
+                            <div class="email-list">
+                                <a href="mailto:support@velloxlogistics.com"><i class="fas fa-headset"></i> support@velloxlogistics.com – General Support</a>
+                                <a href="mailto:sales@velloxlogistics.com"><i class="fas fa-chart-line"></i> sales@velloxlogistics.com – Sales & Quotes</a>
+                                <a href="mailto:info@velloxlogistics.com"><i class="fas fa-info-circle"></i> info@velloxlogistics.com – General Inquiries</a>
+                                <a href="mailto:customs@velloxlogistics.com"><i class="fas fa-file-contract"></i> customs@velloxlogistics.com – Customs & Compliance</a>
+                                <a href="mailto:careers@velloxlogistics.com"><i class="fas fa-briefcase"></i> careers@velloxlogistics.com – Join Our Team</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="icon"><i class="fas fa-clock"></i></div>
+                        <div class="text">
+                            <strong>Working Hours</strong>
+                            Mon–Fri: 8:00 AM – 6:00 PM GMT<br>
+                            Sat: 9:00 AM – 1:00 PM GMT
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h4><i class="fas fa-file-invoice" style="color:var(--primary);"></i> Send Us a Message</h4>
+                    <form id="contactForm" onsubmit="event.preventDefault(); alert('✅ Thank you! We will get back to you within 24 hours.');">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="John Doe" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@company.com" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <select id="department">
+                                <option value="support">Customer Support</option>
+                                <option value="sales">Sales & Quotes</option>
+                                <option value="customs">Customs & Compliance</option>
+                                <option value="logistics">Logistics Solutions</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Tell us how we can help you..." rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (same as index) -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <p>Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="tracking.html"><i class="fas fa-search"></i> Track a Shipment</a></li>
+                        <li><a href="ship.html"><i class="fas fa-shipping-fast"></i> Ship Now</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+                        <li><a href="services.html"><i class="fas fa-cogs"></i> Services</a></li>
+                        <li><a href="freight.html"><i class="fas fa-ship"></i> Freight</a></li>
+                        <li><a href="customs.html"><i class="fas fa-file-contract"></i> Customs</a></li>
+                        <li><a href="logistics.html"><i class="fas fa-truck-moving"></i> Logistics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-undo"></i> Claims & Returns</a></li>
+                        <li><a href="#"><i class="fas fa-undo"></i> Initiate Return</a></li>
+                        <li><a href="#"><i class="fas fa-file-invoice"></i> Get Label</a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> Feedback</a></li>
+                        <li><a href="#"><i class="fas fa-ticket-alt"></i> Submit a Ticket</a></li>
+                        <li><a href="informed-delivery.html"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html"><i class="fas fa-building"></i> About Velox</a></li>
+                        <li><a href="#"><i class="fas fa-bullhorn"></i> Newsroom</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Careers</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — All rights reserved.</div>
+                <div class="legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Cookies</a>
+                    <a href="#">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileNav() {
+            const links = document.getElementById('navLinks');
+            links.classList.toggle('open');
+            const icon = document.querySelector('.menu-toggle i');
+            icon.className = links.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+        }
+    </script>
+</body>
+</html>

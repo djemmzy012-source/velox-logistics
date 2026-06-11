@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Sign In | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fc;
+            color: #1e2a3a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== HEADER & FOOTER (matching main site) ========== */
+        :root {
+            --primary: #D40000;
+            --primary-dark: #B00000;
+            --secondary: #FFCC00;
+            --dark: #0A0A1A;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-600: #757575;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: 0.2s ease;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--secondary);
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .top-bar-left a, .top-bar-right a {
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .top-bar-left a:hover, .top-bar-right a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-right .sign-in {
+            color: white;
+            font-weight: 600;
+        }
+        .top-bar-right .lang-select {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.8);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .top-bar-right .top-cta {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 4px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.65rem;
+        }
+        .top-bar-right .top-phone {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 0;
+            border-bottom: 3px solid var(--secondary);
+        }
+        .main-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 2px;
+        }
+        .logo span {
+            color: var(--dark);
+            background: var(--secondary);
+            padding: 0 8px;
+            border-radius: var(--radius-sm);
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--dark);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-actions .btn-track, .nav-actions .btn-ship {
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-actions .btn-track:hover, .nav-actions .btn-ship:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 1.4rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Sign-in Section */
+        .signin-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px;
+        }
+        .signin-card {
+            max-width: 480px;
+            width: 100%;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 40px 32px;
+            margin: 0 auto;
+        }
+        .signin-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .signin-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .signin-header p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(212,0,0,0.08);
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            font-size: 0.85rem;
+        }
+        .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .form-options a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .form-options a:hover {
+            text-decoration: underline;
+        }
+        .btn-signin {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-signin:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 28px;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+        .signup-link a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .demo-credentials {
+            background: #f8f9fa;
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            border: 1px solid var(--gray-200);
+        }
+        .demo-credentials code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        /* Toast notification */
+        .toast-notify {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1f2937;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 0.875rem;
+            z-index: 10000;
+            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.85);
+            transition: 0.2s;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.5);
+            padding: 40px 0 20px;
+            margin-top: auto;
+            border-top: 3px solid var(--secondary);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 10px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .signin-card {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+  
+    <!-- ============================================================
+    TOP BAR (phone and email updated, no user menu)
+    ============================================================ -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="tel:+1 (559) 508-3927"><i class="fas fa-phone-alt"></i> +1 (559) 508-3927</a>
+                <a href="mailto:support@velloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a href="#"><i class="fas fa-map-pin"></i> Locations</a>
+                <a href="tracking.html"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
+                <!-- Register & Sign In not inserted dynamically -->
+                <select class="lang-select" id="langSelect">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
+                <a href="quick-quote.html" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
+                <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAV -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="tracking.html">Tracking</a>
+                <a href="services.html">Services</a>
+                <a href="freight.html">Freight</a>
+                <a href="customs.html">Customs</a>
+                <a href="logistics.html">Logistics</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn-track" onclick="window.location.href='tracking.html'"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-ship" onclick="window.location.href='ship.html'"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIGN IN FORM -->
+    <div class="signin-section">
+        <div class="signin-card">
+            <div class="signin-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to manage your shipments & account</p>
+            </div>
+            <form id="signinForm">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email or Username</label>
+                    <input type="text" id="loginEmail" placeholder="demo@velox.com" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••" required>
+                </div>
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe"> Remember me
+                    </label>
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn-signin" id="signinBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            <div class="signup-link">
+                Don't have an account? <a href="register.html">Create one now</a>
+            </div>
+            <div class="demo-credentials">
+                <strong>Demo account</strong><br>
+                Email: <code>demo@velox.com</code> &nbsp;|&nbsp; Password: <code>demo123</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="copyright">© 2026 Velox Logistics — All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile nav toggle
+        function toggleMobileNav() {
+            const links = document.getElementById('navLinks');
+            links.classList.toggle('open');
+        }
+
+        // Demo user database
+        const users = [
+            { email: "demo@velox.com", password: "demo123", name: "Demo User" },
+            { email: "customer@velox.com", password: "password", name: "John Customer" }
+        ];
+
+        // Toast notification
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notify';
+            toast.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-2"></i>${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Handle form submission
+        const form = document.getElementById('signinForm');
+        const btn = document.getElementById('signinBtn');
+        const originalBtnText = btn.innerHTML;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            const remember = document.getElementById('rememberMe').checked;
+
+            if (!email || !password) {
+                showToast('Please enter both email and password', true);
+                return;
+            }
+
+            // Simulate network delay
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    const session = { email: user.email, name: user.name };
+                    localStorage.setItem('velox_user', JSON.stringify(session));
+                    if (remember) localStorage.setItem('velox_user_remember', 'true');
+                    else localStorage.removeItem('velox_user_remember');
+                    showToast(`Welcome back, ${user.name}! Redirecting...`);
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1200);
+                } else {
+                    showToast('Invalid email or password. Please try again.', true);
+                    btn.innerHTML = originalBtnText;
+                    btn.disabled = false;
+                }
+            }, 800);
+        });
+
+        // Language selector placeholder
+        document.getElementById('langSelect')?.addEventListener('change', function() {
+            console.log('Language changed to', this.value);
+            // Full translation logic can be added later
+        });
+    </script>
+</body>
+</html>

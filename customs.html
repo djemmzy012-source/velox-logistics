@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customs Clearance | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        /* ============================================================
+               ROOT & RESET
+            ============================================================ */
+        :root {
+            --primary: #D40000;
+            --primary-dark: #B00000;
+            --secondary: #FFCC00;
+            --secondary-dark: #E6B800;
+            --dark: #0A0A1A;
+            --dark-light: #1A1A2E;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --radius-full: 9999px;
+            --container: 1280px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================================
+               UTILITY
+            ============================================================ */
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(212, 0, 0, 0.08);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .highlight {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--gray-600);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .text-center .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(212, 0, 0, 0.20);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 0, 0, 0.30);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+            box-shadow: 0 4px 16px rgba(255, 204, 0, 0.20);
+        }
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--gray-300);
+        }
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-ghost-light {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-ghost-light:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-2px);
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 0.75rem;
+        }
+
+        /* ============================================================
+               ANIMATIONS
+            ============================================================ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.9s ease forwards;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.7s ease forwards;
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.6s ease forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .animate-pulse {
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.1s;
+        }
+        .animate-delay-2 {
+            animation-delay: 0.2s;
+        }
+        .animate-delay-3 {
+            animation-delay: 0.3s;
+        }
+        .animate-delay-4 {
+            animation-delay: 0.4s;
+        }
+        .animate-delay-5 {
+            animation-delay: 0.5s;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================================
+               TOP BAR — Heavy & Busy
+            ============================================================ */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--secondary);
+            position: relative;
+            z-index: 1002;
+            overflow: hidden;
+        }
+
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.04), transparent);
+            animation: shimmer 6s linear infinite;
+            background-size: 200% 100%;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left a {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .top-bar-left a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-left a i {
+            color: var(--secondary);
+            font-size: 0.65rem;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-right a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        .top-bar-right a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-right .sign-in {
+            color: var(--white);
+            font-weight: 600;
+        }
+        .top-bar-right .register {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .top-bar-right .informed-delivery {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .top-bar-right .informed-delivery i {
+            color: var(--secondary);
+        }
+
+        .top-bar-right .lang-select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .top-bar-right .lang-select:focus {
+            outline: none;
+        }
+
+        .top-bar-right .top-cta {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 4px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            transition: var(--transition);
+        }
+        .top-bar-right .top-cta:hover {
+            background: var(--white);
+            transform: scale(1.04);
+        }
+
+        .top-bar-right .top-phone {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .top-bar .marquee-strip {
+            background: rgba(255, 204, 0, 0.04);
+            padding: 3px 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 4px;
+        }
+
+        .top-bar .marquee-strip .marquee-content {
+            display: flex;
+            gap: 40px;
+            animation: marquee 30s linear infinite;
+            white-space: nowrap;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .top-bar .marquee-strip .marquee-content span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-bar .marquee-strip .marquee-content span i {
+            color: var(--secondary);
+        }
+
+        /* ============================================================
+               MAIN NAV — Sticky & Heavy
+            ============================================================ */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            padding: 12px 0;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .main-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .logo span {
+            color: var(--dark);
+            background: var(--secondary);
+            padding: 0 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--gray-600);
+            position: relative;
+            padding: 4px 0;
+            transition: var(--transition);
+        }
+        .nav-links a:hover {
+            color: var(--dark);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .nav-actions .btn-track {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            box-shadow: 0 4px 12px rgba(212, 0, 0, 0.20);
+        }
+        .nav-actions .btn-track:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-actions .btn-ship {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .nav-actions .btn-ship:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--dark);
+            background: none;
+            border: none;
+            padding: 4px;
+            transition: var(--transition);
+        }
+        .menu-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* ============================================================
+               CUSTOMS HERO — Fixed Background
+            ============================================================ */
+        .customs-hero {
+            position: relative;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+            background: var(--dark);
+        }
+
+        .customs-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80');
+        }
+
+        .customs-hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 26, 0.60) 0%, rgba(10, 10, 26, 0.20) 100%);
+        }
+
+        .customs-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            padding: 40px 20px;
+        }
+
+        .customs-hero-content .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 8px 20px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .customs-hero-content .badge i {
+            color: var(--secondary);
+        }
+
+        .customs-hero-content h1 {
+            font-size: 3.6rem;
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        .customs-hero-content h1 .highlight {
+            color: var(--secondary);
+        }
+
+        .customs-hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.85;
+            margin-bottom: 32px;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .customs-hero-content .hero-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+               CUSTOMS OVERVIEW
+            ============================================================ */
+        .customs-overview {
+            background: var(--white);
+            padding: 80px 0;
+        }
+
+        .customs-overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .customs-overview-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            height: 420px;
+            background-size: cover;
+            background-position: center;
+            background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80');
+            position: relative;
+        }
+
+        .customs-overview-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 0, 0, 0.10), transparent 60%);
+        }
+
+        .customs-overview-content .section-title {
+            margin-bottom: 12px;
+        }
+        .customs-overview-content p {
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 14px;
+        }
+
+        .customs-overview-content .feature-list {
+            list-style: none;
+            margin: 16px 0 0;
+        }
+        .customs-overview-content .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+        }
+        .customs-overview-content .feature-list li i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================================
+               CUSTOMS PROCESS
+            ============================================================ */
+        .customs-process {
+            background: var(--gray-50);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .customs-process::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--secondary));
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-top: 48px;
+        }
+
+        .process-step {
+            background: var(--white);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .process-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .process-step:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .process-step .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+        .process-step:hover .step-number {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: scale(1.05);
+        }
+
+        .process-step h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+        .process-step p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+               DOCUMENTATION
+            ============================================================ */
+        .documentation-section {
+            background: var(--white);
+            padding: 80px 0;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 28px;
+            margin-top: 44px;
+        }
+
+        .doc-card {
+            background: var(--gray-50);
+            padding: 32px 26px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .doc-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .doc-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+            background: var(--white);
+        }
+
+        .doc-card .doc-icon {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .doc-card h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+        .doc-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+               FEATURES / BENEFITS
+            ============================================================ */
+        .features-section {
+            background: var(--gray-50);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .features-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-top: 44px;
+        }
+
+        .feature-benefit {
+            background: var(--white);
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .feature-benefit.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .feature-benefit:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary);
+        }
+
+        .feature-benefit .icon {
+            font-size: 2.4rem;
+            color: var(--secondary);
+            margin-bottom: 14px;
+            display: block;
+        }
+        .feature-benefit h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+        .feature-benefit p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+               CTA BANNER
+            ============================================================ */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-light) 100%);
+            padding: 70px 20px;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 204, 0, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-banner .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-banner .cta-title {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 12px;
+        }
+        .cta-banner p {
+            font-size: 1.05rem;
+            opacity: 0.75;
+            max-width: 600px;
+            margin: 0 auto 28px;
+            line-height: 1.8;
+        }
+
+        /* ============================================================
+               FOOTER — Heavy & Busy
+            ============================================================ */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 0 20px;
+            margin-top: auto;
+            border-top: 3px solid var(--secondary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 28px;
+            height: 2px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .footer-col p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            max-width: 320px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 6px;
+        }
+        .footer-col ul a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .footer-col ul a:hover {
+            color: var(--secondary);
+            transform: translateX(4px);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-bottom .copyright {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal {
+            display: flex;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal a:hover {
+            color: var(--secondary);
+        }
+
+        /* ============================================================
+               RESPONSIVE
+            ============================================================ */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .customs-overview-grid {
+                grid-template-columns: 1fr;
+            }
+            .customs-overview-image {
+                height: 280px;
+            }
+            .customs-hero-content h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar .container {
+                justify-content: center;
+                text-align: center;
+            }
+            .top-bar-left {
+                justify-content: center;
+                font-size: 0.65rem;
+                gap: 8px;
+            }
+            .top-bar-right {
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .main-nav .container {
+                flex-wrap: wrap;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 12px 0;
+                gap: 8px;
+                border-top: 1px solid var(--gray-200);
+                margin-top: 10px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                font-size: 0.8rem;
+                padding: 6px 0;
+                width: 100%;
+            }
+            .nav-links a::after {
+                display: none;
+            }
+            .nav-actions {
+                margin-left: auto;
+            }
+            .nav-actions .btn-track,
+            .nav-actions .btn-ship {
+                font-size: 0.65rem;
+                padding: 6px 12px;
+            }
+
+            .customs-hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .customs-hero-content p {
+                font-size: 1rem;
+            }
+            .customs-hero-content .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            .customs-hero-content .hero-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+            .process-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .doc-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .footer-col p {
+                max-width: 100%;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cta-banner .cta-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .customs-hero-content h1 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .customs-overview-image {
+                height: 200px;
+            }
+            .cta-banner .cta-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- ============================================================
+    TOP BAR (phone and email updated, no user menu)
+    ============================================================ -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="tel:+1 (559) 508-3927"><i class="fas fa-phone-alt"></i> +1 (559) 508-3927</a>
+                <a href="mailto:support@velloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a href="#"><i class="fas fa-map-pin"></i> Locations</a>
+                <a href="tracking.html"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
+                <!-- Register & Sign In not inserted dynamically -->
+                <select class="lang-select" id="langSelect">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
+                <a href="quick-quote.html" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
+                <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
+            </div>
+        </div>
+        <div class="marquee-strip">
+            <div class="container">
+                <div class="marquee-content">
+                    <span><i class="fas fa-check-circle"></i> 10M+ Shipments Delivered</span>
+                    <span><i class="fas fa-check-circle"></i> 220+ Countries Served</span>
+                    <span><i class="fas fa-check-circle"></i> 99.7% On-Time Delivery</span>
+                    <span><i class="fas fa-check-circle"></i> 24/7 Customer Support</span>
+                    <span><i class="fas fa-check-circle"></i> Global Freight & Logistics</span>
+                    <span><i class="fas fa-check-circle"></i> Customs Clearance Experts</span>
+                    <span><i class="fas fa-check-circle"></i> Real-Time Tracking</span>
+                    <span><i class="fas fa-check-circle"></i> Sustainable Supply Chains</span>
+                    <span><i class="fas fa-check-circle"></i> 18+ Years of Excellence</span>
+                    <span><i class="fas fa-check-circle"></i> 50K+ Business Clients</span>
+                    <span><i class="fas fa-check-circle"></i> Click-N-Ship® Available</span>
+                    <span><i class="fas fa-check-circle"></i> Free Package Pickup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MAIN NAV — Sticky & Heavy (Same as Index)
+    ============================================================ -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="index.html#tracking">Tracking</a>
+                <a href="index.html#services">Services</a>
+                <a href="index.html#freight">Freight</a>
+                <a href="customs.html" style="color:var(--primary);">Customs</a>
+                <a href="index.html#logistics">Logistics</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn-track" onclick="window.location.href='index.html#tracking'"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-ship"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    CUSTOMS HERO — Fixed Background
+    ============================================================ -->
+    <section class="customs-hero">
+        <div class="customs-hero-bg"></div>
+        <div class="customs-hero-content">
+            <div class="badge animate-pulse">
+                <i class="fas fa-file-contract"></i> <span data-i18n="customs_hero_badge">CUSTOMS CLEARANCE EXPERTS</span>
+            </div>
+            <h1 class="animate-fade-up"><span data-i18n="customs_hero_title_1">Seamless</span> <span class="highlight" data-i18n="customs_hero_title_2">Cross-Border</span> <span data-i18n="customs_hero_title_3">Clearance</span></h1>
+            <p class="animate-fade-up animate-delay-1" data-i18n="customs_hero_desc">Navigate complex international trade regulations with confidence. Our expert customs brokerage team ensures your shipments clear customs quickly, efficiently, and compliantly.</p>
+            <div class="hero-actions animate-fade-up animate-delay-2">
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> <span data-i18n="customs_hero_cta_1">GET CUSTOMS HELP</span></a>
+                <a href="#process" class="btn btn-secondary"><i class="fas fa-arrow-down"></i> <span data-i18n="customs_hero_cta_2">SEE PROCESS</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CUSTOMS OVERVIEW
+    ============================================================ -->
+    <section class="customs-overview">
+        <div class="container">
+            <div class="customs-overview-grid">
+                <div class="customs-overview-image reveal"></div>
+                <div class="customs-overview-content">
+                    <span class="section-label"><i class="fas fa-info-circle"></i> <span data-i18n="customs_overview_label">Why Velox Customs</span></span>
+                    <h2 class="section-title"><span data-i18n="customs_overview_title_1">Global</span> <span class="highlight" data-i18n="customs_overview_title_2">Customs</span> <span data-i18n="customs_overview_title_3">Expertise</span></h2>
+                    <p data-i18n="customs_overview_desc_1">With over 18 years of experience in international trade, Velox Logistics offers comprehensive customs brokerage services that streamline your cross-border shipments. Our team of licensed customs brokers stays ahead of changing regulations to ensure your goods move without delay.</p>
+                    <p data-i18n="customs_overview_desc_2">From import/export declarations to tariff classification and free trade agreement benefits, we provide end-to-end customs support for businesses of all sizes.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_overview_feat_1">Licensed customs brokers with global expertise</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_overview_feat_2">Real-time shipment visibility and status updates</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_overview_feat_3">Duty and tax calculation with optimization strategies</span></li>
+                        <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_overview_feat_4">Compliance with all international trade regulations</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CUSTOMS PROCESS
+    ============================================================ -->
+    <section class="customs-process" id="process">
+        <div class="container text-center">
+            <span class="section-label"><i class="fas fa-route"></i> <span data-i18n="customs_process_label">How It Works</span></span>
+            <h2 class="section-title"><span data-i18n="customs_process_title_1">Our</span> <span class="highlight" data-i18n="customs_process_title_2">Customs</span> <span data-i18n="customs_process_title_3">Process</span></h2>
+            <p class="section-subtitle" data-i18n="customs_process_sub">From documentation to clearance, we handle every step of the customs process with precision and care.</p>
+
+            <div class="process-grid">
+                <div class="process-step" data-delay="0">
+                    <div class="step-number">1</div>
+                    <h4 data-i18n="customs_process_step_1_title">Documentation</h4>
+                    <p data-i18n="customs_process_step_1_desc">We prepare and review all required customs documentation, including commercial invoices, packing lists, and certificates of origin.</p>
+                </div>
+                <div class="process-step" data-delay="1">
+                    <div class="step-number">2</div>
+                    <h4 data-i18n="customs_process_step_2_title">Classification</h4>
+                    <p data-i18n="customs_process_step_2_desc">Our experts classify your goods using Harmonized System (HS) codes to determine applicable duties, taxes, and trade restrictions.</p>
+                </div>
+                <div class="process-step" data-delay="2">
+                    <div class="step-number">3</div>
+                    <h4 data-i18n="customs_process_step_3_title">Declaration</h4>
+                    <p data-i18n="customs_process_step_3_desc">We file accurate customs declarations and manage all communications with customs authorities to ensure smooth processing.</p>
+                </div>
+                <div class="process-step" data-delay="3">
+                    <div class="step-number">4</div>
+                    <h4 data-i18n="customs_process_step_4_title">Clearance</h4>
+                    <p data-i18n="customs_process_step_4_desc">Your goods clear customs efficiently, and we provide real-time updates on status, duties paid, and estimated delivery timing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    DOCUMENTATION
+    ============================================================ -->
+    <section class="documentation-section">
+        <div class="container text-center">
+            <span class="section-label"><i class="fas fa-file-alt"></i> <span data-i18n="customs_doc_label">Documentation</span></span>
+            <h2 class="section-title"><span data-i18n="customs_doc_title_1">Essential</span> <span class="highlight" data-i18n="customs_doc_title_2">Documents</span> <span data-i18n="customs_doc_title_3">We Handle</span></h2>
+            <p class="section-subtitle" data-i18n="customs_doc_sub">We manage all the critical paperwork required for smooth customs clearance across borders.</p>
+
+            <div class="doc-grid">
+                <div class="doc-card" data-delay="0">
+                    <span class="doc-icon"><i class="fas fa-file-invoice"></i></span>
+                    <h4 data-i18n="customs_doc_1_title">Commercial Invoice</h4>
+                    <p data-i18n="customs_doc_1_desc">Detailed invoice showing the value, quantity, and description of goods for customs valuation purposes.</p>
+                </div>
+                <div class="doc-card" data-delay="1">
+                    <span class="doc-icon"><i class="fas fa-list-alt"></i></span>
+                    <h4 data-i18n="customs_doc_2_title">Packing List</h4>
+                    <p data-i18n="customs_doc_2_desc">Comprehensive list of all items in the shipment with weights, dimensions, and packaging details.</p>
+                </div>
+                <div class="doc-card" data-delay="2">
+                    <span class="doc-icon"><i class="fas fa-certificate"></i></span>
+                    <h4 data-i18n="customs_doc_3_title">Certificate of Origin</h4>
+                    <p data-i18n="customs_doc_3_desc">Official document certifying the country where the goods were manufactured or produced.</p>
+                </div>
+                <div class="doc-card" data-delay="3">
+                    <span class="doc-icon"><i class="fas fa-barcode"></i></span>
+                    <h4 data-i18n="customs_doc_4_title">HS Code Classification</h4>
+                    <p data-i18n="customs_doc_4_desc">Harmonized System codes that accurately categorize your goods for duty and tax calculation.</p>
+                </div>
+                <div class="doc-card" data-delay="4">
+                    <span class="doc-icon"><i class="fas fa-ship"></i></span>
+                    <h4 data-i18n="customs_doc_5_title">Bill of Lading / Air Waybill</h4>
+                    <p data-i18n="customs_doc_5_desc">Shipping documents that serve as evidence of the contract of carriage and receipt of goods.</p>
+                </div>
+                <div class="doc-card" data-delay="5">
+                    <span class="doc-icon"><i class="fas fa-handshake"></i></span>
+                    <h4 data-i18n="customs_doc_6_title">Free Trade Agreement Forms</h4>
+                    <p data-i18n="customs_doc_6_desc">Documentation to claim preferential duty rates under existing free trade agreements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FEATURES / BENEFITS
+    ============================================================ -->
+    <section class="features-section">
+        <div class="container text-center">
+            <span class="section-label"><i class="fas fa-star"></i> <span data-i18n="customs_features_label">Why Choose Us</span></span>
+            <h2 class="section-title"><span data-i18n="customs_features_title_1">Customs</span> <span class="highlight" data-i18n="customs_features_title_2">Advantages</span></h2>
+            <p class="section-subtitle" data-i18n="customs_features_sub">We go beyond clearance to provide strategic advantages for your cross-border business.</p>
+
+            <div class="features-grid">
+                <div class="feature-benefit" data-delay="0">
+                    <span class="icon"><i class="fas fa-bolt"></i></span>
+                    <h4 data-i18n="customs_feature_1_title">Fast Clearance</h4>
+                    <p data-i18n="customs_feature_1_desc">Our streamlined processes and customs relationships ensure your shipments clear quickly, reducing delays and storage costs.</p>
+                </div>
+                <div class="feature-benefit" data-delay="1">
+                    <span class="icon"><i class="fas fa-shield-alt"></i></span>
+                    <h4 data-i18n="customs_feature_2_title">Compliance Guaranteed</h4>
+                    <p data-i18n="customs_feature_2_desc">We stay current with ever-changing trade regulations to keep you compliant and avoid costly penalties.</p>
+                </div>
+                <div class="feature-benefit" data-delay="2">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <h4 data-i18n="customs_feature_3_title">Duty Optimization</h4>
+                    <p data-i18n="customs_feature_3_desc">Our experts identify duty savings opportunities through free trade agreements and proper tariff classification.</p>
+                </div>
+                <div class="feature-benefit" data-delay="3">
+                    <span class="icon"><i class="fas fa-globe"></i></span>
+                    <h4 data-i18n="customs_feature_4_title">Global Coverage</h4>
+                    <p data-i18n="customs_feature_4_desc">Customs support in over 220 countries and territories, with local expertise in every major trade corridor.</p>
+                </div>
+                <div class="feature-benefit" data-delay="4">
+                    <span class="icon"><i class="fas fa-headset"></i></span>
+                    <h4 data-i18n="customs_feature_5_title">24/7 Support</h4>
+                    <p data-i18n="customs_feature_5_desc">Our customs team is available around the clock to address urgent issues and provide real-time guidance.</p>
+                </div>
+                <div class="feature-benefit" data-delay="5">
+                    <span class="icon"><i class="fas fa-cloud-upload-alt"></i></span>
+                    <h4 data-i18n="customs_feature_6_title">Digital Platform</h4>
+                    <p data-i18n="customs_feature_6_desc">Track your customs status online, access documents, and manage your shipments through our secure portal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CTA BANNER
+    ============================================================ -->
+    <section class="cta-banner" id="contact">
+        <div class="container">
+            <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);"><i class="fas fa-paper-plane"></i> <span data-i18n="customs_cta_label">Ready to Ship?</span></span>
+            <h2 class="cta-title" data-i18n="customs_cta_title">Let Us Handle Your Customs</h2>
+            <p data-i18n="customs_cta_desc">Contact our customs team today for a free consultation and get your shipments moving across borders with confidence.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="#" class="btn btn-secondary"><i class="fas fa-phone-alt"></i> <span data-i18n="customs_cta_btn_1">Call Us Now</span></a>
+                <a href="index.html#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> <span data-i18n="customs_cta_btn_2">Request a Quote</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER — Heavy & Busy (Same as Index)
+    ============================================================ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <p data-i18n="footer_desc">Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_quick">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#tracking"><i class="fas fa-search"></i> <span data-i18n="nav_track">Track a Shipment</span></a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-calculator"></i> <span data-i18n="nav_quote">Get a Quote</span></a></li>
+                        <li><a href="index.html#about"><i class="fas fa-info-circle"></i> <span data-i18n="nav_about">About Us</span></a></li>
+                        <li><a href="index.html#services"><i class="fas fa-cogs"></i> <span data-i18n="nav_services">Services</span></a></li>
+                        <li><a href="index.html#freight"><i class="fas fa-ship"></i> <span data-i18n="nav_freight">Freight</span></a></li>
+                        <li><a href="customs.html"><i class="fas fa-file-contract"></i> <span data-i18n="nav_customs">Customs</span></a></li>
+                        <li><a href="index.html#logistics"><i class="fas fa-truck-moving"></i> <span data-i18n="nav_logistics">Logistics</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_support">Customer Service</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-headset"></i> <span data-i18n="contact">Contact Us</span></a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> <span data-i18n="help_center">Help Center</span></a></li>
+                        <li><a href="#"><i class="fas fa-undo"></i> <span data-i18n="claims">Claims & Returns</span></a></li>
+                        <li><a href="#"><i class="fas fa-comments"></i> <span data-i18n="feedback">Feedback</span></a></li>
+                        <li><a href="#"><i class="fas fa-ticket-alt"></i> <span data-i18n="ticket">Submit a Ticket</span></a></li>
+                        <li><a href="#"><i class="fas fa-envelope-open-text"></i> <span data-i18n="informed_delivery">Informed Delivery</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_company">Company</h4>
+                    <ul>
+                        <li><a href="index.html#about"><i class="fas fa-building"></i> <span data-i18n="about_us">About Velox</span></a></li>
+                        <li><a href="#"><i class="fas fa-bullhorn"></i> <span data-i18n="newsroom">Newsroom</span></a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> <span data-i18n="careers">Careers</span></a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> <span data-i18n="privacy">Privacy Policy</span></a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> <span data-i18n="terms">Terms of Use</span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — <span data-i18n="copyright">All rights reserved.</span></div>
+                <div class="legal">
+                    <a href="#" data-i18n="privacy">Privacy</a>
+                    <a href="#" data-i18n="terms">Terms</a>
+                    <a href="#" data-i18n="cookies">Cookies</a>
+                    <a href="#" data-i18n="accessibility">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // MOBILE NAV
+        // ============================================================
+        function toggleMobileNav() {
+            const links = document.getElementById('navLinks');
+            links.classList.toggle('open');
+            const icon = document.querySelector('.menu-toggle i');
+            icon.className = links.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+        }
+
+        // ============================================================
+        // SCROLL REVEAL
+        // ============================================================
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .process-step, .doc-card, .feature-benefit');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 80;
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', () => {
+            revealOnScroll();
+            setTimeout(revealOnScroll, 300);
+        });
+
+        // ============================================================
+        // SMOOTH SCROLL FOR ANCHOR LINKS
+        // ============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ============================================================
+        // TRANSLATIONS (Full Index Translations)
+        // ============================================================
+        const translations = {
+            en: {
+                customs_hero_badge: "CUSTOMS CLEARANCE EXPERTS",
+                customs_hero_title_1: "Seamless",
+                customs_hero_title_2: "Cross-Border",
+                customs_hero_title_3: "Clearance",
+                customs_hero_desc: "Navigate complex international trade regulations with confidence. Our expert customs brokerage team ensures your shipments clear customs quickly, efficiently, and compliantly.",
+                customs_hero_cta_1: "GET CUSTOMS HELP",
+                customs_hero_cta_2: "SEE PROCESS",
+                customs_overview_label: "Why Velox Customs",
+                customs_overview_title_1: "Global",
+                customs_overview_title_2: "Customs",
+                customs_overview_title_3: "Expertise",
+                customs_overview_desc_1: "With over 18 years of experience in international trade, Velox Logistics offers comprehensive customs brokerage services that streamline your cross-border shipments. Our team of licensed customs brokers stays ahead of changing regulations to ensure your goods move without delay.",
+                customs_overview_desc_2: "From import/export declarations to tariff classification and free trade agreement benefits, we provide end-to-end customs support for businesses of all sizes.",
+                customs_overview_feat_1: "Licensed customs brokers with global expertise",
+                customs_overview_feat_2: "Real-time shipment visibility and status updates",
+                customs_overview_feat_3: "Duty and tax calculation with optimization strategies",
+                customs_overview_feat_4: "Compliance with all international trade regulations",
+                customs_process_label: "How It Works",
+                customs_process_title_1: "Our",
+                customs_process_title_2: "Customs",
+                customs_process_title_3: "Process",
+                customs_process_sub: "From documentation to clearance, we handle every step of the customs process with precision and care.",
+                customs_process_step_1_title: "Documentation",
+                customs_process_step_1_desc: "We prepare and review all required customs documentation, including commercial invoices, packing lists, and certificates of origin.",
+                customs_process_step_2_title: "Classification",
+                customs_process_step_2_desc: "Our experts classify your goods using Harmonized System (HS) codes to determine applicable duties, taxes, and trade restrictions.",
+                customs_process_step_3_title: "Declaration",
+                customs_process_step_3_desc: "We file accurate customs declarations and manage all communications with customs authorities to ensure smooth processing.",
+                customs_process_step_4_title: "Clearance",
+                customs_process_step_4_desc: "Your goods clear customs efficiently, and we provide real-time updates on status, duties paid, and estimated delivery timing.",
+                customs_doc_label: "Documentation",
+                customs_doc_title_1: "Essential",
+                customs_doc_title_2: "Documents",
+                customs_doc_title_3: "We Handle",
+                customs_doc_sub: "We manage all the critical paperwork required for smooth customs clearance across borders.",
+                customs_doc_1_title: "Commercial Invoice",
+                customs_doc_1_desc: "Detailed invoice showing the value, quantity, and description of goods for customs valuation purposes.",
+                customs_doc_2_title: "Packing List",
+                customs_doc_2_desc: "Comprehensive list of all items in the shipment with weights, dimensions, and packaging details.",
+                customs_doc_3_title: "Certificate of Origin",
+                customs_doc_3_desc: "Official document certifying the country where the goods were manufactured or produced.",
+                customs_doc_4_title: "HS Code Classification",
+                customs_doc_4_desc: "Harmonized System codes that accurately categorize your goods for duty and tax calculation.",
+                customs_doc_5_title: "Bill of Lading / Air Waybill",
+                customs_doc_5_desc: "Shipping documents that serve as evidence of the contract of carriage and receipt of goods.",
+                customs_doc_6_title: "Free Trade Agreement Forms",
+                customs_doc_6_desc: "Documentation to claim preferential duty rates under existing free trade agreements.",
+                customs_features_label: "Why Choose Us",
+                customs_features_title_1: "Customs",
+                customs_features_title_2: "Advantages",
+                customs_features_sub: "We go beyond clearance to provide strategic advantages for your cross-border business.",
+                customs_feature_1_title: "Fast Clearance",
+                customs_feature_1_desc: "Our streamlined processes and customs relationships ensure your shipments clear quickly, reducing delays and storage costs.",
+                customs_feature_2_title: "Compliance Guaranteed",
+                customs_feature_2_desc: "We stay current with ever-changing trade regulations to keep you compliant and avoid costly penalties.",
+                customs_feature_3_title: "Duty Optimization",
+                customs_feature_3_desc: "Our experts identify duty savings opportunities through free trade agreements and proper tariff classification.",
+                customs_feature_4_title: "Global Coverage",
+                customs_feature_4_desc: "Customs support in over 220 countries and territories, with local expertise in every major trade corridor.",
+                customs_feature_5_title: "24/7 Support",
+                customs_feature_5_desc: "Our customs team is available around the clock to address urgent issues and provide real-time guidance.",
+                customs_feature_6_title: "Digital Platform",
+                customs_feature_6_desc: "Track your customs status online, access documents, and manage your shipments through our secure portal.",
+                customs_cta_label: "Ready to Ship?",
+                customs_cta_title: "Let Us Handle Your Customs",
+                customs_cta_desc: "Contact our customs team today for a free consultation and get your shipments moving across borders with confidence.",
+                customs_cta_btn_1: "Call Us Now",
+                customs_cta_btn_2: "Request a Quote",
+                footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.",
+                footer_quick: "Quick Links",
+                footer_support: "Customer Service",
+                footer_company: "Company",
+                nav_track: "Track a Shipment",
+                nav_quote: "Get a Quote",
+                nav_about: "About Us",
+                nav_services: "Services",
+                nav_freight: "Freight",
+                nav_customs: "Customs",
+                nav_logistics: "Logistics",
+                contact: "Contact Us",
+                help_center: "Help Center",
+                claims: "Claims & Returns",
+                feedback: "Feedback",
+                ticket: "Submit a Ticket",
+                informed_delivery: "Informed Delivery",
+                about_us: "About Velox",
+                newsroom: "Newsroom",
+                careers: "Careers",
+                privacy: "Privacy Policy",
+                terms: "Terms of Use",
+                copyright: "All rights reserved.",
+                cookies: "Cookies",
+                accessibility: "Accessibility"
+            },
+            fr: {
+                customs_hero_badge: "EXPERTS EN DÉDOUANEMENT",
+                customs_hero_title_1: "Fluide",
+                customs_hero_title_2: "Transfrontalier",
+                customs_hero_title_3: "Dédouanement",
+                customs_hero_desc: "Naviguez dans les réglementations complexes du commerce international en toute confiance. Notre équipe d'experts en courtage en douane garantit que vos envois sont dédouanés rapidement, efficacement et en toute conformité.",
+                customs_hero_cta_1: "OBTENIR DE L'AIDE",
+                customs_hero_cta_2: "VOIR LE PROCESSUS",
+                customs_overview_label: "Pourquoi Velox Customs",
+                customs_overview_title_1: "Expertise",
+                customs_overview_title_2: "Douanière",
+                customs_overview_title_3: "Mondiale",
+                customs_overview_desc_1: "Fort de plus de 18 ans d'expérience dans le commerce international, Velox Logistics propose des services de courtage en douane complets qui simplifient vos envois transfrontaliers.",
+                customs_overview_desc_2: "Des déclarations d'import/export à la classification tarifaire et aux avantages des accords de libre-échange, nous fournissons un soutien douanier de bout en bout.",
+                customs_overview_feat_1: "Courtiers en douane agréés avec expertise mondiale",
+                customs_overview_feat_2: "Visibilité en temps réel et mises à jour de statut",
+                customs_overview_feat_3: "Calcul des droits et taxes avec stratégies d'optimisation",
+                customs_overview_feat_4: "Conformité avec toutes les réglementations commerciales internationales",
+                customs_process_label: "Comment ça marche",
+                customs_process_title_1: "Notre",
+                customs_process_title_2: "Processus",
+                customs_process_title_3: "Douanier",
+                customs_process_sub: "De la documentation au dédouanement, nous gérons chaque étape avec précision et soin.",
+                customs_process_step_1_title: "Documentation",
+                customs_process_step_1_desc: "Nous préparons et examinons toute la documentation douanière requise, y compris les factures commerciales, les listes de colisage et les certificats d'origine.",
+                customs_process_step_2_title: "Classification",
+                customs_process_step_2_desc: "Nos experts classent vos marchandises à l'aide des codes du Système harmonisé (SH).",
+                customs_process_step_3_title: "Déclaration",
+                customs_process_step_3_desc: "Nous déposons des déclarations douanières précises et gérons toutes les communications avec les autorités douanières.",
+                customs_process_step_4_title: "Dédouanement",
+                customs_process_step_4_desc: "Vos marchandises sont dédouanées efficacement, avec des mises à jour en temps réel.",
+                customs_doc_label: "Documentation",
+                customs_doc_title_1: "Documents",
+                customs_doc_title_2: "Essentiels",
+                customs_doc_title_3: "Gérés",
+                customs_doc_sub: "Nous gérons toute la paperasse critique pour un dédouanement fluide.",
+                customs_doc_1_title: "Facture Commerciale",
+                customs_doc_1_desc: "Facture détaillée indiquant la valeur, la quantité et la description des marchandises.",
+                customs_doc_2_title: "Liste de Colisage",
+                customs_doc_2_desc: "Liste complète de tous les articles avec poids, dimensions et détails d'emballage.",
+                customs_doc_3_title: "Certificat d'Origine",
+                customs_doc_3_desc: "Document officiel certifiant le pays de fabrication des marchandises.",
+                customs_doc_4_title: "Classification HS",
+                customs_doc_4_desc: "Codes du Système harmonisé pour catégoriser vos marchandises.",
+                customs_doc_5_title: "Connaissement / Lettre de Transport Aérien",
+                customs_doc_5_desc: "Documents de transport servant de preuve du contrat de transport.",
+                customs_doc_6_title: "Formulaires d'Accord de Libre-Échange",
+                customs_doc_6_desc: "Documentation pour réclamer des taux de droit préférentiels.",
+                customs_features_label: "Pourquoi nous choisir",
+                customs_features_title_1: "Avantages",
+                customs_features_title_2: "Douaniers",
+                customs_features_sub: "Nous allons au-delà du dédouanement pour offrir des avantages stratégiques.",
+                customs_feature_1_title: "Dédouanement Rapide",
+                customs_feature_1_desc: "Nos processus simplifiés assurent un dédouanement rapide.",
+                customs_feature_2_title: "Conformité Garantie",
+                customs_feature_2_desc: "Nous restons à jour avec les réglementations commerciales.",
+                customs_feature_3_title: "Optimisation des Droits",
+                customs_feature_3_desc: "Nos experts identifient les opportunités d'économies.",
+                customs_feature_4_title: "Couverture Mondiale",
+                customs_feature_4_desc: "Soutien douanier dans plus de 220 pays.",
+                customs_feature_5_title: "Support 24/7",
+                customs_feature_5_desc: "Notre équipe est disponible 24h/24 pour les urgences.",
+                customs_feature_6_title: "Plateforme Numérique",
+                customs_feature_6_desc: "Suivez votre statut douanier en ligne.",
+                customs_cta_label: "Prêt à expédier ?",
+                customs_cta_title: "Laissez-nous gérer vos douanes",
+                customs_cta_desc: "Contactez notre équipe douanière pour une consultation gratuite.",
+                customs_cta_btn_1: "Appelez-nous",
+                customs_cta_btn_2: "Demander un devis",
+                footer_desc: "Solutions mondiales d'express et de fret construites sur la fiabilité, la rapidité et l'engagement pour des chaînes d'approvisionnement durables.",
+                footer_quick: "Liens rapides",
+                footer_support: "Service client",
+                footer_company: "Entreprise",
+                nav_track: "Suivre un colis",
+                nav_quote: "Obtenir un devis",
+                nav_about: "À propos",
+                nav_services: "Services",
+                nav_freight: "Fret",
+                nav_customs: "Douanes",
+                nav_logistics: "Logistique",
+                contact: "Contactez-nous",
+                help_center: "Centre d'aide",
+                claims: "Réclamations",
+                feedback: "Retour",
+                ticket: "Soumettre un ticket",
+                informed_delivery: "Livraison informée",
+                about_us: "À propos",
+                newsroom: "Salle de presse",
+                careers: "Carrières",
+                privacy: "Politique de confidentialité",
+                terms: "Conditions d'utilisation",
+                copyright: "Tous droits réservés.",
+                cookies: "Cookies",
+                accessibility: "Accessibilité"
+            },
+            de: {
+                customs_hero_badge: "ZOLLEXPERTEN",
+                customs_hero_title_1: "Nahtlose",
+                customs_hero_title_2: "Grenzüberschreitende",
+                customs_hero_title_3: "Zollabfertigung",
+                customs_hero_desc: "Navigieren Sie souverän durch komplexe internationale Handelsvorschriften. Unser Expertenteam für Zollbrokerage gewährleistet eine schnelle, effiziente und regelkonforme Zollabfertigung.",
+                customs_hero_cta_1: "ZOLLHILFE ERHALTEN",
+                customs_hero_cta_2: "PROZESS ANSEHEN",
+                customs_overview_label: "Warum Velox Customs",
+                customs_overview_title_1: "Globale",
+                customs_overview_title_2: "Zoll-",
+                customs_overview_title_3: "Expertise",
+                customs_overview_desc_1: "Mit über 18 Jahren Erfahrung im internationalen Handel bietet Velox Logistics umfassende Zollbrokerage-Dienste.",
+                customs_overview_desc_2: "Von Import-/Exportdeklarationen bis zur Zolltarifklassifizierung und Freihandelsabkommen.",
+                customs_overview_feat_1: "Lizenzierte Zollbroker mit globaler Expertise",
+                customs_overview_feat_2: "Echtzeit-Sendungsverfolgung und Statusaktualisierungen",
+                customs_overview_feat_3: "Zoll- und Steuerberechnung mit Optimierungsstrategien",
+                customs_overview_feat_4: "Einhaltung aller internationalen Handelsvorschriften",
+                customs_process_label: "So funktioniert es",
+                customs_process_title_1: "Unser",
+                customs_process_title_2: "Zoll-",
+                customs_process_title_3: "Prozess",
+                customs_process_sub: "Von der Dokumentation bis zur Abfertigung – jeder Schritt mit Präzision und Sorgfalt.",
+                customs_process_step_1_title: "Dokumentation",
+                customs_process_step_1_desc: "Wir erstellen und prüfen alle erforderlichen Zolldokumente.",
+                customs_process_step_2_title: "Klassifizierung",
+                customs_process_step_2_desc: "Unsere Experten klassifizieren Ihre Waren mit HS-Codes.",
+                customs_process_step_3_title: "Deklaration",
+                customs_process_step_3_desc: "Wir geben genaue Zolldeklarationen ab und kommunizieren mit den Behörden.",
+                customs_process_step_4_title: "Abfertigung",
+                customs_process_step_4_desc: "Ihre Waren werden effizient abgefertigt, mit Echtzeit-Updates.",
+                customs_doc_label: "Dokumentation",
+                customs_doc_title_1: "Wesentliche",
+                customs_doc_title_2: "Dokumente",
+                customs_doc_title_3: "Wir verwalten",
+                customs_doc_sub: "Wir kümmern uns um alle wichtigen Unterlagen für eine reibungslose Zollabfertigung.",
+                customs_doc_1_title: "Handelsrechnung",
+                customs_doc_1_desc: "Detaillierte Rechnung mit Wert, Menge und Beschreibung der Waren.",
+                customs_doc_2_title: "Packliste",
+                customs_doc_2_desc: "Umfassende Liste aller Artikel mit Gewichten und Maßen.",
+                customs_doc_3_title: "Ursprungszeugnis",
+                customs_doc_3_desc: "Offizielles Dokument, das das Herstellungsland bescheinigt.",
+                customs_doc_4_title: "HS-Code-Klassifizierung",
+                customs_doc_4_desc: "Harmonisierte Systemcodes für Ihre Warenkategorisierung.",
+                customs_doc_5_title: "Konnossement / Luftfrachtbrief",
+                customs_doc_5_desc: "Versanddokumente als Nachweis des Beförderungsvertrags.",
+                customs_doc_6_title: "Freihandelsabkommen-Formulare",
+                customs_doc_6_desc: "Dokumentation zur Beanspruchung von Präferenzzollsätzen.",
+                customs_features_label: "Warum uns wählen",
+                customs_features_title_1: "Zoll-",
+                customs_features_title_2: "Vorteile",
+                customs_features_sub: "Wir bieten strategische Vorteile für Ihr grenzüberschreitendes Geschäft.",
+                customs_feature_1_title: "Schnelle Abfertigung",
+                customs_feature_1_desc: "Unsere optimierten Prozesse sorgen für eine schnelle Abfertigung.",
+                customs_feature_2_title: "Compliance garantiert",
+                customs_feature_2_desc: "Wir bleiben stets auf dem neuesten Stand der Handelsvorschriften.",
+                customs_feature_3_title: "Zolloptimierung",
+                customs_feature_3_desc: "Unsere Experten identifizieren Einsparpotenziale.",
+                customs_feature_4_title: "Weltweite Abdeckung",
+                customs_feature_4_desc: "Zollunterstützung in über 220 Ländern.",
+                customs_feature_5_title: "24/7 Support",
+                customs_feature_5_desc: "Unser Team ist rund um die Uhr verfügbar.",
+                customs_feature_6_title: "Digitale Plattform",
+                customs_feature_6_desc: "Verfolgen Sie Ihren Zollstatus online.",
+                customs_cta_label: "Bereit zum Versand?",
+                customs_cta_title: "Überlassen Sie uns Ihren Zoll",
+                customs_cta_desc: "Kontaktieren Sie unser Zollteam für eine kostenlose Beratung.",
+                customs_cta_btn_1: "Rufen Sie uns an",
+                customs_cta_btn_2: "Angebot anfordern",
+                footer_desc: "Globale Express- und Frachtlösungen basierend auf Zuverlässigkeit, Geschwindigkeit und Engagement für nachhaltige Lieferketten.",
+                footer_quick: "Quicklinks",
+                footer_support: "Kundenservice",
+                footer_company: "Unternehmen",
+                nav_track: "Sendung verfolgen",
+                nav_quote: "Angebot einholen",
+                nav_about: "Über uns",
+                nav_services: "Dienstleistungen",
+                nav_freight: "Fracht",
+                nav_customs: "Zoll",
+                nav_logistics: "Logistik",
+                contact: "Kontakt",
+                help_center: "Hilfezentrum",
+                claims: "Ansprüche",
+                feedback: "Feedback",
+                ticket: "Ticket einreichen",
+                informed_delivery: "Informierte Zustellung",
+                about_us: "Über Velox",
+                newsroom: "Nachrichten",
+                careers: "Karriere",
+                privacy: "Datenschutzrichtlinie",
+                terms: "Nutzungsbedingungen",
+                copyright: "Alle Rechte vorbehalten.",
+                cookies: "Cookies",
+                accessibility: "Barrierefreiheit"
+            },
+            es: {
+                customs_hero_badge: "EXPERTOS EN ADUANAS",
+                customs_hero_title_1: "Movimiento",
+                customs_hero_title_2: "Transfronterizo",
+                customs_hero_title_3: "Fluido",
+                customs_hero_desc: "Navegue con confianza por las complejas regulaciones del comercio internacional. Nuestro equipo de expertos en agencias de aduanas garantiza un despacho rápido, eficiente y conforme.",
+                customs_hero_cta_1: "OBTENER AYUDA",
+                customs_hero_cta_2: "VER PROCESO",
+                customs_overview_label: "Por qué Velox Customs",
+                customs_overview_title_1: "Expertise",
+                customs_overview_title_2: "Aduanera",
+                customs_overview_title_3: "Global",
+                customs_overview_desc_1: "Con más de 18 años de experiencia en comercio internacional, Velox Logistics ofrece servicios integrales de agencia de aduanas.",
+                customs_overview_desc_2: "Desde declaraciones de importación/exportación hasta clasificación arancelaria y beneficios de tratados de libre comercio.",
+                customs_overview_feat_1: "Agentes de aduanas licenciados con experiencia global",
+                customs_overview_feat_2: "Visibilidad de envíos en tiempo real y actualizaciones de estado",
+                customs_overview_feat_3: "Cálculo de aranceles e impuestos con estrategias de optimización",
+                customs_overview_feat_4: "Cumplimiento de todas las regulaciones comerciales internacionales",
+                customs_process_label: "Cómo funciona",
+                customs_process_title_1: "Nuestro",
+                customs_process_title_2: "Proceso",
+                customs_process_title_3: "Aduanero",
+                customs_process_sub: "Desde la documentación hasta el despacho, manejamos cada paso con precisión y cuidado.",
+                customs_process_step_1_title: "Documentación",
+                customs_process_step_1_desc: "Preparamos y revisamos toda la documentación aduanera requerida.",
+                customs_process_step_2_title: "Clasificación",
+                customs_process_step_2_desc: "Nuestros expertos clasifican sus mercancías utilizando códigos del Sistema Armonizado.",
+                customs_process_step_3_title: "Declaración",
+                customs_process_step_3_desc: "Presentamos declaraciones aduaneras precisas y gestionamos las comunicaciones.",
+                customs_process_step_4_title: "Despacho",
+                customs_process_step_4_desc: "Sus mercancías se despachan eficientemente con actualizaciones en tiempo real.",
+                customs_doc_label: "Documentación",
+                customs_doc_title_1: "Documentos",
+                customs_doc_title_2: "Esenciales",
+                customs_doc_title_3: "Manejamos",
+                customs_doc_sub: "Gestionamos toda la documentación crítica para un despacho aduanero fluido.",
+                customs_doc_1_title: "Factura Comercial",
+                customs_doc_1_desc: "Factura detallada con valor, cantidad y descripción de las mercancías.",
+                customs_doc_2_title: "Lista de Embalaje",
+                customs_doc_2_desc: "Lista completa de todos los artículos con pesos y dimensiones.",
+                customs_doc_3_title: "Certificado de Origen",
+                customs_doc_3_desc: "Documento oficial que certifica el país de fabricación.",
+                customs_doc_4_title: "Clasificación HS",
+                customs_doc_4_desc: "Códigos del Sistema Armonizado para categorizar sus mercancías.",
+                customs_doc_5_title: "Conocimiento de Embarque / Guía Aérea",
+                customs_doc_5_desc: "Documentos de transporte que sirven como evidencia del contrato de transporte.",
+                customs_doc_6_title: "Formularios de Tratado de Libre Comercio",
+                customs_doc_6_desc: "Documentación para reclamar tasas arancelarias preferenciales.",
+                customs_features_label: "Por qué elegirnos",
+                customs_features_title_1: "Ventajas",
+                customs_features_title_2: "Aduaneras",
+                customs_features_sub: "Vamos más allá del despacho para ofrecer ventajas estratégicas.",
+                customs_feature_1_title: "Despacho Rápido",
+                customs_feature_1_desc: "Nuestros procesos optimizados garantizan un despacho rápido.",
+                customs_feature_2_title: "Cumplimiento Garantizado",
+                customs_feature_2_desc: "Nos mantenemos actualizados con las regulaciones comerciales.",
+                customs_feature_3_title: "Optimización de Aranceles",
+                customs_feature_3_desc: "Nuestros expertos identifican oportunidades de ahorro.",
+                customs_feature_4_title: "Cobertura Global",
+                customs_feature_4_desc: "Soporte aduanero en más de 220 países.",
+                customs_feature_5_title: "Soporte 24/7",
+                customs_feature_5_desc: "Nuestro equipo está disponible las 24 horas.",
+                customs_feature_6_title: "Plataforma Digital",
+                customs_feature_6_desc: "Siga su estado aduanero en línea.",
+                customs_cta_label: "¿Listo para enviar?",
+                customs_cta_title: "Deje que manejemos sus aduanas",
+                customs_cta_desc: "Contacte a nuestro equipo de aduanas para una consulta gratuita.",
+                customs_cta_btn_1: "Llámenos ahora",
+                customs_cta_btn_2: "Solicitar presupuesto",
+                footer_desc: "Soluciones globales de express y carga basadas en confiabilidad, velocidad y un compromiso con cadenas de suministro sostenibles.",
+                footer_quick: "Enlaces rápidos",
+                footer_support: "Servicio al cliente",
+                footer_company: "Empresa",
+                nav_track: "Rastrear un envío",
+                nav_quote: "Obtener presupuesto",
+                nav_about: "Sobre nosotros",
+                nav_services: "Servicios",
+                nav_freight: "Carga",
+                nav_customs: "Aduanas",
+                nav_logistics: "Logística",
+                contact: "Contacto",
+                help_center: "Centro de ayuda",
+                claims: "Reclamaciones",
+                feedback: "Comentarios",
+                ticket: "Enviar ticket",
+                informed_delivery: "Entrega informada",
+                about_us: "Sobre Velox",
+                newsroom: "Sala de prensa",
+                careers: "Carreras",
+                privacy: "Política de privacidad",
+                terms: "Términos de uso",
+                copyright: "Todos los derechos reservados.",
+                cookies: "Cookies",
+                accessibility: "Accesibilidad"
+            },
+            zh: {
+                customs_hero_badge: "清关专家",
+                customs_hero_title_1: "无缝",
+                customs_hero_title_2: "跨境",
+                customs_hero_title_3: "清关",
+                customs_hero_desc: "自信应对复杂的国际贸易法规。我们的专业报关团队确保您的货物快速、高效、合规地完成清关。",
+                customs_hero_cta_1: "获取清关帮助",
+                customs_hero_cta_2: "查看流程",
+                customs_overview_label: "为什么选择 Velox 清关",
+                customs_overview_title_1: "全球",
+                customs_overview_title_2: "清关",
+                customs_overview_title_3: "专业",
+                customs_overview_desc_1: "Velox Logistics 拥有超过18年的国际贸易经验，提供全面的报关服务，简化您的跨境运输。",
+                customs_overview_desc_2: "从进出口申报到关税分类和自由贸易协定优惠，我们为各类企业提供端到端的清关支持。",
+                customs_overview_feat_1: "持牌报关行，全球专业知识",
+                customs_overview_feat_2: "实时货物可见性和状态更新",
+                customs_overview_feat_3: "关税和税费计算，优化策略",
+                customs_overview_feat_4: "遵守所有国际贸易法规",
+                customs_process_label: "工作流程",
+                customs_process_title_1: "我们的",
+                customs_process_title_2: "清关",
+                customs_process_title_3: "流程",
+                customs_process_sub: "从文件到清关，我们以精准和细致处理每一步。",
+                customs_process_step_1_title: "文件准备",
+                customs_process_step_1_desc: "我们准备和审查所有所需的清关文件，包括商业发票、装箱单和原产地证书。",
+                customs_process_step_2_title: "分类",
+                customs_process_step_2_desc: "我们的专家使用协调制度（HS）编码对您的货物进行分类。",
+                customs_process_step_3_title: "申报",
+                customs_process_step_3_desc: "我们提交准确的报关单，并管理与海关当局的所有沟通。",
+                customs_process_step_4_title: "清关",
+                customs_process_step_4_desc: "您的货物高效完成清关，我们提供实时状态更新。",
+                customs_doc_label: "文件处理",
+                customs_doc_title_1: "关键",
+                customs_doc_title_2: "文件",
+                customs_doc_title_3: "我们处理",
+                customs_doc_sub: "我们管理所有关键文件，确保跨境清关顺利进行。",
+                customs_doc_1_title: "商业发票",
+                customs_doc_1_desc: "详细发票，显示货物的价值、数量和描述。",
+                customs_doc_2_title: "装箱单",
+                customs_doc_2_desc: "所有物品的完整清单，包含重量、尺寸和包装详情。",
+                customs_doc_3_title: "原产地证书",
+                customs_doc_3_desc: "证明货物制造或生产国的官方文件。",
+                customs_doc_4_title: "HS编码分类",
+                customs_doc_4_desc: "准确分类货物的协调制度编码。",
+                customs_doc_5_title: "提单 / 空运提单",
+                customs_doc_5_desc: "作为运输合同证据的运输文件。",
+                customs_doc_6_title: "自由贸易协定表格",
+                customs_doc_6_desc: "申请优惠关税税率的文件。",
+                customs_features_label: "为什么选择我们",
+                customs_features_title_1: "清关",
+                customs_features_title_2: "优势",
+                customs_features_sub: "我们超越清关，为您的跨境业务提供战略优势。",
+                customs_feature_1_title: "快速清关",
+                customs_feature_1_desc: "我们简化的流程和海关关系确保您的货物快速清关。",
+                customs_feature_2_title: "合规保证",
+                customs_feature_2_desc: "我们紧跟不断变化的贸易法规，确保您合规。",
+                customs_feature_3_title: "关税优化",
+                customs_feature_3_desc: "我们的专家通过自由贸易协定和正确的关税分类识别节省机会。",
+                customs_feature_4_title: "全球覆盖",
+                customs_feature_4_desc: "在220多个国家和地区提供清关支持。",
+                customs_feature_5_title: "24/7支持",
+                customs_feature_5_desc: "我们的清关团队全天候待命，处理紧急问题。",
+                customs_feature_6_title: "数字平台",
+                customs_feature_6_desc: "在线跟踪您的清关状态，访问文件，管理您的货物。",
+                customs_cta_label: "准备发货？",
+                customs_cta_title: "让我们处理您的清关",
+                customs_cta_desc: "立即联系我们的清关团队，获得免费咨询。",
+                customs_cta_btn_1: "立即致电",
+                customs_cta_btn_2: "请求报价",
+                footer_desc: "基于可靠性、速度和对可持续供应链承诺的全球快递和货运解决方案。自2005年起连接全球企业。",
+                footer_quick: "快速链接",
+                footer_support: "客户服务",
+                footer_company: "公司",
+                nav_track: "追踪货物",
+                nav_quote: "获取报价",
+                nav_about: "关于我们",
+                nav_services: "服务",
+                nav_freight: "货运",
+                nav_customs: "清关",
+                nav_logistics: "物流",
+                contact: "联系我们",
+                help_center: "帮助中心",
+                claims: "索赔与退货",
+                feedback: "反馈",
+                ticket: "提交工单",
+                informed_delivery: "知情配送",
+                about_us: "关于 Velox",
+                newsroom: "新闻室",
+                careers: "职业",
+                privacy: "隐私政策",
+                terms: "使用条款",
+                copyright: "保留所有权利。",
+                cookies: "Cookies",
+                accessibility: "无障碍"
+            }
+        };
+
+        // ============================================================
+        // TRANSLATION ENGINE
+        // ============================================================
+        function changeLanguage() {
+            const lang = document.getElementById('langSelect').value;
+            const t = translations[lang] || translations.en;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key] !== undefined) {
+                    el.innerHTML = t[key];
+                }
+            });
+        }
+
+        document.getElementById('langSelect')?.addEventListener('change', changeLanguage);
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        // Set initial language
+        changeLanguage();
+
+        console.log('Velox Customs — Ready with translator');
+    </script>
+
+</body>
+</html>
