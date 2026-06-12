@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Velox Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================================
+               ROOT & RESET (exactly as in your index.html)
+        ============================================================ */
+        :root {
+            --primary: #D40000;
+            --primary-dark: #B00000;
+            --secondary: #FFCC00;
+            --secondary-dark: #E6B800;
+            --dark: #0A0A1A;
+            --dark-light: #1A1A2E;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-800: #424242;
+            --gray-900: #212121;
+            --white: #FFFFFF;
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.16);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --radius-full: 9999px;
+            --container: 1280px;
+            --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ============================================================
+               UTILITY
+        ============================================================ */
+        .container {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(212, 0, 0, 0.08);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .highlight {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--gray-600);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .text-center .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(212, 0, 0, 0.20);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212, 0, 0, 0.30);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+            box-shadow: 0 4px 16px rgba(255, 204, 0, 0.20);
+        }
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================================
+               TOP BAR
+        ============================================================ */
+        .top-bar {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid var(--secondary);
+            position: relative;
+            z-index: 1002;
+            overflow: hidden;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-left a {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .top-bar-left a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-left a i {
+            color: var(--secondary);
+            font-size: 0.65rem;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-bar-right a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        .top-bar-right a:hover {
+            color: var(--secondary);
+        }
+        .top-bar-right .sign-in {
+            color: var(--white);
+            font-weight: 600;
+        }
+        .top-bar-right .register {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .top-bar-right .informed-delivery i {
+            color: var(--secondary);
+        }
+
+        .top-bar-right .lang-select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .top-bar-right .top-cta {
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 4px 14px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .top-bar-right .top-cta:hover {
+            background: var(--white);
+            transform: scale(1.04);
+        }
+
+        .top-bar-right .top-phone {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        /* ============================================================
+               MAIN NAV
+        ============================================================ */
+        .main-nav {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            padding: 12px 0;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .main-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .logo span {
+            color: var(--dark);
+            background: var(--secondary);
+            padding: 0 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--gray-600);
+            position: relative;
+            padding: 4px 0;
+        }
+        .nav-links a:hover {
+            color: var(--dark);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .nav-actions .btn-track {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 0, 0, 0.20);
+        }
+        .nav-actions .btn-track:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-actions .btn-ship {
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(212, 0, 0, 0.25);
+        }
+        .nav-actions .btn-ship:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--dark);
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        .menu-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* ============================================================
+               PAGE SPECIFIC STYLES
+        ============================================================ */
+        .page-header {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--primary), var(--secondary));
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .register-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .register-form {
+            background: var(--white);
+            padding: 40px 34px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .register-form h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.92rem;
+            font-family: inherit;
+            transition: var(--transition);
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.04);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .register-form .btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        .register-info {
+            background: var(--gray-50);
+            padding: 40px;
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+        }
+
+        .register-info h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .register-info ul {
+            list-style: disc;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .register-info li {
+            margin-bottom: 10px;
+            color: var(--gray-600);
+        }
+
+        .benefit-icons {
+            display: flex;
+            gap: 20px;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .benefit-icon {
+            text-align: center;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .benefit-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .benefit-icon span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: block;
+            color: var(--gray-700);
+        }
+
+        /* ============================================================
+               FOOTER (same as index)
+        ============================================================ */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 0 20px;
+            margin-top: auto;
+            border-top: 3px solid var(--secondary);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 28px;
+            height: 2px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        .footer-col p {
+            font-size: 0.85rem;
+            line-height: 1.8;
+            max-width: 320px;
+        }
+        .footer-col ul li {
+            margin-bottom: 6px;
+        }
+        .footer-col ul a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .footer-col ul a:hover {
+            color: var(--secondary);
+            transform: translateX(4px);
+        }
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .footer-bottom .copyright {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal {
+            display: flex;
+            gap: 16px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.25);
+        }
+        .footer-bottom .legal a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .register-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 12px 0;
+                gap: 8px;
+                border-top: 1px solid var(--gray-200);
+                margin-top: 10px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            .register-form {
+                padding: 24px 20px;
+            }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-left">
+                <a href="tel:+442079460123"><i class="fas fa-phone-alt"></i> +1 (559) 508 3927</a>
+                <a href="mailto:support@veloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a href="#"><i class="fas fa-map-pin"></i> Locations</a>
+                <a href="tracking.html"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
+            </div>
+            <div class="top-bar-right">
+                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
+                <a href="register.html" class="register">Register</a>
+                <a href="signin.html" class="sign-in">Sign In</a>
+                <select class="lang-select" id="langSelect">
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="de">🇩🇪 DE</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="zh">🇨🇳 中文</option>
+                </select>
+                <a href="quick-quote.html" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
+                <a href="support.html" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAV -->
+    <header class="main-nav">
+        <div class="container">
+            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="tracking.html">Tracking</a>
+                <a href="services.html">Services</a>
+                <a href="freight.html">Freight</a>
+                <a href="customs.html">Customs</a>
+                <a href="logistics.html">Logistics</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="btn-track" onclick="window.location.href='tracking.html'"><i class="fas fa-search"></i> Track</button>
+                <button class="btn-ship" onclick="window.location.href='ship.html'"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Create Your Velox Account</h1>
+            <p>Join thousands of businesses and individuals who trust Velox for their shipping needs.</p>
+        </div>
+    </section>
+
+    <!-- REGISTRATION CONTENT -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="register-grid">
+                <!-- Registration Form -->
+                <div class="register-form animate-fade-up">
+                    <h4><i class="fas fa-user-plus" style="color: var(--primary); margin-right: 8px;"></i> Sign Up</h4>
+                    <form id="registerForm" onsubmit="event.preventDefault(); alert('✅ Registration successful! Please check your email for verification. (Demo)');">
+                        <div class="form-row">
+                            <div class="form-group"><label>First Name</label><input type="text" required placeholder="John"></div>
+                            <div class="form-group"><label>Last Name</label><input type="text" required placeholder="Doe"></div>
+                        </div>
+                        <div class="form-group"><label>Email Address</label><input type="email" required placeholder="john@example.com"></div>
+                        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+44 20 7946 0123"></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Password</label><input type="password" required></div>
+                            <div class="form-group"><label>Confirm Password</label><input type="password" required></div>
+                        </div>
+                        <div class="form-group"><label>Company Name (optional)</label><input type="text" placeholder="Your business name"></div>
+                        <div class="form-group"><label>Country</label>
+                            <select>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                                <option>Canada</option>
+                                <option>Germany</option>
+                                <option>France</option>
+                                <option>Australia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" style="width: auto; margin-right: 8px;"> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account <i class="fas fa-arrow-right"></i></button>
+                    </form>
+                    <p class="text-center" style="margin-top: 20px; font-size: 0.85rem;">Already have an account? <a href="signin.html">Sign in here</a></p>
+                </div>
+
+                <!-- Benefits Section -->
+                <div class="register-info animate-fade-up">
+                    <h3>Why register with Velox?</h3>
+                    <ul>
+                        <li>✓ Track up to 50 shipments at once</li>
+                        <li>✓ Save frequently used addresses</li>
+                        <li>✓ Get delivery notifications via email or SMS</li>
+                        <li>✓ Request free pickup from your home or office</li>
+                        <li>✓ Print shipping labels instantly</li>
+                        <li>✓ Access your shipping history for up to 12 months</li>
+                        <li>✓ Exclusive discounts for frequent shippers</li>
+                    </ul>
+                    <div class="benefit-icons">
+                        <div class="benefit-icon"><i class="fas fa-truck-fast"></i><span>Fast Delivery</span></div>
+                        <div class="benefit-icon"><i class="fas fa-shield-alt"></i><span>Secure</span></div>
+                        <div class="benefit-icon"><i class="fas fa-headset"></i><span>24/7 Support</span></div>
+                        <div class="benefit-icon"><i class="fas fa-chart-line"></i><span>Tracking</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <p>Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="tracking.html"><i class="fas fa-search"></i> Track a Shipment</a></li><li><a href="ship.html"><i class="fas fa-shipping-fast"></i> Ship Now</a></li><li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li><li><a href="services.html"><i class="fas fa-cogs"></i> Services</a></li><li><a href="freight.html"><i class="fas fa-ship"></i> Freight</a></li><li><a href="customs.html"><i class="fas fa-file-contract"></i> Customs</a></li><li><a href="logistics.html"><i class="fas fa-truck-moving"></i> Logistics</a></li></ul></div>
+                <div class="footer-col"><h4>Customer Service</h4><ul><li><a href="contact.html"><i class="fas fa-headset"></i> Contact Us</a></li><li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li><li><a href="#"><i class="fas fa-undo"></i> Claims & Returns</a></li><li><a href="#"><i class="fas fa-undo"></i> Initiate Return</a></li><li><a href="#"><i class="fas fa-file-invoice"></i> Get Label</a></li><li><a href="#"><i class="fas fa-comments"></i> Feedback</a></li><li><a href="#"><i class="fas fa-ticket-alt"></i> Submit a Ticket</a></li><li><a href="informed-delivery.html"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a></li></ul></div>
+                <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html"><i class="fas fa-building"></i> About Velox</a></li><li><a href="#"><i class="fas fa-bullhorn"></i> Newsroom</a></li><li><a href="#"><i class="fas fa-users"></i> Careers</a></li><li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li><li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — All rights reserved.</div><div class="legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div></div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile nav toggle
+        function toggleMobileNav() {
+            const links = document.getElementById('navLinks');
+            links.classList.toggle('open');
+            const icon = document.querySelector('.menu-toggle i');
+            icon.className = links.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+        }
+
+        // Language selector placeholder (can be extended)
+        const langSelect = document.getElementById('langSelect');
+        if (langSelect) {
+            langSelect.addEventListener('change', function() {
+                console.log('Language changed to', this.value);
+                // You can add full translation logic here using your translations object from index.html
+            });
+        }
+
+        // Password match validation (optional)
+        const form = document.getElementById('registerForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const pwd = form.querySelector('input[type="password"]');
+                const confirm = form.querySelectorAll('input[type="password"]')[1];
+                if (pwd && confirm && pwd.value !== confirm.value) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

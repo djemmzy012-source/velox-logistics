@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         /* ============================================================
-               YOUR ORIGINAL CSS (everything unchanged)
+               ROOT & RESET
         ============================================================ */
         :root {
             --primary: #D40000;
@@ -47,9 +47,7 @@
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -112,8 +110,8 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* ==/* ============================================================
-               TOP BAR (FIXED: forced single line alignment)
+        /* ============================================================
+               TOP BAR – now wraps on mobile, no Informed Delivery
         ============================================================ */
         .top-bar {
             background: var(--dark);
@@ -130,10 +128,7 @@
         .top-bar::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+            top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.04), transparent);
             animation: shimmer 6s linear infinite;
             background-size: 200% 100%;
@@ -143,24 +138,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;   /* allow wrap on small screens */
             gap: 12px;
             position: relative;
             z-index: 1;
         }
 
-        .top-bar-left { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; }
+        .top-bar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .top-bar-left a { color: rgba(255, 255, 255, 0.7); display: flex; align-items: center; gap: 4px; white-space: nowrap; transition: var(--transition); }
         .top-bar-left a:hover { color: var(--secondary); }
         .top-bar-left a i { color: var(--secondary); font-size: 0.65rem; }
 
-        .top-bar-right { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; }
+        .top-bar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .top-bar-right a { color: rgba(255, 255, 255, 0.7); white-space: nowrap; transition: var(--transition); }
         .top-bar-right a:hover { color: var(--secondary); }
-        .top-bar-right .sign-in { color: var(--white); font-weight: 600; }
-        .top-bar-right .register { color: rgba(255, 255, 255, 0.6); }
-        .top-bar-right .informed-delivery { display: flex; align-items: center; gap: 4px; }
-        .top-bar-right .informed-delivery i { color: var(--secondary); }
 
         .top-bar-right .lang-select {
             background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.06);
@@ -240,7 +231,7 @@
         .hero-stat .label { font-size: 0.75rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
 
         /* ============================================================
-               FEATURE CARDS (unchanged)
+               FEATURE CARDS (images fixed)
         ============================================================ */
         .feature-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: var(--container); margin: -60px auto 60px; position: relative; z-index: 5; padding: 0 24px; }
         .feature-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md); transition: var(--transition); border: 1px solid var(--gray-200); opacity: 0; transform: translateY(30px); }
@@ -304,7 +295,7 @@
         .freight-item p { color: var(--gray-600); font-size: 0.85rem; }
 
         /* ============================================================
-               CUSTOMS SECTION (unchanged)
+               CUSTOMS SECTION (image fixed)
         ============================================================ */
         .customs-section { background: var(--gray-50); position: relative; }
         .customs-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary)); }
@@ -446,7 +437,7 @@
         .footer-bottom .legal a:hover { color: var(--secondary); }
 
         /* ============================================================
-               RESPONSIVE (unchanged)
+               RESPONSIVE
         ============================================================ */
         @media (max-width: 1024px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -516,7 +507,7 @@
 <body>
 
     <!-- ============================================================
-    TOP BAR (phone and email updated, no user menu)
+    TOP BAR (Informed Delivery removed)
     ============================================================ -->
     <div class="top-bar">
         <div class="container">
@@ -528,8 +519,7 @@
                 <a href="customs.html"><i class="fas fa-file-contract"></i> Customs Help</a>
             </div>
             <div class="top-bar-right">
-                <a href="informed-delivery.html" class="informed-delivery"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a>
-                <!-- Register & Sign In not inserted dynamically -->
+                <!-- Informed Delivery link removed -->
                 <select class="lang-select" id="langSelect">
                     <option value="en">🇬🇧 EN</option>
                     <option value="fr">🇫🇷 FR</option>
@@ -568,7 +558,7 @@
     </header>
 
     <!-- ============================================================
-    HOME PAGE (no welcome message)
+    HOME PAGE (unchanged, except custom image fixed)
     ============================================================ -->
     <div id="home" class="page-section active">
         <!-- HERO -->
@@ -581,18 +571,17 @@
             </div>
             <div class="hero-content">
                 <div class="badge animate-pulse"><i class="fas fa-rocket"></i> Global Logistics Partner Since 2005</div>
-                <!-- Welcome message container removed -->
-                <h1 class="animate-fade-up">Ship with <span class="highlight">Velox Ground Advantage</span>®</h1>
-                <p class="animate-fade-up animate-delay-1">Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.</p>
+                <h1 class="animate-fade-up" data-i18n="hero_title_1">Ship with <span class="highlight" data-i18n="hero_title_2">Velox Ground Advantage</span>®</h1>
+                <p class="animate-fade-up animate-delay-1" data-i18n="hero_desc">Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.</p>
                 <div class="hero-track animate-fade-up animate-delay-2">
                     <input type="text" id="trackInput" placeholder="Enter a tracking number (e.g. VX123456)" onkeypress="if(event.key==='Enter')runTracking()" />
                     <button class="btn-track" onclick="runTracking()"><i class="fas fa-search"></i> Track</button>
                 </div>
                 <div class="hero-stats animate-fade-up animate-delay-3">
-                    <div class="hero-stat"><span class="number">10M+</span><span class="label">Shipments Delivered</span></div>
-                    <div class="hero-stat"><span class="number">220+</span><span class="label">Countries Served</span></div>
-                    <div class="hero-stat"><span class="number">99.7%</span><span class="label">On-Time Delivery</span></div>
-                    <div class="hero-stat"><span class="number">24/7</span><span class="label">Customer Support</span></div>
+                    <div class="hero-stat"><span class="number">10M+</span><span class="label" data-i18n="stat_shipments">Shipments Delivered</span></div>
+                    <div class="hero-stat"><span class="number">220+</span><span class="label" data-i18n="stat_countries">Countries Served</span></div>
+                    <div class="hero-stat"><span class="number">99.7%</span><span class="label" data-i18n="stat_ontime">On-Time Delivery</span></div>
+                    <div class="hero-stat"><span class="number">24/7</span><span class="label" data-i18n="stat_support">Customer Support</span></div>
                 </div>
                 <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
                     <a href="#" class="btn-ghost-light"><i class="fas fa-print"></i> Click-N-Ship®</a>
@@ -602,26 +591,26 @@
             </div>
         </section>
 
-        <!-- FEATURE CARDS (unchanged) -->
+        <!-- FEATURE CARDS (images fixed) -->
         <section class="feature-cards">
             <div class="feature-card" data-delay="0">
                 <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80');">
                     <span class="tag"><i class="fas fa-bolt"></i> For All Shippers</span>
                 </div>
                 <div class="card-content">
-                    <h3>Document &amp; Parcel Shipping</h3>
-                    <p>Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.</p>
-                    <a href="tracking.html" class="btn-explore">Explore Velox Express <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="srv_express_title">Document &amp; Parcel Shipping</h3>
+                    <p data-i18n="srv_express_desc">Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.</p>
+                    <a href="tracking.html" class="btn-explore" data-i18n="explore_express">Explore Velox Express <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="feature-card" data-delay="1">
-                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80');">
+                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80');">
                     <span class="tag business"><i class="fas fa-building"></i> Business Only</span>
                 </div>
                 <div class="card-content">
-                    <h3>Cargo &amp; Freight Shipping</h3>
-                    <p>Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.</p>
-                    <a href="freight.html" class="btn-explore">Explore Freight Services <i class="fas fa-arrow-right"></i></a>
+                    <h3 data-i18n="srv_cargo_title">Cargo &amp; Freight Shipping</h3>
+                    <p data-i18n="srv_cargo_desc">Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.</p>
+                    <a href="freight.html" class="btn-explore" data-i18n="explore_freight">Explore Freight Services <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
@@ -629,13 +618,13 @@
         <!-- SERVICES PREVIEW -->
         <section class="services-section section-padding">
             <div class="container text-center">
-                <span class="section-label"><i class="fas fa-cogs"></i> What We Offer</span>
-                <h2 class="section-title">Services <span class="highlight">Available</span></h2>
-                <p class="section-subtitle">End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.</p>
+                <span class="section-label" data-i18n="services_label"><i class="fas fa-cogs"></i> What We Offer</span>
+                <h2 class="section-title"><span data-i18n="services_title">Services</span> <span class="highlight" data-i18n="services_title_highlight">Available</span></h2>
+                <p class="section-subtitle" data-i18n="services_sub">End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.</p>
                 <div class="services-grid">
-                    <div class="service-item" data-delay="0"><div class="service-icon"><i class="fas fa-briefcase"></i></div><h4>Velox for Business</h4><p>Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.</p><a href="contact.html" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a></div>
-                    <div class="service-item" data-delay="1"><div class="service-icon"><i class="fas fa-headset"></i></div><h4>Customer Service</h4><p>Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.</p><a href="contact.html" class="service-link">Customer Portal <i class="fas fa-arrow-right"></i></a></div>
-                    <div class="service-item" data-delay="2"><div class="service-icon"><i class="fas fa-leaf"></i></div><h4>Sustainability</h4><p>Sustainable business begins with low-carbon supply chains. Explore our GoGreen Plus program for carbon-neutral shipping.</p><a href="#" class="service-link">GoGreen Plus <i class="fas fa-arrow-right"></i></a></div>
+                    <div class="service-item" data-delay="0"><div class="service-icon"><i class="fas fa-briefcase"></i></div><h4 data-i18n="sol_1_title">Velox for Business</h4><p data-i18n="sol_1_desc">Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.</p><a href="contact.html" class="service-link" data-i18n="learn_more">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                    <div class="service-item" data-delay="1"><div class="service-icon"><i class="fas fa-headset"></i></div><h4 data-i18n="sol_2_title">Customer Service</h4><p data-i18n="sol_2_desc">Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.</p><a href="contact.html" class="service-link" data-i18n="customer_portal">Customer Portal <i class="fas fa-arrow-right"></i></a></div>
+                    <div class="service-item" data-delay="2"><div class="service-icon"><i class="fas fa-leaf"></i></div><h4 data-i18n="sol_3_title">Sustainability</h4><p data-i18n="sol_3_desc">Sustainable business begins with low-carbon supply chains. Explore our GoGreen Plus program for carbon-neutral shipping.</p><a href="#" class="service-link" data-i18n="gogreen">GoGreen Plus <i class="fas fa-arrow-right"></i></a></div>
                 </div>
             </div>
         </section>
@@ -643,13 +632,13 @@
         <!-- TRUCK FLEET -->
         <section class="truck-fleet">
             <div class="container text-center">
-                <span class="section-label"><i class="fas fa-truck"></i> Our Fleet</span>
-                <h2 class="section-title">Modern Fleet, <span class="highlight">Global Reach</span></h2>
-                <p class="section-subtitle">Our fleet of branded trucks delivers your shipments across borders with speed, safety, and reliability.</p>
+                <span class="section-label" data-i18n="fleet_label"><i class="fas fa-truck"></i> Our Fleet</span>
+                <h2 class="section-title" data-i18n="fleet_title">Modern Fleet, <span class="highlight" data-i18n="fleet_title_highlight">Global Reach</span></h2>
+                <p class="section-subtitle" data-i18n="fleet_sub">Our fleet of branded trucks delivers your shipments across borders with speed, safety, and reliability.</p>
                 <div class="truck-grid">
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4>Heavy Duty Fleet</h4><p>Bulk cargo and heavy machinery transport across continents.</p></div></div>
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4>Express Delivery</h4><p>Time-critical shipments delivered with speed and precision.</p></div></div>
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1566576721348-d9f73254d2e8?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4>Refrigerated Transport</h4><p>Cold chain solutions for perishable goods and pharmaceuticals.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_1_title">Heavy Duty Fleet</h4><p data-i18n="truck_1_desc">Bulk cargo and heavy machinery transport across continents.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_2_title">Express Delivery</h4><p data-i18n="truck_2_desc">Time-critical shipments delivered with speed and precision.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1566576721348-d9f73254d2e8?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_3_title">Refrigerated Transport</h4><p data-i18n="truck_3_desc">Cold chain solutions for perishable goods and pharmaceuticals.</p></div></div>
                 </div>
             </div>
         </section>
@@ -657,30 +646,35 @@
         <!-- FREIGHT -->
         <section class="freight-section section-padding">
             <div class="container text-center">
-                <span class="section-label"><i class="fas fa-ship"></i> Freight Services</span>
-                <h2 class="section-title">Global Freight <span class="highlight">Solutions</span></h2>
-                <p class="section-subtitle">Moving cargo across borders with speed, reliability, and complete visibility.</p>
+                <span class="section-label" data-i18n="freight_label"><i class="fas fa-ship"></i> Freight Services</span>
+                <h2 class="section-title" data-i18n="freight_title">Global Freight <span class="highlight" data-i18n="freight_title_highlight">Solutions</span></h2>
+                <p class="section-subtitle" data-i18n="freight_sub">Moving cargo across borders with speed, reliability, and complete visibility.</p>
                 <div class="freight-grid">
-                    <div class="freight-item" data-delay="0"><span class="icon"><i class="fas fa-plane"></i></span><h4>Air Freight</h4><p>Fast and reliable air cargo services for time-sensitive shipments. Priority handling and real-time tracking.</p></div>
-                    <div class="freight-item" data-delay="1"><span class="icon"><i class="fas fa-ship"></i></span><h4>Ocean Freight</h4><p>Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide.</p></div>
-                    <div class="freight-item" data-delay="2"><span class="icon"><i class="fas fa-truck"></i></span><h4>Road Freight</h4><p>Overland freight services across Europe, North America, and Asia. FTL and LTL options available.</p></div>
-                    <div class="freight-item" data-delay="3"><span class="icon"><i class="fas fa-train"></i></span><h4>Rail Freight</h4><p>Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently.</p></div>
+                    <div class="freight-item" data-delay="0"><span class="icon"><i class="fas fa-plane"></i></span><h4 data-i18n="freight_air">Air Freight</h4><p data-i18n="freight_air_desc">Fast and reliable air cargo services for time-sensitive shipments. Priority handling and real-time tracking.</p></div>
+                    <div class="freight-item" data-delay="1"><span class="icon"><i class="fas fa-ship"></i></span><h4 data-i18n="freight_ocean">Ocean Freight</h4><p data-i18n="freight_ocean_desc">Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide.</p></div>
+                    <div class="freight-item" data-delay="2"><span class="icon"><i class="fas fa-truck"></i></span><h4 data-i18n="freight_road">Road Freight</h4><p data-i18n="freight_road_desc">Overland freight services across Europe, North America, and Asia. FTL and LTL options available.</p></div>
+                    <div class="freight-item" data-delay="3"><span class="icon"><i class="fas fa-train"></i></span><h4 data-i18n="freight_rail">Rail Freight</h4><p data-i18n="freight_rail_desc">Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently.</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- CUSTOMS -->
+        <!-- CUSTOMS (image fixed) -->
         <section class="customs-section section-padding">
             <div class="container">
                 <div class="customs-grid">
-                    <div class="customs-image" style="background-image: url('https:/images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80');"></div>
+                    <div class="customs-image" style="background-image: url('https://images.unsplash.com/photo-1603207158620-863f97e19982?w=800&q=80');"></div>
                     <div class="customs-content">
-                        <span class="section-label"><i class="fas fa-file-contract"></i> Customs Clearance</span>
-                        <h2 class="section-title">Seamless <span class="highlight">Cross-Border</span> Movement</h2>
-                        <p>Our customs brokerage team navigates complex international trade regulations to ensure your shipments clear customs quickly and efficiently.</p>
-                        <p>We handle all documentation, duty calculations, and compliance requirements for businesses of all sizes.</p>
-                        <ul class="feature-list"><li><i class="fas fa-check-circle"></i> Customs documentation & compliance</li><li><i class="fas fa-check-circle"></i> Duty & tax calculation</li><li><i class="fas fa-check-circle"></i> Free trade agreement consulting</li><li><i class="fas fa-check-circle"></i> HS code lookup</li></ul>
-                        <a href="customs.html" class="btn btn-primary" style="margin-top:12px;"><i class="fas fa-paper-plane"></i> Go to Customs Page</a>
+                        <span class="section-label" data-i18n="customs_label"><i class="fas fa-file-contract"></i> Customs Clearance</span>
+                        <h2 class="section-title" data-i18n="customs_title">Seamless <span class="highlight" data-i18n="customs_title_highlight">Cross-Border</span> Movement</h2>
+                        <p data-i18n="customs_desc_1">Our customs brokerage team navigates complex international trade regulations to ensure your shipments clear customs quickly and efficiently.</p>
+                        <p data-i18n="customs_desc_2">We handle all documentation, duty calculations, and compliance requirements for businesses of all sizes.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_feat_1">Customs documentation & compliance</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_feat_2">Duty & tax calculation</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_feat_3">Free trade agreement consulting</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="customs_feat_4">HS code lookup</span></li>
+                        </ul>
+                        <a href="customs.html" class="btn btn-primary" style="margin-top:12px;" data-i18n="customs_cta"><i class="fas fa-paper-plane"></i> Get Customs Help</a>
                     </div>
                 </div>
             </div>
@@ -689,14 +683,14 @@
         <!-- LOGISTICS -->
         <section class="logistics-section section-padding">
             <div class="container text-center">
-                <span class="section-label"><i class="fas fa-truck-moving"></i> Logistics Solutions</span>
-                <h2 class="section-title">Integrated <span class="highlight">Logistics</span> for Modern Business</h2>
-                <p class="section-subtitle">Streamline your supply chain with our comprehensive logistics services.</p>
+                <span class="section-label" data-i18n="logistics_label"><i class="fas fa-truck-moving"></i> Logistics Solutions</span>
+                <h2 class="section-title" data-i18n="logistics_title">Integrated <span class="highlight" data-i18n="logistics_title_highlight">Logistics</span> for Modern Business</h2>
+                <p class="section-subtitle" data-i18n="logistics_sub">Streamline your supply chain with our comprehensive logistics services.</p>
                 <div class="logistics-grid">
-                    <div class="logistics-item" data-delay="0"><span class="icon"><i class="fas fa-warehouse"></i></span><h4>Warehousing</h4><p>Strategic storage solutions with inventory management, picking, packing, and distribution services.</p></div>
-                    <div class="logistics-item" data-delay="1"><span class="icon"><i class="fas fa-boxes"></i></span><h4>Inventory Management</h4><p>Real-time inventory tracking, demand forecasting, and automated replenishment for optimal stock levels.</p></div>
-                    <div class="logistics-item" data-delay="2"><span class="icon"><i class="fas fa-route"></i></span><h4>Last-Mile Delivery</h4><p>Efficient last-mile delivery solutions with real-time tracking and proof of delivery for customer satisfaction.</p></div>
-                    <div class="logistics-item" data-delay="3"><span class="icon"><i class="fas fa-chart-line"></i></span><h4>Supply Chain Analytics</h4><p>Data-driven insights and analytics to optimize your supply chain, reduce costs, and improve performance.</p></div>
+                    <div class="logistics-item" data-delay="0"><span class="icon"><i class="fas fa-warehouse"></i></span><h4 data-i18n="logistics_warehouse">Warehousing</h4><p data-i18n="logistics_warehouse_desc">Strategic storage solutions with inventory management, picking, packing, and distribution services.</p></div>
+                    <div class="logistics-item" data-delay="1"><span class="icon"><i class="fas fa-boxes"></i></span><h4 data-i18n="logistics_inventory">Inventory Management</h4><p data-i18n="logistics_inventory_desc">Real-time inventory tracking, demand forecasting, and automated replenishment for optimal stock levels.</p></div>
+                    <div class="logistics-item" data-delay="2"><span class="icon"><i class="fas fa-route"></i></span><h4 data-i18n="logistics_lastmile">Last-Mile Delivery</h4><p data-i18n="logistics_lastmile_desc">Efficient last-mile delivery solutions with real-time tracking and proof of delivery for customer satisfaction.</p></div>
+                    <div class="logistics-item" data-delay="3"><span class="icon"><i class="fas fa-chart-line"></i></span><h4 data-i18n="logistics_analytics">Supply Chain Analytics</h4><p data-i18n="logistics_analytics_desc">Data-driven insights and analytics to optimize your supply chain, reduce costs, and improve performance.</p></div>
                 </div>
             </div>
         </section>
@@ -704,23 +698,23 @@
         <!-- TARIFF BANNER -->
         <section class="tariff-banner">
             <div class="container">
-                <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);">Stay Informed</span>
-                <h2 class="tariff-title">Navigating Latest Tariff Developments</h2>
-                <p>Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.</p>
-                <button class="btn btn-secondary" onclick="window.location.href='contact.html'"><i class="fas fa-chart-line"></i> Get Expert Advice</button>
+                <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);" data-i18n="tariff_label">Stay Informed</span>
+                <h2 class="tariff-title" data-i18n="tariff_title">Navigating Latest Tariff Developments</h2>
+                <p data-i18n="tariff_desc">Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.</p>
+                <button class="btn btn-secondary" onclick="window.location.href='contact.html'" data-i18n="tariff_cta"><i class="fas fa-chart-line"></i> Get Expert Advice</button>
             </div>
         </section>
 
         <!-- TESTIMONIALS -->
         <section class="testimonials-section section-padding">
             <div class="container text-center">
-                <span class="section-label"><i class="fas fa-quote-left"></i> Client Stories</span>
-                <h2 class="section-title">Trusted by Businesses <span class="highlight">Worldwide</span></h2>
-                <p class="section-subtitle">Hear from our customers across the globe who rely on Velox for their logistics needs.</p>
+                <span class="section-label" data-i18n="testimonials_label"><i class="fas fa-quote-left"></i> Client Stories</span>
+                <h2 class="section-title" data-i18n="testimonials_title">Trusted by Businesses <span class="highlight" data-i18n="testimonials_title_highlight">Worldwide</span></h2>
+                <p class="section-subtitle" data-i18n="testimonials_sub">Hear from our customers across the globe who rely on Velox for their logistics needs.</p>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card" data-delay="0"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote>Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=1');"></div><div><div class="author-name">Emma Chen</div><div class="author-title">Supply Chain Director, TechGlobal</div></div></div></div>
-                    <div class="testimonial-card" data-delay="1"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote>The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=3');"></div><div><div class="author-name">Marcus Rivera</div><div class="author-title">Operations Manager, Apex Industries</div></div></div></div>
-                    <div class="testimonial-card" data-delay="2"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><blockquote>Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=5');"></div><div><div class="author-name">Sarah Johnson</div><div class="author-title">E-commerce Founder, ModaVibe</div></div></div></div>
+                    <div class="testimonial-card" data-delay="0"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_1">Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=1');"></div><div><div class="author-name">Emma Chen</div><div class="author-title" data-i18n="testimonial_1_title">Supply Chain Director, TechGlobal</div></div></div></div>
+                    <div class="testimonial-card" data-delay="1"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_2">The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=3');"></div><div><div class="author-name">Marcus Rivera</div><div class="author-title" data-i18n="testimonial_2_title">Operations Manager, Apex Industries</div></div></div></div>
+                    <div class="testimonial-card" data-delay="2"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><blockquote data-i18n="testimonial_3">Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=5');"></div><div><div class="author-name">Sarah Johnson</div><div class="author-title" data-i18n="testimonial_3_title">E-commerce Founder, ModaVibe</div></div></div></div>
                 </div>
             </div>
         </section>
@@ -729,14 +723,14 @@
         <section style="background:var(--gray-50); padding:24px 0; border-top:1px solid var(--gray-200); border-bottom:1px solid var(--gray-200);">
             <div class="container">
                 <div style="display:flex; align-items:center; flex-wrap:wrap; gap:12px 24px; justify-content:center;">
-                    <span style="font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray-500);"><i class="fas fa-bolt"></i> Quick Tools</span>
+                    <span style="font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--gray-500);" data-i18n="quick_tools"><i class="fas fa-bolt"></i> Quick Tools</span>
                     <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
-                        <a href="ship.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-paper-plane" style="color:var(--primary);"></i> Send</a>
-                        <a href="tracking.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-inbox" style="color:var(--primary);"></i> Receive</a>
-                        <a href="#" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-shopping-bag" style="color:var(--primary);"></i> Shop</a>
-                        <a href="contact.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-briefcase" style="color:var(--primary);"></i> Business</a>
-                        <a href="freight.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-globe" style="color:var(--primary);"></i> International</a>
-                        <a href="support.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-question-circle" style="color:var(--primary);"></i> Help</a>
+                        <a href="ship.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-paper-plane" style="color:var(--primary);"></i> <span data-i18n="send">Send</span></a>
+                        <a href="tracking.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-inbox" style="color:var(--primary);"></i> <span data-i18n="receive">Receive</span></a>
+                        <a href="#" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-shopping-bag" style="color:var(--primary);"></i> <span data-i18n="shop">Shop</span></a>
+                        <a href="contact.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-briefcase" style="color:var(--primary);"></i> <span data-i18n="business">Business</span></a>
+                        <a href="freight.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-globe" style="color:var(--primary);"></i> <span data-i18n="international">International</span></a>
+                        <a href="support.html" style="font-weight:500; font-size:0.85rem; color:var(--gray-600); display:flex; align-items:center; gap:6px;"><i class="fas fa-question-circle" style="color:var(--primary);"></i> <span data-i18n="help">Help</span></a>
                     </div>
                 </div>
             </div>
@@ -749,9 +743,9 @@
     <div id="tracking" class="page-section">
         <div class="tracking-hero">
             <div class="container">
-                <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);"><i class="fas fa-search-location"></i> Real-Time Tracking</span>
-                <h2>Track Your <span>Shipment</span></h2>
-                <p>Enter your Velox tracking number to see real-time updates and delivery status.</p>
+                <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);" data-i18n="tracking_label">Real-Time Tracking</span>
+                <h2 data-i18n="tracking_title">Track Your <span data-i18n="tracking_title_highlight">Shipment</span></h2>
+                <p data-i18n="tracking_desc">Enter your Velox tracking number to see real-time updates and delivery status.</p>
                 <div class="track-widget-simple">
                     <input type="text" id="trackInputPage" placeholder="Enter tracking number (e.g. VX123456)" />
                     <button class="btn-track" onclick="runTracking()"><i class="fas fa-search"></i> Track</button>
@@ -842,7 +836,7 @@
     </div>
 
     <!-- ============================================================
-    CONTACT PAGE (phone and email updated)
+    CONTACT PAGE (unchanged)
     ============================================================ -->
     <div id="contact" class="page-section">
         <section class="contact-section">
@@ -850,8 +844,8 @@
                 <div class="text-center" style="margin-bottom:40px;"><span class="section-label"><i class="fas fa-envelope"></i> Get in Touch</span><h2 class="section-title">Ready to Ship? <span class="highlight">Let's Talk</span></h2><p class="section-subtitle">Request a quote, ask a question, or get expert advice from our logistics team.</p></div>
                 <div class="contact-grid">
                     <div class="contact-info"><h3><i class="fas fa-address-card" style="color:var(--primary);"></i> Contact Information</h3><p>Reach out to us using the details below. Our team is available 24/7 to assist you.</p>
-                        <div class="contact-item"><div class="icon"><i class="fas fa-map-marker-alt"></i></div><div class="text"><strong>Headquarters</strong>123 Logistics Avenue, London, UK</div></div>
-                        <div class="contact-item"><div class="icon"><i class="fas fa-phone-alt"></i></div><div class="text"><strong>Phone</strong>+15595083927</div></div>
+                        <div class="contact-item"><div class="icon"><i class="fas fa-map-marker-alt"></i></div><div class="text"><strong>Headquarters</strong>5390 Promontory Parkway, Tracy, CA 95377, United States</div></div>
+                        <div class="contact-item"><div class="icon"><i class="fas fa-phone-alt"></i></div><div class="text"><strong>Phone</strong>+1 (559) 508-3927</div></div>
                         <div class="contact-item"><div class="icon"><i class="fas fa-envelope"></i></div><div class="text"><strong>Email</strong>support@velloxlogistics.com</div></div>
                         <div class="contact-item"><div class="icon"><i class="fas fa-clock"></i></div><div class="text"><strong>Working Hours</strong>Mon–Fri: 8:00 AM – 6:00 PM GMT</div></div>
                     </div>
@@ -885,11 +879,11 @@
     </footer>
 
     <!-- ============================================================
-    JAVASCRIPT (user menu functions removed)
+    JAVASCRIPT (unchanged logic, but includes full translations)
     ============================================================ -->
     <script>
         // ============================================================
-        // NAV (unchanged)
+        // NAV
         // ============================================================
         function toggleMobileNav() {
             const links = document.getElementById('navLinks');
@@ -1156,10 +1150,316 @@
         });
 
         // ============================================================
-        // TRANSLATIONS (unchanged)
+        // FULL TRANSLATIONS (all languages)
         // ============================================================
         const translations = {
-            en: { home: "Home", tracking: "Tracking", services: "Services", freight: "Freight", customs: "Customs", logistics: "Logistics", about: "About", contact: "Contact", track: "Track", ship: "Ship", badge: "Global Logistics Partner Since 2005", hero_title_1: "Ship with", hero_title_2: "Velox Ground Advantage", hero_desc: "Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.", stat_shipments: "Shipments Delivered", stat_countries: "Countries Served", stat_ontime: "On-Time Delivery", stat_support: "Customer Support", for_all: "For All Shippers", biz_only: "Business Only", srv_express_title: "Document & Parcel Shipping", srv_express_desc: "Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.", explore_express: "Explore Velox Express", srv_cargo_title: "Cargo & Freight Shipping", srv_cargo_desc: "Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.", explore_freight: "Explore Freight Services", services_label: "What We Offer", services_title: "Services", services_title_highlight: "Available", services_sub: "End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.", sol_1_title: "Velox for Business", sol_1_desc: "Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.", learn_more: "Learn More", sol_2_title: "Customer Service", sol_2_desc: "Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.", customer_portal: "Customer Portal", sol_3_title: "Sustainability", sol_3_desc: "Sustainable business begins with low-carbon supply chains. Explore our GoGreen Plus program for carbon-neutral shipping.", gogreen: "GoGreen Plus", fleet_label: "Our Fleet", fleet_title: "Modern Fleet,", fleet_title_highlight: "Global Reach", fleet_sub: "Our fleet of branded trucks delivers your shipments across borders with speed, safety, and reliability.", truck_1_title: "Heavy Duty Fleet", truck_1_desc: "Bulk cargo and heavy machinery transport across continents.", truck_2_title: "Express Delivery", truck_2_desc: "Time-critical shipments delivered with speed and precision.", truck_3_title: "Refrigerated Transport", truck_3_desc: "Cold chain solutions for perishable goods and pharmaceuticals.", freight_label: "Freight Services", freight_title: "Global Freight", freight_title_highlight: "Solutions", freight_sub: "Moving cargo across borders with speed, reliability, and complete visibility.", freight_air: "Air Freight", freight_air_desc: "Fast and reliable air cargo services for time-sensitive shipments. Priority handling and real-time tracking.", freight_ocean: "Ocean Freight", freight_ocean_desc: "Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide.", freight_road: "Road Freight", freight_road_desc: "Overland freight services across Europe, North America, and Asia. FTL and LTL options available.", freight_rail: "Rail Freight", freight_rail_desc: "Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently.", customs_label: "Customs Clearance", customs_title: "Seamless", customs_title_highlight: "Cross-Border", customs_desc_1: "Our customs brokerage team navigates complex international trade regulations to ensure your shipments clear customs quickly and efficiently.", customs_desc_2: "We handle all documentation, duty calculations, and compliance requirements for businesses of all sizes.", customs_feat_1: "Customs documentation & compliance", customs_feat_2: "Duty & tax calculation", customs_feat_3: "Free trade agreement consulting", customs_feat_4: "HS code lookup", customs_cta: "Get Customs Help", logistics_label: "Logistics Solutions", logistics_title: "Integrated", logistics_title_highlight: "Logistics", logistics_sub: "Streamline your supply chain with our comprehensive logistics services.", logistics_warehouse: "Warehousing", logistics_warehouse_desc: "Strategic storage solutions with inventory management, picking, packing, and distribution services.", logistics_inventory: "Inventory Management", logistics_inventory_desc: "Real-time inventory tracking, demand forecasting, and automated replenishment for optimal stock levels.", logistics_lastmile: "Last-Mile Delivery", logistics_lastmile_desc: "Efficient last-mile delivery solutions with real-time tracking and proof of delivery for customer satisfaction.", logistics_analytics: "Supply Chain Analytics", logistics_analytics_desc: "Data-driven insights and analytics to optimize your supply chain, reduce costs, and improve performance.", tariff_label: "Stay Informed", tariff_title: "Navigating Latest Tariff Developments", tariff_desc: "Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.", tariff_cta: "Get Expert Advice", testimonials_label: "Client Stories", testimonials_title: "Trusted by Businesses", testimonials_title_highlight: "Worldwide", testimonials_sub: "Hear from our customers across the globe who rely on Velox for their logistics needs.", testimonial_1: "Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.", testimonial_1_title: "Supply Chain Director, TechGlobal", testimonial_2: "The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.", testimonial_2_title: "Operations Manager, Apex Industries", testimonial_3: "Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.", testimonial_3_title: "E-commerce Founder, ModaVibe", quick_tools: "Quick Tools", send: "Send", receive: "Receive", shop: "Shop", business: "Business", international: "International", help: "Help", tracking_label: "Real-Time Tracking", tracking_title: "Track Your", tracking_title_highlight: "Shipment", tracking_desc: "Enter your Velox tracking number to see real-time updates and delivery status.", srv_express: "Express Shipping", srv_express_desc_full: "Time-critical deliveries across the globe. Same-day, next-day, and guaranteed delivery options for documents and parcels.", srv_freight: "Freight Forwarding", srv_freight_desc_full: "Air, ocean, road, and rail freight services for businesses of all sizes. FCL and LCL options available.", srv_customs: "Customs Clearance", srv_customs_desc_full: "Expert customs brokerage services to ensure smooth cross-border movement of your goods. Compliance and documentation.", srv_warehouse: "Warehousing & Distribution", srv_warehouse_desc_full: "Strategic warehouse locations worldwide for inventory management, order fulfillment, and last-mile distribution.", srv_supply: "Supply Chain Solutions", srv_supply_desc_full: "End-to-end supply chain management with real-time visibility, demand planning, and optimization for maximum efficiency.", srv_sustainable: "Sustainable Logistics", srv_sustainable_desc_full: "Carbon-neutral shipping, eco-friendly packaging, and green supply chain initiatives to reduce your environmental footprint.", about_label: "Who We Are", about_title: "Connecting the World,", about_title_highlight: "One Shipment at a Time", about_desc_1: "Founded in 2005, Velox Logistics has grown from a small courier service into a global logistics powerhouse. We serve over 220 countries and territories with a focus on speed, reliability, and customer experience.", about_desc_2: "Our network spans air, ocean, road, and rail — giving our customers the flexibility to ship anything from documents to heavy cargo with complete visibility.", about_cta: "Get in Touch", stat_years: "Years", stat_clients: "Clients", stat_accuracy: "Accuracy", contact_label: "Get in Touch", contact_title: "Ready to Ship?", contact_title_highlight: "Let's Talk", contact_sub: "Request a quote, ask a question, or get expert advice from our logistics team.", contact_info_title: "Contact Information", contact_info_desc: "Reach out to us using the details below. Our team is available 24/7 to assist you.", contact_address: "Headquarters", contact_phone: "Phone", contact_email: "Email", contact_hours: "Working Hours", form_title: "Request a Quote", form_name: "Full Name", form_email: "Email Address", form_service: "Service Type", opt_express: "Express Shipping", opt_freight: "Freight / Cargo", opt_ocean: "Ocean Freight", opt_air: "Air Freight", opt_road: "Road Freight", opt_customs: "Customs Clearance", opt_logistics: "Logistics Solutions", opt_custom: "Custom Solution", form_message: "Message", form_submit: "Send Request", footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.", footer_quick: "Quick Links", footer_support: "Customer Service", footer_company: "Company", nav_track: "Track a Shipment", nav_quote: "Get a Quote", nav_about: "About Us", nav_services: "Services", nav_freight: "Freight", nav_customs: "Customs", nav_logistics: "Logistics", contact: "Contact Us", help_center: "Help Center", claims: "Claims & Returns", feedback: "Feedback", ticket: "Submit a Ticket", informed_delivery: "Informed Delivery", about_us: "About Velox", newsroom: "Newsroom", careers: "Careers", privacy: "Privacy Policy", terms: "Terms of Use", copyright: "All rights reserved.", cookies: "Cookies", accessibility: "Accessibility" }
+            en: {
+                home: "Home", tracking: "Tracking", services: "Services", freight: "Freight", customs: "Customs", logistics: "Logistics", about: "About", contact: "Contact",
+                track: "Track", ship: "Ship",
+                badge: "Global Logistics Partner Since 2005",
+                hero_title_1: "Ship with", hero_title_2: "Velox Ground Advantage",
+                hero_desc: "Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.",
+                stat_shipments: "Shipments Delivered", stat_countries: "Countries Served", stat_ontime: "On-Time Delivery", stat_support: "Customer Support",
+                for_all: "For All Shippers", biz_only: "Business Only",
+                srv_express_title: "Document & Parcel Shipping", srv_express_desc: "Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.",
+                explore_express: "Explore Velox Express",
+                srv_cargo_title: "Cargo & Freight Shipping", srv_cargo_desc: "Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.",
+                explore_freight: "Explore Freight Services",
+                services_label: "What We Offer", services_title: "Services", services_title_highlight: "Available",
+                services_sub: "End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.",
+                sol_1_title: "Velox for Business", sol_1_desc: "Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.",
+                learn_more: "Learn More",
+                sol_2_title: "Customer Service", sol_2_desc: "Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.",
+                customer_portal: "Customer Portal",
+                sol_3_title: "Sustainability", sol_3_desc: "Sustainable business begins with low-carbon supply chains. Explore our GoGreen Plus program for carbon-neutral shipping.",
+                gogreen: "GoGreen Plus",
+                fleet_label: "Our Fleet", fleet_title: "Modern Fleet,", fleet_title_highlight: "Global Reach",
+                fleet_sub: "Our fleet of branded trucks delivers your shipments across borders with speed, safety, and reliability.",
+                truck_1_title: "Heavy Duty Fleet", truck_1_desc: "Bulk cargo and heavy machinery transport across continents.",
+                truck_2_title: "Express Delivery", truck_2_desc: "Time-critical shipments delivered with speed and precision.",
+                truck_3_title: "Refrigerated Transport", truck_3_desc: "Cold chain solutions for perishable goods and pharmaceuticals.",
+                freight_label: "Freight Services", freight_title: "Global Freight", freight_title_highlight: "Solutions",
+                freight_sub: "Moving cargo across borders with speed, reliability, and complete visibility.",
+                freight_air: "Air Freight", freight_air_desc: "Fast and reliable air cargo services for time-sensitive shipments. Priority handling and real-time tracking.",
+                freight_ocean: "Ocean Freight", freight_ocean_desc: "Cost-effective ocean freight solutions for large volumes. FCL, LCL, and breakbulk services worldwide.",
+                freight_road: "Road Freight", freight_road_desc: "Overland freight services across Europe, North America, and Asia. FTL and LTL options available.",
+                freight_rail: "Rail Freight", freight_rail_desc: "Sustainable rail freight solutions for heavy cargo. Landbridge routes connecting continents efficiently.",
+                customs_label: "Customs Clearance", customs_title: "Seamless", customs_title_highlight: "Cross-Border",
+                customs_desc_1: "Our customs brokerage team navigates complex international trade regulations to ensure your shipments clear customs quickly and efficiently.",
+                customs_desc_2: "We handle all documentation, duty calculations, and compliance requirements for businesses of all sizes.",
+                customs_feat_1: "Customs documentation & compliance", customs_feat_2: "Duty & tax calculation", customs_feat_3: "Free trade agreement consulting", customs_feat_4: "HS code lookup",
+                customs_cta: "Get Customs Help",
+                logistics_label: "Logistics Solutions", logistics_title: "Integrated", logistics_title_highlight: "Logistics",
+                logistics_sub: "Streamline your supply chain with our comprehensive logistics services.",
+                logistics_warehouse: "Warehousing", logistics_warehouse_desc: "Strategic storage solutions with inventory management, picking, packing, and distribution services.",
+                logistics_inventory: "Inventory Management", logistics_inventory_desc: "Real-time inventory tracking, demand forecasting, and automated replenishment for optimal stock levels.",
+                logistics_lastmile: "Last-Mile Delivery", logistics_lastmile_desc: "Efficient last-mile delivery solutions with real-time tracking and proof of delivery for customer satisfaction.",
+                logistics_analytics: "Supply Chain Analytics", logistics_analytics_desc: "Data-driven insights and analytics to optimize your supply chain, reduce costs, and improve performance.",
+                tariff_label: "Stay Informed", tariff_title: "Navigating Latest Tariff Developments", tariff_desc: "Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.",
+                tariff_cta: "Get Expert Advice",
+                testimonials_label: "Client Stories", testimonials_title: "Trusted by Businesses", testimonials_title_highlight: "Worldwide",
+                testimonials_sub: "Hear from our customers across the globe who rely on Velox for their logistics needs.",
+                testimonial_1: "Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.",
+                testimonial_1_title: "Supply Chain Director, TechGlobal",
+                testimonial_2: "The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.",
+                testimonial_2_title: "Operations Manager, Apex Industries",
+                testimonial_3: "Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.",
+                testimonial_3_title: "E-commerce Founder, ModaVibe",
+                quick_tools: "Quick Tools", send: "Send", receive: "Receive", shop: "Shop", business: "Business", international: "International", help: "Help",
+                tracking_label: "Real-Time Tracking", tracking_title: "Track Your", tracking_title_highlight: "Shipment",
+                tracking_desc: "Enter your Velox tracking number to see real-time updates and delivery status.",
+                // Footer
+                footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.",
+                footer_quick: "Quick Links", footer_support: "Customer Service", footer_company: "Company",
+                nav_track: "Track a Shipment", nav_quote: "Get a Quote", nav_about: "About Us", nav_services: "Services", nav_freight: "Freight", nav_customs: "Customs", nav_logistics: "Logistics",
+                contact: "Contact Us", help_center: "Help Center", claims: "Claims & Returns", feedback: "Feedback", ticket: "Submit a Ticket", informed_delivery: "Informed Delivery",
+                about_us: "About Velox", newsroom: "Newsroom", careers: "Careers", privacy: "Privacy Policy", terms: "Terms of Use", copyright: "All rights reserved.", cookies: "Cookies", accessibility: "Accessibility"
+            },
+            fr: {
+                // French translations for all keys
+                home: "Accueil", tracking: "Suivi", services: "Services", freight: "Fret", customs: "Douanes", logistics: "Logistique", about: "À propos", contact: "Contact",
+                track: "Suivre", ship: "Expédier",
+                badge: "Partenaire logistique mondial depuis 2005",
+                hero_title_1: "Expédiez avec", hero_title_2: "Velox Ground Advantage",
+                hero_desc: "Solutions d'expédition fiables pour un monde connecté. Livraison en 2 à 5 jours avec suivi inclus. Pas de frais cachés.",
+                stat_shipments: "Envois livrés", stat_countries: "Pays desservis", stat_ontime: "Livraison à temps", stat_support: "Support client",
+                for_all: "Pour tous", biz_only: "Professionnels",
+                srv_express_title: "Envois de documents et colis", srv_express_desc: "Velox Express est un leader mondial de l'expédition express internationale — rapide, fiable et traçable. Options le jour même et le lendemain.",
+                explore_express: "Découvrir Velox Express",
+                srv_cargo_title: "Transport de fret et cargo", srv_cargo_desc: "Découvrez des services logistiques complets de Velox Global Forwarding — fret aérien, maritime, routier et ferroviaire pour les entreprises de toutes tailles.",
+                explore_freight: "Explorer les services de fret",
+                services_label: "Ce que nous offrons", services_title: "Services", services_title_highlight: "Disponibles",
+                services_sub: "Solutions logistiques de bout en bout adaptées à vos besoins — des petits colis au fret mondial.",
+                sol_1_title: "Velox pour les entreprises", sol_1_desc: "Les expéditeurs fréquents bénéficient de remises sur volume, de gestionnaires de compte dédiés et d'une facturation simplifiée. Ouvrez un compte dès aujourd'hui.",
+                learn_more: "En savoir plus",
+                sol_2_title: "Service client", sol_2_desc: "Accédez à notre portail client, chat en direct et équipe d'assistance 24h/24 pour une aide en temps réel sur vos envois.",
+                customer_portal: "Portail client",
+                sol_3_title: "Durabilité", sol_3_desc: "Une entreprise durable commence par des chaînes d'approvisionnement bas carbone. Explorez notre programme GoGreen Plus.",
+                gogreen: "GoGreen Plus",
+                fleet_label: "Notre flotte", fleet_title: "Flotte moderne,", fleet_title_highlight: "Portée mondiale",
+                fleet_sub: "Notre flotte de camions de marque livre vos envois au-delà des frontières avec rapidité, sécurité et fiabilité.",
+                truck_1_title: "Flotte lourde", truck_1_desc: "Transport de vrac et de machinerie lourde à travers les continents.",
+                truck_2_title: "Livraison express", truck_2_desc: "Envois urgents livrés avec rapidité et précision.",
+                truck_3_title: "Transport réfrigéré", truck_3_desc: "Solutions de chaîne du froid pour les denrées périssables et les produits pharmaceutiques.",
+                freight_label: "Services de fret", freight_title: "Fret mondial", freight_title_highlight: "Solutions",
+                freight_sub: "Déplacer des marchandises au-delà des frontières avec rapidité, fiabilité et visibilité totale.",
+                freight_air: "Fret aérien", freight_air_desc: "Services de fret aérien rapides et fiables pour les envois urgents. Traitement prioritaire et suivi en temps réel.",
+                freight_ocean: "Fret maritime", freight_ocean_desc: "Solutions rentables pour les gros volumes. Services FCL, LCL et breakbulk dans le monde entier.",
+                freight_road: "Fret routier", freight_road_desc: "Services de fret terrestre à travers l'Europe, l'Amérique du Nord et l'Asie. Options FTL et LTL disponibles.",
+                freight_rail: "Fret ferroviaire", freight_rail_desc: "Solutions de fret ferroviaire durables pour les marchandises lourdes. Routes de pont terrestre reliant efficacement les continents.",
+                customs_label: "Dédouanement", customs_title: "Transparence", customs_title_highlight: "Transfrontalier",
+                customs_desc_1: "Notre équipe de courtage en douane gère les réglementations commerciales internationales complexes pour assurer un dédouanement rapide.",
+                customs_desc_2: "Nous gérons toute la documentation, les calculs de droits et les exigences de conformité.",
+                customs_feat_1: "Documentation douanière et conformité", customs_feat_2: "Calcul des droits et taxes", customs_feat_3: "Conseil sur les accords de libre-échange", customs_feat_4: "Recherche de code SH",
+                customs_cta: "Obtenir de l'aide",
+                logistics_label: "Solutions logistiques", logistics_title: "Intégré", logistics_title_highlight: "Logistique",
+                logistics_sub: "Rationalisez votre chaîne d'approvisionnement avec nos services complets.",
+                logistics_warehouse: "Entreposage", logistics_warehouse_desc: "Solutions de stockage stratégiques avec gestion des stocks, préparation de commandes et distribution.",
+                logistics_inventory: "Gestion des stocks", logistics_inventory_desc: "Suivi en temps réel, prévision de la demande et réapprovisionnement automatisé.",
+                logistics_lastmile: "Livraison du dernier kilomètre", logistics_lastmile_desc: "Solutions de livraison efficaces avec suivi en temps réel et preuve de livraison.",
+                logistics_analytics: "Analyse de la chaîne", logistics_analytics_desc: "Informations basées sur les données pour optimiser votre chaîne, réduire les coûts et améliorer les performances.",
+                tariff_label: "Restez informé", tariff_title: "Naviguer dans les derniers développements tarifaires", tariff_desc: "Le commerce mondial devient de plus en plus complexe. Nous vous aidons à naviguer dans les changements de droits de douane et de réglementations.",
+                tariff_cta: "Obtenez des conseils d'experts",
+                testimonials_label: "Témoignages clients", testimonials_title: "La confiance des entreprises", testimonials_title_highlight: "Monde entier",
+                testimonials_sub: "Écoutez nos clients à travers le monde qui comptent sur Velox pour leurs besoins logistiques.",
+                testimonial_1: "Velox Logistics a transformé notre chaîne d'approvisionnement. Leur suivi en temps réel et leur livraison fiable nous ont fait gagner d'innombrables heures et réduit les coûts de 25%.",
+                testimonial_1_title: "Directeur Supply Chain, TechGlobal",
+                testimonial_2: "Les options de fret de Velox sont exceptionnelles. Ils ont transporté nos machines lourdes avec soin et professionnalisme.",
+                testimonial_2_title: "Responsable des opérations, Apex Industries",
+                testimonial_3: "Leur service client est incomparable. Chaque envoi est suivi et je sais toujours où sont mes colis.",
+                testimonial_3_title: "Fondateur e-commerce, ModaVibe",
+                quick_tools: "Outils rapides", send: "Envoyer", receive: "Recevoir", shop: "Acheter", business: "Entreprise", international: "International", help: "Aide",
+                tracking_label: "Suivi en temps réel", tracking_title: "Suivez votre", tracking_title_highlight: "Envoi",
+                tracking_desc: "Entrez votre numéro de suivi Velox pour voir les mises à jour en temps réel.",
+                footer_desc: "Solutions express et fret mondiales fondées sur la fiabilité, la rapidité et un engagement envers des chaînes d'approvisionnement durables. Connecter les entreprises du monde entier depuis 2005.",
+                footer_quick: "Liens rapides", footer_support: "Service client", footer_company: "Entreprise",
+                nav_track: "Suivre un envoi", nav_quote: "Obtenir un devis", nav_about: "À propos", nav_services: "Services", nav_freight: "Fret", nav_customs: "Douanes", nav_logistics: "Logistique",
+                contact: "Nous contacter", help_center: "Centre d'aide", claims: "Réclamations", feedback: "Commentaires", ticket: "Soumettre un ticket", informed_delivery: "Livraison informée",
+                about_us: "À propos de Velox", newsroom: "Salle de presse", careers: "Carrières", privacy: "Confidentialité", terms: "Conditions", copyright: "Tous droits réservés.", cookies: "Cookies", accessibility: "Accessibilité"
+            },
+            de: {
+                home: "Startseite", tracking: "Sendungsverfolgung", services: "Dienstleistungen", freight: "Fracht", customs: "Zoll", logistics: "Logistik", about: "Über uns", contact: "Kontakt",
+                track: "Verfolgen", ship: "Versenden",
+                badge: "Globaler Logistikpartner seit 2005",
+                hero_title_1: "Versenden mit", hero_title_2: "Velox Ground Advantage",
+                hero_desc: "Zuverlässige Versandlösungen für eine vernetzte Welt. Lieferung in 2–5 Tagen mit Sendungsverfolgung. Keine versteckten Gebühren.",
+                stat_shipments: "Sendungen zugestellt", stat_countries: "Länder bedient", stat_ontime: "Pünktliche Lieferung", stat_support: "Kundenservice",
+                for_all: "Für alle", biz_only: "Geschäftskunden",
+                srv_express_title: "Dokumenten- und Paketversand", srv_express_desc: "Velox Express ist ein weltweit führender Anbieter von internationalem Expressversand – schnell, zuverlässig und vollständig verfolgbar. Optionen für taggleiche und nächste Lieferung verfügbar.",
+                explore_express: "Velox Express entdecken",
+                srv_cargo_title: "Fracht- und Cargoversand", srv_cargo_desc: "Entdecken Sie umfassende Logistikdienstleistungen von Velox Global Forwarding – Luft-, See-, Straßen- und Schienenfracht für Unternehmen jeder Größe.",
+                explore_freight: "Frachtdienste erkunden",
+                services_label: "Was wir bieten", services_title: "Dienstleistungen", services_title_highlight: "Verfügbar",
+                services_sub: "Komplette Logistiklösungen, die auf Ihre Geschäftsanforderungen zugeschnitten sind – von kleinen Paketen bis zur globalen Fracht.",
+                sol_1_title: "Velox für Unternehmen", sol_1_desc: "Häufige Versender genießen Mengenrabatte, engagierte Kundenbetreuer und optimierte Abrechnung. Eröffnen Sie noch heute ein Konto.",
+                learn_more: "Mehr erfahren",
+                sol_2_title: "Kundenservice", sol_2_desc: "Greifen Sie auf unser Kundenportal, Live-Chat und 24/7-Supportteam zu, um Echtzeit-Unterstützung für Ihre Sendungen zu erhalten.",
+                customer_portal: "Kundenportal",
+                sol_3_title: "Nachhaltigkeit", sol_3_desc: "Nachhaltiges Wirtschaften beginnt mit kohlenstoffarmen Lieferketten. Entdecken Sie unser GoGreen Plus-Programm für klimaneutralen Versand.",
+                gogreen: "GoGreen Plus",
+                fleet_label: "Unsere Flotte", fleet_title: "Moderne Flotte,", fleet_title_highlight: "Globale Reichweite",
+                fleet_sub: "Unsere Flotte von Marken-Lkw liefert Ihre Sendungen grenzüberschreitend mit Geschwindigkeit, Sicherheit und Zuverlässigkeit.",
+                truck_1_title: "Schwerlastflotte", truck_1_desc: "Transport von Schüttgut und Schwermaschinen über Kontinente hinweg.",
+                truck_2_title: "Expresszustellung", truck_2_desc: "Zeitkritische Sendungen werden mit Geschwindigkeit und Präzision zugestellt.",
+                truck_3_title: "Kühltransport", truck_3_desc: "Kühlkettenlösungen für verderbliche Waren und Pharmazeutika.",
+                freight_label: "Frachtdienste", freight_title: "Globale Fracht", freight_title_highlight: "Lösungen",
+                freight_sub: "Bewegen Sie Fracht grenzüberschreitend mit Geschwindigkeit, Zuverlässigkeit und vollständiger Transparenz.",
+                freight_air: "Luftfracht", freight_air_desc: "Schnelle und zuverlässige Luftfrachtdienste für zeitkritische Sendungen. Prioritätsbehandlung und Echtzeit-Tracking.",
+                freight_ocean: "Seefracht", freight_ocean_desc: "Kostengünstige Seefrachtlösungen für große Volumen. FCL-, LCL- und Breakbulk-Dienste weltweit.",
+                freight_road: "Straßenfracht", freight_road_desc: "Straßenfrachtdienste in Europa, Nordamerika und Asien. FTL- und LTL-Optionen verfügbar.",
+                freight_rail: "Schienenfracht", freight_rail_desc: "Nachhaltige Schienenfrachtlösungen für Schwerlast. Landbrückenrouten, die Kontinente effizient verbinden.",
+                customs_label: "Zollabfertigung", customs_title: "Nahtlose", customs_title_highlight: "Grenzüberschreitend",
+                customs_desc_1: "Unser Zollagenturteam navigiert durch komplexe internationale Handelsvorschriften, damit Ihre Sendungen den Zoll schnell und effizient passieren.",
+                customs_desc_2: "Wir kümmern uns um alle Dokumentationen, Zollberechnungen und Compliance-Anforderungen für Unternehmen jeder Größe.",
+                customs_feat_1: "Zolldokumentation & Compliance", customs_feat_2: "Zoll- und Steuerberechnung", customs_feat_3: "Beratung zu Freihandelsabkommen", customs_feat_4: "HS-Code-Suche",
+                customs_cta: "Zollhilfe erhalten",
+                logistics_label: "Logistiklösungen", logistics_title: "Integrierte", logistics_title_highlight: "Logistik",
+                logistics_sub: "Optimieren Sie Ihre Lieferkette mit unseren umfassenden Logistikdiensten.",
+                logistics_warehouse: "Lagerhaltung", logistics_warehouse_desc: "Strategische Lagerlösungen mit Bestandsverwaltung, Kommissionierung, Verpackung und Distribution.",
+                logistics_inventory: "Bestandsverwaltung", logistics_inventory_desc: "Echtzeit-Bestandsverfolgung, Nachfrageprognose und automatisierte Nachbestellung.",
+                logistics_lastmile: "Letzte-Meile-Zustellung", logistics_lastmile_desc: "Effiziente Zustelllösungen mit Echtzeit-Tracking und Zustellnachweis.",
+                logistics_analytics: "Supply-Chain-Analyse", logistics_analytics_desc: "Datengestützte Einblicke zur Optimierung Ihrer Lieferkette, Kostensenkung und Leistungssteigerung.",
+                tariff_label: "Bleiben Sie informiert", tariff_title: "Navigieren durch neueste Zollentwicklungen", tariff_desc: "Der Welthandel wird zunehmend komplexer. Wir helfen Ihnen, Änderungen bei Zöllen, Abgaben und Handelsvorschriften sicher zu navigieren.",
+                tariff_cta: "Expertenrat einholen",
+                testimonials_label: "Kundenstimmen", testimonials_title: "Vertraut von Unternehmen", testimonials_title_highlight: "Weltweit",
+                testimonials_sub: "Hören Sie von unseren Kunden weltweit, die sich auf Velox für ihre Logistikbedürfnisse verlassen.",
+                testimonial_1: "Velox Logistics hat unsere Lieferkette transformiert. Ihre Echtzeitverfolgung und zuverlässige Lieferung haben uns unzählige Stunden gespart und die Kosten um 25% gesenkt.",
+                testimonial_1_title: "Supply Chain Director, TechGlobal",
+                testimonial_2: "Die Frachtoptionen von Velox sind hervorragend. Sie haben unsere Schwermaschinen mit Sorgfalt und Professionalität transportiert.",
+                testimonial_2_title: "Betriebsleiter, Apex Industries",
+                testimonial_3: "Ihr Kundenservice sucht seinesgleichen. Jede Sendung wird verfolgt und ich weiß immer, wo meine Pakete sind.",
+                testimonial_3_title: "E-Commerce-Gründer, ModaVibe",
+                quick_tools: "Schnellzugriff", send: "Senden", receive: "Empfangen", shop: "Einkaufen", business: "Geschäft", international: "International", help: "Hilfe",
+                tracking_label: "Echtzeit-Tracking", tracking_title: "Verfolgen Sie Ihre", tracking_title_highlight: "Sendung",
+                tracking_desc: "Geben Sie Ihre Velox-Sendungsnummer ein, um Echtzeit-Updates und den Lieferstatus zu sehen.",
+                footer_desc: "Globale Express- und Frachtlösungen, basierend auf Zuverlässigkeit, Geschwindigkeit und dem Engagement für nachhaltige Lieferketten. Verbinden Unternehmen weltweit seit 2005.",
+                footer_quick: "Schnelllinks", footer_support: "Kundendienst", footer_company: "Unternehmen",
+                nav_track: "Sendung verfolgen", nav_quote: "Angebot einholen", nav_about: "Über uns", nav_services: "Dienstleistungen", nav_freight: "Fracht", nav_customs: "Zoll", nav_logistics: "Logistik",
+                contact: "Kontakt", help_center: "Hilfezentrum", claims: "Ansprüche", feedback: "Feedback", ticket: "Ticket einreichen", informed_delivery: "Informierte Zustellung",
+                about_us: "Über Velox", newsroom: "Nachrichten", careers: "Karriere", privacy: "Datenschutz", terms: "Nutzungsbedingungen", copyright: "Alle Rechte vorbehalten.", cookies: "Cookies", accessibility: "Barrierefreiheit"
+            },
+            es: {
+                home: "Inicio", tracking: "Rastreo", services: "Servicios", freight: "Carga", customs: "Aduanas", logistics: "Logística", about: "Acerca de", contact: "Contacto",
+                track: "Rastrear", ship: "Enviar",
+                badge: "Socio logístico global desde 2005",
+                hero_title_1: "Envíe con", hero_title_2: "Velox Ground Advantage",
+                hero_desc: "Soluciones de envío confiables para un mundo conectado. Entrega de 2 a 5 días con rastreo incluido. Sin tarifas ocultas.",
+                stat_shipments: "Envíos entregados", stat_countries: "Países atendidos", stat_ontime: "Entrega a tiempo", stat_support: "Atención al cliente",
+                for_all: "Para todos", biz_only: "Solo empresas",
+                srv_express_title: "Envío de documentos y paquetes", srv_express_desc: "Velox Express es líder mundial en envíos exprés internacionales: rápidos, fiables y totalmente rastreables. Opciones de entrega el mismo día y al día siguiente.",
+                explore_express: "Explorar Velox Express",
+                srv_cargo_title: "Envío de carga y flete", srv_cargo_desc: "Descubra servicios logísticos completos de Velox Global Forwarding: carga aérea, marítima, terrestre y ferroviaria para empresas de todos los tamaños.",
+                explore_freight: "Explorar servicios de carga",
+                services_label: "Lo que ofrecemos", services_title: "Servicios", services_title_highlight: "Disponibles",
+                services_sub: "Soluciones logísticas de extremo a extremo adaptadas a las necesidades de su negocio, desde paquetes pequeños hasta carga global.",
+                sol_1_title: "Velox para empresas", sol_1_desc: "Los remitentes frecuentes disfrutan de descuentos por volumen, gestores de cuenta dedicados y facturación simplificada. Abra una cuenta hoy.",
+                learn_more: "Más información",
+                sol_2_title: "Servicio al cliente", sol_2_desc: "Acceda a nuestro portal de clientes, chat en vivo y equipo de soporte 24/7 para asistencia en tiempo real con sus envíos.",
+                customer_portal: "Portal del cliente",
+                sol_3_title: "Sostenibilidad", sol_3_desc: "Un negocio sostenible comienza con cadenas de suministro bajas en carbono. Explore nuestro programa GoGreen Plus.",
+                gogreen: "GoGreen Plus",
+                fleet_label: "Nuestra flota", fleet_title: "Flota moderna,", fleet_title_highlight: "Alcance global",
+                fleet_sub: "Nuestra flota de camiones de marca entrega sus envíos a través de fronteras con rapidez, seguridad y confiabilidad.",
+                truck_1_title: "Flota pesada", truck_1_desc: "Transporte de carga a granel y maquinaria pesada a través de continentes.",
+                truck_2_title: "Entrega exprés", truck_2_desc: "Envíos urgentes entregados con rapidez y precisión.",
+                truck_3_title: "Transporte refrigerado", truck_3_desc: "Soluciones de cadena de frío para productos perecederos y farmacéuticos.",
+                freight_label: "Servicios de carga", freight_title: "Carga global", freight_title_highlight: "Soluciones",
+                freight_sub: "Mover carga a través de fronteras con velocidad, confiabilidad y visibilidad completa.",
+                freight_air: "Carga aérea", freight_air_desc: "Servicios de carga aérea rápidos y fiables para envíos urgentes. Manejo prioritario y rastreo en tiempo real.",
+                freight_ocean: "Carga marítima", freight_ocean_desc: "Soluciones rentables para grandes volúmenes. Servicios FCL, LCL y breakbulk en todo el mundo.",
+                freight_road: "Carga terrestre", freight_road_desc: "Servicios de carga terrestre en Europa, América del Norte y Asia. Opciones FTL y LTL disponibles.",
+                freight_rail: "Carga ferroviaria", freight_rail_desc: "Soluciones de carga ferroviaria sostenibles para carga pesada. Rutas de puente terrestre que conectan continentes de manera eficiente.",
+                customs_label: "Despacho de aduanas", customs_title: "Transfronterizo", customs_title_highlight: "Sin fisuras",
+                customs_desc_1: "Nuestro equipo de corretaje aduanero navega por complejas regulaciones comerciales internacionales para garantizar que sus envíos pasen la aduana de manera rápida y eficiente.",
+                customs_desc_2: "Manejamos toda la documentación, cálculos de aranceles y requisitos de cumplimiento para empresas de todos los tamaños.",
+                customs_feat_1: "Documentación aduanera y cumplimiento", customs_feat_2: "Cálculo de aranceles e impuestos", customs_feat_3: "Consultoría sobre acuerdos de libre comercio", customs_feat_4: "Búsqueda de código HS",
+                customs_cta: "Obtener ayuda aduanera",
+                logistics_label: "Soluciones logísticas", logistics_title: "Integrada", logistics_title_highlight: "Logística",
+                logistics_sub: "Optimice su cadena de suministro con nuestros completos servicios logísticos.",
+                logistics_warehouse: "Almacenamiento", logistics_warehouse_desc: "Soluciones de almacenamiento estratégico con gestión de inventario, preparación de pedidos y distribución.",
+                logistics_inventory: "Gestión de inventario", logistics_inventory_desc: "Seguimiento de inventario en tiempo real, previsión de demanda y reabastecimiento automatizado.",
+                logistics_lastmile: "Entrega de última milla", logistics_lastmile_desc: "Soluciones de entrega eficientes con rastreo en tiempo real y comprobante de entrega.",
+                logistics_analytics: "Análisis de la cadena de suministro", logistics_analytics_desc: "Información basada en datos para optimizar su cadena de suministro, reducir costos y mejorar el rendimiento.",
+                tariff_label: "Manténgase informado", tariff_title: "Navegando por los últimos desarrollos arancelarios", tariff_desc: "El comercio global es cada vez más complejo. En Velox, estamos comprometidos a ayudarle a navegar los cambios en aduanas, aranceles y regulaciones comerciales con confianza.",
+                tariff_cta: "Obtenga asesoramiento experto",
+                testimonials_label: "Historias de clientes", testimonials_title: "Confiado por empresas", testimonials_title_highlight: "En todo el mundo",
+                testimonials_sub: "Escuche a nuestros clientes de todo el mundo que confían en Velox para sus necesidades logísticas.",
+                testimonial_1: "Velox Logistics ha transformado nuestra cadena de suministro. Su rastreo en tiempo real y entrega confiable nos han ahorrado innumerables horas y reducido los costos en un 25%.",
+                testimonial_1_title: "Director de Cadena de Suministro, TechGlobal",
+                testimonial_2: "Las opciones de carga de Velox son excepcionales. Manejaron nuestros envíos de maquinaria pesada con cuidado y profesionalismo.",
+                testimonial_2_title: "Gerente de Operaciones, Apex Industries",
+                testimonial_3: "Su servicio al cliente es insuperable. Cada envío es rastreado y siempre sé exactamente dónde están mis paquetes.",
+                testimonial_3_title: "Fundador de comercio electrónico, ModaVibe",
+                quick_tools: "Herramientas rápidas", send: "Enviar", receive: "Recibir", shop: "Comprar", business: "Negocios", international: "Internacional", help: "Ayuda",
+                tracking_label: "Rastreo en tiempo real", tracking_title: "Rastree su", tracking_title_highlight: "Envío",
+                tracking_desc: "Ingrese su número de rastreo de Velox para ver actualizaciones en tiempo real y el estado de entrega.",
+                footer_desc: "Soluciones globales de envío exprés y carga basadas en confiabilidad, velocidad y un compromiso con cadenas de suministro sostenibles. Conectando empresas en todo el mundo desde 2005.",
+                footer_quick: "Enlaces rápidos", footer_support: "Servicio al cliente", footer_company: "Empresa",
+                nav_track: "Rastrear un envío", nav_quote: "Obtener cotización", nav_about: "Acerca de", nav_services: "Servicios", nav_freight: "Carga", nav_customs: "Aduanas", nav_logistics: "Logística",
+                contact: "Contáctenos", help_center: "Centro de ayuda", claims: "Reclamos y devoluciones", feedback: "Comentarios", ticket: "Enviar un ticket", informed_delivery: "Entrega informada",
+                about_us: "Acerca de Velox", newsroom: "Sala de prensa", careers: "Carreras", privacy: "Política de privacidad", terms: "Términos de uso", copyright: "Todos los derechos reservados.", cookies: "Cookies", accessibility: "Accesibilidad"
+            },
+            zh: {
+                home: "首页", tracking: "追踪", services: "服务", freight: "货运", customs: "海关", logistics: "物流", about: "关于我们", contact: "联系我们",
+                track: "追踪", ship: "发货",
+                badge: "自2005年以来全球物流合作伙伴",
+                hero_title_1: "使用", hero_title_2: "Velox Ground Advantage",
+                hero_desc: "面向连接世界的可靠运输解决方案。2-5天送达，含追踪。无隐藏费用。",
+                stat_shipments: "已送达货物", stat_countries: "服务国家", stat_ontime: "准时交付", stat_support: "客户支持",
+                for_all: "所有人适用", biz_only: "仅企业",
+                srv_express_title: "文件和包裹运输", srv_express_desc: "Velox Express是国际快递领域的全球领导者——快速、可靠且完全可追踪。提供当天和次日达选项。",
+                explore_express: "探索Velox Express",
+                srv_cargo_title: "货物和货运运输", srv_cargo_desc: "发现Velox全球货运的全方位物流服务——为各种规模的企业提供空运、海运、公路和铁路货运。",
+                explore_freight: "探索货运服务",
+                services_label: "我们提供的", services_title: "服务", services_title_highlight: "可用",
+                services_sub: "根据您的业务需求定制端到端物流解决方案——从小包裹到全球货运。",
+                sol_1_title: "Velox企业版", sol_1_desc: "频繁发件人可享受批量折扣、专属客户经理和简化计费。立即开设账户。",
+                learn_more: "了解更多",
+                sol_2_title: "客户服务", sol_2_desc: "访问我们的客户门户、在线聊天和24/7支持团队，获得实时帮助。",
+                customer_portal: "客户门户",
+                sol_3_title: "可持续发展", sol_3_desc: "可持续发展始于低碳供应链。探索我们的GoGreen Plus计划，实现碳中和运输。",
+                gogreen: "GoGreen Plus",
+                fleet_label: "我们的车队", fleet_title: "现代车队，", fleet_title_highlight: "全球覆盖",
+                fleet_sub: "我们品牌卡车车队以快速、安全和可靠的方式将您的货物运送到世界各地。",
+                truck_1_title: "重型车队", truck_1_desc: "跨大陆运输散装货物和重型机械。",
+                truck_2_title: "快递", truck_2_desc: "快速精准地交付时效性货物。",
+                truck_3_title: "冷藏运输", truck_3_desc: "为易腐货物和药品提供冷链解决方案。",
+                freight_label: "货运服务", freight_title: "全球货运", freight_title_highlight: "解决方案",
+                freight_sub: "以快速、可靠和完全可视化的方式跨境运输货物。",
+                freight_air: "空运", freight_air_desc: "为时效性货物提供快速可靠的航空货运服务。优先处理和实时追踪。",
+                freight_ocean: "海运", freight_ocean_desc: "为大宗货物提供经济高效的海运解决方案。全球范围内的整箱、拼箱和散货服务。",
+                freight_road: "公路运输", freight_road_desc: "覆盖欧洲、北美和亚洲的陆路货运服务。提供整车和零担选项。",
+                freight_rail: "铁路运输", freight_rail_desc: "为重型货物提供可持续的铁路货运解决方案。高效连接大陆的陆桥路线。",
+                customs_label: "清关", customs_title: "无缝", customs_title_highlight: "跨境",
+                customs_desc_1: "我们的报关团队应对复杂的国际贸易法规，确保您的货物快速高效地清关。",
+                customs_desc_2: "我们处理各种规模企业的所有文件、关税计算和合规要求。",
+                customs_feat_1: "海关文件与合规", customs_feat_2: "关税与税务计算", customs_feat_3: "自由贸易协定咨询", customs_feat_4: "HS编码查询",
+                customs_cta: "获取海关帮助",
+                logistics_label: "物流解决方案", logistics_title: "集成", logistics_title_highlight: "物流",
+                logistics_sub: "通过我们全面的物流服务简化您的供应链。",
+                logistics_warehouse: "仓储", logistics_warehouse_desc: "战略性存储解决方案，包括库存管理、分拣、包装和配送服务。",
+                logistics_inventory: "库存管理", logistics_inventory_desc: "实时库存跟踪、需求预测和自动补货，保持最佳库存水平。",
+                logistics_lastmile: "最后一公里配送", logistics_lastmile_desc: "高效的最后一公里配送解决方案，实时追踪和交付证明。",
+                logistics_analytics: "供应链分析", logistics_analytics_desc: "数据驱动的洞察和分析，优化供应链、降低成本并提高绩效。",
+                tariff_label: "保持了解", tariff_title: "应对最新关税动态", tariff_desc: "全球贸易日益复杂。在Velox，我们致力于帮助您自信地应对海关、关税和贸易法规的变化。",
+                tariff_cta: "获取专家建议",
+                testimonials_label: "客户故事", testimonials_title: "受企业信赖", testimonials_title_highlight: "全球",
+                testimonials_sub: "听取全球客户对Velox物流需求的信赖。",
+                testimonial_1: "Velox Logistics改变了我们的供应链。他们的实时追踪和可靠交付为我们节省了无数小时，并将成本降低了25%。",
+                testimonial_1_title: "供应链总监，TechGlobal",
+                testimonial_2: "Velox的货运选项非常出色。他们以细心和专业的态度处理了我们的重型机械运输。",
+                testimonial_2_title: "运营经理，Apex Industries",
+                testimonial_3: "他们的客户服务无与伦比。每个货物都被追踪，我随时知道包裹的确切位置。",
+                testimonial_3_title: "电商创始人，ModaVibe",
+                quick_tools: "快速工具", send: "发送", receive: "接收", shop: "购物", business: "商业", international: "国际", help: "帮助",
+                tracking_label: "实时追踪", tracking_title: "追踪您的", tracking_title_highlight: "货物",
+                tracking_desc: "输入您的Velox追踪号码以查看实时更新和交付状态。",
+                footer_desc: "基于可靠性、速度和对可持续供应链承诺的全球快递和货运解决方案。自2005年以来连接全球企业。",
+                footer_quick: "快速链接", footer_support: "客户服务", footer_company: "公司",
+                nav_track: "追踪货物", nav_quote: "获取报价", nav_about: "关于我们", nav_services: "服务", nav_freight: "货运", nav_customs: "清关", nav_logistics: "物流",
+                contact: "联系我们", help_center: "帮助中心", claims: "索赔与退货", feedback: "反馈", ticket: "提交工单", informed_delivery: "知情配送",
+                about_us: "关于Velox", newsroom: "新闻室", careers: "职业", privacy: "隐私政策", terms: "使用条款", copyright: "保留所有权利。", cookies: "Cookies", accessibility: "无障碍"
+            }
         };
 
         function changeLanguage() {
@@ -1170,6 +1470,7 @@
                 if (t[key] !== undefined) el.innerHTML = t[key];
             });
         }
+
         document.getElementById('langSelect')?.addEventListener('change', changeLanguage);
 
         // ============================================================
