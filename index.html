@@ -908,212 +908,217 @@
             }
             closeMobileNav();
         }
+// ============================================================
+// TRACKING (with admin shipment support + debug logs)
+// ============================================================
+const FALLBACK_SHIPMENTS = [{
+    trackingNumber: "VX123456",
+    customerName: "John Smith",
+    fromCountry: "United Kingdom",
+    toCountry: "United States",
+    weight: "5.5",
+    serviceType: "Express",
+    status: "in_transit",
+    updates: [
+        { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "pending", location: "London, UK", notes: "Shipment created" },
+        { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "processing", location: "Heathrow Airport", notes: "Processed at facility" },
+        { timestamp: new Date().toISOString(), status: "in_transit", location: "In Transit", notes: "En route to destination" }
+    ]
+}, {
+    trackingNumber: "VX789012",
+    customerName: "Sarah Johnson",
+    fromCountry: "United States",
+    toCountry: "United Kingdom",
+    weight: "12.0",
+    serviceType: "Priority",
+    status: "delivered",
+    updates: [
+        { timestamp: new Date(Date.now() - 259200000).toISOString(), status: "pending", location: "San Francisco, CA", notes: "Shipment created" },
+        { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "in_transit", location: "International Hub", notes: "In transit" },
+        { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "out_for_delivery", location: "London, UK", notes: "Out for delivery" },
+        { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
+    ]
+}];
 
-        // ============================================================
-        // TRACKING (unchanged)
-        // ============================================================
-        const FALLBACK_SHIPMENTS = [{
-            trackingNumber: "VX123456",
-            customerName: "John Smith",
-            fromCountry: "United Kingdom",
-            toCountry: "United States",
-            weight: "5.5",
-            serviceType: "Express",
-            status: "in_transit",
-            updates: [
-                { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "pending", location: "London, UK", notes: "Shipment created" },
-                { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "processing", location: "Heathrow Airport", notes: "Processed at facility" },
-                { timestamp: new Date().toISOString(), status: "in_transit", location: "In Transit", notes: "En route to destination" }
-            ]
-        }, {
-            trackingNumber: "VX789012",
-            customerName: "Sarah Johnson",
-            fromCountry: "United States",
-            toCountry: "United Kingdom",
-            weight: "12.0",
-            serviceType: "Priority",
-            status: "delivered",
-            updates: [
-                { timestamp: new Date(Date.now() - 259200000).toISOString(), status: "pending", location: "San Francisco, CA", notes: "Shipment created" },
-                { timestamp: new Date(Date.now() - 172800000).toISOString(), status: "in_transit", location: "International Hub", notes: "In transit" },
-                { timestamp: new Date(Date.now() - 86400000).toISOString(), status: "out_for_delivery", location: "London, UK", notes: "Out for delivery" },
-                { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
-            ]
-        }];
+function convertLocationHistoryToUpdates(locationHistory) {
+    if (!locationHistory || locationHistory.length === 0) return [];
+    return locationHistory.map(entry => ({
+        timestamp: entry.timestamp,
+        status: entry.event.toLowerCase().replace(/\s/g, '_'),
+        location: `${entry.city}, ${entry.country}`,
+        notes: entry.event
+    }));
+}
 
-        function convertLocationHistoryToUpdates(locationHistory) {
-            if (!locationHistory || locationHistory.length === 0) return [];
-            return locationHistory.map(entry => ({
-                timestamp: entry.timestamp,
-                status: entry.event.toLowerCase().replace(/\s/g, '_'),
-                location: `${entry.city}, ${entry.country}`,
-                notes: entry.event
-            }));
-        }
+async function getShipments() {
+    try {
+        const stored = localStorage.getItem('velox_shipments');
+        console.log('🔍 velox_shipments in localStorage:', stored);
 
-        async function getShipments() {
-            try {
-                const stored = localStorage.getItem('velox_shipments');
-                if (stored && stored !== 'undefined') {
-                    const adminShipments = JSON.parse(stored);
-                    if (adminShipments && adminShipments.length) {
-                        return adminShipments.map(ship => ({
-                            trackingNumber: ship.trackingNumber,
-                            customerName: ship.customer,
-                            fromCountry: ship.fromCountry,
-                            toCountry: ship.toCountry,
-                            weight: ship.weight,
-                            serviceType: ship.service,
-                            status: ship.status,
-                            updates: convertLocationHistoryToUpdates(ship.locationHistory)
-                        }));
-                    }
-                }
-            } catch(e) {
-                console.warn("Could not read admin shipments", e);
-            }
-            return FALLBACK_SHIPMENTS;
-        }
+        if (stored && stored !== 'undefined') {
+            const adminShipments = JSON.parse(stored);
+            console.log('📦 Admin shipments found:', adminShipments);
 
-        async function runTracking() {
-            const heroInput = document.getElementById('trackInput')?.value || '';
-            const pageInput = document.getElementById('trackInputPage')?.value || '';
-            const num = (heroInput || pageInput).trim().toUpperCase();
-
-            if (!num) {
-                alert("Please enter a tracking number");
-                return;
-            }
-
-            const btn = document.querySelector('.btn-track');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-            btn.disabled = true;
-
-            try {
-                const shipments = await getShipments();
-                let order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === num);
-
-                if (!order && num.startsWith('VX')) {
-                    const withoutPrefix = num.substring(2);
-                    order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix);
-                }
-
-                showPage('tracking');
-
-                const resultContainer = document.getElementById('trackingResult');
-
-                if (order) {
-                    renderTrackingResult(order, resultContainer);
-                } else {
-                    resultContainer.innerHTML = `
-                        <div class="tracking-not-found">
-                            <i class="fas fa-search"></i>
-                            <h3>❌ Not Found</h3>
-                            <p>Tracking number "${num}" could not be found. Please check and try again.</p>
-                            <button class="btn btn-primary btn-sm" onclick="document.getElementById('trackInputPage').focus()" style="margin-top:12px;">
-                                <i class="fas fa-redo"></i> Try Again
-                            </button>
-                        </div>
-                    `;
-                    resultContainer.style.display = 'block';
-                }
-            } catch (err) {
-                alert('Error loading tracking data. Please check your internet connection.');
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+            if (adminShipments && adminShipments.length) {
+                const mapped = adminShipments.map(ship => ({
+                    trackingNumber: ship.trackingNumber,
+                    customerName: ship.customer || 'Unknown',
+                    fromCountry: ship.fromCountry || 'Unknown',
+                    toCountry: ship.toCountry || 'Unknown',
+                    weight: ship.weight || '0',
+                    serviceType: ship.service || 'Standard',
+                    status: ship.status || 'pending',
+                    updates: convertLocationHistoryToUpdates(ship.locationHistory)
+                }));
+                console.log('✅ Mapped admin shipments ready:', mapped);
+                return mapped;
             }
         }
+        console.warn('⚠️ No admin data found – using fallback demo shipments.');
+    } catch(e) {
+        console.error('❌ Error reading admin shipments:', e);
+    }
+    return FALLBACK_SHIPMENTS;
+}
 
-        function renderTrackingResult(order, container) {
-            const statusLabels = {
-                'pending': '⏳ Pending',
-                'processing': '🔄 Processing',
-                'in_transit': '🚚 In Transit',
-                'out_for_delivery': '📦 Out for Delivery',
-                'delivered': '✅ Delivered'
-            };
+async function runTracking() {
+    const heroInput = document.getElementById('trackInput')?.value || '';
+    const pageInput = document.getElementById('trackInputPage')?.value || '';
+    const num = (heroInput || pageInput).trim().toUpperCase();
 
-            const statusIcons = {
-                'pending': 'fa-clock',
-                'processing': 'fa-sync-alt',
-                'in_transit': 'fa-truck',
-                'out_for_delivery': 'fa-box-open',
-                'delivered': 'fa-check-circle'
-            };
+    if (!num) {
+        alert("Please enter a tracking number");
+        return;
+    }
 
-            const currentStatus = statusLabels[order.status] || order.status;
-            const currentIcon = statusIcons[order.status] || 'fa-circle';
+    const btn = document.querySelector('.btn-track');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+    btn.disabled = true;
 
-            let timelineHTML = '';
-            if (order.updates && order.updates.length > 0) {
-                const sorted = [...order.updates].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                sorted.forEach(u => {
-                    const uStatus = statusLabels[u.status] || u.status;
-                    const uIcon = statusIcons[u.status] || 'fa-circle';
-                    const date = new Date(u.timestamp).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    timelineHTML += `
-                        <div class="timeline-item">
-                            <div class="date">${date}</div>
-                            <div class="status"><i class="fas ${uIcon}" style="color:var(--primary);"></i> ${uStatus}</div>
-                            <div class="location"><i class="fas fa-map-pin" style="color:var(--gray-400);"></i> ${u.location}</div>
-                            ${u.notes ? `<div class="notes"><i class="fas fa-comment-dots" style="color:var(--gray-400);"></i> ${u.notes}</div>` : ''}
-                        </div>
-                    `;
-                });
-            }
+    try {
+        const shipments = await getShipments();
+        let order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === num);
 
-            const html = `
-                <div class="tracking-result-card">
-                    <div class="header">
-                        <div class="number">
-                            <i class="fas fa-box"></i> ${order.trackingNumber}
-                        </div>
-                        <div class="status-badge">
-                            <i class="fas ${currentIcon}"></i> ${currentStatus}
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div class="details-grid">
-                            <div class="item">
-                                <label><i class="fas fa-user"></i> Customer</label>
-                                <div class="value">${order.customerName}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-route"></i> Route</label>
-                                <div class="value">${order.fromCountry} → ${order.toCountry}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-tag"></i> Service</label>
-                                <div class="value">${order.serviceType}</div>
-                            </div>
-                            <div class="item">
-                                <label><i class="fas fa-weight"></i> Weight</label>
-                                <div class="value">${order.weight} kg</div>
-                            </div>
-                        </div>
-                        <h4 style="margin-bottom:16px; font-weight:800; color:var(--dark); display:flex; align-items:center; gap:8px;">
-                            <i class="fas fa-timeline" style="color:var(--primary);"></i> Shipment Progress
-                        </h4>
-                        <div class="tracking-timeline">
-                            ${timelineHTML}
-                        </div>
-                    </div>
+        if (!order && num.startsWith('VX')) {
+            const withoutPrefix = num.substring(2);
+            order = shipments.find(o => (o.trackingNumber || '').toUpperCase().trim() === withoutPrefix);
+        }
+
+        showPage('tracking');
+
+        const resultContainer = document.getElementById('trackingResult');
+
+        if (order) {
+            renderTrackingResult(order, resultContainer);
+        } else {
+            resultContainer.innerHTML = `
+                <div class="tracking-not-found">
+                    <i class="fas fa-search"></i>
+                    <h3>❌ Not Found</h3>
+                    <p>Tracking number "${num}" could not be found. Please check and try again.</p>
+                    <button class="btn btn-primary btn-sm" onclick="document.getElementById('trackInputPage').focus()" style="margin-top:12px;">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
                 </div>
             `;
-
-            container.innerHTML = html;
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            resultContainer.style.display = 'block';
         }
+    } catch (err) {
+        alert('Error loading tracking data. Please check your internet connection.');
+    } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
 
+function renderTrackingResult(order, container) {
+    const statusLabels = {
+        'pending': '⏳ Pending',
+        'processing': '🔄 Processing',
+        'in_transit': '🚚 In Transit',
+        'out_for_delivery': '📦 Out for Delivery',
+        'delivered': '✅ Delivered'
+    };
+
+    const statusIcons = {
+        'pending': 'fa-clock',
+        'processing': 'fa-sync-alt',
+        'in_transit': 'fa-truck',
+        'out_for_delivery': 'fa-box-open',
+        'delivered': 'fa-check-circle'
+    };
+
+    const currentStatus = statusLabels[order.status] || order.status;
+    const currentIcon = statusIcons[order.status] || 'fa-circle';
+
+    let timelineHTML = '';
+    if (order.updates && order.updates.length > 0) {
+        const sorted = [...order.updates].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        sorted.forEach(u => {
+            const uStatus = statusLabels[u.status] || u.status;
+            const uIcon = statusIcons[u.status] || 'fa-circle';
+            const date = new Date(u.timestamp).toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            timelineHTML += `
+                <div class="timeline-item">
+                    <div class="date">${date}</div>
+                    <div class="status"><i class="fas ${uIcon}" style="color:var(--primary);"></i> ${uStatus}</div>
+                    <div class="location"><i class="fas fa-map-pin" style="color:var(--gray-400);"></i> ${u.location}</div>
+                    ${u.notes ? `<div class="notes"><i class="fas fa-comment-dots" style="color:var(--gray-400);"></i> ${u.notes}</div>` : ''}
+                </div>
+            `;
+        });
+    }
+
+    const html = `
+        <div class="tracking-result-card">
+            <div class="header">
+                <div class="number">
+                    <i class="fas fa-box"></i> ${order.trackingNumber}
+                </div>
+                <div class="status-badge">
+                    <i class="fas ${currentIcon}"></i> ${currentStatus}
+                </div>
+            </div>
+            <div class="body">
+                <div class="details-grid">
+                    <div class="item">
+                        <label><i class="fas fa-user"></i> Customer</label>
+                        <div class="value">${order.customerName}</div>
+                    </div>
+                    <div class="item">
+                        <label><i class="fas fa-route"></i> Route</label>
+                        <div class="value">${order.fromCountry} → ${order.toCountry}</div>
+                    </div>
+                    <div class="item">
+                        <label><i class="fas fa-tag"></i> Service</label>
+                        <div class="value">${order.serviceType}</div>
+                    </div>
+                    <div class="item">
+                        <label><i class="fas fa-weight"></i> Weight</label>
+                        <div class="value">${order.weight} kg</div>
+                    </div>
+                </div>
+                <h4 style="margin-bottom:16px; font-weight:800; color:var(--dark); display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-timeline" style="color:var(--primary);"></i> Shipment Progress
+                </h4>
+                <div class="tracking-timeline">
+                    ${timelineHTML}
+                </div>
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = html;
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
         // ============================================================
         // SLIDESHOW (unchanged)
         // ============================================================

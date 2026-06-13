@@ -1932,38 +1932,54 @@
                 { timestamp: new Date(Date.now() - 43200000).toISOString(), status: "delivered", location: "London, UK", notes: "Delivered successfully" }
             ]
         }];
+// Helper to convert admin location history
+function convertLocationHistoryToUpdates(locationHistory) {
+    if (!locationHistory || locationHistory.length === 0) return [];
+    return locationHistory.map(entry => ({
+        timestamp: entry.timestamp,
+        status: entry.event.toLowerCase().replace(/\s/g, '_'),
+        location: `${entry.city}, ${entry.country}`,
+        notes: entry.event
+    }));
+}
 
-        // Main shipment loader – tries localStorage first
-        async function getShipments() {
-            try {
-                const stored = localStorage.getItem('velox_shipments');
-                if (stored && stored !== 'undefined') {
-                    const adminShipments = JSON.parse(stored);
-                    if (adminShipments && adminShipments.length) {
-                        // Map admin data to tracking format
-                        return adminShipments.map(ship => ({
-                            trackingNumber: ship.trackingNumber,
-                            customerName: ship.customer || 'Unknown',
-                            fromCountry: ship.fromCountry || 'Unknown',
-                            toCountry: ship.toCountry || 'Unknown',
-                            fromLat: null,       // admin data has no coordinates
-                            fromLng: null,
-                            toLat: null,
-                            toLng: null,
-                            weight: ship.weight || '0',
-                            serviceType: ship.service || 'Standard',
-                            status: ship.status || 'pending',
-                            updates: convertLocationHistoryToUpdates(ship.locationHistory)
-                        }));
-                    }
-                }
-            } catch(e) {
-                console.warn("Could not read admin shipments", e);
+// Main shipment loader – tries localStorage first
+async function getShipments() {
+    try {
+        const stored = localStorage.getItem('velox_shipments');
+        console.log('🔍 velox_shipments in localStorage:', stored);
+
+        if (stored && stored !== 'undefined') {
+            const adminShipments = JSON.parse(stored);
+            console.log('📦 Admin shipments found:', adminShipments);
+
+            if (adminShipments && adminShipments.length) {
+                // Map admin data to tracking format
+                const mapped = adminShipments.map(ship => ({
+                    trackingNumber: ship.trackingNumber,
+                    customerName: ship.customer || 'Unknown',
+                    fromCountry: ship.fromCountry || 'Unknown',
+                    toCountry: ship.toCountry || 'Unknown',
+                    fromLat: null,       // admin data has no coordinates
+                    fromLng: null,
+                    toLat: null,
+                    toLng: null,
+                    weight: ship.weight || '0',
+                    serviceType: ship.service || 'Standard',
+                    status: ship.status || 'pending',
+                    updates: convertLocationHistoryToUpdates(ship.locationHistory)
+                }));
+                console.log('✅ Mapped admin shipments ready:', mapped);
+                return mapped;
             }
-            // Fallback to demo data if no admin shipments
-            return FALLBACK_SHIPMENTS;
         }
-
+        console.warn('⚠️ No admin data found – using fallback demo shipments.');
+    } catch(e) {
+        console.error('❌ Error reading admin shipments:', e);
+    }
+    // Fallback to demo data if no admin shipments
+    return FALLBACK_SHIPMENTS;
+}
         let mapInstance = null;
         let polyline = null;
 
