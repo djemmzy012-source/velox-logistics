@@ -16,7 +16,13 @@
         .toast-message { position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: #1f2937; color: white; padding: 12px 24px; border-radius: 40px; font-weight: 500; font-size: 0.875rem; backdrop-filter: blur(8px); background: rgba(0,0,0,0.85); transition: 0.2s; z-index: 10000; }
         .status-badge { font-size: 0.7rem; font-weight: 600; padding: 4px 12px; border-radius: 9999px; display: inline-block; }
         .modal-backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); }
-        select.status-select { font-size: 0.7rem; padding: 2px 6px; border-radius: 12px; border: 1px solid #ccc; background: white; }
+        select.status-select { font-size: 0.7rem; padding: 6px 8px; border-radius: 12px; border: 1px solid #ccc; background: white; max-width: 100%; }
+        input, select, textarea, button { touch-action: manipulation; }
+        @media (max-width: 640px) {
+            .toast-message { left: 12px; right: 12px; bottom: 12px; text-align: center; }
+            #dynamicPanel { padding: 12px; }
+            #globalModal > div.relative { margin: 12px; width: calc(100% - 24px); }
+        }
     </style>
 </head>
 <body>
@@ -29,11 +35,11 @@
             <p class="text-gray-500 text-sm mt-2">Full location & timeline control</p>
         </div>
         <form id="loginForm">
-            <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Username</label><input type="text" id="adminUser" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="admin" value="admin"></div>
-            <div class="mb-6"><label class="block text-gray-700 text-sm font-bold mb-2">Password</label><input type="password" id="adminPass" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="••••••" value="admin123"></div>
+            <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Username</label><input type="text" id="adminUser" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="Username" autocomplete="username"></div>
+            <div class="mb-6"><label class="block text-gray-700 text-sm font-bold mb-2">Password</label><input type="password" id="adminPass" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="Password" autocomplete="current-password"></div>
             <button type="submit" class="w-full bg-[#D40000] hover:bg-[#B00000] text-white font-bold py-2.5 rounded-lg transition"><i class="fas fa-lock mr-2"></i> Login</button>
         </form>
-        <p class="text-xs text-center text-gray-400 mt-6">demo: admin / admin123</p>
+        <p class="text-xs text-center text-gray-400 mt-6">Authorized access only</p>
     </div>
 </div>
 
@@ -57,7 +63,16 @@
             <h2 id="pageTitle" class="text-xl font-bold text-gray-800"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Package Location Manager</h2>
             <div><span class="text-sm text-gray-500"><i class="fas fa-user-shield text-red-500 mr-1"></i> Super Admin</span></div>
         </div>
-        <div id="dynamicPanel" class="p-6"></div>
+        <nav class="md:hidden bg-white border-b px-3 py-2 flex gap-2 overflow-x-auto" aria-label="Mobile admin navigation">
+            <a href="#" data-nav="dashboard" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a>
+            <a href="#" data-nav="shipments" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-box mr-1"></i> Shipments</a>
+            <a href="#" data-nav="customs" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-file-contract mr-1"></i> Customs</a>
+            <a href="#" data-nav="claims" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-file-invoice-dollar mr-1"></i> Claims</a>
+            <a href="#" data-nav="complaints" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-comment-dots mr-1"></i> Complaints</a>
+            <a href="#" data-nav="reports" class="sidebar-link whitespace-nowrap rounded-lg px-3 py-2 text-sm text-gray-700"><i class="fas fa-chart-line mr-1"></i> Reports</a>
+            <button id="mobileLogoutBtn" type="button" class="whitespace-nowrap rounded-lg px-3 py-2 text-sm text-red-700 bg-red-50"><i class="fas fa-sign-out-alt mr-1"></i> Logout</button>
+        </nav>
+        <div id="dynamicPanel" class="p-4 sm:p-6"></div>
     </main>
 </div>
 
@@ -71,9 +86,7 @@
     </div>
 </div>
 
-<script><a href="#" data-nav="pending" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700">
-    <i class="fas fa-clock w-5"></i> Pending Approval
-</a>
+<script>
     // ========== DATA MODELS ==========
     let shipments = [
         { id: 1, trackingNumber: "VX123456", customer: "John Smith", 
@@ -506,6 +519,7 @@
     document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
         e.preventDefault();
         if(document.getElementById('adminUser').value==='admin' && document.getElementById('adminPass').value==='admin123'){
+            sessionStorage.setItem('velox_admin_logged_in', '1');
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboardApp').classList.remove('hidden');
             loadData();
@@ -513,8 +527,24 @@
             addLog("Admin login");
         } else alert("Invalid credentials");
     });
-    document.getElementById('logoutBtn')?.addEventListener('click',()=>{ addLog("Logout"); document.getElementById('dashboardApp').classList.add('hidden'); document.getElementById('loginScreen').classList.remove('hidden'); });
+    function logoutAdmin() {
+        addLog("Logout");
+        sessionStorage.removeItem('velox_admin_logged_in');
+        document.getElementById('dashboardApp').classList.add('hidden');
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('adminPass').value = '';
+    }
+    document.getElementById('logoutBtn')?.addEventListener('click', logoutAdmin);
+    document.getElementById('mobileLogoutBtn')?.addEventListener('click', logoutAdmin);
     document.querySelectorAll('.sidebar-link').forEach(link=>{ link.addEventListener('click',(e)=>{ e.preventDefault(); loadNav(link.dataset.nav); }); });
+
+    // Restore the dashboard after a refresh in the same browser tab.
+    if (sessionStorage.getItem('velox_admin_logged_in') === '1') {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardApp').classList.remove('hidden');
+        loadData();
+        loadNav('dashboard');
+    }
 </script>
 </body>
 </html>
