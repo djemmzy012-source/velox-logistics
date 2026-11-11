@@ -23,7 +23,40 @@
             #dynamicPanel { padding: 12px; }
             #globalModal > div.relative { margin: 12px; width: calc(100% - 24px); }
         }
-    </style>
+    /* VELLOX PROFESSIONAL ADMIN THEME */
+:root{--primary:#17345c;--primary-dark:#102644;--secondary:#c9a45c;--velox-red:#b82732}
+body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;color:#263449}
+#dashboardApp{background:#f3f5f9}
+#dashboardApp>aside{width:260px!important;min-width:260px;background:#fff;border-right:1px solid #e5eaf1;box-shadow:2px 0 14px rgba(20,40,70,.04);position:sticky;top:0;height:100vh!important}
+#dashboardApp>aside>div:first-child{padding:25px 22px;border-bottom:1px solid #edf0f5}
+.sidebar-link{margin:4px 12px;padding:12px 14px;border-radius:9px;border-left:0!important;font-size:13px;font-weight:600;transition:.2s}
+.sidebar-link.active{background:#edf2f9!important;color:#17345c!important;border-left:0!important}
+.sidebar-link:hover{background:#f3f6fa!important;color:#17345c}
+#dashboardApp main{min-width:0;background:#f3f5f9}
+#dashboardApp main>div:first-child{min-height:70px;padding:16px 28px;border-bottom:1px solid #e8edf3;box-shadow:0 2px 8px rgba(20,40,70,.03)}
+#pageTitle{font-size:19px;font-weight:750;color:#17345c}
+#dynamicPanel{padding:26px!important;max-width:1800px;margin:auto}
+#dynamicPanel .bg-white{border-color:#e6ebf2!important;box-shadow:0 3px 14px rgba(25,45,75,.045)}
+#dynamicPanel .rounded-2xl{border-radius:13px!important}
+#dynamicPanel button{transition:filter .15s,transform .15s}
+#dynamicPanel button:hover{filter:brightness(.96)}
+#dynamicPanel table{font-size:13px}
+#dynamicPanel th{font-size:11px;text-transform:uppercase;letter-spacing:.045em;color:#64748b;white-space:nowrap}
+#dynamicPanel td{vertical-align:middle}
+#dynamicPanel .overflow-x-auto{max-width:100%}
+#loginScreen{background:linear-gradient(135deg,#102644,#173c68)!important}
+#loginScreen>div{border:1px solid #e7ebf1;box-shadow:0 24px 70px rgba(0,0,0,.22)}
+.velox-brand{display:flex;align-items:center;gap:11px}
+.velox-mark{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;background:#17345c;color:#fff;border:2px solid #c9a45c;border-radius:11px;font-weight:900;font-size:24px;font-style:italic;box-shadow:0 3px 9px rgba(23,52,92,.16);flex-shrink:0}
+.velox-brand-name{font-weight:850;letter-spacing:.7px;color:#17345c}
+@media(max-width:767px){
+ #dashboardApp>aside{display:none}
+ #dashboardApp main>div:first-child{padding:13px 15px}
+ #dynamicPanel{padding:13px!important}
+ #dynamicPanel .grid{gap:12px}
+ #dynamicPanel table{min-width:850px}
+}
+</style>
 </head>
 <body>
 
@@ -31,7 +64,7 @@
 <div id="loginScreen" class="fixed inset-0 bg-[#0A0A1A] z-50 flex items-center justify-center">
     <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
         <div class="text-center mb-6">
-            <div class="text-3xl font-black text-[#D40000]">Velox<span class="text-[#FFCC00] bg-gray-900 px-2 rounded">Admin</span></div>
+            <div class="velox-brand justify-center"><span class="velox-mark">V</span><span class="velox-brand-name text-3xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div>
             <p class="text-gray-500 text-sm mt-2">Full location & timeline control</p>
         </div>
         <form id="loginForm">
@@ -46,7 +79,7 @@
 <!-- MAIN DASHBOARD -->
 <div id="dashboardApp" class="hidden min-h-screen flex">
     <aside class="w-72 bg-white shadow-xl border-r border-gray-100 flex-shrink-0 hidden md:block overflow-y-auto" style="height:100vh;">
-        <div class="p-5 border-b"><div class="text-2xl font-black text-[#D40000]">Velox<span class="text-[#FFCC00] bg-gray-900 px-1 rounded">Admin</span></div><p class="text-xs text-gray-400">Realâ€‘time tracking</p></div>
+        <div class="p-5 border-b"><div class="velox-brand"><span class="velox-mark">V</span><span class="velox-brand-name text-xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div><p class="text-xs text-gray-400">Realâ€‘time tracking</p></div>
         <nav class="py-4">
             <a href="#" data-nav="dashboard" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700 font-medium"><i class="fas fa-tachometer-alt w-5"></i> Dashboard</a>
             <a href="#" data-nav="shipments" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-box w-5"></i> Shipments & Location</a>
@@ -399,7 +432,7 @@ th{background:#172b4d;color:#fff;font-size:9px;text-transform:uppercase;letter-s
 tbody tr:nth-child(even){background:#f5f7fa}
 .footer{margin-top:25px;border-top:2px solid #172b4d;padding-top:13px;color:#64748b;text-align:center;line-height:1.6}
 @media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}.top,.paid,th{print-color-adjust:exact;-webkit-print-color-adjust:exact}}</style></head><body>
-    <div class="top"><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div>
+    <div class="top"><div style="display:flex;align-items:center;gap:14px"><span style="width:48px;height:48px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #c9a45c;border-radius:10px;color:#fff;font-size:28px;font-weight:900;font-style:italic">V</span><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div></div>
     <div style="text-align:right"><div class="label">Payment status</div><div class="paid">${invoiceEscape(paymentStatus)}</div></div></div>
     <div class="grid">
       <div class="box"><div class="label">Invoice reference</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
