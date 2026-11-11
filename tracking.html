@@ -1194,12 +1194,12 @@
             </div>
             <div class="top-bar-right">
                 <select class="lang-select" id="langSelect">
-                    <option value="en">ðŸ‡¬ðŸ‡§ EN</option>
-                    <option value="fr">ðŸ‡«ðŸ‡· FR</option>
-                    <option value="de">ðŸ‡©ðŸ‡ª DE</option>
-                    <option value="es">ðŸ‡ªðŸ‡¸ ES</option>
-                    <option value="zh">ðŸ‡¨ðŸ‡³ ä¸­æ–‡</option>
-                </select>
+    <option value="en">EN — English</option>
+    <option value="de">DE — Deutsch</option>
+    <option value="fr">FR — Français</option>
+    <option value="ru">RU — Русский</option>
+    <option value="zh">中文 — Chinese</option>
+</select>
                 <a href="index.html#contact" class="top-cta"><i class="fas fa-bolt"></i> Quick Quote</a>
                 <a href="index.html#contact" class="top-phone"><i class="fas fa-headset"></i> 24/7 Support</a>
             </div>
@@ -1409,111 +1409,263 @@
         // TRANSLATIONS
         // ============================================================
         const translations = {
-            en: {
-                tracking_hero_badge: "REAL-TIME TRACKING",
-                tracking_hero_title_1: "Track Your",
-                tracking_hero_title_2: "Shipment",
-                tracking_hero_desc: "Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.",
-                tracking_faq_label: "FAQs",
-                tracking_faq_title_1: "Frequently",
-                tracking_faq_title_2: "Asked",
-                tracking_faq_title_3: "Questions",
-                tracking_faq_sub: "Find answers to the most common questions about tracking your shipments with Velox.",
-                tracking_faq_1_q: "How do I track my package?",
-                tracking_faq_1_a: "Simply enter your tracking number in the search box above and click Track. You'll see real-time updates including the current location, status, and estimated delivery date.",
-                tracking_faq_2_q: "What does a tracking number look like?",
-                tracking_faq_2_a: "Velox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.",
-                tracking_faq_3_q: "Why is my tracking number not working?",
-                tracking_faq_3_a: "If your tracking number isn't recognized, it may not have been scanned into our system yet. Please wait 24-48 hours after shipping and try again. If the issue persists, contact our support team.",
-                tracking_faq_4_q: "Can I track multiple shipments at once?",
-                tracking_faq_4_a: "Yes, you can track up to 10 shipments simultaneously by entering multiple tracking numbers separated by commas in the search box.",
-                tracking_stats_label: "OUR TRACKING PERFORMANCE",
-                tracking_stats_title_1: "Built for",
-                tracking_stats_title_2: "Transparency",
-                tracking_stat_1: "Tracking Accuracy",
-                tracking_stat_2: "Live Updates",
-                tracking_stat_3: "Countries Covered",
-                tracking_stat_4: "Shipments Tracked",
-                footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.",
-                footer_quick: "Quick Links",
-                footer_support: "Customer Service",
-                footer_company: "Company",
-                nav_track: "Track a Shipment",
-                nav_quote: "Get a Quote",
-                nav_about: "About Us",
-                nav_services: "Services",
-                contact: "Contact Us",
-                help_center: "Help Center",
-                claims: "Claims & Returns",
-                ticket: "Submit a Ticket",
-                about_us: "About Velox",
-                newsroom: "Newsroom",
-                careers: "Careers",
-                privacy: "Privacy Policy",
-                terms: "Terms of Use",
-                copyright: "All rights reserved.",
-                cookies: "Cookies",
-                accessibility: "Accessibility"
-            },
-            fr: {
-                tracking_hero_badge: "SUIVI EN TEMPS RÃ‰EL",
-                tracking_hero_title_1: "Suivez votre",
-                tracking_hero_title_2: "Colis",
-                tracking_hero_desc: "Entrez votre numÃ©ro de suivi Velox pour voir les mises Ã  jour en temps rÃ©el, l'Ã©tat de la livraison et le suivi par carte.",
-                tracking_faq_label: "FAQ",
-                tracking_faq_title_1: "Questions",
-                tracking_faq_title_2: "FrÃ©quemment",
-                tracking_faq_title_3: "PosÃ©es",
-                tracking_faq_sub: "Trouvez les rÃ©ponses aux questions les plus courantes sur le suivi de vos envois avec Velox.",
-                tracking_faq_1_q: "Comment suivre mon colis ?",
-                tracking_faq_1_a: "Entrez simplement votre numÃ©ro de suivi dans la case de recherche et cliquez sur Suivre.",
-                tracking_faq_2_q: "Ã€ quoi ressemble un numÃ©ro de suivi ?",
-                tracking_faq_2_a: "Les numÃ©ros de suivi Velox commencent par 'VX' suivi de 6 chiffres (ex: VX123456).",
-                tracking_faq_3_q: "Pourquoi mon numÃ©ro de suivi ne fonctionne-t-il pas ?",
-                tracking_faq_3_a: "Si votre numÃ©ro n'est pas reconnu, il n'a peut-Ãªtre pas encore Ã©tÃ© scannÃ©. Attendez 24-48 heures et rÃ©essayez.",
-                tracking_faq_4_q: "Puis-je suivre plusieurs envois Ã  la fois ?",
-                tracking_faq_4_a: "Oui, vous pouvez suivre jusqu'Ã  10 envois en entrant plusieurs numÃ©ros sÃ©parÃ©s par des virgules.",
-                tracking_stats_label: "NOTRE PERFORMANCE DE SUIVI",
-                tracking_stats_title_1: "ConÃ§u pour la",
-                tracking_stats_title_2: "Transparence",
-                tracking_stat_1: "PrÃ©cision de suivi",
-                tracking_stat_2: "Mises Ã  jour en direct",
-                tracking_stat_3: "Pays couverts",
-                tracking_stat_4: "Envois suivis",
-                footer_desc: "Solutions mondiales d'express et de fret construites sur la fiabilitÃ©, la rapiditÃ© et l'engagement pour des chaÃ®nes d'approvisionnement durables.",
-                footer_quick: "Liens rapides",
-                footer_support: "Service client",
-                footer_company: "Entreprise",
-                nav_track: "Suivre un colis",
-                nav_quote: "Obtenir un devis",
-                nav_about: "Ã€ propos",
-                nav_services: "Services",
-                contact: "Contactez-nous",
-                help_center: "Centre d'aide",
-                claims: "RÃ©clamations",
-                ticket: "Soumettre un ticket",
-                about_us: "Ã€ propos",
-                newsroom: "Salle de presse",
-                careers: "CarriÃ¨res",
-                privacy: "Politique de confidentialitÃ©",
-                terms: "Conditions d'utilisation",
-                copyright: "Tous droits rÃ©servÃ©s.",
-                cookies: "Cookies",
-                accessibility: "AccessibilitÃ©"
-            }
-            // Add other languages if needed (de, es, zh) - same structure
-        };
+    en: {
+        tracking_hero_badge: "REAL-TIME TRACKING",
+        tracking_hero_title_1: "Track Your",
+        tracking_hero_title_2: "Shipment",
+        tracking_hero_desc: "Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.",
+        tracking_faq_label: "FAQs",
+        tracking_faq_title_1: "Frequently",
+        tracking_faq_title_2: "Asked",
+        tracking_faq_title_3: "Questions",
+        tracking_faq_sub: "Find answers to the most common questions about tracking your shipments with Velox.",
+        tracking_faq_1_q: "How do I track my package?",
+        tracking_faq_1_a: "Simply enter your tracking number in the search box above and click Track. You'll see real-time updates including the current location, status, and estimated delivery date.",
+        tracking_faq_2_q: "What does a tracking number look like?",
+        tracking_faq_2_a: "Velox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.",
+        tracking_faq_3_q: "Why is my tracking number not working?",
+        tracking_faq_3_a: "If your tracking number isn't recognized, it may not have been scanned into our system yet. Please wait 24-48 hours after shipping and try again. If the issue persists, contact our support team.",
+        tracking_faq_4_q: "Can I track multiple shipments at once?",
+        tracking_faq_4_a: "Yes, you can track up to 10 shipments simultaneously by entering multiple tracking numbers separated by commas in the search box.",
+        tracking_stats_label: "OUR TRACKING PERFORMANCE",
+        tracking_stats_title_1: "Built for",
+        tracking_stats_title_2: "Transparency",
+        tracking_stat_1: "Tracking Accuracy",
+        tracking_stat_2: "Live Updates",
+        tracking_stat_3: "Countries Covered",
+        tracking_stat_4: "Shipments Tracked",
+        footer_desc: "Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.",
+        footer_quick: "Quick Links",
+        footer_support: "Customer Service",
+        footer_company: "Company",
+        nav_track: "Track a Shipment",
+        nav_quote: "Get a Quote",
+        nav_about: "About Us",
+        nav_services: "Services",
+        contact: "Contact Us",
+        help_center: "Help Center",
+        claims: "Claims & Returns",
+        ticket: "Submit a Ticket",
+        about_us: "About Velox",
+        newsroom: "Newsroom",
+        careers: "Careers",
+        privacy: "Privacy Policy",
+        terms: "Terms of Use",
+        copyright: "All rights reserved.",
+        cookies: "Cookies",
+        accessibility: "Accessibility"
+    },
+    de: {
+        tracking_hero_badge: "SENDUNGSVERFOLGUNG IN ECHTZEIT",
+        tracking_hero_title_1: "Verfolgen Sie Ihre",
+        tracking_hero_title_2: "Sendung",
+        tracking_hero_desc: "Geben Sie Ihre Velox-Sendungsnummer ein, um Echtzeit-Updates, den Lieferstatus und die Live-Kartenverfolgung zu sehen.",
+        tracking_faq_label: "HÄUFIGE FRAGEN",
+        tracking_faq_title_1: "Häufig",
+        tracking_faq_title_2: "Gestellte",
+        tracking_faq_title_3: "Fragen",
+        tracking_faq_sub: "Hier finden Sie Antworten auf häufige Fragen zur Sendungsverfolgung mit Velox.",
+        tracking_faq_1_q: "Wie kann ich mein Paket verfolgen?",
+        tracking_faq_1_a: "Geben Sie einfach Ihre Sendungsnummer in das Suchfeld oben ein und klicken Sie auf Verfolgen. Sie sehen Echtzeit-Updates zum aktuellen Standort, Status und voraussichtlichen Lieferdatum.",
+        tracking_faq_2_q: "Wie sieht eine Sendungsnummer aus?",
+        tracking_faq_2_a: "Velox-Sendungsnummern beginnen normalerweise mit 'VX', gefolgt von 6 Ziffern (z. B. VX123456). Sie finden die Nummer in Ihrer Versandbestätigung oder auf Ihrem Beleg.",
+        tracking_faq_3_q: "Warum funktioniert meine Sendungsnummer nicht?",
+        tracking_faq_3_a: "Wenn Ihre Sendungsnummer nicht erkannt wird, wurde sie möglicherweise noch nicht in unserem System erfasst. Bitte warten Sie nach dem Versand 24 bis 48 Stunden und versuchen Sie es erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an unseren Kundenservice.",
+        tracking_faq_4_q: "Kann ich mehrere Sendungen gleichzeitig verfolgen?",
+        tracking_faq_4_a: "Ja, Sie können bis zu 10 Sendungen gleichzeitig verfolgen, indem Sie mehrere durch Kommas getrennte Sendungsnummern in das Suchfeld eingeben.",
+        tracking_stats_label: "UNSERE LEISTUNG BEI DER SENDUNGSVERFOLGUNG",
+        tracking_stats_title_1: "Entwickelt für",
+        tracking_stats_title_2: "Transparenz",
+        tracking_stat_1: "Sendungsverfolgungsgenauigkeit",
+        tracking_stat_2: "Live-Updates",
+        tracking_stat_3: "Abgedeckte Länder",
+        tracking_stat_4: "Verfolgte Sendungen",
+        footer_desc: "Weltweite Express- und Frachtlösungen, die auf Zuverlässigkeit, Geschwindigkeit und nachhaltigen Lieferketten basieren. Seit 2005 verbinden wir Unternehmen weltweit.",
+        footer_quick: "Schnellzugriff",
+        footer_support: "Kundenservice",
+        footer_company: "Unternehmen",
+        nav_track: "Sendung verfolgen",
+        nav_quote: "Angebot anfordern",
+        nav_about: "Über uns",
+        nav_services: "Dienstleistungen",
+        contact: "Kontakt",
+        help_center: "Hilfezentrum",
+        claims: "Reklamationen und Rücksendungen",
+        ticket: "Anfrage einreichen",
+        about_us: "Über Velox",
+        newsroom: "Pressebereich",
+        careers: "Karriere",
+        privacy: "Datenschutzerklärung",
+        terms: "Nutzungsbedingungen",
+        copyright: "Alle Rechte vorbehalten.",
+        cookies: "Cookies",
+        accessibility: "Barrierefreiheit"
+    },
+    fr: {
+        tracking_hero_badge: "SUIVI EN TEMPS RÉEL",
+        tracking_hero_title_1: "Suivez votre",
+        tracking_hero_title_2: "Expédition",
+        tracking_hero_desc: "Saisissez votre numéro de suivi Velox pour consulter les mises à jour en temps réel, le statut de livraison et le suivi sur carte.",
+        tracking_faq_label: "FAQ",
+        tracking_faq_title_1: "Questions",
+        tracking_faq_title_2: "Fréquemment",
+        tracking_faq_title_3: "Posées",
+        tracking_faq_sub: "Trouvez les réponses aux questions les plus fréquentes sur le suivi de vos expéditions avec Velox.",
+        tracking_faq_1_q: "Comment suivre mon colis ?",
+        tracking_faq_1_a: "Saisissez simplement votre numéro de suivi dans le champ de recherche ci-dessus et cliquez sur Suivre. Vous verrez les mises à jour en temps réel, notamment la position actuelle, le statut et la date de livraison estimée.",
+        tracking_faq_2_q: "À quoi ressemble un numéro de suivi ?",
+        tracking_faq_2_a: "Les numéros de suivi Velox commencent généralement par « VX », suivi de 6 chiffres (par exemple : VX123456). Vous trouverez ce numéro dans votre e-mail de confirmation d'expédition ou sur votre reçu.",
+        tracking_faq_3_q: "Pourquoi mon numéro de suivi ne fonctionne-t-il pas ?",
+        tracking_faq_3_a: "Si votre numéro de suivi n'est pas reconnu, il n'a peut-être pas encore été enregistré dans notre système. Veuillez attendre 24 à 48 heures après l'expédition, puis réessayer. Si le problème persiste, contactez notre service client.",
+        tracking_faq_4_q: "Puis-je suivre plusieurs expéditions à la fois ?",
+        tracking_faq_4_a: "Oui, vous pouvez suivre jusqu'à 10 expéditions simultanément en saisissant plusieurs numéros de suivi séparés par des virgules dans le champ de recherche.",
+        tracking_stats_label: "NOS PERFORMANCES DE SUIVI",
+        tracking_stats_title_1: "Conçu pour",
+        tracking_stats_title_2: "la transparence",
+        tracking_stat_1: "Précision du suivi",
+        tracking_stat_2: "Mises à jour en direct",
+        tracking_stat_3: "Pays desservis",
+        tracking_stat_4: "Expéditions suivies",
+        footer_desc: "Des solutions mondiales de transport express et de fret fondées sur la fiabilité, la rapidité et un engagement en faveur de chaînes d'approvisionnement durables. Nous connectons les entreprises du monde entier depuis 2005.",
+        footer_quick: "Liens rapides",
+        footer_support: "Service client",
+        footer_company: "Entreprise",
+        nav_track: "Suivre un envoi",
+        nav_quote: "Obtenir un devis",
+        nav_about: "À propos",
+        nav_services: "Services",
+        contact: "Nous contacter",
+        help_center: "Centre d'aide",
+        claims: "Réclamations et retours",
+        ticket: "Soumettre une demande",
+        about_us: "À propos de Velox",
+        newsroom: "Actualités",
+        careers: "Carrières",
+        privacy: "Politique de confidentialité",
+        terms: "Conditions d'utilisation",
+        copyright: "Tous droits réservés.",
+        cookies: "Cookies",
+        accessibility: "Accessibilité"
+    },
+    ru: {
+        tracking_hero_badge: "ОТСЛЕЖИВАНИЕ В РЕАЛЬНОМ ВРЕМЕНИ",
+        tracking_hero_title_1: "Отследите свою",
+        tracking_hero_title_2: "Посылку",
+        tracking_hero_desc: "Введите номер отслеживания Velox, чтобы увидеть обновления в реальном времени, статус доставки и местоположение на карте.",
+        tracking_faq_label: "ЧАСТЫЕ ВОПРОСЫ",
+        tracking_faq_title_1: "Часто",
+        tracking_faq_title_2: "Задаваемые",
+        tracking_faq_title_3: "Вопросы",
+        tracking_faq_sub: "Найдите ответы на самые распространённые вопросы об отслеживании отправлений Velox.",
+        tracking_faq_1_q: "Как отследить мою посылку?",
+        tracking_faq_1_a: "Введите номер отслеживания в поле поиска выше и нажмите «Отследить». Вы увидите обновления в реальном времени, включая текущее местоположение, статус и предполагаемую дату доставки.",
+        tracking_faq_2_q: "Как выглядит номер отслеживания?",
+        tracking_faq_2_a: "Номера отслеживания Velox обычно начинаются с «VX», за которым следуют 6 цифр (например, VX123456). Номер указан в письме с подтверждением отправки или в квитанции.",
+        tracking_faq_3_q: "Почему мой номер отслеживания не работает?",
+        tracking_faq_3_a: "Если номер не распознаётся, возможно, отправление ещё не было зарегистрировано в нашей системе. Подождите 24–48 часов после отправки и попробуйте снова. Если проблема сохраняется, свяжитесь со службой поддержки.",
+        tracking_faq_4_q: "Можно ли отслеживать несколько отправлений одновременно?",
+        tracking_faq_4_a: "Да, вы можете одновременно отслеживать до 10 отправлений, введя несколько номеров через запятую в поле поиска.",
+        tracking_stats_label: "ПОКАЗАТЕЛИ НАШЕГО ОТСЛЕЖИВАНИЯ",
+        tracking_stats_title_1: "Создано для",
+        tracking_stats_title_2: "Прозрачности",
+        tracking_stat_1: "Точность отслеживания",
+        tracking_stat_2: "Обновления в реальном времени",
+        tracking_stat_3: "Страны обслуживания",
+        tracking_stat_4: "Отслеживаемые отправления",
+        footer_desc: "Международные экспресс-доставки и грузовые перевозки, основанные на надёжности, скорости и стремлении к устойчивым цепочкам поставок. Мы объединяем компании по всему миру с 2005 года.",
+        footer_quick: "Быстрые ссылки",
+        footer_support: "Служба поддержки",
+        footer_company: "Компания",
+        nav_track: "Отследить отправление",
+        nav_quote: "Получить предложение",
+        nav_about: "О нас",
+        nav_services: "Услуги",
+        contact: "Связаться с нами",
+        help_center: "Центр помощи",
+        claims: "Претензии и возвраты",
+        ticket: "Отправить запрос",
+        about_us: "О компании Velox",
+        newsroom: "Новости",
+        careers: "Карьера",
+        privacy: "Политика конфиденциальности",
+        terms: "Условия использования",
+        copyright: "Все права защищены.",
+        cookies: "Файлы cookie",
+        accessibility: "Доступность"
+    },
+    zh: {
+        tracking_hero_badge: "实时物流追踪",
+        tracking_hero_title_1: "追踪您的",
+        tracking_hero_title_2: "货件",
+        tracking_hero_desc: "输入您的 Velox 运单号，即可查看实时更新、配送状态和地图追踪信息。",
+        tracking_faq_label: "常见问题",
+        tracking_faq_title_1: "常见",
+        tracking_faq_title_2: "问题",
+        tracking_faq_title_3: "解答",
+        tracking_faq_sub: "了解有关使用 Velox 追踪货件的常见问题及解答。",
+        tracking_faq_1_q: "如何追踪我的包裹？",
+        tracking_faq_1_a: "只需在上方搜索框中输入您的运单号，然后点击“追踪”。您将看到实时更新，包括当前位置、运输状态和预计送达日期。",
+        tracking_faq_2_q: "运单号是什么样的？",
+        tracking_faq_2_a: "Velox 运单号通常以“VX”开头，后面跟着 6 位数字（例如：VX123456）。您可以在发货确认邮件或收据上找到运单号。",
+        tracking_faq_3_q: "为什么我的运单号无法使用？",
+        tracking_faq_3_a: "如果系统无法识别您的运单号，可能是货件尚未录入我们的系统。请在发货后等待 24 至 48 小时再试。如果问题仍然存在，请联系我们的客服团队。",
+        tracking_faq_4_q: "我可以同时追踪多个货件吗？",
+        tracking_faq_4_a: "可以，您最多可以同时追踪 10 个货件，只需在搜索框中输入多个运单号，并用逗号分隔即可。",
+        tracking_stats_label: "我们的追踪服务表现",
+        tracking_stats_title_1: "为",
+        tracking_stats_title_2: "透明度而打造",
+        tracking_stat_1: "追踪准确率",
+        tracking_stat_2: "实时更新",
+        tracking_stat_3: "服务覆盖国家",
+        tracking_stat_4: "已追踪货件",
+        footer_desc: "提供全球快递与货运解决方案，以可靠、高效和可持续供应链为核心。自 2005 年以来，我们一直连接全球企业。",
+        footer_quick: "快速链接",
+        footer_support: "客户服务",
+        footer_company: "公司",
+        nav_track: "追踪货件",
+        nav_quote: "获取报价",
+        nav_about: "关于我们",
+        nav_services: "服务",
+        contact: "联系我们",
+        help_center: "帮助中心",
+        claims: "索赔与退货",
+        ticket: "提交工单",
+        about_us: "关于 Velox",
+        newsroom: "新闻中心",
+        careers: "职业机会",
+        privacy: "隐私政策",
+        terms: "使用条款",
+        copyright: "版权所有。",
+        cookies: "Cookie",
+        accessibility: "无障碍访问"
+    }
+};
 
-        function changeLanguage() {
-            const lang = document.getElementById('langSelect').value;
-            const t = translations[lang] || translations.en;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key] !== undefined) el.innerHTML = t[key];
-            });
-        }
+        function changeLanguage(useSaved = false) {
+    const selector = document.getElementById('langSelect');
+    if (!selector) return;
 
-        document.getElementById('langSelect')?.addEventListener('change', changeLanguage);
+    if (useSaved) {
+        try {
+            const saved = localStorage.getItem('veloxLanguage');
+            if (saved && translations[saved]) selector.value = saved;
+        } catch (e) {}
+    }
+
+    const lang = translations[selector.value] ? selector.value : 'en';
+    const t = translations[lang] || translations.en;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    try {
+        localStorage.setItem('veloxLanguage', lang);
+    } catch (e) {}
+}
+
+document.getElementById('langSelect')?.addEventListener('change', () => changeLanguage(false));
 
         // ============================================================
         // TRACKING ENGINE
@@ -1843,7 +1995,7 @@
         // AUTO-RUN TRACKING IF COMING FROM INDEX PAGE
         // ============================================================
         window.addEventListener('DOMContentLoaded', () => {
-            changeLanguage();
+            changeLanguage(true);
 
             const params = new URLSearchParams(window.location.search);
             const trackNum = params.get('track');
@@ -1869,3 +2021,6 @@
     </script>
 </body>
 </html>
+
+
+
