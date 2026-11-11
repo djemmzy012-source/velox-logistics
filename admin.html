@@ -35,7 +35,7 @@
             <p class="text-gray-500 text-sm mt-2">Full location & timeline control</p>
         </div>
         <form id="loginForm">
-            <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Username</label><input type="text" id="adminUser" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="Username" autocomplete="username"></div>
+            <div class="mb-4"><label class="block text-gray-700 text-sm font-bold mb-2">Admin Email</label><input type="email" id="adminUser" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="Admin email" autocomplete="username" required></div>
             <div class="mb-6"><label class="block text-gray-700 text-sm font-bold mb-2">Password</label><input type="password" id="adminPass" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" placeholder="Password" autocomplete="current-password"></div>
             <button type="submit" class="w-full bg-[#D40000] hover:bg-[#B00000] text-white font-bold py-2.5 rounded-lg transition"><i class="fas fa-lock mr-2"></i> Login</button>
         </form>
@@ -46,7 +46,7 @@
 <!-- MAIN DASHBOARD -->
 <div id="dashboardApp" class="hidden min-h-screen flex">
     <aside class="w-72 bg-white shadow-xl border-r border-gray-100 flex-shrink-0 hidden md:block overflow-y-auto" style="height:100vh;">
-        <div class="p-5 border-b"><div class="text-2xl font-black text-[#D40000]">Velox<span class="text-[#FFCC00] bg-gray-900 px-1 rounded">Admin</span></div><p class="text-xs text-gray-400">Real‑time tracking</p></div>
+        <div class="p-5 border-b"><div class="text-2xl font-black text-[#D40000]">Velox<span class="text-[#FFCC00] bg-gray-900 px-1 rounded">Admin</span></div><p class="text-xs text-gray-400">Realâ€‘time tracking</p></div>
         <nav class="py-4">
             <a href="#" data-nav="dashboard" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700 font-medium"><i class="fas fa-tachometer-alt w-5"></i> Dashboard</a>
             <a href="#" data-nav="shipments" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-box w-5"></i> Shipments & Location</a>
@@ -86,18 +86,25 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+    const VELOX_SUPABASE_URL = "https://msuoujruonzugtojukkq.supabase.co";
+    const VELOX_SUPABASE_KEY = "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm";
+    const veloxSupabase = window.supabase.createClient(
+        VELOX_SUPABASE_URL,
+        VELOX_SUPABASE_KEY
+    );
     // ========== DATA MODELS ==========
     let shipments = [
-        { id: 1, trackingNumber: "VX123456", customer: "John Smith", 
-          fromCountry: "United Kingdom", fromCity: "London", 
-          toCountry: "United States", toCity: "New York", 
+        { id: 1, trackingNumber: "VX123456", customer: "John Smith",
+          fromCountry: "United Kingdom", fromCity: "London",
+          toCountry: "United States", toCity: "New York",
           weight: "5.5", service: "Express", status: "in_transit", customsHold: false, holdReason: "",
           locationHistory: [
               { country: "United Kingdom", city: "London", timestamp: "2025-02-10 08:30", event: "Shipment created" },
               { country: "United Kingdom", city: "Heathrow Airport", timestamp: "2025-02-12 14:20", event: "In transit" }
           ] },
-        { id: 2, trackingNumber: "VX789012", customer: "Sarah Johnson", 
+        { id: 2, trackingNumber: "VX789012", customer: "Sarah Johnson",
           fromCountry: "United States", fromCity: "San Francisco",
           toCountry: "United Kingdom", toCity: "London",
           weight: "12.0", service: "Priority", status: "delivered", customsHold: false, holdReason: "",
@@ -106,7 +113,7 @@
               { country: "United States", city: "New York JFK", timestamp: "2025-02-03 22:15", event: "In transit" },
               { country: "United Kingdom", city: "London Heathrow", timestamp: "2025-02-05 11:30", event: "Delivered" }
           ] },
-        { id: 3, trackingNumber: "VX345678", customer: "Marcus Rivera", 
+        { id: 3, trackingNumber: "VX345678", customer: "Marcus Rivera",
           fromCountry: "Germany", fromCity: "Frankfurt",
           toCountry: "Brazil", toCity: "Sao Paulo",
           weight: "45.0", service: "Freight", status: "customs_hold", customsHold: true, holdReason: "Missing commercial invoice",
@@ -114,7 +121,7 @@
               { country: "Germany", city: "Frankfurt", timestamp: "2025-02-14 10:00", event: "Shipment created" },
               { country: "Brazil", city: "GRU Airport - Customs", timestamp: "2025-02-15 09:20", event: "Customs hold" }
           ] },
-        { id: 4, trackingNumber: "VX901234", customer: "Emma Chen", 
+        { id: 4, trackingNumber: "VX901234", customer: "Emma Chen",
           fromCountry: "China", fromCity: "Shanghai",
           toCountry: "Canada", toCity: "Toronto",
           weight: "2.2", service: "Express", status: "pending", customsHold: false, holdReason: "",
@@ -132,23 +139,116 @@
     ];
     let auditLogs = [{ timestamp: new Date().toLocaleString(), action: "System ready" }];
 
-    // Persistence helpers
+    // Supabase shared storage
+    let veloxDataReady = false;
+    let veloxSyncQueue = Promise.resolve();
+
+    async function syncSupabaseTable(table, items, itemKey, dbKey) {
+        const { data: existing, error } = await veloxSupabase
+            .from(table)
+            .select(`id, ${dbKey}`);
+
+        if (error) throw error;
+
+        const existingRows = existing || [];
+
+        for (const item of items) {
+            const rawKey = item[itemKey] ?? (
+                table === 'audit_logs'
+                    ? `${item.timestamp}|${item.action}`
+                    : ''
+            );
+
+            let key = String(rawKey).trim();
+
+            if (table === 'shipments') {
+                key = key.toUpperCase();
+            }
+
+            if (!key) continue;
+
+            const payload = table === 'shipments'
+                ? { tracking_number: key, data: item }
+                : { record_key: key, data: item };
+
+            const found = existingRows.find(row =>
+                String(row[dbKey]) === key
+            );
+
+            const result = found
+                ? await veloxSupabase
+                    .from(table)
+                    .update(payload)
+                    .eq('id', found.id)
+                : await veloxSupabase
+                    .from(table)
+                    .insert(payload);
+
+            if (result.error) throw result.error;
+        }
+
+        console.info(`Supabase ${table}: synchronization completed without deleting records.`);
+    }
+    async function syncAllToSupabase() {
+        await syncSupabaseTable('shipments', shipments, 'trackingNumber', 'tracking_number');
+        await syncSupabaseTable('claims', claims, 'id', 'record_key');
+        await syncSupabaseTable('complaints', complaints, 'id', 'record_key');
+        await syncSupabaseTable('audit_logs', auditLogs, 'id', 'record_key');
+    }
+
     function persistData() {
         localStorage.setItem('velox_shipments', JSON.stringify(shipments));
         localStorage.setItem('velox_claims', JSON.stringify(claims));
         localStorage.setItem('velox_complaints', JSON.stringify(complaints));
         localStorage.setItem('velox_audit', JSON.stringify(auditLogs));
+
+        if (veloxDataReady) {
+            veloxSyncQueue = veloxSyncQueue
+                .then(syncAllToSupabase)
+                .catch(error => {
+                    console.error('Supabase synchronization failed:', error);
+                    showToast('Cloud sync failed. Check your connection.', 'danger');
+                });
+        }
     }
-    function loadData() {
-        try {
-            if(localStorage.getItem('velox_shipments')) shipments = JSON.parse(localStorage.getItem('velox_shipments'));
-            if(localStorage.getItem('velox_claims')) claims = JSON.parse(localStorage.getItem('velox_claims'));
-            if(localStorage.getItem('velox_complaints')) complaints = JSON.parse(localStorage.getItem('velox_complaints'));
-            if(localStorage.getItem('velox_audit')) auditLogs = JSON.parse(localStorage.getItem('velox_audit'));
-        } catch(e) {}
+
+    async function loadData() {
+        veloxDataReady = false;
+
+        const tables = ['shipments', 'claims', 'complaints', 'audit_logs'];
+
+        const results = await Promise.all(
+            tables.map(table =>
+                veloxSupabase.from(table).select('data')
+            )
+        );
+
+        for (const result of results) {
+            if (result.error) throw result.error;
+        }
+
+        shipments = results[0].data.map(row => row.data);
+        claims = results[1].data.map(row => row.data);
+        complaints = results[2].data.map(row => row.data);
+        auditLogs = results[3].data.map(row => row.data);
+
+        localStorage.setItem('velox_shipments', JSON.stringify(shipments));
+        localStorage.setItem('velox_claims', JSON.stringify(claims));
+        localStorage.setItem('velox_complaints', JSON.stringify(complaints));
+        localStorage.setItem('velox_audit', JSON.stringify(auditLogs));
+
+        veloxDataReady = true;
     }
-    function addLog(action) { auditLogs.unshift({ timestamp: new Date().toLocaleString(), action }); if(auditLogs.length>100) auditLogs.pop(); persistData(); }
-    function showToast(msg, type="info") { const t=document.createElement('div'); t.className='toast-message'; t.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':type==='danger'?'fa-exclamation-triangle':'fa-info-circle'} mr-2"></i>${msg}`; document.body.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); },2800); }
+
+    function addLog(action) {
+        auditLogs.unshift({
+            id: crypto.randomUUID(),
+            timestamp: new Date().toLocaleString(),
+            action
+        });
+        if (auditLogs.length > 100) auditLogs.pop();
+        persistData();
+    }    function showToast(msg, type="info") { const t=document.createElement('div'); t.className='toast-message'; t.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':type==='danger'?'fa-exclamation-triangle':'fa-info-circle'} mr-2"></i>${msg}`; document.body.appendChild(t); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); },2800); }
 
     // Modal functions
     function openModal(title, bodyHtml, confirmText="Confirm", cancelText="Cancel", onConfirm=null) {
@@ -167,7 +267,7 @@
         cancelBtn.parentNode.replaceChild(newCancel, cancelBtn);
         confirmBtn.parentNode.replaceChild(newConfirm, confirmBtn);
         newCancel.onclick = closeModal;
-        newConfirm.onclick = () => { if(onConfirm) onConfirm(); closeModal(); };
+        newConfirm.onclick = async () => { if (!onConfirm) { closeModal(); return; } newConfirm.disabled = true; try { await onConfirm(); closeModal(); } catch (error) { console.error("Modal action failed:", error); showToast(error.message || "Action failed. Please try again.", "danger"); } finally { newConfirm.disabled = false; } };
         closeBtn.onclick = closeModal;
         overlay.onclick = closeModal;
     }
@@ -246,13 +346,80 @@
     }
 
     // ========== SHIPMENTS WITH FULL CONTROLS ==========
-    function renderShipments() {
+    function invoiceEscape(value) {
+    return String(value ?? "").replace(/[&<>"']/g, ch => ({
+        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+    })[ch]);
+}
+
+function printShipmentInvoice(ship) {
+    if (!ship) return;
+    const history = Array.isArray(ship.locationHistory) ? ship.locationHistory : [];
+    const historyRows = history.map(item => `
+        <tr>
+            <td>${invoiceEscape(item.timestamp || "")}</td>
+            <td>${invoiceEscape([item.city, item.country].filter(Boolean).join(", "))}</td>
+            <td>${invoiceEscape(item.event || item.status || "Shipment update")}</td>
+        </tr>
+    `).join("");
+    const created = ship.createdAt ? new Date(ship.createdAt).toLocaleString() : "Not recorded";
+    const charge = ship.shippingCharge !== undefined && ship.shippingCharge !== null && ship.shippingCharge !== ""
+        ? `${invoiceEscape(ship.currency || "USD")} ${invoiceEscape(ship.shippingCharge)}`
+        : "Not specified";
+    const popup = window.open("", "_blank", "width=900,height=700");
+    if (!popup) {
+        showToast("Allow pop-ups to print the invoice.", "warning");
+        return;
+    }
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Shipment Invoice - ${invoiceEscape(ship.trackingNumber)}</title>
+    <style>
+    @page{size:A4;margin:15mm}
+    *{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#202938;margin:0;font-size:12px}
+    .top{display:flex;justify-content:space-between;border-bottom:3px solid #b5121b;padding-bottom:18px}
+    h1{font-size:23px;margin:0 0 6px;color:#b5121b}.muted{color:#667085}
+    h2{font-size:15px;margin:24px 0 10px;border-bottom:1px solid #ddd;padding-bottom:7px}
+    .paid{background:#e6f7ec;color:#137333;padding:9px 16px;font-weight:bold;border-radius:5px;display:inline-block}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+    .box{border:1px solid #ddd;border-radius:5px;padding:12px;min-height:65px}
+    .label{font-size:10px;color:#667085;text-transform:uppercase;margin-bottom:5px}
+    .value{font-weight:bold;font-size:13px;overflow-wrap:anywhere}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{border:1px solid #ddd;padding:9px;text-align:left;vertical-align:top}
+    th{background:#f3f4f6;font-size:10px;text-transform:uppercase}
+    .footer{margin-top:28px;border-top:1px solid #ddd;padding-top:12px;color:#667085;text-align:center}
+    @media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+    </style></head><body>
+    <div class="top"><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div>
+    <div style="text-align:right"><div class="label">Payment status</div><div class="paid">PAID</div></div></div>
+    <div class="grid">
+      <div class="box"><div class="label">Invoice reference</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
+      <div class="box"><div class="label">Tracking number</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
+      <div class="box"><div class="label">Customer</div><div class="value">${invoiceEscape(ship.customer)}</div></div>
+      <div class="box"><div class="label">Shipment created</div><div class="value">${invoiceEscape(created)}</div></div>
+      <div class="box"><div class="label">Origin</div><div class="value">${invoiceEscape([ship.fromCity,ship.fromCountry].filter(Boolean).join(", "))}</div></div>
+      <div class="box"><div class="label">Destination</div><div class="value">${invoiceEscape([ship.toCity,ship.toCountry].filter(Boolean).join(", "))}</div></div>
+      <div class="box"><div class="label">Weight / Service</div><div class="value">${invoiceEscape(ship.weight)} kg / ${invoiceEscape(ship.service)}</div></div>
+      <div class="box"><div class="label">Shipping charge</div><div class="value">${charge}</div></div>
+      <div class="box"><div class="label">Current shipment status</div><div class="value">${invoiceEscape(String(ship.status || "Pending").replace(/_/g," ").toUpperCase())}</div></div>
+    </div>
+    <h2>Shipment tracking history</h2>
+    <table><thead><tr><th>Date &amp; time</th><th>Location</th><th>Tracking event</th></tr></thead>
+    <tbody>${historyRows || '<tr><td colspan="3">No tracking events recorded.</td></tr>'}</tbody></table>
+    <div class="footer">Thank you for choosing Vellox Logistics.</div>
+    </body></html>`;
+    popup.document.open();
+    popup.document.write(html);
+    popup.document.close();
+    popup.focus();
+    setTimeout(() => popup.print(), 500);
+}
+function renderShipments() {
         let rows = shipments.map(s => {
             const curr = getCurrentLocation(s);
             return `<tr class="border-b hover:bg-gray-50">
                 <td class="px-4 py-2 font-mono">${s.trackingNumber}</td>
                 <td class="px-4 py-2">${s.customer}</td>
-                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} → ${s.toCity}, ${s.toCountry}</td>
+                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} â†’ ${s.toCity}, ${s.toCountry}</td>
                 <td class="px-4 py-2">
                     <select class="status-select border rounded px-2 py-1 text-sm" data-id="${s.id}">
                         <option value="pending" ${s.status==='pending' ? 'selected' : ''}>Pending</option>
@@ -267,6 +434,7 @@
                     <button class="updateLocationBtn bg-indigo-600 text-white px-3 py-1 rounded text-xs" data-id="${s.id}"><i class="fas fa-map-marker-alt"></i> Location</button>
                     <button class="viewHistoryBtn bg-gray-600 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-history"></i> History</button>
                     <button class="editShipBtn bg-blue-500 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="invoiceBtn bg-green-700 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-file-invoice"></i> Invoice</button>
                     <button class="customsToggleBtn bg-yellow-500 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas ${s.customsHold ? 'fa-check-circle' : 'fa-stop-circle'}"></i> Customs</button>
                 </td>
              </tr>`;
@@ -305,13 +473,24 @@
             const historyBtn = e.target.closest('.viewHistoryBtn');
             const editBtn = e.target.closest('.editShipBtn');
             const customsBtn = e.target.closest('.customsToggleBtn');
+            const invoiceBtn = e.target.closest('.invoiceBtn');
+            if (invoiceBtn) {
+                const id = parseInt(invoiceBtn.dataset.id, 10);
+                const ship = shipments.find(s => s.id === id);
+                if (!ship) {
+                    showToast("Shipment not found.", "danger");
+                    return;
+                }
+                printShipmentInvoice(ship);
+                return;
+            }
             if (updateBtn) {
                 const id = parseInt(updateBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
                 if (!ship) return;
                 const now = new Date();
                 const defaultDateTime = now.toISOString().slice(0,16);
-                openModal(`📍 Update Location for ${ship.trackingNumber}`, `
+                openModal(`ðŸ“ Update Location for ${ship.trackingNumber}`, `
                     <div class="space-y-3">
                         <div><label class="font-bold">Country *</label><input id="locCountry" class="w-full border p-2 rounded" placeholder="e.g. United States"></div>
                         <div><label class="font-bold">City *</label><input id="locCity" class="w-full border p-2 rounded" placeholder="e.g. Chicago, IL"></div>
@@ -330,20 +509,20 @@
                     addLog(`Location added for ${ship.trackingNumber}: ${newCountry}, ${newCity}`);
                     persistData();
                     renderShipments();
-                    showToast(`✓ Location added for ${ship.trackingNumber}`, "success");
+                    showToast(`âœ“ Location added for ${ship.trackingNumber}`, "success");
                 });
             }
             if (historyBtn) {
                 const id = parseInt(historyBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
                 if (!ship) return;
-                const historyHtml = ship.locationHistory.map(h => `<div class="border-b pb-2 mb-2"><div class="text-xs text-gray-500">${h.timestamp}</div><div class="font-semibold">📍 ${h.country}, ${h.city}</div><div class="text-sm text-gray-600">${h.event}</div></div>`).join('');
-                openModal(`📜 Location History - ${ship.trackingNumber}`, `<div class="max-h-96 overflow-auto">${historyHtml || '<p>No history</p>'}</div>`, "Close", "Close", () => {});
+                const historyHtml = ship.locationHistory.map(h => `<div class="border-b pb-2 mb-2"><div class="text-xs text-gray-500">${h.timestamp}</div><div class="font-semibold">ðŸ“ ${h.country}, ${h.city}</div><div class="text-sm text-gray-600">${h.event}</div></div>`).join('');
+                openModal(`ðŸ“œ Location History - ${ship.trackingNumber}`, `<div class="max-h-96 overflow-auto">${historyHtml || '<p>No history</p>'}</div>`, "Close", "Close", () => {});
             }
             if (editBtn) {
                 const id = parseInt(editBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
-                openModal("✏️ Edit Shipment Details", `
+                openModal("âœï¸ Edit Shipment Details", `
                     <div class="grid grid-cols-2 gap-3">
                         <div><label>Tracking</label><input id="editTrack" value="${ship.trackingNumber}" class="w-full border p-2"></div>
                         <div><label>Customer</label><input id="editCust" value="${ship.customer}" class="w-full border p-2"></div>
@@ -353,6 +532,9 @@
                         <div><label>Dest City</label><input id="editToCity" value="${ship.toCity}" class="w-full border p-2"></div>
                         <div><label>Weight (kg)</label><input id="editWeight" value="${ship.weight}" class="w-full border p-2"></div>
                         <div><label>Service</label><select id="editService" class="w-full border p-2"><option ${ship.service==='Express'?'selected':''}>Express</option><option ${ship.service==='Priority'?'selected':''}>Priority</option><option ${ship.service==='Freight'?'selected':''}>Freight</option></select></div>
+                        <div><label>Shipment Date & Time</label><input type="datetime-local" id="editCreatedAt" value="${ship.createdAt ? new Date(ship.createdAt).toISOString().slice(0,16) : ''}" class="w-full border p-2"></div>
+                        <div><label>Shipping Charge (optional)</label><input type="number" min="0" step="0.01" id="editShippingCharge" value="${ship.shippingCharge ?? ''}" class="w-full border p-2"></div>
+                        <div><label>Currency</label><input id="editCurrency" value="${ship.currency || 'USD'}" maxlength="3" class="w-full border p-2"></div>
                         ${ship.customsHold ? `<div><label>Customs Hold Reason</label><textarea id="editHoldReason" class="w-full border p-2">${ship.holdReason}</textarea></div>` : ''}
                     </div>
                 `, "Save Changes", "Cancel", () => {
@@ -364,6 +546,9 @@
                     ship.toCity = document.getElementById('editToCity').value;
                     ship.weight = document.getElementById('editWeight').value;
                     ship.service = document.getElementById('editService').value;
+                    ship.createdAt = document.getElementById('editCreatedAt').value || ship.createdAt || "";
+                    ship.shippingCharge = document.getElementById('editShippingCharge').value;
+                    ship.currency = (document.getElementById('editCurrency').value || "USD").trim().toUpperCase();
                     if (ship.customsHold && document.getElementById('editHoldReason')) {
                         ship.holdReason = document.getElementById('editHoldReason').value;
                     }
@@ -404,10 +589,13 @@
                     <div><label>Dest City</label><input id="newToCity" class="w-full border p-2"></div>
                     <div><label>Weight (kg)</label><input id="newWeight" class="w-full border p-2"></div>
                     <div><label>Service</label><select id="newService"><option>Express</option><option>Priority</option><option>Freight</option></select></div>
+                    <div><label>Shipment Date & Time</label><input type="datetime-local" id="newCreatedAt" value="${new Date().toISOString().slice(0,16)}" class="w-full border p-2"></div>
+                    <div><label>Shipping Charge (optional)</label><input type="number" min="0" step="0.01" id="newShippingCharge" class="w-full border p-2"></div>
+                    <div><label>Currency</label><input id="newCurrency" value="USD" maxlength="3" class="w-full border p-2"></div>
                     <div class="col-span-2"><label>Initial Location (Country)</label><input id="initCountry" class="w-full border p-2"></div>
                     <div class="col-span-2"><label>Initial Location (City)</label><input id="initCity" class="w-full border p-2"></div>
                 </div>
-            `, "Create", "Cancel", () => {
+            `, "Create", "Cancel", async () => {
                 const newId = shipments.length+1;
                 const newShip = {
                     id: newId,
@@ -419,6 +607,9 @@
                     toCity: document.getElementById('newToCity').value,
                     weight: document.getElementById('newWeight').value,
                     service: document.getElementById('newService').value,
+                    createdAt: document.getElementById('newCreatedAt').value,
+                    shippingCharge: document.getElementById('newShippingCharge').value,
+                    currency: (document.getElementById('newCurrency').value || "USD").trim().toUpperCase(),
                     status: "pending",
                     customsHold: false,
                     holdReason: "",
@@ -431,11 +622,18 @@
                 } else {
                     newShip.locationHistory.push({ country: "Origin", city: "Unknown", timestamp: new Date().toLocaleString(), event: "Registered" });
                 }
+                const trackingNumber = String(newShip.trackingNumber || '').trim().toUpperCase();
+                if (!trackingNumber) throw new Error("Tracking number is required.");
+                if (shipments.some(s => String(s.trackingNumber).toUpperCase() === trackingNumber)) {
+                    throw new Error("Tracking number already exists.");
+                }
+                newShip.trackingNumber = trackingNumber;
+                await syncSupabaseTable('shipments', [newShip], 'trackingNumber', 'tracking_number');
                 shipments.push(newShip);
                 persistData();
                 addLog(`Added shipment ${newShip.trackingNumber}`);
                 renderShipments();
-                showToast("Shipment created", "success");
+                showToast("Shipment created and saved to cloud", "success");
             });
         });
         // Quick timeline event adder
@@ -515,36 +713,94 @@
         else if(nav==='reports') renderReports();
     }
 
-    // Login & Init
-    document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
+    // Supabase Admin Login
+    async function showAdminDashboard() {
+        await loadData();
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardApp').classList.remove('hidden');
+        loadNav('dashboard');
+    }
+
+    document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if(document.getElementById('adminUser').value==='admin' && document.getElementById('adminPass').value==='admin123'){
-            sessionStorage.setItem('velox_admin_logged_in', '1');
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('dashboardApp').classList.remove('hidden');
-            loadData();
-            loadNav('dashboard');
-            addLog("Admin login");
-        } else alert("Invalid credentials");
+
+        const email = document.getElementById('adminUser').value.trim();
+        const password = document.getElementById('adminPass').value;
+        const loginButton = e.currentTarget.querySelector('button[type="submit"]');
+
+        loginButton.disabled = true;
+        loginButton.textContent = 'Verifying...';
+
+        try {
+            const { data, error } = await veloxSupabase.auth.signInWithPassword({
+                email,
+                password
+            });
+
+            if (error) throw error;
+
+            const { data: admin, error: adminError } = await veloxSupabase
+                .from('admin_users')
+                .select('user_id')
+                .eq('user_id', data.user.id)
+                .maybeSingle();
+
+            if (adminError) throw adminError;
+
+            if (!admin) {
+                await veloxSupabase.auth.signOut();
+                throw new Error('This account is not authorized as an administrator.');
+            }
+
+            await showAdminDashboard();
+        } catch (error) {
+            alert(error.message || 'Login failed. Please try again.');
+        } finally {
+            loginButton.disabled = false;
+            loginButton.innerHTML = '<i class="fas fa-lock mr-2"></i> Login';
+        }
     });
-    function logoutAdmin() {
-        addLog("Logout");
-        sessionStorage.removeItem('velox_admin_logged_in');
+
+    async function logoutAdmin() {
+        await veloxSupabase.auth.signOut();
         document.getElementById('dashboardApp').classList.add('hidden');
         document.getElementById('loginScreen').classList.remove('hidden');
         document.getElementById('adminPass').value = '';
     }
+
     document.getElementById('logoutBtn')?.addEventListener('click', logoutAdmin);
     document.getElementById('mobileLogoutBtn')?.addEventListener('click', logoutAdmin);
-    document.querySelectorAll('.sidebar-link').forEach(link=>{ link.addEventListener('click',(e)=>{ e.preventDefault(); loadNav(link.dataset.nav); }); });
 
-    // Restore the dashboard after a refresh in the same browser tab.
-    if (sessionStorage.getItem('velox_admin_logged_in') === '1') {
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('dashboardApp').classList.remove('hidden');
-        loadData();
-        loadNav('dashboard');
-    }
-</script>
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadNav(link.dataset.nav);
+        });
+    });
+
+    // Restore an existing Supabase session after refresh.
+    (async function restoreAdminSession() {
+        try {
+            const { data: { session }, error } = await veloxSupabase.auth.getSession();
+            if (error) throw error;
+
+            if (!session) return;
+
+            const { data: admin, error: adminError } = await veloxSupabase
+                .from('admin_users')
+                .select('user_id')
+                .eq('user_id', session.user.id)
+                .maybeSingle();
+
+            if (adminError || !admin) {
+                await veloxSupabase.auth.signOut();
+                return;
+            }
+
+            await showAdminDashboard();
+        } catch (error) {
+            console.error('Session restore failed:', error);
+        }
+    })();</script>
 </body>
 </html>
