@@ -79,7 +79,7 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
 <!-- MAIN DASHBOARD -->
 <div id="dashboardApp" class="hidden min-h-screen flex">
     <aside class="w-72 bg-white shadow-xl border-r border-gray-100 flex-shrink-0 hidden md:block overflow-y-auto" style="height:100vh;">
-        <div class="p-5 border-b"><div class="velox-brand"><span class="velox-mark">V</span><span class="velox-brand-name text-xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div><p class="text-xs text-gray-400">Realâ€‘time tracking</p></div>
+        <div class="p-5 border-b"><div class="velox-brand"><span class="velox-mark">V</span><span class="velox-brand-name text-xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div><p class="text-xs text-gray-400">RealÃ¢â‚¬â€˜time tracking</p></div>
         <nav class="py-4">
             <a href="#" data-nav="dashboard" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700 font-medium"><i class="fas fa-tachometer-alt w-5"></i> Dashboard</a>
             <a href="#" data-nav="shipments" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-box w-5"></i> Shipments & Location</a>
@@ -385,21 +385,38 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
     })[ch]);
 }
 
+function invoiceLocation(...values) {
+    return values
+        .map(value => String(value ?? "").trim().replace(/^,+|,+$/g, "").trim())
+        .filter(Boolean)
+        .join(", ");
+}
+
+function invoiceDate(value) {
+    if (!value) return "Not recorded";
+    const raw = String(value).trim();
+    const local = raw.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/);
+    const date = local
+        ? new Date(+local[1], +local[2] - 1, +local[3], +local[4], +local[5], +(local[6] || 0))
+        : new Date(raw);
+    return Number.isNaN(date.getTime()) ? raw : date.toLocaleString();
+}
+
 function printShipmentInvoice(ship) {
     if (!ship) return;
     const history = Array.isArray(ship.locationHistory) ? ship.locationHistory : [];
     const historyRows = history.map(item => `
         <tr>
             <td>${invoiceEscape(item.timestamp || "")}</td>
-            <td>${invoiceEscape([item.city, item.country].filter(Boolean).join(", "))}</td>
+            <td>${invoiceEscape(invoiceLocation(item.city, item.country))}</td>
             <td>${invoiceEscape(item.event || item.status || "Shipment update")}</td>
         </tr>
     `).join("");
-    const created = ship.createdAt ? new Date(ship.createdAt).toLocaleString() : "Not recorded";
+    const created = invoiceDate(ship.createdAt);
     const charge = ship.shippingCharge !== undefined && ship.shippingCharge !== null && ship.shippingCharge !== ""
         ? `${invoiceEscape(ship.currency || "USD")} ${invoiceEscape(ship.shippingCharge)}`
         : "Not specified";
-    const paymentStatus = String(ship.paymentStatus || "unpaid").toUpperCase();
+    const paymentStatus = String(ship.paymentStatus || "unpaid").trim().replace(/_/g," ").toUpperCase();
     const trackingNumber = invoiceEscape(ship.trackingNumber || "");
     const trackingUrl = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, "tracking.html")}?track=${encodeURIComponent(ship.trackingNumber || "")}`;
     const popup = window.open("", "_blank", "width=900,height=700");
@@ -416,7 +433,7 @@ body{font-family:Arial,Helvetica,sans-serif;color:#202b3c;margin:0;font-size:12p
 .top .muted{color:#d9e2f0;font-size:11px;letter-spacing:1px}
 .top .label{color:#d9e2f0}
 h2{font-size:14px;margin:23px 0 9px;color:#172b4d;border-bottom:2px solid #c8202f;padding-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.paid{background:#e5f5eb;color:#137333;padding:9px 17px;font-weight:800;border-radius:4px;display:inline-block;border:1px solid #b7dfc5}
+.unpaid{background:#fff0f0;color:#b5121b;padding:9px 17px;font-weight:800;border-radius:4px;display:inline-block;border:1px solid #efb8bd}.paid{background:#e5f5eb;color:#137333;padding:9px 17px;font-weight:800;border-radius:4px;display:inline-block;border:1px solid #b7dfc5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
 .box{border:1px solid #d9e0e9;border-left:3px solid #c8202f;border-radius:4px;padding:12px;min-height:64px;background:#fbfcfe}
 .label{font-size:9px;color:#64748b;text-transform:uppercase;margin-bottom:7px;font-weight:700;letter-spacing:.8px}
@@ -433,14 +450,14 @@ tbody tr:nth-child(even){background:#f5f7fa}
 .footer{margin-top:25px;border-top:2px solid #172b4d;padding-top:13px;color:#64748b;text-align:center;line-height:1.6}
 @media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}.top,.paid,th{print-color-adjust:exact;-webkit-print-color-adjust:exact}}</style></head><body>
     <div class="top"><div style="display:flex;align-items:center;gap:14px"><span style="width:48px;height:48px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #c9a45c;border-radius:10px;color:#fff;font-size:28px;font-weight:900;font-style:italic">V</span><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div></div>
-    <div style="text-align:right"><div class="label">Payment status</div><div class="paid">${invoiceEscape(paymentStatus)}</div></div></div>
+    <div style="text-align:right"><div class="label">Payment status</div><div class="${paymentStatus === "PAID" ? "paid" : "unpaid"}">${invoiceEscape(paymentStatus)}</div></div></div>
     <div class="grid">
       <div class="box"><div class="label">Invoice reference</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
       <div class="box"><div class="label">Tracking number</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
       <div class="box"><div class="label">Customer</div><div class="value">${invoiceEscape(ship.customer)}</div></div>
       <div class="box"><div class="label">Shipment created</div><div class="value">${invoiceEscape(created)}</div></div>
-      <div class="box"><div class="label">Origin</div><div class="value">${invoiceEscape([ship.fromCity,ship.fromCountry].filter(Boolean).join(", "))}</div></div>
-      <div class="box"><div class="label">Destination</div><div class="value">${invoiceEscape([ship.toCity,ship.toCountry].filter(Boolean).join(", "))}</div></div>
+      <div class="box"><div class="label">Origin</div><div class="value">${invoiceEscape(invoiceLocation(ship.fromCity, ship.fromCountry))}</div></div>
+      <div class="box"><div class="label">Destination</div><div class="value">${invoiceEscape(invoiceLocation(ship.toCity, ship.toCountry))}</div></div>
       <div class="box"><div class="label">Weight / Service</div><div class="value">${invoiceEscape(ship.weight)} kg / ${invoiceEscape(ship.service)}</div></div>
       <div class="box"><div class="label">Shipping charge</div><div class="value">${charge}</div></div>
       <div class="box"><div class="label">Current shipment status</div><div class="value">${invoiceEscape(String(ship.status || "Pending").replace(/_/g," ").toUpperCase())}</div></div>
@@ -482,17 +499,24 @@ tbody tr:nth-child(even){background:#f5f7fa}
         if (popup.JsBarcode && barcodeElement && rawTrackingNumber) {
             clearInterval(barcodeTimer);
 
-            popup.JsBarcode(barcodeElement, rawTrackingNumber, {
-                format: "CODE128",
-                lineColor: "#172033",
-                width: 2,
-                height: 65,
-                displayValue: false,
-                margin: 5
-            });
-
-            popup.focus();
-            setTimeout(() => popup.print(), 300);
+            try {
+                popup.JsBarcode(barcodeElement, rawTrackingNumber, {
+                    format: "CODE128",
+                    lineColor: "#172033",
+                    width: 2,
+                    height: 65,
+                    displayValue: false,
+                    margin: 5
+                });
+                popup.focus();
+                setTimeout(() => {
+                    if (!popup.closed) popup.print();
+                }, 500);
+            } catch (error) {
+                console.error("Invoice barcode generation failed:", error);
+                barcodeElement.outerHTML = '<p style="color:#b5121b;font-weight:bold">Barcode could not be generated. Please verify the tracking number.</p>';
+                showToast("Barcode generation failed: " + error.message, "warning");
+            }
         } else if (barcodeAttempts >= 40) {
             clearInterval(barcodeTimer);
             showToast("Barcode library did not load. Check your connection and try again.", "warning");
@@ -505,7 +529,7 @@ function renderShipments() {
             return `<tr class="border-b hover:bg-gray-50">
                 <td class="px-4 py-2 font-mono">${s.trackingNumber}</td>
                 <td class="px-4 py-2">${s.customer}</td>
-                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} â†’ ${s.toCity}, ${s.toCountry}</td>
+                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} Ã¢â€ â€™ ${s.toCity}, ${s.toCountry}</td>
                 <td class="px-4 py-2">
                     <select class="status-select border rounded px-2 py-1 text-sm" data-id="${s.id}">
                         <option value="pending" ${s.status==='pending' ? 'selected' : ''}>Pending</option>
@@ -522,6 +546,8 @@ function renderShipments() {
                     <button class="editShipBtn bg-blue-500 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-edit"></i> Edit</button>
                     <button class="invoiceBtn bg-green-700 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-file-invoice"></i> Invoice</button>
                     <button class="customsToggleBtn bg-yellow-500 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas ${s.customsHold ? 'fa-check-circle' : 'fa-stop-circle'}"></i> Customs</button>
+
+                    <button class="deleteShipBtn bg-red-700 text-white px-3 py-1 rounded text-xs ml-1" data-id="${s.id}"><i class="fas fa-trash"></i> Delete</button>
                 </td>
              </tr>`;
         }).join('');
@@ -554,12 +580,13 @@ function renderShipments() {
         });
         // Event delegation for buttons
         const panelDiv = document.getElementById('dynamicPanel');
-        panelDiv.addEventListener('click', (e) => {
+        panelDiv.onclick = (e) => {
             const updateBtn = e.target.closest('.updateLocationBtn');
             const historyBtn = e.target.closest('.viewHistoryBtn');
             const editBtn = e.target.closest('.editShipBtn');
             const customsBtn = e.target.closest('.customsToggleBtn');
             const invoiceBtn = e.target.closest('.invoiceBtn');
+            const deleteBtn = e.target.closest('.deleteShipBtn');
             if (invoiceBtn) {
                 const id = parseInt(invoiceBtn.dataset.id, 10);
                 const ship = shipments.find(s => s.id === id);
@@ -576,7 +603,7 @@ function renderShipments() {
                 if (!ship) return;
                 const now = new Date();
                 const defaultDateTime = now.toISOString().slice(0,16);
-                openModal(`ðŸ“ Update Location for ${ship.trackingNumber}`, `
+                openModal(`Ã°Å¸â€œÂ Update Location for ${ship.trackingNumber}`, `
                     <div class="space-y-3">
                         <div><label class="font-bold">Country *</label><input id="locCountry" class="w-full border p-2 rounded" placeholder="e.g. United States"></div>
                         <div><label class="font-bold">City *</label><input id="locCity" class="w-full border p-2 rounded" placeholder="e.g. Chicago, IL"></div>
@@ -595,20 +622,70 @@ function renderShipments() {
                     addLog(`Location added for ${ship.trackingNumber}: ${newCountry}, ${newCity}`);
                     persistData();
                     renderShipments();
-                    showToast(`âœ“ Location added for ${ship.trackingNumber}`, "success");
+                    showToast(`Ã¢Å“â€œ Location added for ${ship.trackingNumber}`, "success");
                 });
             }
             if (historyBtn) {
                 const id = parseInt(historyBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
                 if (!ship) return;
-                const historyHtml = ship.locationHistory.map(h => `<div class="border-b pb-2 mb-2"><div class="text-xs text-gray-500">${h.timestamp}</div><div class="font-semibold">ðŸ“ ${h.country}, ${h.city}</div><div class="text-sm text-gray-600">${h.event}</div></div>`).join('');
-                openModal(`ðŸ“œ Location History - ${ship.trackingNumber}`, `<div class="max-h-96 overflow-auto">${historyHtml || '<p>No history</p>'}</div>`, "Close", "Close", () => {});
+                const renderHistory = () => {
+                    const historyHtml = ship.locationHistory.map((h, index) => `
+                        <div class="border-b pb-3 mb-3">
+                            <div class="text-xs text-gray-500">${h.timestamp || ''}</div>
+                            <div class="font-semibold">${h.country || ''}, ${h.city || ''}</div>
+                            <div class="text-sm text-gray-600 mb-2">${h.event || ''}</div>
+                            <button type="button" class="bg-blue-600 text-white px-3 py-1 rounded text-xs mr-2" data-history-action="edit" data-index="${index}">Edit Event</button>
+                            <button type="button" class="bg-red-600 text-white px-3 py-1 rounded text-xs" data-history-action="delete" data-index="${index}">Delete Event</button>
+                        </div>
+                    `).join('');
+                    document.getElementById('modalBody').innerHTML =
+                        `<div class="max-h-96 overflow-auto">${historyHtml || '<p>No history</p>'}</div>`;
+                };
+
+                openModal(`Location History - ${ship.trackingNumber}`, '<div></div>', "Close", "Close", () => {});
+                const historyModalBody = document.getElementById('modalBody');
+                renderHistory();
+
+                historyModalBody.onclick = async (event) => {
+                    const button = event.target.closest('[data-history-action]');
+                    if (!button) return;
+
+                    const index = Number(button.dataset.index);
+                    const entry = ship.locationHistory[index];
+                    if (!entry) return;
+
+                    if (button.dataset.historyAction === 'edit') {
+                        const nextEvent = prompt("Edit event description:", entry.event || "");
+                        if (nextEvent === null || !nextEvent.trim()) return;
+
+                        const nextCountry = prompt("Edit country:", entry.country || "");
+                        if (nextCountry === null) return;
+
+                        const nextCity = prompt("Edit city:", entry.city || "");
+                        if (nextCity === null) return;
+
+                        entry.event = nextEvent.trim();
+                        entry.country = nextCountry.trim();
+                        entry.city = nextCity.trim();
+                    } else if (button.dataset.historyAction === 'delete') {
+                        if (!confirm("Delete this timeline event? This cannot be undone.")) return;
+                        ship.locationHistory.splice(index, 1);
+                    } else {
+                        return;
+                    }
+
+                    persistData();
+                    addLog(`Shipment history ${button.dataset.historyAction}d for ${ship.trackingNumber}`);
+                    await veloxSyncQueue;
+                    renderHistory();
+                    showToast("Shipment history updated.", "success");
+                };
             }
             if (editBtn) {
                 const id = parseInt(editBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
-                openModal("âœï¸ Edit Shipment Details", `
+                openModal("Ã¢Å“ÂÃ¯Â¸Â Edit Shipment Details", `
                     <div class="grid grid-cols-2 gap-3">
                         <div><label>Tracking</label><input id="editTrack" value="${ship.trackingNumber}" class="w-full border p-2"></div>
                         <div><label>Customer</label><input id="editCust" value="${ship.customer}" class="w-full border p-2"></div>
@@ -646,6 +723,48 @@ function renderShipments() {
                     addLog(`Edited shipment ${ship.trackingNumber}`);
                 });
             }
+            if (deleteBtn) {
+                const id = parseInt(deleteBtn.dataset.id, 10);
+                const ship = shipments.find(s => s.id === id);
+                if (!ship) {
+                    showToast("Shipment not found.", "danger");
+                    return;
+                }
+
+                openModal(
+                    "Delete Shipment",
+                    `<p>Are you sure you want to permanently delete <strong>${ship.trackingNumber}</strong>?</p><p class="text-sm text-red-600 mt-2">This action cannot be undone.</p>`,
+                    "Delete Shipment",
+                    "Cancel",
+                    async () => {
+                        if (!veloxDataReady) throw new Error("Shipment data is not ready. Please reload and try again.");
+
+                        await veloxSyncQueue;
+
+                        const trackingKey = String(ship.trackingNumber).trim().toUpperCase();
+                        const { data: deletedRows, error } = await veloxSupabase
+                            .from('shipments')
+                            .delete()
+                            .eq('tracking_number', trackingKey)
+                            .select('id');
+
+                        if (error) throw error;
+                        if (!deletedRows || deletedRows.length !== 1) {
+                            throw new Error("Shipment was not deleted. Check Supabase permissions and tracking number.");
+                        }
+
+                        shipments = shipments.filter(s => s.id !== id);
+                        localStorage.setItem('velox_shipments', JSON.stringify(shipments));
+
+                        addLog(`Deleted shipment ${trackingKey}`);
+                        await veloxSyncQueue;
+
+                        renderShipments();
+                        showToast("Shipment deleted successfully.", "success");
+                    }
+                );
+                return;
+            }
             if (customsBtn) {
                 const id = parseInt(customsBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
@@ -664,7 +783,7 @@ function renderShipments() {
                 }
                 renderShipments();
             }
-        });
+        };
         // Add new shipment button
         document.getElementById('addShipBtn')?.addEventListener('click', () => {
             openModal("Create New Shipment", `
