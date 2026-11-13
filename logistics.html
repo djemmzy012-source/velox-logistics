@@ -1180,7 +1180,107 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+/* Additional logistics content sections */
+.logistics-connect,
+.logistics-business-solutions {
+    padding: 75px 6%;
+    background: #f7f9fc;
+}
+
+.logistics-connect-inner,
+.logistics-business-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logistics-extra-heading {
+    max-width: 760px;
+    margin: 0 auto 38px;
+    text-align: center;
+}
+
+.logistics-extra-heading h2 {
+    margin-bottom: 14px;
+    color: #102b46;
+    font-size: 32px;
+}
+
+.logistics-extra-heading p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.logistics-connect-grid,
+.logistics-business-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.logistics-connect-card,
+.logistics-business-card {
+    padding: 26px 22px;
+    background: #fff;
+    border: 1px solid #e5eaf0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(16, 43, 70, 0.05);
+}
+
+.logistics-extra-number {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #102b46;
+    color: #fff;
+    font-weight: 700;
+}
+
+.logistics-connect-card h3,
+.logistics-business-card h3 {
+    margin: 14px 0 10px;
+    color: #102b46;
+    font-size: 19px;
+}
+
+.logistics-connect-card p,
+.logistics-business-card p {
+    color: #64748b;
+    line-height: 1.65;
+    font-size: 14px;
+}
+
+.logistics-business-card i {
+    color: #b88732;
+    font-size: 25px;
+}
+
+@media (max-width: 1024px) {
+    .logistics-connect-grid,
+    .logistics-business-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .logistics-connect,
+    .logistics-business-solutions {
+        padding: 52px 5%;
+    }
+
+    .logistics-connect-grid,
+    .logistics-business-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .logistics-extra-heading h2 {
+        font-size: 26px;
+    }
+}
+</style>
 <style id="vellox-logo-override">
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 .logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
@@ -1402,6 +1502,78 @@
         </div>
     </section>
 
+    <!-- ============================================================
+    LOGISTICS CONNECTION SECTION
+    ============================================================ -->
+    <section class="logistics-connect">
+        <div class="container">
+            <div class="logistics-connect-inner">
+                <span class="section-label"><i class="fas fa-link"></i> CONNECTED LOGISTICS</span>
+                <h2 class="section-title">Logistics That Connect <span class="highlight">Every Stage</span></h2>
+                <p class="section-subtitle">A coordinated approach helps keep goods, information, and operations moving throughout your supply chain.</p>
+                <div class="logistics-connect-grid">
+                    <div class="logistics-connect-card">
+                        <span class="logistics-extra-number">01</span>
+                        <h3>Procurement Coordination</h3>
+                        <p>Coordinate the movement of goods from suppliers and prepare shipments for the next stage of the journey.</p>
+                    </div>
+                    <div class="logistics-connect-card">
+                        <span class="logistics-extra-number">02</span>
+                        <h3>Storage & Handling</h3>
+                        <p>Organize storage, inventory handling, and order preparation to support efficient goods management.</p>
+                    </div>
+                    <div class="logistics-connect-card">
+                        <span class="logistics-extra-number">03</span>
+                        <h3>Distribution Planning</h3>
+                        <p>Plan distribution activities and coordinate shipment movements between facilities and destinations.</p>
+                    </div>
+                    <div class="logistics-connect-card">
+                        <span class="logistics-extra-number">04</span>
+                        <h3>Delivery Coordination</h3>
+                        <p>Keep the final delivery stage organized with shipment visibility and clear communication.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    LOGISTICS BUSINESS SOLUTIONS
+    ============================================================ -->
+    <section class="logistics-business-solutions">
+        <div class="container">
+            <div class="logistics-business-inner">
+                <span class="section-label"><i class="fas fa-building"></i> SOLUTIONS FOR YOUR BUSINESS</span>
+                <h2 class="section-title">Solutions Built Around <span class="highlight">Your Business</span></h2>
+                <p class="section-subtitle">Different industries have different logistics needs. Our service approach can be tailored to your products, priorities, and operational requirements.</p>
+                <div class="logistics-business-grid">
+                    <div class="logistics-business-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>E-commerce</h3>
+                        <p>Support order processing, inventory coordination, packing, and delivery for online businesses.</p>
+                    </div>
+                    <div class="logistics-business-card">
+                        <i class="fas fa-store"></i>
+                        <h3>Retail & Distribution</h3>
+                        <p>Coordinate stock movement and replenishment between suppliers, storage facilities, and retail destinations.</p>
+                    </div>
+                    <div class="logistics-business-card">
+                        <i class="fas fa-industry"></i>
+                        <h3>Manufacturing</h3>
+                        <p>Help organize the movement of materials, components, and finished goods throughout production supply chains.</p>
+                    </div>
+                    <div class="logistics-business-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Growing Businesses</h3>
+                        <p>Adapt logistics planning as shipment volumes, customer needs, and business operations develop.</p>
+                    </div>
+                </div>
+                <div style="text-align:center; margin-top:32px;">
+                    <a href="contact.html" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Discuss Your Logistics Needs</a>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- ============================================================
     CTA BANNER
     ============================================================ -->

@@ -1264,7 +1264,38 @@
                 font-size: 1.4rem;
             }
         }
-    </style>
+    
+        .customs-support-card {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .customs-support-card .customs-support-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .customs-support-card:hover .customs-support-link {
+            color: var(--primary-dark);
+        }
+        /* CUSTOMS SUPPORT SERVICES */
+        .customs-support-services { padding: 90px 0; background: var(--gray-50); }
+        .customs-support-services .support-heading { text-align: center; max-width: 720px; margin: 0 auto 42px; }
+        .customs-support-services .support-heading .section-subtitle { margin: 0 auto; }
+        .customs-support-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; }
+        .customs-support-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px 22px; box-shadow: 0 8px 24px rgba(10,10,26,.04); transition: transform .25s ease, box-shadow .25s ease; }
+        .customs-support-card:hover { transform: translateY(-5px); box-shadow: 0 14px 30px rgba(10,10,26,.09); }
+        .customs-support-card .support-icon { width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: rgba(212,0,0,.08); color: var(--primary); font-size: 22px; margin-bottom: 20px; }
+        .customs-support-card h3 { color: var(--dark); font-size: 1.12rem; margin: 0 0 12px; }
+        .customs-support-card p { color: var(--gray-600); line-height: 1.7; font-size: .94rem; margin: 0; }
+        @media (max-width: 1024px) { .customs-support-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 560px) { .customs-support-services { padding: 65px 0; } .customs-support-grid { grid-template-columns: 1fr; } }
+</style>
 <style id="vellox-logo-override">
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 .logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
@@ -1514,7 +1545,38 @@
     <!-- ============================================================
     CTA BANNER
     ============================================================ -->
-    <section class="cta-banner" id="contact">
+        <section class="customs-support-services">
+        <div class="container">
+            <div class="support-heading">
+                <span class="section-label">Beyond Clearance</span>
+                <h2 class="section-title">Practical Customs Support</h2>
+                <p class="section-subtitle">Clear guidance and careful coordination to help keep your international shipments organised through the customs process.</p>
+            </div>
+            <div class="customs-support-grid">
+                <a class="customs-support-card" href="help-center.html" aria-label="Documentation Review">
+                    <div class="support-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Documentation Review</h3>
+                    <p>We help organise key shipping documents and check that important details are clear and consistent before submission.</p>
+                <span class="customs-support-link">Learn More <i class="fas fa-arrow-right"></i></span></a>
+                <a class="customs-support-card" href="global-forwarding.html" aria-label="Import &amp; Export Coordination">
+                    <div class="support-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Import &amp; Export Coordination</h3>
+                    <p>We coordinate shipment information and documentation with the relevant parties involved in your import or export process.</p>
+                <span class="customs-support-link">Learn More <i class="fas fa-arrow-right"></i></span></a>
+                <a class="customs-support-card" href="customer-service.html" aria-label="Customs Query Support">
+                    <div class="support-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Customs Query Support</h3>
+                    <p>When additional information is requested, we help communicate the requirements and organise the relevant details.</p>
+                <span class="customs-support-link">Learn More <i class="fas fa-arrow-right"></i></span></a>
+                <a class="customs-support-card" href="tracking.html" aria-label="Release Coordination">
+                    <div class="support-icon"><i class="fas fa-box-open"></i></div>
+                    <h3>Release Coordination</h3>
+                    <p>We help coordinate updates with the parties handling your shipment and keep you informed as the process progresses.</p>
+                <span class="customs-support-link">Learn More <i class="fas fa-arrow-right"></i></span></a>
+            </div>
+        </div>
+    </section>
+<section class="cta-banner" id="contact">
         <div class="container">
             <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);"><i class="fas fa-paper-plane"></i> <span data-i18n="customs_cta_label">Ready to Ship?</span></span>
             <h2 class="cta-title" data-i18n="customs_cta_title">Let Us Handle Your Customs</h2>

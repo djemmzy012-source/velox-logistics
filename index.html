@@ -334,19 +334,20 @@
         /* ============================================================
                MAIN NAV
         ============================================================ */
-        /* TOP BAR ALIGNMENT FIX */
+        /* TOP BAR DESKTOP ALIGNMENT */
         @media (min-width: 769px) and (max-width: 1100px) {
             .top-bar .container {
-                flex-direction: column;
-                justify-content: center;
+                flex-direction: row;
+                justify-content: space-between;
                 align-items: center;
-                gap: 10px;
+                flex-wrap: nowrap;
+                gap: 12px;
             }
             .top-bar-left,
             .top-bar-right {
-                justify-content: center;
-                width: 100%;
-                gap: 16px;
+                width: auto;
+                flex-wrap: nowrap;
+                gap: 12px;
             }
         }
 
@@ -384,8 +385,8 @@
             border-bottom: 3px solid var(--secondary);
         }
         .main-nav .container { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-        .logo { display: flex; align-items: center; cursor: pointer; flex-shrink: 0; }
-        .logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+        .logo { display: flex; align-items: center; cursor: pointer; flex-shrink: 0; position: relative; z-index: 2; transform: translateY(-4px); }
+        .logo img { display: block; width: 198px; height: auto; max-height: 60px; object-fit: contain; }
         @media (max-width: 480px) { .logo img { width: 155px; max-height: 48px; } }
         .logo span { color: var(--dark); background: var(--secondary); padding: 0 8px; border-radius: var(--radius-sm); }
         .nav-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
@@ -771,7 +772,6 @@
             <div class="logo" onclick="showPage('home')" role="button" aria-label="Vellox Logistics home"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
             <nav class="nav-links" id="navLinks">
                 <a href="#home" onclick="showPage('home')">Home</a>
-                <a href="#tracking" onclick="openTracking(event)">Tracking</a>
                 <a href="#services" onclick="showPage('services')">Services</a>
                 <a href="#freight" onclick="showPage('freight')">Freight</a>
                 <a href="#customs" onclick="showPage('contact')">Customs</a>
@@ -795,9 +795,9 @@
         <section class="hero">
             <div class="hero-slideshow">
                 <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&q=80');"></div>
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1494412574643-35d324698420?w=1200&q=80');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80');"></div>
                 <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1553413077-190dd305871c?w=1200&q=80');"></div>
-                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1566576721348-d9f73254d2e8?w=1200&q=80');"></div>
+                <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=1200&q=80');"></div>
             </div>
             <div class="hero-content">
                 <div class="badge animate-pulse"><i class="fas fa-rocket"></i> Global Logistics Partner Since 2005</div>
@@ -892,7 +892,7 @@
         <section class="customs-section section-padding">
             <div class="container">
                 <div class="customs-grid">
-                    <div class="customs-image" style="background-image: url('https://images.unsplash.com/photo-1603207158620-863f97e19982?w=800&q=80');"></div>
+                    <div class="customs-image" style="background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80');"></div>
                     <div class="customs-content">
                         <span class="section-label" data-i18n="customs_label"><i class="fas fa-file-contract"></i> Customs Clearance</span>
                         <h2 class="section-title" data-i18n="customs_title">Seamless <span class="highlight" data-i18n="customs_title_highlight">Cross-Border</span> Movement</h2>
