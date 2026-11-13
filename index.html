@@ -669,6 +669,19 @@
             .nav-links a { font-size: 0.8rem; padding: 6px 0; width: 100%; }
             .nav-links a::after { display: none; }
             .nav-actions { margin-left: auto; }
+            .mobile-lang-select {
+                display: inline-block;
+                height: 32px;
+                max-width: 62px;
+                padding: 4px 3px;
+                border: 1px solid var(--gray-200);
+                border-radius: 5px;
+                background: var(--white);
+                color: var(--dark);
+                font-size: .68rem;
+                font-weight: 700;
+                cursor: pointer;
+            }
             .nav-actions .btn-track, .nav-actions .btn-ship { display: none; }
             .mobile-quick-quote {
                 display: inline-flex;
@@ -804,7 +817,13 @@
                 <button class="btn-track" type="button" onclick="openTracking(event)"><i class="fas fa-search"></i> Track</button>
                 <button class="btn-ship" type="button" onclick="showPage('contact')" style="background:var(--primary); color:var(--white); box-shadow:0 4px 12px rgba(212,0,0,0.25);"><i class="fas fa-shipping-fast"></i> Ship</button>
                 <a href="#contact" onclick="showPage('contact')" class="mobile-quick-quote"><i class="fas fa-bolt"></i> Quick Quote</a>
-                <button class="menu-toggle" type="button" onclick="toggleMobileNav()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+                <select class="mobile-lang-select" id="mobileLangSelect" aria-label="Choose language">
+                    <option value="en">EN</option>
+                    <option value="de">DE</option>
+                    <option value="fr">FR</option>
+                    <option value="ru">RU</option>
+                    <option value="zh">中文</option>
+                </select>                <button class="menu-toggle" type="button" onclick="toggleMobileNav()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
             </div>
         </div>
     </header>
@@ -1727,18 +1746,26 @@
     }
 };
 
-        function changeLanguage(useSaved = false) {
-    const selector = document.getElementById('langSelect');
-    if (!selector) return;
+        function changeLanguage(useSaved = false, selectedLanguage = null) {
+    const desktopSelector = document.getElementById('langSelect');
+    const mobileSelector = document.getElementById('mobileLangSelect');
+    if (!desktopSelector && !mobileSelector) return;
 
     if (useSaved) {
         try {
             const saved = localStorage.getItem('veloxLanguage');
-            if (saved && translations[saved]) selector.value = saved;
+            if (saved && translations[saved]) {
+                if (desktopSelector) desktopSelector.value = saved;
+                if (mobileSelector) mobileSelector.value = saved;
+            }
         } catch (e) {}
     }
 
-    const lang = translations[selector.value] ? selector.value : 'en';
+    const requestedLanguage = selectedLanguage || mobileSelector?.value || desktopSelector?.value || 'en';
+    const lang = translations[requestedLanguage] ? requestedLanguage : 'en';
+    if (desktopSelector) desktopSelector.value = lang;
+    if (mobileSelector) mobileSelector.value = lang;
+
     const t = translations[lang] || translations.en;
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1751,7 +1778,8 @@
     } catch (e) {}
 }
 
-document.getElementById('langSelect')?.addEventListener('change', () => changeLanguage(false));
+document.getElementById('langSelect')?.addEventListener('change', e => changeLanguage(false, e.target.value));
+document.getElementById('mobileLangSelect')?.addEventListener('change', e => changeLanguage(false, e.target.value));
 
         // INIT
         showPage('home');
