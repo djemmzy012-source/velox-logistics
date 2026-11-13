@@ -1,16 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Track & Trace | Velox Logistics</title>
+    <title>Track & Trace | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <!-- Leaflet CSS for the map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* ============================================================
-               ROOT & RESET â€” Same as Index
+               ROOT & RESET  Same as Index
             ============================================================ */
         :root {
             --primary: #D40000;
@@ -773,20 +773,36 @@
                TIMELINE
             ============================================================ */
         .tracking-timeline {
+            --timeline-progress: 0;
             position: relative;
             padding-left: 40px;
             margin-top: 16px;
         }
 
-        .tracking-timeline::before {
+        .tracking-timeline::before,
+        .tracking-timeline::after {
             content: '';
             position: absolute;
             left: 14px;
             top: 4px;
+            width: 3px;
+            border-radius: 3px;
+        }
+
+        .tracking-timeline::before {
             bottom: 4px;
-            width: 2px;
             background: var(--gray-200);
-            border-radius: 2px;
+        }
+
+        .tracking-timeline::after {
+            top: 4px;
+            bottom: 4px;
+            height: auto;
+            background: var(--primary);
+            box-shadow: 0 0 8px rgba(212, 0, 0, 0.22);
+            transform: scaleY(var(--timeline-progress));
+            transform-origin: top;
+            transition: transform 900ms ease;
         }
 
         .timeline-item {
@@ -808,13 +824,28 @@
             height: 16px;
             border-radius: 50%;
             background: var(--white);
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.08);
+            border: 3px solid var(--gray-300);
             z-index: 2;
-            transition: var(--transition);
+            transition: background 300ms ease, border-color 300ms ease, box-shadow 300ms ease;
         }
-        .timeline-item:hover::before {
+
+        .timeline-item.is-complete::before {
+            background: var(--secondary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.08);
+        }
+
+        .timeline-item.is-current::before {
+            background: var(--primary);
             border-color: var(--secondary);
+            box-shadow: 0 0 0 5px rgba(212, 0, 0, 0.14);
+            animation: timelinePulse 1.8s ease-in-out infinite;
+        }
+
+        .timeline-item.is-pending::before {
+            background: var(--white);
+            border-color: var(--gray-300);
+            box-shadow: none;
         }
 
         .timeline-item .date {
@@ -823,6 +854,7 @@
             font-weight: 500;
             margin-bottom: 2px;
         }
+
         .timeline-item .status {
             font-weight: 700;
             color: var(--dark);
@@ -831,9 +863,16 @@
             align-items: center;
             gap: 8px;
         }
+
         .timeline-item .status i {
             color: var(--primary);
         }
+
+        .timeline-item.is-pending .status,
+        .timeline-item.is-pending .status i {
+            color: var(--gray-400);
+        }
+
         .timeline-item .location {
             font-size: 0.85rem;
             color: var(--gray-500);
@@ -841,6 +880,7 @@
             align-items: center;
             gap: 4px;
         }
+
         .timeline-item .notes {
             font-size: 0.8rem;
             color: var(--gray-400);
@@ -848,6 +888,25 @@
             margin-top: 2px;
         }
 
+        @keyframes timelinePulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 0 4px rgba(212, 0, 0, 0.16);
+            }
+            50% {
+                opacity: 0.45;
+                box-shadow: 0 0 0 8px rgba(212, 0, 0, 0.04);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .timeline-item.is-current::before {
+                animation: none;
+            }
+            .tracking-timeline::after {
+                transition: none;
+            }
+        }
         /* ============================================================
                FAQ & SUPPORT
             ============================================================ */
@@ -1179,6 +1238,13 @@
             }
         }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
 
@@ -1209,7 +1275,7 @@
     <!-- MAIN NAV -->
     <header class="main-nav">
         <div class="container">
-            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
             <nav class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
                 <a href="tracking.html">Tracking</a>
@@ -1233,7 +1299,7 @@
         <div class="container">
             <div class="badge"><i class="fas fa-satellite-dish"></i> <span data-i18n="tracking_hero_badge">REAL-TIME TRACKING</span></div>
             <h1><span data-i18n="tracking_hero_title_1">Track Your</span> <span class="highlight" data-i18n="tracking_hero_title_2">Shipment</span></h1>
-            <p data-i18n="tracking_hero_desc">Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.</p>
+            <p data-i18n="tracking_hero_desc">Enter your Vellox tracking number to see real-time updates, delivery status, and live map tracking.</p>
 
             <div class="track-widget">
                 <input type="text" id="trackInput" placeholder="Enter tracking number (e.g. VX123456)" />
@@ -1260,7 +1326,7 @@
                 <span class="highlight" data-i18n="tracking_faq_title_2">Asked</span>
                 <span data-i18n="tracking_faq_title_3">Questions</span>
             </h2>
-            <p class="section-subtitle" data-i18n="tracking_faq_sub">Find answers to the most common questions about tracking your shipments with Velox.</p>
+            <p class="section-subtitle" data-i18n="tracking_faq_sub">Find answers to the most common questions about tracking your shipments with Vellox.</p>
 
             <div class="faq-grid">
                 <div class="faq-item">
@@ -1278,7 +1344,7 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer" data-i18n="tracking_faq_2_a">
-                        Velox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.
+                        Vellox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1337,7 +1403,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Vellox Logistics</h4>
                     <p data-i18n="footer_desc">Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
                     <div class="footer-social">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -1368,7 +1434,7 @@
                 <div class="footer-col">
                     <h4 data-i18n="footer_company">Company</h4>
                     <ul>
-                        <li><a href="index.html#about"><i class="fas fa-building"></i> <span data-i18n="about_us">About Velox</span></a></li>
+                        <li><a href="index.html#about"><i class="fas fa-building"></i> <span data-i18n="about_us">About Vellox</span></a></li>
                         <li><a href="#"><i class="fas fa-bullhorn"></i> <span data-i18n="newsroom">Newsroom</span></a></li>
                         <li><a href="#"><i class="fas fa-users"></i> <span data-i18n="careers">Careers</span></a></li>
                         <li><a href="#"><i class="fas fa-shield-alt"></i> <span data-i18n="privacy">Privacy Policy</span></a></li>
@@ -1376,7 +1442,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics â€” <span data-i18n="copyright">All rights reserved.</span></div>
+                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Vellox Logistics  <span data-i18n="copyright">All rights reserved.</span></div>
                 <div class="legal">
                     <a href="#" data-i18n="privacy">Privacy</a>
                     <a href="#" data-i18n="terms">Terms</a>
@@ -1392,11 +1458,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const VELOX_SUPABASE_URL = "https://msuoujruonzugtojukkq.supabase.co";
-        const VELOX_SUPABASE_KEY = "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm";
+        const VELLOX_SUPABASE_URL = "https://msuoujruonzugtojukkq.supabase.co";
+        const VELLOX_SUPABASE_KEY = "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm";
         const veloxSupabase = window.supabase.createClient(
-            VELOX_SUPABASE_URL,
-            VELOX_SUPABASE_KEY
+            VELLOX_SUPABASE_URL,
+            VELLOX_SUPABASE_KEY
         );
         function toggleMobileNav() {
             const links = document.getElementById('navLinks');
@@ -1413,16 +1479,16 @@
         tracking_hero_badge: "REAL-TIME TRACKING",
         tracking_hero_title_1: "Track Your",
         tracking_hero_title_2: "Shipment",
-        tracking_hero_desc: "Enter your Velox tracking number to see real-time updates, delivery status, and live map tracking.",
+        tracking_hero_desc: "Enter your Vellox tracking number to see real-time updates, delivery status, and live map tracking.",
         tracking_faq_label: "FAQs",
         tracking_faq_title_1: "Frequently",
         tracking_faq_title_2: "Asked",
         tracking_faq_title_3: "Questions",
-        tracking_faq_sub: "Find answers to the most common questions about tracking your shipments with Velox.",
+        tracking_faq_sub: "Find answers to the most common questions about tracking your shipments with Vellox.",
         tracking_faq_1_q: "How do I track my package?",
         tracking_faq_1_a: "Simply enter your tracking number in the search box above and click Track. You'll see real-time updates including the current location, status, and estimated delivery date.",
         tracking_faq_2_q: "What does a tracking number look like?",
-        tracking_faq_2_a: "Velox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.",
+        tracking_faq_2_a: "Vellox tracking numbers typically start with 'VX' followed by 6 digits (e.g., VX123456). You'll find it on your shipping confirmation email or receipt.",
         tracking_faq_3_q: "Why is my tracking number not working?",
         tracking_faq_3_a: "If your tracking number isn't recognized, it may not have been scanned into our system yet. Please wait 24-48 hours after shipping and try again. If the issue persists, contact our support team.",
         tracking_faq_4_q: "Can I track multiple shipments at once?",
@@ -1446,7 +1512,7 @@
         help_center: "Help Center",
         claims: "Claims & Returns",
         ticket: "Submit a Ticket",
-        about_us: "About Velox",
+        about_us: "About Vellox",
         newsroom: "Newsroom",
         careers: "Careers",
         privacy: "Privacy Policy",
@@ -1459,16 +1525,16 @@
         tracking_hero_badge: "SENDUNGSVERFOLGUNG IN ECHTZEIT",
         tracking_hero_title_1: "Verfolgen Sie Ihre",
         tracking_hero_title_2: "Sendung",
-        tracking_hero_desc: "Geben Sie Ihre Velox-Sendungsnummer ein, um Echtzeit-Updates, den Lieferstatus und die Live-Kartenverfolgung zu sehen.",
+        tracking_hero_desc: "Geben Sie Ihre Vellox-Sendungsnummer ein, um Echtzeit-Updates, den Lieferstatus und die Live-Kartenverfolgung zu sehen.",
         tracking_faq_label: "HÄUFIGE FRAGEN",
         tracking_faq_title_1: "Häufig",
         tracking_faq_title_2: "Gestellte",
         tracking_faq_title_3: "Fragen",
-        tracking_faq_sub: "Hier finden Sie Antworten auf häufige Fragen zur Sendungsverfolgung mit Velox.",
+        tracking_faq_sub: "Hier finden Sie Antworten auf häufige Fragen zur Sendungsverfolgung mit Vellox.",
         tracking_faq_1_q: "Wie kann ich mein Paket verfolgen?",
         tracking_faq_1_a: "Geben Sie einfach Ihre Sendungsnummer in das Suchfeld oben ein und klicken Sie auf Verfolgen. Sie sehen Echtzeit-Updates zum aktuellen Standort, Status und voraussichtlichen Lieferdatum.",
         tracking_faq_2_q: "Wie sieht eine Sendungsnummer aus?",
-        tracking_faq_2_a: "Velox-Sendungsnummern beginnen normalerweise mit 'VX', gefolgt von 6 Ziffern (z. B. VX123456). Sie finden die Nummer in Ihrer Versandbestätigung oder auf Ihrem Beleg.",
+        tracking_faq_2_a: "Vellox-Sendungsnummern beginnen normalerweise mit 'VX', gefolgt von 6 Ziffern (z. B. VX123456). Sie finden die Nummer in Ihrer Versandbestätigung oder auf Ihrem Beleg.",
         tracking_faq_3_q: "Warum funktioniert meine Sendungsnummer nicht?",
         tracking_faq_3_a: "Wenn Ihre Sendungsnummer nicht erkannt wird, wurde sie möglicherweise noch nicht in unserem System erfasst. Bitte warten Sie nach dem Versand 24 bis 48 Stunden und versuchen Sie es erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an unseren Kundenservice.",
         tracking_faq_4_q: "Kann ich mehrere Sendungen gleichzeitig verfolgen?",
@@ -1492,7 +1558,7 @@
         help_center: "Hilfezentrum",
         claims: "Reklamationen und Rücksendungen",
         ticket: "Anfrage einreichen",
-        about_us: "Über Velox",
+        about_us: "Über Vellox",
         newsroom: "Pressebereich",
         careers: "Karriere",
         privacy: "Datenschutzerklärung",
@@ -1505,16 +1571,16 @@
         tracking_hero_badge: "SUIVI EN TEMPS RÉEL",
         tracking_hero_title_1: "Suivez votre",
         tracking_hero_title_2: "Expédition",
-        tracking_hero_desc: "Saisissez votre numéro de suivi Velox pour consulter les mises à jour en temps réel, le statut de livraison et le suivi sur carte.",
+        tracking_hero_desc: "Saisissez votre numéro de suivi Vellox pour consulter les mises à jour en temps réel, le statut de livraison et le suivi sur carte.",
         tracking_faq_label: "FAQ",
         tracking_faq_title_1: "Questions",
         tracking_faq_title_2: "Fréquemment",
         tracking_faq_title_3: "Posées",
-        tracking_faq_sub: "Trouvez les réponses aux questions les plus fréquentes sur le suivi de vos expéditions avec Velox.",
+        tracking_faq_sub: "Trouvez les réponses aux questions les plus fréquentes sur le suivi de vos expéditions avec Vellox.",
         tracking_faq_1_q: "Comment suivre mon colis ?",
         tracking_faq_1_a: "Saisissez simplement votre numéro de suivi dans le champ de recherche ci-dessus et cliquez sur Suivre. Vous verrez les mises à jour en temps réel, notamment la position actuelle, le statut et la date de livraison estimée.",
         tracking_faq_2_q: "À quoi ressemble un numéro de suivi ?",
-        tracking_faq_2_a: "Les numéros de suivi Velox commencent généralement par « VX », suivi de 6 chiffres (par exemple : VX123456). Vous trouverez ce numéro dans votre e-mail de confirmation d'expédition ou sur votre reçu.",
+        tracking_faq_2_a: "Les numéros de suivi Vellox commencent généralement par « VX », suivi de 6 chiffres (par exemple : VX123456). Vous trouverez ce numéro dans votre e-mail de confirmation d'expédition ou sur votre reçu.",
         tracking_faq_3_q: "Pourquoi mon numéro de suivi ne fonctionne-t-il pas ?",
         tracking_faq_3_a: "Si votre numéro de suivi n'est pas reconnu, il n'a peut-être pas encore été enregistré dans notre système. Veuillez attendre 24 à 48 heures après l'expédition, puis réessayer. Si le problème persiste, contactez notre service client.",
         tracking_faq_4_q: "Puis-je suivre plusieurs expéditions à la fois ?",
@@ -1538,7 +1604,7 @@
         help_center: "Centre d'aide",
         claims: "Réclamations et retours",
         ticket: "Soumettre une demande",
-        about_us: "À propos de Velox",
+        about_us: "À propos de Vellox",
         newsroom: "Actualités",
         careers: "Carrières",
         privacy: "Politique de confidentialité",
@@ -1551,16 +1617,16 @@
         tracking_hero_badge: "ОТСЛЕЖИВАНИЕ В РЕАЛЬНОМ ВРЕМЕНИ",
         tracking_hero_title_1: "Отследите свою",
         tracking_hero_title_2: "Посылку",
-        tracking_hero_desc: "Введите номер отслеживания Velox, чтобы увидеть обновления в реальном времени, статус доставки и местоположение на карте.",
+        tracking_hero_desc: "Введите номер отслеживания Vellox, чтобы увидеть обновления в реальном времени, статус доставки и местоположение на карте.",
         tracking_faq_label: "ЧАСТЫЕ ВОПРОСЫ",
         tracking_faq_title_1: "Часто",
         tracking_faq_title_2: "Задаваемые",
         tracking_faq_title_3: "Вопросы",
-        tracking_faq_sub: "Найдите ответы на самые распространённые вопросы об отслеживании отправлений Velox.",
+        tracking_faq_sub: "Найдите ответы на самые распространённые вопросы об отслеживании отправлений Vellox.",
         tracking_faq_1_q: "Как отследить мою посылку?",
         tracking_faq_1_a: "Введите номер отслеживания в поле поиска выше и нажмите «Отследить». Вы увидите обновления в реальном времени, включая текущее местоположение, статус и предполагаемую дату доставки.",
         tracking_faq_2_q: "Как выглядит номер отслеживания?",
-        tracking_faq_2_a: "Номера отслеживания Velox обычно начинаются с «VX», за которым следуют 6 цифр (например, VX123456). Номер указан в письме с подтверждением отправки или в квитанции.",
+        tracking_faq_2_a: "Номера отслеживания Vellox обычно начинаются с «VX», за которым следуют 6 цифр (например, VX123456). Номер указан в письме с подтверждением отправки или в квитанции.",
         tracking_faq_3_q: "Почему мой номер отслеживания не работает?",
         tracking_faq_3_a: "Если номер не распознаётся, возможно, отправление ещё не было зарегистрировано в нашей системе. Подождите 24–48 часов после отправки и попробуйте снова. Если проблема сохраняется, свяжитесь со службой поддержки.",
         tracking_faq_4_q: "Можно ли отслеживать несколько отправлений одновременно?",
@@ -1584,7 +1650,7 @@
         help_center: "Центр помощи",
         claims: "Претензии и возвраты",
         ticket: "Отправить запрос",
-        about_us: "О компании Velox",
+        about_us: "О компании Vellox",
         newsroom: "Новости",
         careers: "Карьера",
         privacy: "Политика конфиденциальности",
@@ -1597,16 +1663,16 @@
         tracking_hero_badge: "实时物流追踪",
         tracking_hero_title_1: "追踪您的",
         tracking_hero_title_2: "货件",
-        tracking_hero_desc: "输入您的 Velox 运单号，即可查看实时更新、配送状态和地图追踪信息。",
+        tracking_hero_desc: "输入您的 Vellox 运单号，即可查看实时更新、配送状态和地图追踪信息。",
         tracking_faq_label: "常见问题",
         tracking_faq_title_1: "常见",
         tracking_faq_title_2: "问题",
         tracking_faq_title_3: "解答",
-        tracking_faq_sub: "了解有关使用 Velox 追踪货件的常见问题及解答。",
+        tracking_faq_sub: "了解有关使用 Vellox 追踪货件的常见问题及解答。",
         tracking_faq_1_q: "如何追踪我的包裹？",
         tracking_faq_1_a: "只需在上方搜索框中输入您的运单号，然后点击“追踪”。您将看到实时更新，包括当前位置、运输状态和预计送达日期。",
         tracking_faq_2_q: "运单号是什么样的？",
-        tracking_faq_2_a: "Velox 运单号通常以“VX”开头，后面跟着 6 位数字（例如：VX123456）。您可以在发货确认邮件或收据上找到运单号。",
+        tracking_faq_2_a: "Vellox 运单号通常以“VX”开头，后面跟着 6 位数字（例如：VX123456）。您可以在发货确认邮件或收据上找到运单号。",
         tracking_faq_3_q: "为什么我的运单号无法使用？",
         tracking_faq_3_a: "如果系统无法识别您的运单号，可能是货件尚未录入我们的系统。请在发货后等待 24 至 48 小时再试。如果问题仍然存在，请联系我们的客服团队。",
         tracking_faq_4_q: "我可以同时追踪多个货件吗？",
@@ -1630,7 +1696,7 @@
         help_center: "帮助中心",
         claims: "索赔与退货",
         ticket: "提交工单",
-        about_us: "关于 Velox",
+        about_us: "关于 Vellox",
         newsroom: "新闻中心",
         careers: "职业机会",
         privacy: "隐私政策",
@@ -1670,14 +1736,55 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
         // ============================================================
         // TRACKING ENGINE
         // ============================================================
+        function normalizeShipmentEvent(eventText) {
+            const text = String(eventText || '').toLowerCase();
+
+            if (/released from customs|customs release/.test(text)) return 'in_transit';
+            if (/customs hold|held by customs|customs clearance hold/.test(text)) return 'customs_hold';
+            if (/delivered|delivery completed|proof of delivery/.test(text)) return 'delivered';
+            if (/out for delivery|with courier|on delivery vehicle/.test(text)) return 'out_for_delivery';
+            if (/in[\s_-]*transit|departed|en route/.test(text)) return 'in_transit';
+            if (/process|processed|sorted|prepared/.test(text)) return 'processing';
+            if (/created|booking confirmed|registered|shipment received|label created|picked up/.test(text)) return 'pending';
+
+            return 'update';
+        }
+
+        function formatShipmentEvent(eventText) {
+            const text = String(eventText || '').trim();
+            const match = text.match(/status_changed_from_[a-z_]+_to_([a-z_]+)/i);
+
+            if (match) {
+                const labels = {
+                    pending: 'Shipment Registered',
+                    processing: 'Processing',
+                    in_transit: 'In Transit',
+                    customs_hold: 'Customs Clearance',
+                    out_for_delivery: 'Out for Delivery',
+                    delivered: 'Delivered',
+                    cancelled: 'Cancelled'
+                };
+                return labels[match[1].toLowerCase()] || 'Shipment Updated';
+            }
+
+            return text.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        }
         function convertLocationHistoryToUpdates(locationHistory) {
-            if (!locationHistory || locationHistory.length === 0) return [];
-            return locationHistory.map(entry => ({
-                timestamp: entry.timestamp,
-                status: entry.event.toLowerCase().replace(/\s/g, '_'),
-                location: `${entry.city}, ${entry.country}`,
-                notes: entry.event
-            }));
+            if (!Array.isArray(locationHistory) || locationHistory.length === 0) return [];
+
+            return locationHistory.map(entry => {
+                const eventText = String(entry.event || entry.status || 'Shipment update');
+                const city = String(entry.city || '').trim();
+                const country = String(entry.country || '').trim();
+                const location = [city, country].filter(Boolean).join(', ');
+
+                return {
+                    timestamp: entry.timestamp || null,
+                    status: normalizeShipmentEvent(eventText),
+                    location: location || 'Location not specified',
+                    notes: formatShipmentEvent(eventText)
+                };
+            });
         }
 
         const FALLBACK_SHIPMENTS = [{
@@ -1717,16 +1824,8 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
             ]
         }];
 
-        async function getShipments(trackingNumber) {
-            const { data, error } = await veloxSupabase.rpc(
-                'track_shipment',
-                { p_tracking_number: trackingNumber }
-            );
-
-            if (error) throw error;
-            if (!data) return [];
-
-            return [{
+        function convertTrackingResponse(data) {
+            return {
                 trackingNumber: data.trackingNumber,
                 customerName: data.customer || 'Unknown',
                 fromCountry: data.fromCountry || 'Unknown',
@@ -1739,13 +1838,24 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                 serviceType: data.service || 'Standard',
                 status: data.status || 'pending',
                 updates: convertLocationHistoryToUpdates(data.locationHistory)
-            }];
+            };
+        }
+        async function getShipments(trackingNumber) {
+            const { data, error } = await veloxSupabase.rpc(
+                'track_shipment',
+                { p_tracking_number: trackingNumber }
+            );
+
+            if (error) throw error;
+            if (!data) return [];
+
+            return [convertTrackingResponse(data)];
         }
 
         let mapInstance = null;
         let polyline = null;
 
-        async function runTracking() {
+        async function runTracking(prefetchedResult = null) {
             const input = document.getElementById('trackInput');
             const num = input?.value?.trim()?.toUpperCase() || '';
 
@@ -1755,17 +1865,29 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
             }
 
             const btn = document.querySelector('.track-widget .btn-track');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-            btn.disabled = true;
+            const originalText = btn?.innerHTML;
+            if (!prefetchedResult && btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                btn.disabled = true;
+            }
 
             try {
-                let shipments = await getShipments(num);
-                let order = shipments[0] || null;
+                let shipments = [];
+                let order = null;
 
-                if (!order && !num.startsWith('VX')) {
-                    shipments = await getShipments('VX' + num);
+                if (prefetchedResult) {
+                    if (prefetchedResult.found && prefetchedResult.data) {
+                        shipments = [convertTrackingResponse(prefetchedResult.data)];
+                    }
                     order = shipments[0] || null;
+                } else {
+                    shipments = await getShipments(num);
+                    order = shipments[0] || null;
+
+                    if (!order && !num.startsWith('VX')) {
+                        shipments = await getShipments('VX' + num);
+                        order = shipments[0] || null;
+                    }
                 }
 
                 const section = document.getElementById('trackingResultSection');
@@ -1797,52 +1919,196 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                 console.error('Tracking error:', err);
                 alert('Error loading tracking data. Please check your internet connection.');
             } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                if (btn && !prefetchedResult) {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
             }
         }
         function renderTrackingResult(order, container) {
+            const countryTimeZones = {
+                Germany: 'Europe/Berlin',
+                China: 'Asia/Shanghai',
+                'United States': 'America/Chicago',
+                'United Kingdom': 'Europe/London',
+                Nigeria: 'Africa/Lagos'
+            };
+
+            const shipmentTimeZone = countryTimeZones[order.toCountry] || 'UTC';
+
+            const formatShipmentTime = date => date.toLocaleString('en-US', {
+                timeZone: shipmentTimeZone,
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true
+            });
             const statusLabels = {
-                'pending': 'Pending',
-                'processing': 'Processing',
-                'in_transit': 'In Transit',
-                'out_for_delivery': 'Out for Delivery',
-                'delivered': 'Delivered'
+                pending: 'Pending',
+                processing: 'Processing',
+                in_transit: 'In Transit',
+                customs_hold: 'Customs Hold',
+                out_for_delivery: 'Out for Delivery',
+                delivered: 'Delivered',
+                update: 'Shipment Update'
             };
+
             const statusIcons = {
-                'pending': 'fa-clock',
-                'processing': 'fa-sync-alt',
-                'in_transit': 'fa-truck',
-                'out_for_delivery': 'fa-box-open',
-                'delivered': 'fa-check-circle'
+                pending: 'fa-clock',
+                processing: 'fa-sync-alt',
+                in_transit: 'fa-truck',
+                customs_hold: 'fa-exclamation-circle',
+                out_for_delivery: 'fa-box-open',
+                delivered: 'fa-check-circle',
+                update: 'fa-info-circle'
             };
 
-            const currentStatus = statusLabels[order.status] || order.status;
-            const currentIcon = statusIcons[order.status] || 'fa-circle';
+            const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[ch]);
 
-            let timelineHTML = '';
-            if (order.updates && order.updates.length > 0) {
-                const sorted = [...order.updates].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-                sorted.forEach(u => {
-                    const uStatus = statusLabels[u.status] || u.status;
-                    const uIcon = statusIcons[u.status] || 'fa-circle';
-                    const date = new Date(u.timestamp).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    timelineHTML += `
-                        <div class="timeline-item">
-                            <div class="date">${date}</div>
-                            <div class="status"><i class="fas ${uIcon}" style="color:var(--primary);"></i> ${uStatus}</div>
-                            <div class="location"><i class="fas fa-map-pin" style="color:var(--gray-400);"></i> ${u.location}</div>
-                            ${u.notes ? `<div class="notes"><i class="fas fa-comment-dots" style="color:var(--gray-400);"></i> ${u.notes}</div>` : ''}
-                        </div>
-                    `;
+            const orderStatusRaw = String(order.status || 'pending').toLowerCase();
+            const orderStatus = statusLabels[orderStatusRaw]
+                ? orderStatusRaw
+                : normalizeShipmentEvent(orderStatusRaw);
+
+            const currentStatus = statusLabels[orderStatus] || 'Shipment Update';
+            const currentIcon = statusIcons[orderStatus] || 'fa-info-circle';
+
+            const stageOrder = [
+                'pending',
+                'processing',
+                'in_transit',
+                'out_for_delivery',
+                'delivered'
+            ];
+
+            const updates = Array.isArray(order.updates) ? [...order.updates] : [];
+
+            updates.sort((a, b) => {
+                const timeA = Date.parse(a.timestamp) || 0;
+                const timeB = Date.parse(b.timestamp) || 0;
+                return timeA - timeB;
+            });
+
+            const rows = updates.map(u => {
+                let status = String(u.status || 'update').toLowerCase();
+
+                if (!statusLabels[status]) {
+                    status = normalizeShipmentEvent(u.notes || status);
+                }
+
+                return {
+                    status,
+                    timestamp: u.timestamp || null,
+                    location: u.location || '',
+                    notes: u.notes || ''
+                };
+            });
+
+            let currentStageIndex = orderStatus === 'customs_hold'
+                ? stageOrder.indexOf('in_transit')
+                : stageOrder.indexOf(orderStatus);
+
+            if (currentStageIndex < 0) {
+                const lastStatus = rows.length
+                    ? rows[rows.length - 1].status
+                    : 'pending';
+
+                currentStageIndex = lastStatus === 'customs_hold'
+                    ? stageOrder.indexOf('in_transit')
+                    : stageOrder.indexOf(lastStatus);
+            }
+
+            if (currentStageIndex < 0) currentStageIndex = 0;
+
+            if (!rows.some(row => row.status === orderStatus)) {
+                rows.push({
+                    status: orderStatus,
+                    timestamp: null,
+                    location: '',
+                    notes: ''
                 });
             }
+
+            const currentEventIndex = rows.reduce((found, row, index) =>
+                row.status === orderStatus ? index : found, -1
+            );
+
+            const activeIndex = currentEventIndex >= 0
+                ? currentEventIndex
+                : rows.length - 1;
+
+            stageOrder.forEach((stage, index) => {
+                if (
+                    index > currentStageIndex &&
+                    !rows.some(row => row.status === stage)
+                ) {
+                    rows.push({
+                        status: stage,
+                        timestamp: null,
+                        location: '',
+                        notes: 'Awaiting shipment update',
+                        isFuture: true
+                    });
+                }
+            });
+
+            const delivered = orderStatus === 'delivered';
+            const progress = delivered
+                ? 1
+                : rows.length > 1
+                    ? Math.max(0, activeIndex) / (rows.length - 1)
+                    : 0;
+
+            const timelineProgress = Math.max(0, Math.min(1, progress));
+
+            let timelineHTML = '';
+
+            rows.forEach((u, index) => {
+                const isComplete = delivered || index < activeIndex;
+                const isCurrent = !delivered && index === activeIndex;
+                const stateClass = isComplete
+                    ? 'is-complete'
+                    : isCurrent
+                        ? 'is-current'
+                        : 'is-pending';
+
+                const label = statusLabels[u.status] || 'Shipment Update';
+                const icon = statusIcons[u.status] || 'fa-info-circle';
+
+                const parsedDate = u.timestamp ? new Date(u.timestamp) : null;
+                const validDate = parsedDate && !Number.isNaN(parsedDate.getTime());
+                const dateHTML = validDate
+                    ? `<div class="date">${escapeHTML(formatShipmentTime(parsedDate))}</div>`
+                    : '';
+
+                const locationHTML = u.location
+                    ? `<div class="location"><i class="fas fa-map-pin"></i> ${escapeHTML(u.location)}</div>`
+                    : '';
+
+                const notesHTML = u.notes && u.notes.toLowerCase() !== label.toLowerCase()
+                    ? `<div class="notes">${escapeHTML(u.notes)}</div>`
+                    : '';
+
+                timelineHTML += `
+                    <div class="timeline-item ${stateClass}">
+                        ${dateHTML}
+                        <div class="status">
+                            <i class="fas ${icon}"></i>
+                            ${escapeHTML(u.notes && u.status === 'update' ? u.notes : label)}
+                        </div>
+                        ${locationHTML}
+                        ${notesHTML}
+                    </div>
+                `;
+            });
 
             const hasCoords = (order.fromLat != null && order.toLat != null);
             let mapHTML = '';
@@ -1853,9 +2119,9 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                         <div class="map-overlay">
                             <div class="status">
                                 <span class="dot"></span>
-                                <span>Live Tracking â€” ${order.fromCountry} â†’ ${order.toCountry}</span>
+                                <span>Live Tracking  ${order.fromCountry} 	→ ${order.toCountry}</span>
                             </div>
-                            <span>Last updated: ${new Date().toLocaleString()}</span>
+                            <span>Last updated: ${escapeHTML(formatShipmentTime(new Date()))}</span>
                         </div>
                     </div>
                 `;
@@ -1879,7 +2145,7 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                             </div>
                             <div class="item">
                                 <label><i class="fas fa-route"></i> Route</label>
-                                <div class="value">${order.fromCountry} â†’ ${order.toCountry}</div>
+                                <div class="value">${order.fromCountry} 	→ ${order.toCountry}</div>
                             </div>
                             <div class="item">
                                 <label><i class="fas fa-tag"></i> Service</label>
@@ -1896,9 +2162,7 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                         <h4 style="margin-bottom:16px; font-weight:800; color:var(--dark); display:flex; align-items:center; gap:8px;">
                             <i class="fas fa-timeline" style="color:var(--primary);"></i> Shipment Progress
                         </h4>
-                        <div class="tracking-timeline">
-                            ${timelineHTML}
-                        </div>
+                        <div class="tracking-timeline" style="--timeline-progress: ${timelineProgress};">${timelineHTML}</div>
                     </div>
                 </div>
             `;
@@ -1933,7 +2197,7 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
-                attribution: 'Â© OpenStreetMap contributors'
+                attribution: '© OpenStreetMap contributors'
             }).addTo(mapInstance);
 
             L.marker([order.fromLat, order.fromLng])
@@ -2004,10 +2268,34 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
                 const input = document.getElementById('trackInput');
                 if (input) {
                     input.value = trackNum.toUpperCase();
-                    // Small delay so the page fully loads before searching
+                    let prefetchedResult = null;
+
+                    try {
+                        const storageKey = "velox_prefetched_tracking";
+                        const stored = sessionStorage.getItem(storageKey);
+                        sessionStorage.removeItem(storageKey);
+
+                        if (stored) {
+                            const candidate = JSON.parse(stored);
+                            const age = Date.now() - Number(candidate.createdAt);
+
+                            if (
+                                candidate.trackingNumber === trackNum.toUpperCase() &&
+                                Number.isFinite(age) &&
+                                age >= 0 &&
+                                age <= 120000 &&
+                                typeof candidate.found === "boolean"
+                            ) {
+                                prefetchedResult = candidate;
+                            }
+                        }
+                    } catch (err) {
+                        console.warn("Could not read prefetched tracking data; using normal lookup.", err);
+                    }
+
                     setTimeout(() => {
-                        runTracking();
-                    }, 400);
+                        runTracking(prefetchedResult);
+                    }, prefetchedResult ? 0 : 400);
                 }
             }
         });
@@ -2017,7 +2305,7 @@ document.getElementById('langSelect')?.addEventListener('change', () => changeLa
             if (e.key === 'Enter') runTracking();
         });
 
-        console.log('Velox Tracking page ready â€” auto-search supported');
+        console.log('Vellox Tracking page ready  auto-search supported');
     </script>
 </body>
 </html>

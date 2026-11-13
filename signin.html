@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Sign In | Velox Logistics</title>
+    <title>Sign In | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -363,6 +363,13 @@
             }
         }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
 
@@ -398,7 +405,7 @@
     <!-- MAIN NAV -->
     <header class="main-nav">
         <div class="container">
-            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
             <nav class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
                 <a href="tracking.html">Tracking</a>
@@ -456,7 +463,7 @@
     <!-- FOOTER -->
     <footer>
         <div class="container">
-            <div class="copyright">© 2026 Velox Logistics — All rights reserved.</div>
+            <div class="copyright">© 2026 Vellox Logistics — All rights reserved.</div>
         </div>
     </footer>
 

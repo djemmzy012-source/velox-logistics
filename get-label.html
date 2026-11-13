@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Return Label | Velox Logistics</title>
+    <title>Get Return Label | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
@@ -1053,6 +1053,13 @@
             .label-container .label-body .label-actions .btn { width: 100%; justify-content: center; }
         }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
 
@@ -1093,7 +1100,7 @@
     ============================================================ -->
     <header class="main-nav">
         <div class="container">
-            <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+            <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
 
             <nav class="nav-links" id="navLinks">
                 <a href="index.html" data-i18n="home">Home</a>
@@ -1200,7 +1207,7 @@
 
             <div class="label-container" id="labelContainer">
                 <div class="label-header">
-                    <div class="brand">Velox<span>Logistics</span></div>
+                    <div class="brand">Vellox<span>Logistics</span></div>
                     <div class="service-badge" data-i18n="service_badge">Return Label</div>
                 </div>
                 <div class="label-body">
@@ -1218,7 +1225,7 @@
                     <div class="addresses">
                         <div class="address-block">
                             <h5 data-i18n="label_return_to">Return To</h5>
-                            <p>Velox Logistics Returns<br />123 Logistics Avenue<br />London, UK</p>
+                            <p>Vellox Logistics Returns<br />123 Logistics Avenue<br />London, UK</p>
                         </div>
                         <div class="address-block">
                             <h5 data-i18n="label_ship_to">Ship To</h5>
@@ -1259,7 +1266,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4>
+                    <h4><i class="fas fa-box" style="color:var(--secondary);"></i> Vellox Logistics</h4>
                     <p data-i18n="footer_desc">Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p>
                     <div class="footer-social">
                         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -1300,7 +1307,7 @@
                 <div class="footer-col">
                     <h4 data-i18n="footer_company">Company</h4>
                     <ul>
-                        <li><a href="about.html" data-i18n="about_velox"><i class="fas fa-building"></i> About Velox</a></li>
+                        <li><a href="about.html" data-i18n="about_velox"><i class="fas fa-building"></i> About Vellox</a></li>
                         <li><a href="#" data-i18n="newsroom"><i class="fas fa-bullhorn"></i> Newsroom</a></li>
                         <li><a href="#" data-i18n="careers"><i class="fas fa-users"></i> Careers</a></li>
                         <li><a href="#" data-i18n="privacy_policy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
@@ -1310,7 +1317,7 @@
             </div>
 
             <div class="footer-bottom">
-                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — <span data-i18n="all_rights">All rights reserved.</span></div>
+                <div class="copyright"><i class="fas fa-copyright"></i> 2026 Vellox Logistics — <span data-i18n="all_rights">All rights reserved.</span></div>
                 <div class="legal">
                     <a href="#" data-i18n="footer_privacy">Privacy</a>
                     <a href="#" data-i18n="footer_terms">Terms</a>
@@ -1414,7 +1421,14 @@
                     .addresses { display: flex; gap: 20px; margin: 20px 0; }
                     .label-actions { display: none; }
                 </style>
-                </head><body>${container.innerHTML}</body></html>
+                <style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
+</head><body>${container.innerHTML}</body></html>
             `);
             printWindow.document.close();
             printWindow.print();
@@ -1450,7 +1464,7 @@
                 footer_quick_links: "Quick Links", footer_customer_service: "Customer Service", footer_company: "Company",
                 track_a_shipment: "Track a Shipment", ship_now: "Ship Now", about_us: "About Us", footer_services: "Services", footer_freight: "Freight", footer_customs: "Customs", footer_logistics: "Logistics",
                 contact_us: "Contact Us", help_center: "Help Center", claims_returns: "Claims & Returns", initiate_return: "Initiate Return", get_label: "Get Label", feedback: "Feedback", submit_ticket: "Submit a Ticket", footer_informed_delivery: "Informed Delivery",
-                about_velox: "About Velox", newsroom: "Newsroom", careers: "Careers", privacy_policy: "Privacy Policy", terms_of_use: "Terms of Use",
+                about_velox: "About Vellox", newsroom: "Newsroom", careers: "Careers", privacy_policy: "Privacy Policy", terms_of_use: "Terms of Use",
                 all_rights: "All rights reserved.", footer_privacy: "Privacy", footer_terms: "Terms", cookies: "Cookies", accessibility: "Accessibility"
             },
             fr: { 
@@ -1537,7 +1551,7 @@
                 langSelect.addEventListener('change', changeLanguage);
                 changeLanguage();
             }
-            console.log('✅ Velox System Ready');
+            console.log('✅ Vellox System Ready');
         });
     </script>
 </body>

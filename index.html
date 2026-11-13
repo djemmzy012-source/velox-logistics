@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Velox Logistics | Global Express • Freight • Customs • Logistics</title>
+    <title>Vellox Logistics | Global Express • Freight • Customs • Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
@@ -110,158 +110,154 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        /* ============================================================
-               VELOX TRACKING TRANSITION ANIMATION
-        ============================================================ */
+        /* VELLOX PREMIUM GLOBAL TRACKING TRANSITION */
         #veloxTransition {
             position: fixed;
             inset: 0;
             z-index: 999999;
             display: none;
+            overflow: hidden;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            gap: 24px;
-            background: #0A0A1A;
+            padding: 24px;
+            color: #fff;
+            background:
+                radial-gradient(ellipse at 50% 45%, rgba(20, 65, 105, .42), transparent 58%),
+                linear-gradient(135deg, #050d1b 0%, #09182b 55%, #030914 100%);
+            opacity: 0;
+            transition: opacity 550ms ease;
         }
 
         #veloxTransition.is-active {
             display: flex;
+            opacity: 1;
         }
 
-        .velox-brand {
-            color: #ffffff;
-            font-size: 25px;
-            font-weight: 900;
+        #veloxTransition.is-fading {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .vlx-transition-content {
+            position: relative;
+            z-index: 2;
+            width: min(1050px, 100%);
+            text-align: center;
+        }
+
+        .vlx-transition-brand {
+            margin-bottom: 12px;
+            font-size: clamp(25px, 4vw, 38px);
+            font-weight: 800;
+            letter-spacing: 7px;
+        }
+
+        .vlx-transition-brand span {
+            color: #d8ad52;
+        }
+
+        .vlx-transition-kicker {
+            color: #aabbd0;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+        }
+
+        .vlx-map-wrap {
+            position: relative;
+            width: 100%;
+            margin: 24px auto 12px;
+            background-image:
+                linear-gradient(rgba(145, 177, 208, .045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(145, 177, 208, .045) 1px, transparent 1px);
+            background-size: 34px 34px;
+            mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+        }
+
+        .vlx-map-wrap svg {
+            display: block;
+            width: 100%;
+            height: auto;
+            overflow: visible;
+        }
+
+        .vlx-land {
+            fill: #18324b;
+            stroke: #42617b;
+            stroke-width: 1.2;
+            opacity: .58;
+        }
+
+        .vlx-route {
+            fill: none;
+            stroke: #d8ad52;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            filter: drop-shadow(0 0 5px rgba(216,173,82,.7));
+
+        }
+
+        #veloxTransition.is-active .vlx-route {
+            animation: vlxRouteDraw 3.2s ease forwards;
+        }
+        .vlx-route-node {
+            fill: #f4d58c;
+            filter: drop-shadow(0 0 7px #d8ad52);
+        }
+
+        .vlx-moving-point {
+            fill: #fff4d5;
+            filter: drop-shadow(0 0 8px #e7bd66);
+        }
+
+        .vlx-status-line {
+            margin-top: 12px;
+            color: #e2bd70;
+            font-size: 11px;
+            font-weight: 600;
             letter-spacing: 3px;
         }
 
-        .velox-brand span {
-            color: #FFCC00;
+        .vlx-status-sub {
+            margin-top: 10px;
+            color: #879bb1;
+            font-size: 10px;
+            letter-spacing: 2px;
         }
 
-        .velox-road {
-            position: relative;
-            width: min(420px, 85vw);
-            height: 95px;
-            overflow: hidden;
-            border-bottom: 3px dashed #777;
-        }
-
-        .velox-car-box {
-            position: absolute;
-            left: -125px;
-            bottom: 12px;
-            display: flex;
-            align-items: flex-end;
-            gap: 5px;
-        }
-
-        .velox-car {
-            position: relative;
-            width: 78px;
-            height: 34px;
-            background: #D40000;
-            border-radius: 8px 12px 5px 5px;
-        }
-
-        .velox-car::before {
-            content: "";
-            position: absolute;
-            width: 38px;
-            height: 20px;
-            background: #D40000;
-            top: -17px;
-            left: 18px;
-            border-radius: 10px 10px 0 0;
-            clip-path: polygon(15% 0, 80% 0, 100% 100%, 0 100%);
-        }
-
-        .velox-car::after {
-            content: "V";
-            position: absolute;
-            right: 14px;
-            top: 5px;
-            color: #ffffff;
-            font-weight: 900;
-        }
-
-        .velox-wheel {
-            position: absolute;
-            bottom: -7px;
-            width: 15px;
-            height: 15px;
-            border: 3px solid #aaa;
+        .vlx-status-pulse {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            margin-right: 9px;
             border-radius: 50%;
-            background: #111;
+            background: #e2bd70;
+            box-shadow: 0 0 10px #e2bd70;
+            animation: vlxPulse 1.2s ease-in-out infinite;
         }
 
-        .velox-wheel.one { left: 12px; }
-        .velox-wheel.two { right: 12px; }
-
-        .velox-package {
-            position: relative;
-            width: 25px;
-            height: 25px;
-            border: 2px solid #fff;
-            background: #FFCC00;
-            animation: veloxBoxBounce .35s ease-in-out infinite alternate;
+        @keyframes vlxRouteDraw {
+            to { stroke-dashoffset: 0; }
         }
 
-        .velox-package::after {
-            content: "";
-            position: absolute;
-            left: 9px;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            background: #b88600;
+        @keyframes vlxPulse {
+            50% { opacity: .3; transform: scale(.75); }
         }
 
-        .velox-flight {
-            position: relative;
-            width: min(420px, 85vw);
-            height: 55px;
-            overflow: hidden;
+        @media (max-width: 600px) {
+            #veloxTransition { padding: 18px; }
+            .vlx-transition-brand { letter-spacing: 5px; }
+            .vlx-transition-kicker { letter-spacing: 2px; }
+            .vlx-map-wrap { margin: 35px auto 20px; }
+            .vlx-status-line { letter-spacing: 2px; }
         }
 
-        .velox-plane {
-            position: absolute;
-            left: -55px;
-            top: 12px;
-            color: #FFCC00;
-            font-size: 34px;
+        @media (prefers-reduced-motion: reduce) {
+            .vlx-route, .vlx-status-pulse { animation-duration: .01ms; }
         }
-
-        #veloxTransition.is-active .velox-plane {
-            animation: veloxFly 10s linear forwards;
-        }
-
-        @keyframes veloxFly {
-            0% { transform: translate(0, 15px) rotate(-8deg); }
-            50% { transform: translate(240px, -8px) rotate(-5deg); }
-            100% { transform: translate(550px, -15px) rotate(-8deg); }
-        }
-        .velox-loading {
-            color: #ffffff;
-            font-size: 13px;
-            letter-spacing: 1px;
-        }
-
-        #veloxTransition.is-active .velox-car-box {
-            animation: veloxDrive 10s ease-in-out forwards;
-        }
-
-        @keyframes veloxDrive {
-            from { transform: translateX(0); }
-            to { transform: translateX(550px); }
-        }
-
-        @keyframes veloxBoxBounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
-        }
-
         /* ============================================================
                TOP BAR
         ============================================================ */
@@ -310,7 +306,22 @@
             color: rgba(255, 255, 255, 0.8); padding: 4px 10px; border-radius: var(--radius-sm);
             font-size: 0.7rem; font-weight: 600; cursor: pointer; font-family: inherit;
         }
-        .top-bar-right .lang-select:focus { outline: none; }
+        .top-bar-right .lang-select:focus {
+            outline: none;
+            background-color: #101b2d;
+            color: #ffffff;
+        }
+
+        .top-bar-right .lang-select option {
+            background-color: #101b2d;
+            color: #ffffff;
+        }
+
+        .top-bar-right .lang-select option:checked,
+        .top-bar-right .lang-select option:hover {
+            background-color: #ffcc00;
+            color: #101b2d;
+        }
 
         .top-bar-right .top-cta {
             background: var(--secondary); color: var(--dark); padding: 4px 14px;
@@ -323,13 +334,59 @@
         /* ============================================================
                MAIN NAV
         ============================================================ */
+        /* TOP BAR ALIGNMENT FIX */
+        @media (min-width: 769px) and (max-width: 1100px) {
+            .top-bar .container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+            }
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+                width: 100%;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .top-bar-left,
+            .top-bar-right {
+                justify-content: center;
+                width: 100%;
+                gap: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-bar-left {
+                flex-direction: column;
+                gap: 7px;
+            }
+            .top-bar-right {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .top-bar-left a,
+            .top-bar-right a {
+                font-size: 0.68rem;
+            }
+        }
         .main-nav {
             background: var(--white); box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
             position: sticky; top: 0; z-index: 1001; padding: 12px 0;
             border-bottom: 3px solid var(--secondary);
         }
         .main-nav .container { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-transform: uppercase; display: flex; align-items: center; cursor: pointer; gap: 2px; flex-shrink: 0; }
+        .logo { display: flex; align-items: center; cursor: pointer; flex-shrink: 0; }
+        .logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+        @media (max-width: 480px) { .logo img { width: 155px; max-height: 48px; } }
         .logo span { color: var(--dark); background: var(--secondary); padding: 0 8px; border-radius: var(--radius-sm); }
         .nav-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
         .nav-links a { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; color: var(--gray-600); position: relative; padding: 4px 0; transition: var(--transition); }
@@ -648,26 +705,38 @@
 </head>
 <body>
 
-    <!-- ============================================================
-    VELOX CAR TRANSITION OVERLAY ANIMATION
-    ============================================================ -->
+    <!-- VELLOX PREMIUM GLOBAL TRACKING TRANSITION -->
     <div id="veloxTransition" aria-hidden="true">
-        <div class="velox-brand">VELOX <span>LOGISTICS</span></div>
-        <div class="velox-road">
-            <div class="velox-car-box">
-                <div class="velox-package"></div>
-                <div class="velox-car">
-                    <span class="velox-wheel one"></span>
-                    <span class="velox-wheel two"></span>
-                </div>
-            </div>
-        </div>
-        <div class="velox-flight">
-            <i class="fas fa-plane velox-plane" aria-hidden="true"></i>
-        </div>
-        <div class="velox-loading">Preparing your tracking page...</div>
-    </div>
+        <div class="vlx-transition-content">
+            <div class="vlx-transition-brand">VELLOX<span>.</span></div>
+            <div class="vlx-transition-kicker">GLOBAL LOGISTICS NETWORK</div>
 
+            <div class="vlx-map-wrap">
+                <svg viewBox="0 0 1000 430" role="presentation" aria-hidden="true">
+                    <g class="vlx-land">
+                        <path d="M100 115 L145 75 205 65 250 90 270 130 245 155 230 195 190 215 170 260 130 245 115 205 85 175 Z"/>
+                        <path d="M255 255 L290 270 315 315 300 365 280 405 255 375 245 325 Z"/>
+                        <path d="M430 95 L475 65 525 75 555 110 535 140 495 145 470 125 445 145 415 125 Z"/>
+                        <path d="M465 155 L520 145 565 175 580 230 550 295 515 345 480 315 455 260 440 205 Z"/>
+                        <path d="M540 85 L610 60 690 75 740 110 810 100 870 140 845 180 790 190 755 225 700 205 660 175 610 185 570 145 Z"/>
+                        <path d="M790 275 L835 260 870 285 850 320 810 325 780 300 Z"/>
+                    </g>
+                    <path class="vlx-route" d="M185 155 Q370 10 515 170 T820 155"/>
+                    <circle class="vlx-route-node" cx="185" cy="155" r="5"/>
+                    <circle class="vlx-route-node" cx="820" cy="155" r="5"/>
+                    <circle class="vlx-moving-point" r="7">
+                        <animateMotion id="vlxRouteMotion" begin="indefinite" dur="3.6s" repeatCount="1" path="M185 155 Q370 10 515 170 T820 155"/>
+                    </circle>
+                </svg>
+            </div>
+
+            <div class="vlx-status-line">
+                <span class="vlx-status-pulse"></span>
+                CONNECTING TO GLOBAL TRACKING NETWORK
+            </div>
+            <div class="vlx-status-sub">SECURE ROUTE &bull; REAL-TIME SHIPMENT ACCESS</div>
+        </div>
+    </div>
     <!-- ============================================================
     TOP BAR
     ============================================================ -->
@@ -699,7 +768,7 @@
     ============================================================ -->
     <header class="main-nav">
         <div class="container">
-            <div class="logo" onclick="showPage('home')">Velox<span>Logistics</span></div>
+            <div class="logo" onclick="showPage('home')" role="button" aria-label="Vellox Logistics home"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
             <nav class="nav-links" id="navLinks">
                 <a href="#home" onclick="showPage('home')">Home</a>
                 <a href="#tracking" onclick="openTracking(event)">Tracking</a>
@@ -732,7 +801,7 @@
             </div>
             <div class="hero-content">
                 <div class="badge animate-pulse"><i class="fas fa-rocket"></i> Global Logistics Partner Since 2005</div>
-                <h1 class="animate-fade-up" data-i18n="hero_title_1">Ship with <span class="highlight" data-i18n="hero_title_2">Velox Ground Advantage</span>®</h1>
+                <h1 class="animate-fade-up" data-i18n="hero_title_1">Ship with <span class="highlight" data-i18n="hero_title_2">Vellox Ground Advantage</span>®</h1>
                 <p class="animate-fade-up animate-delay-1" data-i18n="hero_desc">Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.</p>
                 <div class="hero-track animate-fade-up animate-delay-2">
                     <input type="text" id="trackInput" placeholder="Enter a tracking number (e.g. VX123456)" onkeypress="if(event.key==='Enter') openTracking(event)" />
@@ -760,8 +829,8 @@
                 </div>
                 <div class="card-content">
                     <h3 data-i18n="srv_express_title">Document &amp; Parcel Shipping</h3>
-                    <p data-i18n="srv_express_desc">Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.</p>
-                    <a onclick="openTracking(event)" class="btn-explore" data-i18n="explore_express">Explore Velox Express <i class="fas fa-arrow-right"></i></a>
+                    <p data-i18n="srv_express_desc">Vellox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.</p>
+                    <a onclick="openTracking(event)" class="btn-explore" data-i18n="explore_express">Explore Vellox Express <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             <div class="feature-card" data-delay="1">
@@ -770,7 +839,7 @@
                 </div>
                 <div class="card-content">
                     <h3 data-i18n="srv_cargo_title">Cargo &amp; Freight Shipping</h3>
-                    <p data-i18n="srv_cargo_desc">Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.</p>
+                    <p data-i18n="srv_cargo_desc">Discover full-service logistics from Vellox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.</p>
                     <a onclick="showPage('freight')" class="btn-explore" data-i18n="explore_freight">Explore Freight Services <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
@@ -783,7 +852,7 @@
                 <h2 class="section-title"><span data-i18n="services_title">Services</span> <span class="highlight" data-i18n="services_title_highlight">Available</span></h2>
                 <p class="section-subtitle" data-i18n="services_sub">End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.</p>
                 <div class="services-grid">
-                    <div class="service-item" data-delay="0"><div class="service-icon"><i class="fas fa-briefcase"></i></div><h4 data-i18n="sol_1_title">Velox for Business</h4><p data-i18n="sol_1_desc">Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.</p><a onclick="showPage('contact')" class="service-link" data-i18n="learn_more">Learn More <i class="fas fa-arrow-right"></i></a></div>
+                    <div class="service-item" data-delay="0"><div class="service-icon"><i class="fas fa-briefcase"></i></div><h4 data-i18n="sol_1_title">Vellox for Business</h4><p data-i18n="sol_1_desc">Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.</p><a onclick="showPage('contact')" class="service-link" data-i18n="learn_more">Learn More <i class="fas fa-arrow-right"></i></a></div>
                     <div class="service-item" data-delay="1"><div class="service-icon"><i class="fas fa-headset"></i></div><h4 data-i18n="sol_2_title">Customer Service</h4><p data-i18n="sol_2_desc">Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.</p><a onclick="showPage('contact')" class="service-link" data-i18n="customer_portal">Customer Portal <i class="fas fa-arrow-right"></i></a></div>
                     <div class="service-item" data-delay="2"><div class="service-icon"><i class="fas fa-leaf"></i></div><h4 data-i18n="sol_3_title">Sustainability</h4><p data-i18n="sol_3_desc">Sustainable business begins with low-carbon supply chains. Explore our GoGreen Plus program for carbon-neutral shipping.</p><a href="#" class="service-link" data-i18n="gogreen">GoGreen Plus <i class="fas fa-arrow-right"></i></a></div>
                 </div>
@@ -797,9 +866,9 @@
                 <h2 class="section-title" data-i18n="fleet_title">Modern Fleet, <span class="highlight" data-i18n="fleet_title_highlight">Global Reach</span></h2>
                 <p class="section-subtitle" data-i18n="fleet_sub">Our fleet of branded trucks delivers your shipments across borders with speed, safety, and reliability.</p>
                 <div class="truck-grid">
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_1_title">Heavy Duty Fleet</h4><p data-i18n="truck_1_desc">Bulk cargo and heavy machinery transport across continents.</p></div></div>
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_2_title">Express Delivery</h4><p data-i18n="truck_2_desc">Time-critical shipments delivered with speed and precision.</p></div></div>
-                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1566576721348-d9f73254d2e8?w=800&q=80');"><div class="company-badge">Velox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_3_title">Refrigerated Transport</h4><p data-i18n="truck_3_desc">Cold chain solutions for perishable goods and pharmaceuticals.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=800&q=80');"><div class="company-badge">Vellox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_1_title">Heavy Duty Fleet</h4><p data-i18n="truck_1_desc">Bulk cargo and heavy machinery transport across continents.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80');"><div class="company-badge">Vellox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_2_title">Express Delivery</h4><p data-i18n="truck_2_desc">Time-critical shipments delivered with speed and precision.</p></div></div>
+                    <div class="truck-card"><div class="truck-image" style="background-image: url('https://images.unsplash.com/photo-1566576721348-d9f73254d2e8?w=800&q=80');"><div class="company-badge">Vellox<span>Logistics</span></div></div><div class="truck-body"><h4 data-i18n="truck_3_title">Refrigerated Transport</h4><p data-i18n="truck_3_desc">Cold chain solutions for perishable goods and pharmaceuticals.</p></div></div>
                 </div>
             </div>
         </section>
@@ -861,7 +930,7 @@
             <div class="container">
                 <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);" data-i18n="tariff_label">Stay Informed</span>
                 <h2 class="tariff-title" data-i18n="tariff_title">Navigating Latest Tariff Developments</h2>
-                <p data-i18n="tariff_desc">Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.</p>
+                <p data-i18n="tariff_desc">Global trade is becoming increasingly complex. At Vellox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.</p>
                 <button type="button" class="btn btn-secondary" onclick="showPage('contact')" data-i18n="tariff_cta"><i class="fas fa-chart-line"></i> Get Expert Advice</button>
             </div>
         </section>
@@ -871,11 +940,11 @@
             <div class="container text-center">
                 <span class="section-label" data-i18n="testimonials_label"><i class="fas fa-quote-left"></i> Client Stories</span>
                 <h2 class="section-title" data-i18n="testimonials_title">Trusted by Businesses <span class="highlight" data-i18n="testimonials_title_highlight">Worldwide</span></h2>
-                <p class="section-subtitle" data-i18n="testimonials_sub">Hear from our customers across the globe who rely on Velox for their logistics needs.</p>
+                <p class="section-subtitle" data-i18n="testimonials_sub">Hear from our customers across the globe who rely on Vellox for their logistics needs.</p>
                 <div class="testimonials-grid">
-                    <div class="testimonial-card" data-delay="0"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_1">Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=1');"></div><div><div class="author-name">Emma Chen</div><div class="author-title" data-i18n="testimonial_1_title">Supply Chain Director, TechGlobal</div></div></div></div>
-                    <div class="testimonial-card" data-delay="1"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_2">The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=3');"></div><div><div class="author-name">Marcus Rivera</div><div class="author-title" data-i18n="testimonial_2_title">Operations Manager, Apex Industries</div></div></div></div>
-                    <div class="testimonial-card" data-delay="2"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><blockquote data-i18n="testimonial_3">Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.</blockquote><div class="author"><div class="author-avatar" style="background-image: url('https://i.pravatar.cc/150?img=5');"></div><div><div class="author-name">Sarah Johnson</div><div class="author-title" data-i18n="testimonial_3_title">E-commerce Founder, ModaVibe</div></div></div></div>
+                    <div class="testimonial-card" data-delay="0"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_1">Vellox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.</blockquote><div class="author"><div><div class="author-name">Emma Chen</div><div class="author-title" data-i18n="testimonial_1_title">Supply Chain Director, TechGlobal</div></div></div></div>
+                    <div class="testimonial-card" data-delay="1"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><blockquote data-i18n="testimonial_2">The cargo shipping options from Vellox are outstanding. They handled our heavy machinery shipments with care and professionalism.</blockquote><div class="author"><div><div class="author-name">Marcus Rivera</div><div class="author-title" data-i18n="testimonial_2_title">Operations Manager, Apex Industries</div></div></div></div>
+                    <div class="testimonial-card" data-delay="2"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div><blockquote data-i18n="testimonial_3">Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.</blockquote><div class="author"><div><div class="author-name">Sarah Johnson</div><div class="author-title" data-i18n="testimonial_3_title">E-commerce Founder, ModaVibe</div></div></div></div>
                 </div>
             </div>
         </section>
@@ -906,7 +975,7 @@
             <div class="container">
                 <span class="section-label" style="background:rgba(255,204,0,0.12); color:var(--secondary); border:1px solid rgba(255,204,0,0.08);" data-i18n="tracking_label">Real-Time Tracking</span>
                 <h2 data-i18n="tracking_title">Track Your <span data-i18n="tracking_title_highlight">Shipment</span></h2>
-                <p data-i18n="tracking_desc">Enter your Velox tracking number to see real-time updates and delivery status.</p>
+                <p data-i18n="tracking_desc">Enter your Vellox tracking number to see real-time updates and delivery status.</p>
                 <div class="track-widget-simple">
                     <input type="text" id="trackInputPage" placeholder="Enter tracking number (e.g. VX123456)" />
                     <button class="btn-track" type="button" onclick="runTracking()"><i class="fas fa-search"></i> Track</button>
@@ -986,7 +1055,7 @@
                     <div class="about-content">
                         <span class="section-label"><i class="fas fa-info-circle"></i> Who We Are</span>
                         <h2 class="section-title">Connecting the World, <span class="highlight">One Shipment at a Time</span></h2>
-                        <p>Founded in 2005, Velox Logistics has grown from a small courier service into a global logistics powerhouse. We serve over 220 countries and territories with a focus on speed, reliability, and customer experience.</p>
+                        <p>Founded in 2005, Vellox Logistics has grown from a small courier service into a global logistics powerhouse. We serve over 220 countries and territories with a focus on speed, reliability, and customer experience.</p>
                         <p>Our network spans air, ocean, road, and rail — giving our customers the flexibility to ship anything from documents to heavy cargo with complete visibility.</p>
                         <button type="button" class="btn btn-primary" onclick="showPage('contact')"><i class="fas fa-paper-plane"></i> Get in Touch</button>
                         <div class="about-stats"><div class="about-stat"><span class="number">18+</span><span class="label">Years</span></div><div class="about-stat"><span class="number">220+</span><span class="label">Countries</span></div><div class="about-stat"><span class="number">50K+</span><span class="label">Clients</span></div><div class="about-stat"><span class="number">99.7%</span><span class="label">Accuracy</span></div></div>
@@ -1030,18 +1099,19 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col"><h4><i class="fas fa-box" style="color:var(--secondary);"></i> Velox Logistics</h4><p>Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p><div class="footer-social"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></div></div>
+                <div class="footer-col"><h4><i class="fas fa-box" style="color:var(--secondary);"></i> Vellox Logistics</h4><p>Global express and freight solutions built on reliability, speed, and a commitment to sustainable supply chains. Connecting businesses worldwide since 2005.</p><div class="footer-social"><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></div></div>
                 <div class="footer-col"><h4>Quick Links</h4><ul><li><a onclick="openTracking(event)" style="cursor:pointer;"><i class="fas fa-search"></i> Track a Shipment</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-shipping-fast"></i> Ship Now</a></li><li><a onclick="showPage('about')" style="cursor:pointer;"><i class="fas fa-info-circle"></i> About Us</a></li><li><a onclick="showPage('services')" style="cursor:pointer;"><i class="fas fa-cogs"></i> Services</a></li><li><a onclick="showPage('freight')" style="cursor:pointer;"><i class="fas fa-ship"></i> Freight</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-file-contract"></i> Customs</a></li><li><a onclick="showPage('logistics')" style="cursor:pointer;"><i class="fas fa-truck-moving"></i> Logistics</a></li></ul></div>
                 <div class="footer-col"><h4>Customer Service</h4><ul><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-headset"></i> Contact Us</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-question-circle"></i> Help Center</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-undo"></i> Claims & Returns</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-undo"></i> Initiate Return</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-file-invoice"></i> Get Label</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-comments"></i> Feedback</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-ticket-alt"></i> Submit a Ticket</a></li><li><a onclick="showPage('contact')" style="cursor:pointer;"><i class="fas fa-envelope-open-text"></i> Informed Delivery</a></li></ul></div>
-                <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('about')" style="cursor:pointer;"><i class="fas fa-building"></i> About Velox</a></li><li><a href="#"><i class="fas fa-bullhorn"></i> Newsroom</a></li><li><a href="#"><i class="fas fa-users"></i> Careers</a></li><li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li><li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li></ul></div>
+                <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('about')" style="cursor:pointer;"><i class="fas fa-building"></i> About Vellox</a></li><li><a href="#"><i class="fas fa-bullhorn"></i> Newsroom</a></li><li><a href="#"><i class="fas fa-users"></i> Careers</a></li><li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li><li><a href="#"><i class="fas fa-file-contract"></i> Terms of Use</a></li></ul></div>
             </div>
-            <div class="footer-bottom"><div class="copyright"><i class="fas fa-copyright"></i> 2026 Velox Logistics — All rights reserved.</div><div class="legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div></div>
+            <div class="footer-bottom"><div class="copyright"><i class="fas fa-copyright"></i> 2026 Vellox Logistics — All rights reserved.</div><div class="legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a><a href="#">Accessibility</a></div></div>
         </div>
     </footer>
 
     <!-- ============================================================
     JAVASCRIPT
     ============================================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         function toggleMobileNav() {
             const links = document.getElementById('navLinks');
@@ -1068,8 +1138,47 @@
         }
 
         // ============================================================
-        // VELOX TRACKING TRANSITION ANIMATION HANDLER (FIXED)
+        // VELLOX TRACKING TRANSITION ANIMATION HANDLER (FIXED)
         // ============================================================
+        async function vlxPreloadShipment(trackingNumber) {
+            if (!trackingNumber) return;
+
+            const storageKey = "velox_prefetched_tracking";
+
+            try {
+                const client = window.supabase.createClient(
+                    "https://msuoujruonzugtojukkq.supabase.co",
+                    "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm"
+                );
+
+                let { data, error } = await client.rpc(
+                    "track_shipment",
+                    { p_tracking_number: trackingNumber }
+                );
+
+                if (error) throw error;
+
+                if (!data && !trackingNumber.startsWith("VX")) {
+                    const retry = await client.rpc(
+                        "track_shipment",
+                        { p_tracking_number: "VX" + trackingNumber }
+                    );
+
+                    if (retry.error) throw retry.error;
+                    data = retry.data;
+                }
+
+                sessionStorage.setItem(storageKey, JSON.stringify({
+                    trackingNumber: trackingNumber,
+                    found: !!data,
+                    data: data || null,
+                    createdAt: Date.now()
+                }));
+            } catch (err) {
+                try { sessionStorage.removeItem(storageKey); } catch (_) {}
+                console.warn("Tracking prefetch unavailable; normal lookup will be used.", err);
+            }
+        }
         function openTracking(event) {
             if (event) event.preventDefault();
 
@@ -1081,34 +1190,32 @@
                 (trackNum ? "?track=" + encodeURIComponent(trackNum) : "");
 
             const overlay = document.getElementById("veloxTransition");
-            const car = document.querySelector(".velox-car-box");
 
-            if (!overlay || !car) {
+            if (!overlay) {
                 window.location.href = destination;
                 return;
             }
 
-            // Restart both animations
-            car.style.animation = "none";
-            void car.offsetWidth;
-            car.style.animation = "";
+            if (overlay.classList.contains("is-active")) return;
+            void vlxPreloadShipment(trackNum);
 
-            const plane = document.querySelector(".velox-plane");
-            if (plane) {
-                plane.style.animation = "none";
-                void plane.offsetWidth;
-                plane.style.animation = "";
-            }
-
+            overlay.classList.remove("is-fading");
             overlay.classList.add("is-active");
             overlay.setAttribute("aria-hidden", "false");
 
-            // Open the separate tracking page after 10 seconds
-            setTimeout(function () {
-                window.location.href = destination;
-            }, 10000);
-        }
+            const routeMotion = document.getElementById("vlxRouteMotion");
+            if (routeMotion && typeof routeMotion.beginElement === "function") {
+                routeMotion.beginElement();
+            }
 
+            window.setTimeout(function () {
+                overlay.classList.add("is-fading");
+
+                window.setTimeout(function () {
+                    window.location.href = destination;
+                }, 550);
+            }, 3800);
+        }
         // TRACKING (with admin shipment support)
         const FALLBACK_SHIPMENTS = [{
             trackingNumber: "VX123456",
@@ -1337,16 +1444,16 @@
         // TRANSLATIONS
         const translations = {
     en: {
-        hero_title_1: "Ship with", hero_title_2: "Velox GroundAdvantage",
+        hero_title_1: "Ship with", hero_title_2: "Vellox GroundAdvantage",
         hero_desc: "Reliable shipping solutions for a connected world. 2–5 day delivery with tracking included. No hidden fees.",
         stat_shipments: "Shipments Delivered", stat_countries: "Countries Served", stat_ontime: "On-Time Delivery", stat_support: "Customer Support",
-        srv_express_title: "Document & Parcel Shipping", srv_express_desc: "Velox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.",
-        explore_express: "Explore Velox Express",
-        srv_cargo_title: "Cargo & Freight Shipping", srv_cargo_desc: "Discover full-service logistics from Velox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.",
+        srv_express_title: "Document & Parcel Shipping", srv_express_desc: "Vellox Express is a global leader in international express shipping — fast, reliable, and fully trackable. Same-day and next-day options available.",
+        explore_express: "Explore Vellox Express",
+        srv_cargo_title: "Cargo & Freight Shipping", srv_cargo_desc: "Discover full-service logistics from Vellox Global Forwarding — air, ocean, road, and rail freight for businesses of all sizes.",
         explore_freight: "Explore Freight Services",
         services_label: "What We Offer", services_title: "Services", services_title_highlight: "Available",
         services_sub: "End-to-end logistics solutions tailored to your business needs — from small parcels to global freight.",
-        sol_1_title: "Velox for Business", sol_1_desc: "Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.",
+        sol_1_title: "Vellox for Business", sol_1_desc: "Frequent shippers enjoy volume discounts, dedicated account managers, and streamlined billing. Open an account today.",
         learn_more: "Learn More",
         sol_2_title: "Customer Service", sol_2_desc: "Access our customer portal, live chat, and 24/7 support team for real-time assistance with your shipments.",
         customer_portal: "Customer Portal",
@@ -1374,31 +1481,31 @@
         logistics_inventory: "Inventory Management", logistics_inventory_desc: "Real-time inventory tracking, demand forecasting, and automated replenishment for optimal stock levels.",
         logistics_lastmile: "Last-Mile Delivery", logistics_lastmile_desc: "Efficient last-mile delivery solutions with real-time tracking and proof of delivery for customer satisfaction.",
         logistics_analytics: "Supply Chain Analytics", logistics_analytics_desc: "Data-driven insights and analytics to optimize your supply chain, reduce costs, and improve performance.",
-        tariff_label: "Stay Informed", tariff_title: "Navigating Latest Tariff Developments", tariff_desc: "Global trade is becoming increasingly complex. At Velox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.",
+        tariff_label: "Stay Informed", tariff_title: "Navigating Latest Tariff Developments", tariff_desc: "Global trade is becoming increasingly complex. At Vellox, we are committed to helping you navigate changes in customs, duties, and trade regulations with confidence.",
         tariff_cta: "Get Expert Advice",
         testimonials_label: "Client Stories", testimonials_title: "Trusted by Businesses", testimonials_title_highlight: "Worldwide",
-        testimonials_sub: "Hear from our customers across the globe who rely on Velox for their logistics needs.",
-        testimonial_1: "Velox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.",
+        testimonials_sub: "Hear from our customers across the globe who rely on Vellox for their logistics needs.",
+        testimonial_1: "Vellox Logistics has transformed our supply chain. Their real-time tracking and reliable delivery have saved us countless hours and reduced costs by 25%.",
         testimonial_1_title: "Supply Chain Director, TechGlobal",
-        testimonial_2: "The cargo shipping options from Velox are outstanding. They handled our heavy machinery shipments with care and professionalism.",
+        testimonial_2: "The cargo shipping options from Vellox are outstanding. They handled our heavy machinery shipments with care and professionalism.",
         testimonial_2_title: "Operations Manager, Apex Industries",
         testimonial_3: "Their customer service is second to none. Every shipment is tracked, and I always know exactly where my parcels are.",
         testimonial_3_title: "E-commerce Founder, ModaVibe",
         quick_tools: "Quick Tools", send: "Send", receive: "Receive", shop: "Shop", business: "Business", international: "International", help: "Help",
         tracking_label: "Real-Time Tracking", tracking_title: "Track Your", tracking_title_highlight: "Shipment",
-        tracking_desc: "Enter your Velox tracking number to see real-time updates and delivery status."
+        tracking_desc: "Enter your Vellox tracking number to see real-time updates and delivery status."
     },
     de: {
-        hero_title_1: "Versenden mit", hero_title_2: "Velox GroundAdvantage",
+        hero_title_1: "Versenden mit", hero_title_2: "Vellox GroundAdvantage",
         hero_desc: "Zuverlässige Versandlösungen für eine vernetzte Welt. Lieferung in 2–5 Tagen inklusive Sendungsverfolgung. Keine versteckten Gebühren.",
         stat_shipments: "Zugestellte Sendungen", stat_countries: "Bediente Länder", stat_ontime: "Pünktliche Zustellung", stat_support: "Kundenservice",
-        srv_express_title: "Dokumenten- und Paketversand", srv_express_desc: "Velox Express ist ein weltweit führender Anbieter für internationalen Expressversand – schnell, zuverlässig und vollständig nachverfolgbar. Lieferung am selben oder nächsten Tag verfügbar.",
-        explore_express: "Velox Express entdecken",
-        srv_cargo_title: "Cargo- und Frachtversand", srv_cargo_desc: "Entdecken Sie umfassende Logistiklösungen von Velox Global Forwarding – Luft-, See-, Straßen- und Schienentransport für Unternehmen jeder Größe.",
+        srv_express_title: "Dokumenten- und Paketversand", srv_express_desc: "Vellox Express ist ein weltweit führender Anbieter für internationalen Expressversand – schnell, zuverlässig und vollständig nachverfolgbar. Lieferung am selben oder nächsten Tag verfügbar.",
+        explore_express: "Vellox Express entdecken",
+        srv_cargo_title: "Cargo- und Frachtversand", srv_cargo_desc: "Entdecken Sie umfassende Logistiklösungen von Vellox Global Forwarding – Luft-, See-, Straßen- und Schienentransport für Unternehmen jeder Größe.",
         explore_freight: "Frachtservices entdecken",
         services_label: "Unser Angebot", services_title: "Verfügbare", services_title_highlight: "Dienstleistungen",
         services_sub: "Umfassende Logistiklösungen, abgestimmt auf Ihre Geschäftsanforderungen – von kleinen Paketen bis hin zu weltweiten Frachttransporten.",
-        sol_1_title: "Velox für Unternehmen", sol_1_desc: "Kunden mit regelmäßigem Versand profitieren von Mengenrabatten, persönlichen Kundenbetreuern und vereinfachter Abrechnung. Eröffnen Sie noch heute ein Konto.",
+        sol_1_title: "Vellox für Unternehmen", sol_1_desc: "Kunden mit regelmäßigem Versand profitieren von Mengenrabatten, persönlichen Kundenbetreuern und vereinfachter Abrechnung. Eröffnen Sie noch heute ein Konto.",
         learn_more: "Mehr erfahren",
         sol_2_title: "Kundenservice", sol_2_desc: "Nutzen Sie unser Kundenportal, den Live-Chat und unseren rund um die Uhr erreichbaren Support für aktuelle Informationen zu Ihren Sendungen.",
         customer_portal: "Kundenportal",
@@ -1426,31 +1533,31 @@
         logistics_inventory: "Bestandsverwaltung", logistics_inventory_desc: "Echtzeit-Bestandsverfolgung, Bedarfsprognosen und automatische Nachbestellung für optimale Lagerbestände.",
         logistics_lastmile: "Letzte-Meile-Zustellung", logistics_lastmile_desc: "Effiziente Zustellung auf der letzten Meile mit Echtzeitverfolgung und Zustellnachweis.",
         logistics_analytics: "Lieferkettenanalyse", logistics_analytics_desc: "Datenbasierte Erkenntnisse zur Optimierung Ihrer Lieferkette, Senkung der Kosten und Verbesserung der Leistung.",
-        tariff_label: "Informiert bleiben", tariff_title: "Aktuelle Zollentwicklungen verstehen", tariff_desc: "Der globale Handel wird immer komplexer. Velox unterstützt Sie dabei, Änderungen bei Zollabfertigung, Abgaben und Handelsvorschriften sicher zu bewältigen.",
+        tariff_label: "Informiert bleiben", tariff_title: "Aktuelle Zollentwicklungen verstehen", tariff_desc: "Der globale Handel wird immer komplexer. Vellox unterstützt Sie dabei, Änderungen bei Zollabfertigung, Abgaben und Handelsvorschriften sicher zu bewältigen.",
         tariff_cta: "Expertenrat erhalten",
         testimonials_label: "Kundenberichte", testimonials_title: "Weltweit von Unternehmen", testimonials_title_highlight: "geschätzt",
-        testimonials_sub: "Erfahren Sie, warum Kunden weltweit Velox ihre Logistik anvertrauen.",
-        testimonial_1: "Velox Logistics hat unsere Lieferkette verändert. Die Echtzeitverfolgung und zuverlässige Zustellung sparen uns viel Zeit und haben unsere Kosten um 25 % gesenkt.",
+        testimonials_sub: "Erfahren Sie, warum Kunden weltweit Vellox ihre Logistik anvertrauen.",
+        testimonial_1: "Vellox Logistics hat unsere Lieferkette verändert. Die Echtzeitverfolgung und zuverlässige Zustellung sparen uns viel Zeit und haben unsere Kosten um 25 % gesenkt.",
         testimonial_1_title: "Leiter Lieferkette, TechGlobal",
-        testimonial_2: "Die Frachtversandoptionen von Velox sind hervorragend. Unsere schweren Maschinen wurden sorgfältig und professionell transportiert.",
+        testimonial_2: "Die Frachtversandoptionen von Vellox sind hervorragend. Unsere schweren Maschinen wurden sorgfältig und professionell transportiert.",
         testimonial_2_title: "Betriebsleiter, Apex Industries",
         testimonial_3: "Der Kundenservice ist erstklassig. Jede Sendung wird verfolgt, und ich weiß immer genau, wo sich meine Pakete befinden.",
         testimonial_3_title: "E-Commerce-Gründer, ModaVibe",
         quick_tools: "Schnellzugriff", send: "Versenden", receive: "Empfangen", shop: "Einkaufen", business: "Geschäftskunden", international: "International", help: "Hilfe",
         tracking_label: "Echtzeit-Sendungsverfolgung", tracking_title: "Verfolgen Sie Ihre", tracking_title_highlight: "Sendung",
-        tracking_desc: "Geben Sie Ihre Velox-Sendungsnummer ein, um aktuelle Updates und den Lieferstatus zu sehen."
+        tracking_desc: "Geben Sie Ihre Vellox-Sendungsnummer ein, um aktuelle Updates und den Lieferstatus zu sehen."
     },
     fr: {
-        hero_title_1: "Expédiez avec", hero_title_2: "Velox GroundAdvantage",
+        hero_title_1: "Expédiez avec", hero_title_2: "Vellox GroundAdvantage",
         hero_desc: "Des solutions d'expédition fiables pour un monde connecté. Livraison en 2 à 5 jours avec suivi inclus. Aucun frais caché.",
         stat_shipments: "Envois livrés", stat_countries: "Pays desservis", stat_ontime: "Livraison à temps", stat_support: "Service client",
-        srv_express_title: "Expédition de documents et colis", srv_express_desc: "Velox Express est un leader mondial de l'expédition express internationale : rapide, fiable et entièrement traçable. Livraison le jour même ou le lendemain disponible.",
-        explore_express: "Découvrir Velox Express",
-        srv_cargo_title: "Transport de marchandises et fret", srv_cargo_desc: "Découvrez les solutions logistiques complètes de Velox Global Forwarding : fret aérien, maritime, routier et ferroviaire pour les entreprises de toutes tailles.",
+        srv_express_title: "Expédition de documents et colis", srv_express_desc: "Vellox Express est un leader mondial de l'expédition express internationale : rapide, fiable et entièrement traçable. Livraison le jour même ou le lendemain disponible.",
+        explore_express: "Découvrir Vellox Express",
+        srv_cargo_title: "Transport de marchandises et fret", srv_cargo_desc: "Découvrez les solutions logistiques complètes de Vellox Global Forwarding : fret aérien, maritime, routier et ferroviaire pour les entreprises de toutes tailles.",
         explore_freight: "Découvrir nos services de fret",
         services_label: "Nos prestations", services_title: "Services", services_title_highlight: "disponibles",
         services_sub: "Des solutions logistiques complètes adaptées à vos besoins, des petits colis au fret mondial.",
-        sol_1_title: "Velox pour les entreprises", sol_1_desc: "Les expéditeurs réguliers bénéficient de tarifs dégressifs, de gestionnaires de compte dédiés et d'une facturation simplifiée. Ouvrez un compte dès aujourd'hui.",
+        sol_1_title: "Vellox pour les entreprises", sol_1_desc: "Les expéditeurs réguliers bénéficient de tarifs dégressifs, de gestionnaires de compte dédiés et d'une facturation simplifiée. Ouvrez un compte dès aujourd'hui.",
         learn_more: "En savoir plus",
         sol_2_title: "Service client", sol_2_desc: "Accédez à votre portail client, au chat en direct et à notre assistance disponible 24 h/24 et 7 j/7 pour suivre vos expéditions.",
         customer_portal: "Portail client",
@@ -1478,31 +1585,31 @@
         logistics_inventory: "Gestion des stocks", logistics_inventory_desc: "Suivi des stocks en temps réel, prévisions de la demande et réapprovisionnement automatisé pour des niveaux de stock optimaux.",
         logistics_lastmile: "Livraison du dernier kilomètre", logistics_lastmile_desc: "Solutions efficaces de livraison du dernier kilomètre avec suivi en temps réel et preuve de livraison.",
         logistics_analytics: "Analyse de la chaîne logistique", logistics_analytics_desc: "Des analyses fondées sur les données pour optimiser votre chaîne logistique, réduire les coûts et améliorer les performances.",
-        tariff_label: "Restez informé", tariff_title: "Suivre l'évolution des droits de douane", tariff_desc: "Le commerce mondial devient de plus en plus complexe. Velox vous aide à gérer sereinement les changements concernant les douanes, les droits et les réglementations commerciales.",
+        tariff_label: "Restez informé", tariff_title: "Suivre l'évolution des droits de douane", tariff_desc: "Le commerce mondial devient de plus en plus complexe. Vellox vous aide à gérer sereinement les changements concernant les douanes, les droits et les réglementations commerciales.",
         tariff_cta: "Obtenir des conseils d'experts",
         testimonials_label: "Témoignages clients", testimonials_title: "La confiance des entreprises", testimonials_title_highlight: "du monde entier",
-        testimonials_sub: "Découvrez les témoignages de clients du monde entier qui font confiance à Velox pour leurs besoins logistiques.",
-        testimonial_1: "Velox Logistics a transformé notre chaîne d'approvisionnement. Le suivi en temps réel et les livraisons fiables nous font gagner un temps précieux et ont réduit nos coûts de 25 %.",
+        testimonials_sub: "Découvrez les témoignages de clients du monde entier qui font confiance à Vellox pour leurs besoins logistiques.",
+        testimonial_1: "Vellox Logistics a transformé notre chaîne d'approvisionnement. Le suivi en temps réel et les livraisons fiables nous font gagner un temps précieux et ont réduit nos coûts de 25 %.",
         testimonial_1_title: "Directeur de la chaîne logistique, TechGlobal",
-        testimonial_2: "Les options de transport de fret de Velox sont remarquables. Nos machines lourdes ont été transportées avec soin et professionnalisme.",
+        testimonial_2: "Les options de transport de fret de Vellox sont remarquables. Nos machines lourdes ont été transportées avec soin et professionnalisme.",
         testimonial_2_title: "Responsable des opérations, Apex Industries",
         testimonial_3: "Le service client est exceptionnel. Chaque expédition est suivie et je sais toujours exactement où se trouvent mes colis.",
         testimonial_3_title: "Fondateur e-commerce, ModaVibe",
         quick_tools: "Outils rapides", send: "Envoyer", receive: "Recevoir", shop: "Acheter", business: "Entreprises", international: "International", help: "Aide",
         tracking_label: "Suivi en temps réel", tracking_title: "Suivez votre", tracking_title_highlight: "expédition",
-        tracking_desc: "Saisissez votre numéro de suivi Velox pour consulter les mises à jour en temps réel et le statut de livraison."
+        tracking_desc: "Saisissez votre numéro de suivi Vellox pour consulter les mises à jour en temps réel et le statut de livraison."
     },
     ru: {
-        hero_title_1: "Отправляйте с", hero_title_2: "Velox GroundAdvantage",
+        hero_title_1: "Отправляйте с", hero_title_2: "Vellox GroundAdvantage",
         hero_desc: "Надёжные решения для доставки в современном мире. Доставка за 2–5 дней с отслеживанием. Никаких скрытых платежей.",
         stat_shipments: "Доставленные отправления", stat_countries: "Страны обслуживания", stat_ontime: "Доставка в срок", stat_support: "Поддержка клиентов",
-        srv_express_title: "Доставка документов и посылок", srv_express_desc: "Velox Express — мировой лидер международной экспресс-доставки: быстро, надёжно и с полным отслеживанием. Доступна доставка в тот же или на следующий день.",
-        explore_express: "О Velox Express",
-        srv_cargo_title: "Грузовые перевозки", srv_cargo_desc: "Откройте для себя комплексные логистические услуги Velox Global Forwarding: авиаперевозки, морские, автомобильные и железнодорожные перевозки для компаний любого масштаба.",
+        srv_express_title: "Доставка документов и посылок", srv_express_desc: "Vellox Express — мировой лидер международной экспресс-доставки: быстро, надёжно и с полным отслеживанием. Доступна доставка в тот же или на следующий день.",
+        explore_express: "О Vellox Express",
+        srv_cargo_title: "Грузовые перевозки", srv_cargo_desc: "Откройте для себя комплексные логистические услуги Vellox Global Forwarding: авиаперевозки, морские, автомобильные и железнодорожные перевозки для компаний любого масштаба.",
         explore_freight: "Услуги грузоперевозок",
         services_label: "Наши предложения", services_title: "Доступные", services_title_highlight: "услуги",
         services_sub: "Комплексные логистические решения для вашего бизнеса — от небольших посылок до международных грузоперевозок.",
-        sol_1_title: "Velox для бизнеса", sol_1_desc: "Клиенты с регулярными отправками получают скидки за объём, персональных менеджеров и удобную систему расчётов. Откройте счёт уже сегодня.",
+        sol_1_title: "Vellox для бизнеса", sol_1_desc: "Клиенты с регулярными отправками получают скидки за объём, персональных менеджеров и удобную систему расчётов. Откройте счёт уже сегодня.",
         learn_more: "Подробнее",
         sol_2_title: "Обслуживание клиентов", sol_2_desc: "Используйте клиентский портал, онлайн-чат и круглосуточную службу поддержки, чтобы получать актуальную информацию о своих отправлениях.",
         customer_portal: "Клиентский портал",
@@ -1530,31 +1637,31 @@
         logistics_inventory: "Управление запасами", logistics_inventory_desc: "Отслеживание запасов в реальном времени, прогнозирование спроса и автоматическое пополнение для поддержания оптимальных складских остатков.",
         logistics_lastmile: "Доставка последней мили", logistics_lastmile_desc: "Эффективная доставка последней мили с отслеживанием в реальном времени и подтверждением вручения.",
         logistics_analytics: "Аналитика цепочки поставок", logistics_analytics_desc: "Аналитика на основе данных для оптимизации цепочки поставок, сокращения расходов и повышения эффективности.",
-        tariff_label: "Будьте в курсе", tariff_title: "Последние изменения таможенных тарифов", tariff_desc: "Международная торговля становится всё сложнее. Velox помогает уверенно ориентироваться в изменениях таможенных правил, пошлин и торгового законодательства.",
+        tariff_label: "Будьте в курсе", tariff_title: "Последние изменения таможенных тарифов", tariff_desc: "Международная торговля становится всё сложнее. Vellox помогает уверенно ориентироваться в изменениях таможенных правил, пошлин и торгового законодательства.",
         tariff_cta: "Получить консультацию эксперта",
         testimonials_label: "Отзывы клиентов", testimonials_title: "Нам доверяют компании", testimonials_title_highlight: "по всему миру",
-        testimonials_sub: "Узнайте, почему клиенты по всему миру доверяют Velox решение своих логистических задач.",
-        testimonial_1: "Velox Logistics преобразила нашу цепочку поставок. Отслеживание в реальном времени и надёжная доставка сэкономили нам много времени и снизили расходы на 25%.",
+        testimonials_sub: "Узнайте, почему клиенты по всему миру доверяют Vellox решение своих логистических задач.",
+        testimonial_1: "Vellox Logistics преобразила нашу цепочку поставок. Отслеживание в реальном времени и надёжная доставка сэкономили нам много времени и снизили расходы на 25%.",
         testimonial_1_title: "Директор по цепочке поставок, TechGlobal",
-        testimonial_2: "Варианты грузоперевозок Velox превосходны. Перевозка нашего тяжёлого оборудования была выполнена бережно и профессионально.",
+        testimonial_2: "Варианты грузоперевозок Vellox превосходны. Перевозка нашего тяжёлого оборудования была выполнена бережно и профессионально.",
         testimonial_2_title: "Операционный менеджер, Apex Industries",
         testimonial_3: "Их обслуживание клиентов на высшем уровне. Каждое отправление отслеживается, и я всегда точно знаю, где находятся мои посылки.",
         testimonial_3_title: "Основатель интернет-магазина, ModaVibe",
         quick_tools: "Быстрые инструменты", send: "Отправить", receive: "Получить", shop: "Покупки", business: "Для бизнеса", international: "Международные перевозки", help: "Помощь",
         tracking_label: "Отслеживание в реальном времени", tracking_title: "Отследите свою", tracking_title_highlight: "посылку",
-        tracking_desc: "Введите номер отслеживания Velox, чтобы увидеть обновления в реальном времени и статус доставки."
+        tracking_desc: "Введите номер отслеживания Vellox, чтобы увидеть обновления в реальном времени и статус доставки."
     },
     zh: {
-        hero_title_1: "选择", hero_title_2: "Velox GroundAdvantage",
+        hero_title_1: "选择", hero_title_2: "Vellox GroundAdvantage",
         hero_desc: "为互联世界提供可靠的运输服务。2–5 天送达，包含物流追踪，无隐藏费用。",
         stat_shipments: "已送达货件", stat_countries: "服务国家", stat_ontime: "准时送达", stat_support: "客户支持",
-        srv_express_title: "文件与包裹运输", srv_express_desc: "Velox Express 是国际快递领域的全球领先服务商，快速、可靠且全程可追踪。提供当日和次日送达服务。",
-        explore_express: "了解 Velox Express",
-        srv_cargo_title: "货物与货运服务", srv_cargo_desc: "了解 Velox Global Forwarding 的综合物流服务，包括航空、海运、公路和铁路运输，满足各种规模企业的需求。",
+        srv_express_title: "文件与包裹运输", srv_express_desc: "Vellox Express 是国际快递领域的全球领先服务商，快速、可靠且全程可追踪。提供当日和次日送达服务。",
+        explore_express: "了解 Vellox Express",
+        srv_cargo_title: "货物与货运服务", srv_cargo_desc: "了解 Vellox Global Forwarding 的综合物流服务，包括航空、海运、公路和铁路运输，满足各种规模企业的需求。",
         explore_freight: "了解货运服务",
         services_label: "我们的服务", services_title: "可提供的", services_title_highlight: "服务",
         services_sub: "为您的业务量身打造端到端物流解决方案，涵盖小件包裹至全球货运。",
-        sol_1_title: "Velox 企业服务", sol_1_desc: "经常发货的客户可享受批量折扣、专属客户经理和便捷账单服务。立即开设账户。",
+        sol_1_title: "Vellox 企业服务", sol_1_desc: "经常发货的客户可享受批量折扣、专属客户经理和便捷账单服务。立即开设账户。",
         learn_more: "了解更多",
         sol_2_title: "客户服务", sol_2_desc: "通过客户门户、在线聊天和全天候支持团队，实时获取您的货件信息。",
         customer_portal: "客户门户",
@@ -1582,19 +1689,19 @@
         logistics_inventory: "库存管理", logistics_inventory_desc: "实时库存追踪、需求预测和自动补货，帮助维持最佳库存水平。",
         logistics_lastmile: "最后一公里配送", logistics_lastmile_desc: "提供高效的最后一公里配送服务，包括实时追踪和送达证明。",
         logistics_analytics: "供应链分析", logistics_analytics_desc: "利用数据分析优化供应链、降低成本并提升运营效率。",
-        tariff_label: "掌握最新资讯", tariff_title: "了解最新关税动态", tariff_desc: "全球贸易日益复杂。Velox 致力于帮助您从容应对海关、关税和贸易法规的变化。",
+        tariff_label: "掌握最新资讯", tariff_title: "了解最新关税动态", tariff_desc: "全球贸易日益复杂。Vellox 致力于帮助您从容应对海关、关税和贸易法规的变化。",
         tariff_cta: "获取专家建议",
         testimonials_label: "客户评价", testimonials_title: "赢得全球企业的", testimonials_title_highlight: "信赖",
-        testimonials_sub: "了解世界各地客户为何选择 Velox 满足其物流需求。",
-        testimonial_1: "Velox Logistics 改善了我们的供应链。实时追踪和可靠配送为我们节省了大量时间，并降低了 25% 的成本。",
+        testimonials_sub: "了解世界各地客户为何选择 Vellox 满足其物流需求。",
+        testimonial_1: "Vellox Logistics 改善了我们的供应链。实时追踪和可靠配送为我们节省了大量时间，并降低了 25% 的成本。",
         testimonial_1_title: "供应链总监，TechGlobal",
-        testimonial_2: "Velox 的货运选择非常出色。他们以细致、专业的方式运输我们的重型机械设备。",
+        testimonial_2: "Vellox 的货运选择非常出色。他们以细致、专业的方式运输我们的重型机械设备。",
         testimonial_2_title: "运营经理，Apex Industries",
         testimonial_3: "他们的客户服务非常出色。每件货物都可以追踪，我始终清楚包裹的准确位置。",
         testimonial_3_title: "电商创始人，ModaVibe",
         quick_tools: "快捷工具", send: "寄件", receive: "收件", shop: "购物", business: "企业服务", international: "国际运输", help: "帮助",
         tracking_label: "实时物流追踪", tracking_title: "追踪您的", tracking_title_highlight: "货件",
-        tracking_desc: "输入您的 Velox 运单号，即可查看实时更新和配送状态。"
+        tracking_desc: "输入您的 Vellox 运单号，即可查看实时更新和配送状态。"
     }
 };
 

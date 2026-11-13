@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Forwarding | Velox Logistics</title>
+    <title>Global Forwarding | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --dhl-yellow: #FFCC00; --dhl-red: #D40000; --dhl-dark: #2c2c2c; }
@@ -24,11 +24,18 @@
         footer { background: var(--dhl-dark); color: #aaa; padding: 40px 5%; text-align: center; margin-top: 60px; }
         footer a { color: var(--dhl-yellow); }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
     <div class="top-bar"><a href="index.html">Home</a><a href="tracking.html">Track</a><a href="quote.html">Get Quote</a></div>
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="tracking.html">Track</a>
@@ -36,7 +43,7 @@
         </div>
     </nav>
     <section class="hero">
-        <h1>Velox Global Forwarding</h1>
+        <h1>Vellox Global Forwarding</h1>
         <p>Comprehensive logistics solutions for complex supply chains</p>
     </section>
     <div class="content">
@@ -49,7 +56,7 @@
         <p style="margin-top:30px;"><a href="quote.html" style="background:var(--dhl-red); color:white; padding:12px 30px; border-radius:4px; font-weight:700;">Get a Forwarding Quote →</a></p>
     </div>
     <footer>
-        <p>&copy; 2024 Velox Logistics - all rights reserved | <a href="index.html">Back to Home</a></p>
+        <p>&copy; 2024 Vellox Logistics - all rights reserved | <a href="index.html">Back to Home</a></p>
     </footer>
 </body>
 </html>

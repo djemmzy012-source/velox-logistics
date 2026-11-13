@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Divisions | Velox Logistics</title>
+    <title>Our Divisions | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
     <style>
@@ -44,6 +44,13 @@
         .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
         @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } .division-card { flex-direction: column; } .division-img { height: 250px; } }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
 
@@ -60,7 +67,7 @@
 
     <!-- Navigation -->
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -72,7 +79,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Vellox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
         <div class="mobile-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -93,11 +100,11 @@
 
     <!-- Division Cards -->
     <div class="division-container">
-        <!-- Velox Express -->
+        <!-- Vellox Express -->
         <div class="division-card">
             <div class="division-img"></div>
             <div class="division-text">
-                <h3 data-i18n="expr_title">Velox Express</h3>
+                <h3 data-i18n="expr_title">Vellox Express</h3>
                 <p data-i18n="expr_desc">The undisputed global leader in international express shipping. We deliver documents and parcels with speed and reliability worldwide.</p>
                 <a href="business.html" class="btn-explore" data-i18n="learn_more">Learn More →</a>
             </div>
@@ -107,7 +114,7 @@
         <div class="division-card">
             <div class="division-img" style="background-image: url('https://images.unsplash.com/photo-1559297434-fae8a1916a79?w=800');"></div>
             <div class="division-text">
-                <h3 data-i18n="forward_title">Velox Global Forwarding</h3>
+                <h3 data-i18n="forward_title">Vellox Global Forwarding</h3>
                 <p data-i18n="forward_desc">Business-only shipping and logistics service options. From air freight to ocean cargo, we handle complex supply chains.</p>
                 <a href="global-forwarding.html" class="btn-explore" data-i18n="learn_more">Learn More →</a>
             </div>
@@ -131,7 +138,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Vellox Logistics - all rights reserved</div>
     </footer>
 
     <script>
@@ -156,43 +163,43 @@
         const translations = {
             en: {
                 back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
-                mobile_title:"Velox Logistics", divisions_title:"Our Divisions", divisions_sub:"Comprehensive logistics solutions tailored to your needs.",
-                expr_title:"Velox Express", expr_desc:"The undisputed global leader in international express shipping. We deliver documents and parcels with speed and reliability worldwide.",
-                forward_title:"Velox Global Forwarding", forward_desc:"Business-only shipping and logistics service options. From air freight to ocean cargo, we handle complex supply chains.",
+                mobile_title:"Vellox Logistics", divisions_title:"Our Divisions", divisions_sub:"Comprehensive logistics solutions tailored to your needs.",
+                expr_title:"Vellox Express", expr_desc:"The undisputed global leader in international express shipping. We deliver documents and parcels with speed and reliability worldwide.",
+                forward_title:"Vellox Global Forwarding", forward_desc:"Business-only shipping and logistics service options. From air freight to ocean cargo, we handle complex supply chains.",
                 learn_more:"Learn More →", footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
-                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+                copyright:"&copy; 2024 Vellox Logistics - all rights reserved"
             },
             ru: {
                 back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
-                mobile_title:"Velox Logistics", divisions_title:"Наши подразделения", divisions_sub:"Комплексные логистические решения, адаптированные под ваши потребности.",
-                expr_title:"Velox Express", expr_desc:"Бесспорный мировой лидер в международной экспресс-доставке. Мы доставляем документы и посылки быстро и надежно по всему миру.",
-                forward_title:"Velox Global Forwarding", forward_desc:"Услуги доставки и логистики только для бизнеса. От авиагрузов до морских грузов, мы управляем сложными цепочками поставок.",
+                mobile_title:"Vellox Logistics", divisions_title:"Наши подразделения", divisions_sub:"Комплексные логистические решения, адаптированные под ваши потребности.",
+                expr_title:"Vellox Express", expr_desc:"Бесспорный мировой лидер в международной экспресс-доставке. Мы доставляем документы и посылки быстро и надежно по всему миру.",
+                forward_title:"Vellox Global Forwarding", forward_desc:"Услуги доставки и логистики только для бизнеса. От авиагрузов до морских грузов, мы управляем сложными цепочками поставок.",
                 learn_more:"Подробнее →", footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
-                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+                copyright:"&copy; 2024 Vellox Logistics - все права защищены"
             },
             ch: {
                 back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
-                mobile_title:"Velox Logistics", divisions_title:"我们的部门", divisions_sub:"量身定制的综合物流解决方案。",
-                expr_title:"Velox Express", expr_desc:"国际快递领域的全球领导者。我们以速度和可靠性在全球范围内递送文件和包裹。",
-                forward_title:"Velox Global Forwarding", forward_desc:"仅限企业的货运和物流服务选项。从空运到海运，我们处理复杂的供应链。",
+                mobile_title:"Vellox Logistics", divisions_title:"我们的部门", divisions_sub:"量身定制的综合物流解决方案。",
+                expr_title:"Vellox Express", expr_desc:"国际快递领域的全球领导者。我们以速度和可靠性在全球范围内递送文件和包裹。",
+                forward_title:"Vellox Global Forwarding", forward_desc:"仅限企业的货运和物流服务选项。从空运到海运，我们处理复杂的供应链。",
                 learn_more:"了解更多 →", footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
-                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+                copyright:"&copy; 2024 Vellox Logistics - 保留所有权利"
             },
             de: {
                 back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
-                mobile_title:"Velox Logistics", divisions_title:"Unsere Abteilungen", divisions_sub:"Umfassende Logistiklösungen, maßgeschneidert für Ihre Bedürfnisse.",
-                expr_title:"Velox Express", expr_desc:"Der unangefochtene Weltmarktführer im internationalen Expressversand. Wir liefern Dokumente und Pakete weltweit schnell und zuverlässig.",
-                forward_title:"Velox Global Forwarding", forward_desc:"Versand- und Logistikdienstleistungen nur für Unternehmen. Von Luftfracht bis Seefracht, wir übernehmen komplexe Lieferketten.",
+                mobile_title:"Vellox Logistics", divisions_title:"Unsere Abteilungen", divisions_sub:"Umfassende Logistiklösungen, maßgeschneidert für Ihre Bedürfnisse.",
+                expr_title:"Vellox Express", expr_desc:"Der unangefochtene Weltmarktführer im internationalen Expressversand. Wir liefern Dokumente und Pakete weltweit schnell und zuverlässig.",
+                forward_title:"Vellox Global Forwarding", forward_desc:"Versand- und Logistikdienstleistungen nur für Unternehmen. Von Luftfracht bis Seefracht, wir übernehmen komplexe Lieferketten.",
                 learn_more:"Mehr erfahren →", footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
-                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+                copyright:"&copy; 2024 Vellox Logistics - Alle Rechte vorbehalten"
             },
             fr: {
                 back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
-                mobile_title:"Velox Logistics", divisions_title:"Nos Divisions", divisions_sub:"Des solutions logistiques complètes adaptées à vos besoins.",
-                expr_title:"Velox Express", expr_desc:"Le leader mondial incontesté de l'expédition internationale express. Nous livrons documents et colis rapidement et fiablement dans le monde entier.",
-                forward_title:"Velox Global Forwarding", forward_desc:"Options d'expédition et de logistique uniquement pour les entreprises. Du fret aérien au fret maritime, nous gérons des chaînes d'approvisionnement complexes.",
+                mobile_title:"Vellox Logistics", divisions_title:"Nos Divisions", divisions_sub:"Des solutions logistiques complètes adaptées à vos besoins.",
+                expr_title:"Vellox Express", expr_desc:"Le leader mondial incontesté de l'expédition internationale express. Nous livrons documents et colis rapidement et fiablement dans le monde entier.",
+                forward_title:"Vellox Global Forwarding", forward_desc:"Options d'expédition et de logistique uniquement pour les entreprises. Du fret aérien au fret maritime, nous gérons des chaînes d'approvisionnement complexes.",
                 learn_more:"En savoir plus →", footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
-                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+                copyright:"&copy; 2024 Vellox Logistics - Tous droits réservés"
             }
         };
     </script>

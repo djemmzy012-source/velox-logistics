@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find a Location | Velox Logistics</title>
+    <title>Find a Location | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
     <style>
@@ -62,6 +62,13 @@
             .search-box { flex-direction: column; }
         }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
 
@@ -78,7 +85,7 @@
 
     <!-- Navigation -->
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -90,7 +97,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Vellox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
         <div class="mobile-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -122,7 +129,7 @@
         <!-- UK Headquarters -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_uk_country">United Kingdom (Headquarters)</div>
-            <div class="loc-title" data-i18n="loc_uk_title">Velox Logistics UK HQ</div>
+            <div class="loc-title" data-i18n="loc_uk_title">Vellox Logistics UK HQ</div>
             <div class="loc-address">
                 1 Canary Wharf<br>
                 London E14 5AB<br>
@@ -134,7 +141,7 @@
         <!-- USA -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_us_country">United States</div>
-            <div class="loc-title" data-i18n="loc_us_title">Velox Logistics New York</div>
+            <div class="loc-title" data-i18n="loc_us_title">Vellox Logistics New York</div>
             <div class="loc-address">
                 200 West Street<br>
                 New York, NY 10282<br>
@@ -146,7 +153,7 @@
         <!-- Germany -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_de_country">Germany</div>
-            <div class="loc-title" data-i18n="loc_de_title">Velox Logistics Berlin</div>
+            <div class="loc-title" data-i18n="loc_de_title">Vellox Logistics Berlin</div>
             <div class="loc-address">
                 Potsdamer Platz 1<br>
                 10785 Berlin<br>
@@ -158,7 +165,7 @@
         <!-- France -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_fr_country">France</div>
-            <div class="loc-title" data-i18n="loc_fr_title">Velox Logistics Paris</div>
+            <div class="loc-title" data-i18n="loc_fr_title">Vellox Logistics Paris</div>
             <div class="loc-address">
                 2 Rue de la Paix<br>
                 75002 Paris<br>
@@ -170,7 +177,7 @@
         <!-- UAE -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_ae_country">United Arab Emirates</div>
-            <div class="loc-title" data-i18n="loc_ae_title">Velox Logistics Dubai</div>
+            <div class="loc-title" data-i18n="loc_ae_title">Vellox Logistics Dubai</div>
             <div class="loc-address">
                 Business Bay Tower B<br>
                 Level 12, Dubai<br>
@@ -182,7 +189,7 @@
         <!-- China -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_cn_country">China</div>
-            <div class="loc-title" data-i18n="loc_cn_title">Velox Logistics Shanghai</div>
+            <div class="loc-title" data-i18n="loc_cn_title">Vellox Logistics Shanghai</div>
             <div class="loc-address">
                 Lujiazui Financial District<br>
                 No. 88 Century Avenue<br>
@@ -194,7 +201,7 @@
         <!-- Nigeria -->
         <div class="location-card">
             <div class="loc-country" data-i18n="loc_ng_country">Nigeria</div>
-            <div class="loc-title" data-i18n="loc_ng_title">Velox Logistics Lagos</div>
+            <div class="loc-title" data-i18n="loc_ng_title">Vellox Logistics Lagos</div>
             <div class="loc-address">
                 Victoria Island<br>
                 14 Adeola Odeku Street<br>
@@ -221,7 +228,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Vellox Logistics - all rights reserved</div>
     </footer>
 
     <script>
@@ -265,73 +272,73 @@
         const translations = {
             en: {
                 back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
-                mobile_title:"Velox Logistics", locations_title:"Find a Location", locations_sub:"Visit our offices or request a callback.",
+                mobile_title:"Vellox Logistics", locations_title:"Find a Location", locations_sub:"Visit our offices or request a callback.",
                 search_placeholder:"Search by city, country, or postal code...", search_btn:"Search",
-                loc_uk_country:"United Kingdom (Headquarters)", loc_uk_title:"Velox Logistics UK HQ", loc_uk_hours:"Open Mon-Fri 9am-6pm",
-                loc_us_country:"United States", loc_us_title:"Velox Logistics New York", loc_us_hours:"Open Mon-Fri 8am-7pm",
-                loc_de_country:"Germany", loc_de_title:"Velox Logistics Berlin", loc_de_hours:"Open Mon-Fri 9am-6pm",
-                loc_fr_country:"France", loc_fr_title:"Velox Logistics Paris", loc_fr_hours:"Open Mon-Fri 9am-6pm",
-                loc_ae_country:"United Arab Emirates", loc_ae_title:"Velox Logistics Dubai", loc_ae_hours:"Open Mon-Sat 9am-8pm",
-                loc_cn_country:"China", loc_cn_title:"Velox Logistics Shanghai", loc_cn_hours:"Open Mon-Fri 9am-6pm",
-                loc_ng_country:"Nigeria", loc_ng_title:"Velox Logistics Lagos", loc_ng_hours:"Open Mon-Fri 8am-5pm",
+                loc_uk_country:"United Kingdom (Headquarters)", loc_uk_title:"Vellox Logistics UK HQ", loc_uk_hours:"Open Mon-Fri 9am-6pm",
+                loc_us_country:"United States", loc_us_title:"Vellox Logistics New York", loc_us_hours:"Open Mon-Fri 8am-7pm",
+                loc_de_country:"Germany", loc_de_title:"Vellox Logistics Berlin", loc_de_hours:"Open Mon-Fri 9am-6pm",
+                loc_fr_country:"France", loc_fr_title:"Vellox Logistics Paris", loc_fr_hours:"Open Mon-Fri 9am-6pm",
+                loc_ae_country:"United Arab Emirates", loc_ae_title:"Vellox Logistics Dubai", loc_ae_hours:"Open Mon-Sat 9am-8pm",
+                loc_cn_country:"China", loc_cn_title:"Vellox Logistics Shanghai", loc_cn_hours:"Open Mon-Fri 9am-6pm",
+                loc_ng_country:"Nigeria", loc_ng_title:"Vellox Logistics Lagos", loc_ng_hours:"Open Mon-Fri 8am-5pm",
                 footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
-                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+                copyright:"&copy; 2024 Vellox Logistics - all rights reserved"
             },
             ru: {
                 back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
-                mobile_title:"Velox Logistics", locations_title:"Найти отделение", locations_sub:"Посетите наши офисы или запросите обратный звонок.",
+                mobile_title:"Vellox Logistics", locations_title:"Найти отделение", locations_sub:"Посетите наши офисы или запросите обратный звонок.",
                 search_placeholder:"Поиск по городу, стране или почтовому индексу...", search_btn:"Поиск",
-                loc_uk_country:"Великобритания (Штаб-квартира)", loc_uk_title:"Velox Logistics UK HQ", loc_uk_hours:"Пн-Пт: 9:00-18:00",
-                loc_us_country:"США", loc_us_title:"Velox Logistics Нью-Йорк", loc_us_hours:"Пн-Пт: 8:00-19:00",
-                loc_de_country:"Германия", loc_de_title:"Velox Logistics Берлин", loc_de_hours:"Пн-Пт: 9:00-18:00",
-                loc_fr_country:"Франция", loc_fr_title:"Velox Logistics Париж", loc_fr_hours:"Пн-Пт: 9:00-18:00",
-                loc_ae_country:"ОАЭ", loc_ae_title:"Velox Logistics Дубай", loc_ae_hours:"Пн-Сб: 9:00-20:00",
-                loc_cn_country:"Китай", loc_cn_title:"Velox Logistics Шанхай", loc_cn_hours:"Пн-Пт: 9:00-18:00",
-                loc_ng_country:"Нигерия", loc_ng_title:"Velox Logistics Лагос", loc_ng_hours:"Пн-Пт: 8:00-17:00",
+                loc_uk_country:"Великобритания (Штаб-квартира)", loc_uk_title:"Vellox Logistics UK HQ", loc_uk_hours:"Пн-Пт: 9:00-18:00",
+                loc_us_country:"США", loc_us_title:"Vellox Logistics Нью-Йорк", loc_us_hours:"Пн-Пт: 8:00-19:00",
+                loc_de_country:"Германия", loc_de_title:"Vellox Logistics Берлин", loc_de_hours:"Пн-Пт: 9:00-18:00",
+                loc_fr_country:"Франция", loc_fr_title:"Vellox Logistics Париж", loc_fr_hours:"Пн-Пт: 9:00-18:00",
+                loc_ae_country:"ОАЭ", loc_ae_title:"Vellox Logistics Дубай", loc_ae_hours:"Пн-Сб: 9:00-20:00",
+                loc_cn_country:"Китай", loc_cn_title:"Vellox Logistics Шанхай", loc_cn_hours:"Пн-Пт: 9:00-18:00",
+                loc_ng_country:"Нигерия", loc_ng_title:"Vellox Logistics Лагос", loc_ng_hours:"Пн-Пт: 8:00-17:00",
                 footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
-                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+                copyright:"&copy; 2024 Vellox Logistics - все права защищены"
             },
             ch: {
                 back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
-                mobile_title:"Velox Logistics", locations_title:"查找地点", locations_sub:"访问我们的办公室或要求回电。",
+                mobile_title:"Vellox Logistics", locations_title:"查找地点", locations_sub:"访问我们的办公室或要求回电。",
                 search_placeholder:"按城市、国家或邮政编码搜索...", search_btn:"搜索",
-                loc_uk_country:"英国（总部）", loc_uk_title:"Velox Logistics 英国总部", loc_uk_hours:"周一至周五 上午 9 点 - 下午 6 点",
-                loc_us_country:"美国", loc_us_title:"Velox Logistics 纽约", loc_us_hours:"周一至周五 上午 8 点 - 下午 7 点",
-                loc_de_country:"德国", loc_de_title:"Velox Logistics 柏林", loc_de_hours:"周一至周五 上午 9 点 - 下午 6 点",
-                loc_fr_country:"法国", loc_fr_title:"Velox Logistics 巴黎", loc_fr_hours:"周一至周五 上午 9 点 - 下午 6 点",
-                loc_ae_country:"阿联酋", loc_ae_title:"Velox Logistics 迪拜", loc_ae_hours:"周一至周六 上午 9 点 - 下午 8 点",
-                loc_cn_country:"中国", loc_cn_title:"Velox Logistics 上海", loc_cn_hours:"周一至周五 上午 9 点 - 下午 6 点",
-                loc_ng_country:"尼日利亚", loc_ng_title:"Velox Logistics 拉各斯", loc_ng_hours:"周一至周五 上午 8 点 - 下午 5 点",
+                loc_uk_country:"英国（总部）", loc_uk_title:"Vellox Logistics 英国总部", loc_uk_hours:"周一至周五 上午 9 点 - 下午 6 点",
+                loc_us_country:"美国", loc_us_title:"Vellox Logistics 纽约", loc_us_hours:"周一至周五 上午 8 点 - 下午 7 点",
+                loc_de_country:"德国", loc_de_title:"Vellox Logistics 柏林", loc_de_hours:"周一至周五 上午 9 点 - 下午 6 点",
+                loc_fr_country:"法国", loc_fr_title:"Vellox Logistics 巴黎", loc_fr_hours:"周一至周五 上午 9 点 - 下午 6 点",
+                loc_ae_country:"阿联酋", loc_ae_title:"Vellox Logistics 迪拜", loc_ae_hours:"周一至周六 上午 9 点 - 下午 8 点",
+                loc_cn_country:"中国", loc_cn_title:"Vellox Logistics 上海", loc_cn_hours:"周一至周五 上午 9 点 - 下午 6 点",
+                loc_ng_country:"尼日利亚", loc_ng_title:"Vellox Logistics 拉各斯", loc_ng_hours:"周一至周五 上午 8 点 - 下午 5 点",
                 footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
-                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+                copyright:"&copy; 2024 Vellox Logistics - 保留所有权利"
             },
             de: {
                 back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
-                mobile_title:"Velox Logistics", locations_title:"Standort finden", locations_sub:"Besuchen Sie unsere Büros oder fordern Sie einen Rückruf an.",
+                mobile_title:"Vellox Logistics", locations_title:"Standort finden", locations_sub:"Besuchen Sie unsere Büros oder fordern Sie einen Rückruf an.",
                 search_placeholder:"Suche nach Stadt, Land oder Postleitzahl...", search_btn:"Suchen",
-                loc_uk_country:"Vereinigtes Königreich (Zentrale)", loc_uk_title:"Velox Logistics UK HQ", loc_uk_hours:"Mo-Fr: 9:00-18:00",
-                loc_us_country:"USA", loc_us_title:"Velox Logistics New York", loc_us_hours:"Mo-Fr: 8:00-19:00",
-                loc_de_country:"Deutschland", loc_de_title:"Velox Logistics Berlin", loc_de_hours:"Mo-Fr: 9:00-18:00",
-                loc_fr_country:"Frankreich", loc_fr_title:"Velox Logistics Paris", loc_fr_hours:"Mo-Fr: 9:00-18:00",
-                loc_ae_country:"VAE", loc_ae_title:"Velox Logistics Dubai", loc_ae_hours:"Mo-Sa: 9:00-20:00",
-                loc_cn_country:"China", loc_cn_title:"Velox Logistics Shanghai", loc_cn_hours:"Mo-Fr: 9:00-18:00",
-                loc_ng_country:"Nigeria", loc_ng_title:"Velox Logistics Lagos", loc_ng_hours:"Mo-Fr: 8:00-17:00",
+                loc_uk_country:"Vereinigtes Königreich (Zentrale)", loc_uk_title:"Vellox Logistics UK HQ", loc_uk_hours:"Mo-Fr: 9:00-18:00",
+                loc_us_country:"USA", loc_us_title:"Vellox Logistics New York", loc_us_hours:"Mo-Fr: 8:00-19:00",
+                loc_de_country:"Deutschland", loc_de_title:"Vellox Logistics Berlin", loc_de_hours:"Mo-Fr: 9:00-18:00",
+                loc_fr_country:"Frankreich", loc_fr_title:"Vellox Logistics Paris", loc_fr_hours:"Mo-Fr: 9:00-18:00",
+                loc_ae_country:"VAE", loc_ae_title:"Vellox Logistics Dubai", loc_ae_hours:"Mo-Sa: 9:00-20:00",
+                loc_cn_country:"China", loc_cn_title:"Vellox Logistics Shanghai", loc_cn_hours:"Mo-Fr: 9:00-18:00",
+                loc_ng_country:"Nigeria", loc_ng_title:"Vellox Logistics Lagos", loc_ng_hours:"Mo-Fr: 8:00-17:00",
                 footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
-                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+                copyright:"&copy; 2024 Vellox Logistics - Alle Rechte vorbehalten"
             },
             fr: {
                 back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
-                mobile_title:"Velox Logistics", locations_title:"Trouver un emplacement", locations_sub:"Visitez nos bureaux ou demandez un rappel.",
+                mobile_title:"Vellox Logistics", locations_title:"Trouver un emplacement", locations_sub:"Visitez nos bureaux ou demandez un rappel.",
                 search_placeholder:"Rechercher par ville, pays ou code postal...", search_btn:"Rechercher",
-                loc_uk_country:"Royaume-Uni (Siège)", loc_uk_title:"Velox Logistics UK HQ", loc_uk_hours:"Lun-Ven: 9h-18h",
-                loc_us_country:"États-Unis", loc_us_title:"Velox Logistics New York", loc_us_hours:"Lun-Ven: 8h-19h",
-                loc_de_country:"Allemagne", loc_de_title:"Velox Logistics Berlin", loc_de_hours:"Lun-Ven: 9h-18h",
-                loc_fr_country:"France", loc_fr_title:"Velox Logistics Paris", loc_fr_hours:"Lun-Ven: 9h-18h",
-                loc_ae_country:"Émirats Arabes Unis", loc_ae_title:"Velox Logistics Dubaï", loc_ae_hours:"Lun-Sam: 9h-20h",
-                loc_cn_country:"Chine", loc_cn_title:"Velox Logistics Shanghai", loc_cn_hours:"Lun-Ven: 9h-18h",
-                loc_ng_country:"Nigéria", loc_ng_title:"Velox Logistics Lagos", loc_ng_hours:"Lun-Ven: 8h-17h",
+                loc_uk_country:"Royaume-Uni (Siège)", loc_uk_title:"Vellox Logistics UK HQ", loc_uk_hours:"Lun-Ven: 9h-18h",
+                loc_us_country:"États-Unis", loc_us_title:"Vellox Logistics New York", loc_us_hours:"Lun-Ven: 8h-19h",
+                loc_de_country:"Allemagne", loc_de_title:"Vellox Logistics Berlin", loc_de_hours:"Lun-Ven: 9h-18h",
+                loc_fr_country:"France", loc_fr_title:"Vellox Logistics Paris", loc_fr_hours:"Lun-Ven: 9h-18h",
+                loc_ae_country:"Émirats Arabes Unis", loc_ae_title:"Vellox Logistics Dubaï", loc_ae_hours:"Lun-Sam: 9h-20h",
+                loc_cn_country:"Chine", loc_cn_title:"Vellox Logistics Shanghai", loc_cn_hours:"Lun-Ven: 9h-18h",
+                loc_ng_country:"Nigéria", loc_ng_title:"Vellox Logistics Lagos", loc_ng_hours:"Lun-Ven: 8h-17h",
                 footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
-                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+                copyright:"&copy; 2024 Vellox Logistics - Tous droits réservés"
             }
         };
     </script>

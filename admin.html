@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Velox Admin | Full Logistics Control</title>
+    <title>Vellox Admin | Full Logistics Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -79,7 +79,7 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
 <!-- MAIN DASHBOARD -->
 <div id="dashboardApp" class="hidden min-h-screen flex">
     <aside class="w-72 bg-white shadow-xl border-r border-gray-100 flex-shrink-0 hidden md:block overflow-y-auto" style="height:100vh;">
-        <div class="p-5 border-b"><div class="velox-brand"><span class="velox-mark">V</span><span class="velox-brand-name text-xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div><p class="text-xs text-gray-400">RealÃ¢â‚¬â€˜time tracking</p></div>
+        <div class="p-5 border-b"><div class="velox-brand"><span class="velox-mark">V</span><span class="velox-brand-name text-xl">VELLOX <span style="color:#c9a45c">ADMIN</span></span></div><p class="text-xs text-gray-400">Real-time tracking</p></div>
         <nav class="py-4">
             <a href="#" data-nav="dashboard" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700 font-medium"><i class="fas fa-tachometer-alt w-5"></i> Dashboard</a>
             <a href="#" data-nav="shipments" class="sidebar-link flex items-center gap-3 px-6 py-3 text-gray-700"><i class="fas fa-box w-5"></i> Shipments & Location</a>
@@ -121,11 +121,11 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    const VELOX_SUPABASE_URL = "https://msuoujruonzugtojukkq.supabase.co";
-    const VELOX_SUPABASE_KEY = "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm";
+    const VELLOX_SUPABASE_URL = "https://msuoujruonzugtojukkq.supabase.co";
+    const VELLOX_SUPABASE_KEY = "sb_publishable_j9OUqblgfdmKN2PKYt1aUw_CUDauQJm";
     const veloxSupabase = window.supabase.createClient(
-        VELOX_SUPABASE_URL,
-        VELOX_SUPABASE_KEY
+        VELLOX_SUPABASE_URL,
+        VELLOX_SUPABASE_KEY
     );
     // ========== DATA MODELS ==========
     let shipments = [
@@ -170,7 +170,7 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
         { id: 1, trackingNumber: "VX789012", customer: "Sarah Johnson", issue: "Delay & rude driver", status: "open", date: "2025-02-07" },
         { id: 2, trackingNumber: "VX345678", customer: "Marcus Rivera", issue: "Customs no update", status: "resolved", date: "2025-02-15" }
     ];
-    let auditLogs = [{ timestamp: new Date().toLocaleString(), action: "System ready" }];
+    let auditLogs = [{ timestamp: new Date().toISOString(), action: "System ready" }];
 
     // Supabase shared storage
     let veloxDataReady = false;
@@ -276,7 +276,7 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
     function addLog(action) {
         auditLogs.unshift({
             id: crypto.randomUUID(),
-            timestamp: new Date().toLocaleString(),
+            timestamp: new Date().toISOString(),
             action
         });
         if (auditLogs.length > 100) auditLogs.pop();
@@ -312,12 +312,42 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
         return { country: last.country, city: last.city, timestamp: last.timestamp, event: last.event };
     }
 
-    // Helper to update status and log timeline
-    function updateShipmentStatus(ship, newStatus, reasonForCustoms = "") {
+    async function sendShipmentNotification(trackingNumber, event) {
+        const { data, error } = await veloxSupabase.functions.invoke(
+            "shipment-notification",
+            { body: { tracking_number: trackingNumber, event } }
+        );
+
+        if (error) {
+            console.error("Shipment email notification failed:", error);
+            showToast("Shipment saved, but email notification failed.", "warning");
+            return false;
+        }
+
+        if (!data?.success) {
+            console.error("Shipment email notification was not confirmed:", data);
+            showToast("Shipment saved, but email notification was not confirmed.", "warning");
+            return false;
+        }
+
+        console.info("Shipment notification sent:", data);
+        return true;
+    }
+
+    // Helper to update status, save to cloud, and notify contacts
+    async function updateShipmentStatus(ship, newStatus, reasonForCustoms = "") {
         const oldStatus = ship.status;
-        if (oldStatus === newStatus) return;
+        if (oldStatus === newStatus) return false;
+
+        const previous = {
+            status: ship.status,
+            customsHold: ship.customsHold,
+            holdReason: ship.holdReason,
+            historyLength: ship.locationHistory.length
+        };
+
         ship.status = newStatus;
-        // Handle customs hold flag
+
         if (newStatus === "customs_hold") {
             ship.customsHold = true;
             if (reasonForCustoms) ship.holdReason = reasonForCustoms;
@@ -325,7 +355,7 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
             ship.locationHistory.push({
                 country: "Customs",
                 city: "Border Control",
-                timestamp: new Date().toLocaleString(),
+                timestamp: new Date().toISOString(),
                 event: `Status changed to customs hold: ${ship.holdReason}`
             });
         } else {
@@ -335,21 +365,36 @@ body{font-family:Inter,Arial,sans-serif!important;background:#f3f5f9!important;c
                 ship.locationHistory.push({
                     country: "Released",
                     city: "Customs",
-                    timestamp: new Date().toLocaleString(),
+                    timestamp: new Date().toISOString(),
                     event: "Released from customs hold"
                 });
             }
             ship.locationHistory.push({
                 country: getCurrentLocation(ship).country || "System",
                 city: getCurrentLocation(ship).city || "Update",
-                timestamp: new Date().toLocaleString(),
+                timestamp: new Date().toISOString(),
                 event: `Status changed from ${oldStatus} to ${newStatus}`
             });
         }
-        addLog(`Shipment ${ship.trackingNumber} status updated to ${newStatus}`);
-        persistData();
-    }
 
+        try {
+            localStorage.setItem('velox_shipments', JSON.stringify(shipments));
+            await syncSupabaseTable('shipments', [ship], 'trackingNumber', 'tracking_number');
+        } catch (error) {
+            ship.status = previous.status;
+            ship.customsHold = previous.customsHold;
+            ship.holdReason = previous.holdReason;
+            ship.locationHistory.length = previous.historyLength;
+            localStorage.setItem('velox_shipments', JSON.stringify(shipments));
+            console.error("Shipment cloud save failed:", error);
+            showToast("Status was not saved to cloud. Please try again.", "danger");
+            return false;
+        }
+
+        addLog(`Shipment ${ship.trackingNumber} status updated to ${newStatus}`);
+        await sendShipmentNotification(ship.trackingNumber, "status_update");
+        return true;
+    }
     // ========== DASHBOARD ==========
     function renderDashboard() {
         const total = shipments.length;
@@ -424,7 +469,7 @@ function printShipmentInvoice(ship) {
         showToast("Allow pop-ups to print the invoice.", "warning");
         return;
     }
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="${new URL("JsBarcode.all.min.js", window.location.href).href}"><\/script><title>Shipment Invoice - ${invoiceEscape(ship.trackingNumber)}</title>
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="${new URL("JsBarcode.all.min.js", window.location.href).href}"><\/script><script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script><title>Shipment Invoice - ${invoiceEscape(ship.trackingNumber)}</title>
     <style>@page{size:A4;margin:12mm}
 *{box-sizing:border-box}
 body{font-family:Arial,Helvetica,sans-serif;color:#202b3c;margin:0;font-size:12px;background:#fff}
@@ -439,7 +484,7 @@ h2{font-size:14px;margin:23px 0 9px;color:#172b4d;border-bottom:2px solid #c8202
 .label{font-size:9px;color:#64748b;text-transform:uppercase;margin-bottom:7px;font-weight:700;letter-spacing:.8px}
 .value{font-weight:700;font-size:12px;overflow-wrap:anywhere;color:#172b4d}
 .barcode-section{text-align:center;margin:22px 0;padding:20px 15px;border:1px solid #cbd5e1;border-top:4px solid #172b4d;border-radius:5px;background:#fff}
-.barcode-section svg{display:block;width:100%;max-width:520px;height:95px;margin:12px auto;background:#fff}
+.barcode-section svg{display:block;width:100%;max-width:520px;height:95px;margin:12px auto;background:#fff}.code-layout{display:flex;align-items:center;justify-content:center;gap:38px;flex-wrap:wrap;margin:14px auto}.code-item{flex:1 1 260px;min-width:220px;text-align:center}.qr-item{flex:0 1 160px}.qr-item #shipmentQRCode{width:128px;height:128px;margin:10px auto}.qr-item #shipmentQRCode img,.qr-item #shipmentQRCode canvas{display:block;margin:auto;max-width:128px;max-height:128px}
 .barcode-section .value{font-family:monospace;font-size:17px;letter-spacing:2px;margin-top:8px}
 .tracking-link{color:#b5121b;text-decoration:none;font-weight:bold;overflow-wrap:anywhere;font-size:10px}
 .contact{margin-top:9px;font-size:10px;line-height:1.8}
@@ -449,7 +494,7 @@ th{background:#172b4d;color:#fff;font-size:9px;text-transform:uppercase;letter-s
 tbody tr:nth-child(even){background:#f5f7fa}
 .footer{margin-top:25px;border-top:2px solid #172b4d;padding-top:13px;color:#64748b;text-align:center;line-height:1.6}
 @media print{body{print-color-adjust:exact;-webkit-print-color-adjust:exact}.top,.paid,th{print-color-adjust:exact;-webkit-print-color-adjust:exact}}</style></head><body>
-    <div class="top"><div style="display:flex;align-items:center;gap:14px"><span style="width:48px;height:48px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #c9a45c;border-radius:10px;color:#fff;font-size:28px;font-weight:900;font-style:italic">V</span><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div></div>
+    <div class="top"><div style="display:flex;align-items:center;gap:14px"><img src="${new URL("Vellox-Logistics-Logo.png", window.location.href).href}" alt="Vellox Logistics Logo" style="width:58px;height:58px;object-fit:contain;border-radius:8px;background:#fff;padding:3px"><div><h1>VELLOX LOGISTICS</h1><div class="muted">SHIPMENT INVOICE &amp; TRACKING</div></div></div>
     <div style="text-align:right"><div class="label">Payment status</div><div class="${paymentStatus === "PAID" ? "paid" : "unpaid"}">${invoiceEscape(paymentStatus)}</div></div></div>
     <div class="grid">
       <div class="box"><div class="label">Invoice reference</div><div class="value">${invoiceEscape(ship.trackingNumber)}</div></div>
@@ -464,7 +509,7 @@ tbody tr:nth-child(even){background:#f5f7fa}
     </div>
     <div class="barcode-section">
         <div class="label">SHIPMENT BARCODE - CODE 128</div>
-        <svg id="shipmentBarcode"></svg>
+        <div class="code-layout"><div class="code-item"><svg id="shipmentBarcode"></svg></div><div class="code-item qr-item"><div class="label">SCAN TO TRACK SHIPMENT</div><div id="shipmentQRCode"></div></div></div>
         <div class="value">${trackingNumber}</div>
         <p><a class="tracking-link" href="${trackingUrl}">${trackingUrl}</a></p>
     </div>
@@ -496,7 +541,7 @@ tbody tr:nth-child(even){background:#f5f7fa}
 
         const barcodeElement = popup.document.getElementById("shipmentBarcode");
 
-        if (popup.JsBarcode && barcodeElement && rawTrackingNumber) {
+        if (popup.JsBarcode && popup.QRCode && barcodeElement && popup.document.getElementById("shipmentQRCode") && rawTrackingNumber) {
             clearInterval(barcodeTimer);
 
             try {
@@ -508,6 +553,16 @@ tbody tr:nth-child(even){background:#f5f7fa}
                     displayValue: false,
                     margin: 5
                 });
+
+                new popup.QRCode(popup.document.getElementById("shipmentQRCode"), {
+                    text: trackingUrl,
+                    width: 128,
+                    height: 128,
+                    colorDark: "#172033",
+                    colorLight: "#ffffff",
+                    correctLevel: popup.QRCode.CorrectLevel.M
+                });
+
                 popup.focus();
                 setTimeout(() => {
                     if (!popup.closed) popup.print();
@@ -519,7 +574,7 @@ tbody tr:nth-child(even){background:#f5f7fa}
             }
         } else if (barcodeAttempts >= 40) {
             clearInterval(barcodeTimer);
-            showToast("Barcode library did not load. Check your connection and try again.", "warning");
+            showToast("Barcode or QR-code library did not load. Check your connection and try again.", "warning");
         }
     }, 250);
 }
@@ -529,7 +584,7 @@ function renderShipments() {
             return `<tr class="border-b hover:bg-gray-50">
                 <td class="px-4 py-2 font-mono">${s.trackingNumber}</td>
                 <td class="px-4 py-2">${s.customer}</td>
-                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} Ã¢â€ â€™ ${s.toCity}, ${s.toCountry}</td>
+                <td class="px-4 py-2">${s.fromCity}, ${s.fromCountry} → ${s.toCity}, ${s.toCountry}</td>
                 <td class="px-4 py-2">
                     <select class="status-select border rounded px-2 py-1 text-sm" data-id="${s.id}">
                         <option value="pending" ${s.status==='pending' ? 'selected' : ''}>Pending</option>
@@ -603,7 +658,7 @@ function renderShipments() {
                 if (!ship) return;
                 const now = new Date();
                 const defaultDateTime = now.toISOString().slice(0,16);
-                openModal(`Ã°Å¸â€œÂ Update Location for ${ship.trackingNumber}`, `
+                openModal(`Update Location for ${ship.trackingNumber}`, `
                     <div class="space-y-3">
                         <div><label class="font-bold">Country *</label><input id="locCountry" class="w-full border p-2 rounded" placeholder="e.g. United States"></div>
                         <div><label class="font-bold">City *</label><input id="locCity" class="w-full border p-2 rounded" placeholder="e.g. Chicago, IL"></div>
@@ -617,12 +672,12 @@ function renderShipments() {
                     if (!newCountry || !newCity) { showToast("Country and City are required", "danger"); return; }
                     const eventText = document.getElementById('locEvent').value.trim() || "Location updated";
                     let timestampRaw = document.getElementById('locTimestamp').value;
-                    let displayTimestamp = timestampRaw ? timestampRaw.replace('T', ' ') : new Date().toLocaleString();
+                    let displayTimestamp = timestampRaw ? new Date(timestampRaw).toISOString() : new Date().toISOString();
                     ship.locationHistory.push({ country: newCountry, city: newCity, timestamp: displayTimestamp, event: eventText });
                     addLog(`Location added for ${ship.trackingNumber}: ${newCountry}, ${newCity}`);
                     persistData();
                     renderShipments();
-                    showToast(`Ã¢Å“â€œ Location added for ${ship.trackingNumber}`, "success");
+                    showToast(`Location added for ${ship.trackingNumber}`, "success");
                 });
             }
             if (historyBtn) {
@@ -685,10 +740,14 @@ function renderShipments() {
             if (editBtn) {
                 const id = parseInt(editBtn.dataset.id);
                 const ship = shipments.find(s => s.id === id);
-                openModal("Ã¢Å“ÂÃ¯Â¸Â Edit Shipment Details", `
+                openModal("Edit Shipment Details", `
                     <div class="grid grid-cols-2 gap-3">
                         <div><label>Tracking</label><input id="editTrack" value="${ship.trackingNumber}" class="w-full border p-2"></div>
-                        <div><label>Customer</label><input id="editCust" value="${ship.customer}" class="w-full border p-2"></div>
+                        <div><label>Customer</label><input id="editCust" value="${invoiceEscape(ship.customer)}" class="w-full border p-2"></div>
+                        <div><label>Sender Email *</label><input type="email" id="editSenderEmail" value="${invoiceEscape(ship.senderEmail || '')}" required class="w-full border p-2"></div>
+                        <div><label>Sender Phone *</label><input type="tel" id="editSenderPhone" value="${invoiceEscape(ship.senderPhone || '')}" required class="w-full border p-2"></div>
+                        <div><label>Recipient Email *</label><input type="email" id="editReceiverEmail" value="${invoiceEscape(ship.receiverEmail || '')}" required class="w-full border p-2"></div>
+                        <div><label>Recipient Phone *</label><input type="tel" id="editReceiverPhone" value="${invoiceEscape(ship.receiverPhone || '')}" required class="w-full border p-2"></div>
                         <div><label>Origin Country</label><input id="editFromCountry" value="${ship.fromCountry}" class="w-full border p-2"></div>
                         <div><label>Origin City</label><input id="editFromCity" value="${ship.fromCity}" class="w-full border p-2"></div>
                         <div><label>Dest Country</label><input id="editToCountry" value="${ship.toCountry}" class="w-full border p-2"></div>
@@ -704,6 +763,10 @@ function renderShipments() {
                 `, "Save Changes", "Cancel", () => {
                     ship.trackingNumber = document.getElementById('editTrack').value;
                     ship.customer = document.getElementById('editCust').value;
+                    ship.senderEmail = document.getElementById('editSenderEmail').value.trim();
+                    ship.senderPhone = document.getElementById('editSenderPhone').value.trim();
+                    ship.receiverEmail = document.getElementById('editReceiverEmail').value.trim();
+                    ship.receiverPhone = document.getElementById('editReceiverPhone').value.trim();
                     ship.fromCountry = document.getElementById('editFromCountry').value;
                     ship.fromCity = document.getElementById('editFromCity').value;
                     ship.toCountry = document.getElementById('editToCountry').value;
@@ -790,6 +853,10 @@ function renderShipments() {
                 <div class="grid grid-cols-2 gap-3">
                     <div><label>Tracking #</label><input id="newTrack" class="w-full border p-2"></div>
                     <div><label>Customer</label><input id="newCust" class="w-full border p-2"></div>
+                    <div><label>Sender Email *</label><input type="email" id="newSenderEmail" required class="w-full border p-2"></div>
+                    <div><label>Sender Phone *</label><input type="tel" id="newSenderPhone" required class="w-full border p-2"></div>
+                    <div><label>Recipient Email *</label><input type="email" id="newReceiverEmail" required class="w-full border p-2"></div>
+                    <div><label>Recipient Phone *</label><input type="tel" id="newReceiverPhone" required class="w-full border p-2"></div>
                     <div><label>Origin Country</label><input id="newFromCountry" class="w-full border p-2"></div>
                     <div><label>Origin City</label><input id="newFromCity" class="w-full border p-2"></div>
                     <div><label>Dest Country</label><input id="newToCountry" class="w-full border p-2"></div>
@@ -809,6 +876,10 @@ function renderShipments() {
                     id: newId,
                     trackingNumber: document.getElementById('newTrack').value,
                     customer: document.getElementById('newCust').value,
+                    senderEmail: document.getElementById('newSenderEmail').value.trim(),
+                    senderPhone: document.getElementById('newSenderPhone').value.trim(),
+                    receiverEmail: document.getElementById('newReceiverEmail').value.trim(),
+                    receiverPhone: document.getElementById('newReceiverPhone').value.trim(),
                     fromCountry: document.getElementById('newFromCountry').value,
                     fromCity: document.getElementById('newFromCity').value,
                     toCountry: document.getElementById('newToCountry').value,
@@ -827,11 +898,13 @@ function renderShipments() {
                 const initCountry = document.getElementById('initCountry').value.trim();
                 const initCity = document.getElementById('initCity').value.trim();
                 if(initCountry && initCity) {
-                    newShip.locationHistory.push({ country: initCountry, city: initCity, timestamp: new Date().toLocaleString(), event: "Shipment created" });
+                    newShip.locationHistory.push({ country: initCountry, city: initCity, timestamp: new Date().toISOString(), event: "Shipment created" });
                 } else {
-                    newShip.locationHistory.push({ country: "Origin", city: "Unknown", timestamp: new Date().toLocaleString(), event: "Registered" });
+                    newShip.locationHistory.push({ country: "Origin", city: "Unknown", timestamp: new Date().toISOString(), event: "Registered" });
                 }
-                const trackingNumber = String(newShip.trackingNumber || '').trim().toUpperCase();
+                const validEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                if (!validEmail(newShip.senderEmail) || !validEmail(newShip.receiverEmail)) throw new Error("Enter valid sender and recipient email addresses.");
+                if (!newShip.senderPhone || !newShip.receiverPhone) throw new Error("Enter both phone numbers.");                const trackingNumber = String(newShip.trackingNumber || '').trim().toUpperCase();
                 if (!trackingNumber) throw new Error("Tracking number is required.");
                 if (shipments.some(s => String(s.trackingNumber).toUpperCase() === trackingNumber)) {
                     throw new Error("Tracking number already exists.");
@@ -841,6 +914,7 @@ function renderShipments() {
                 shipments.push(newShip);
                 persistData();
                 addLog(`Added shipment ${newShip.trackingNumber}`);
+                await sendShipmentNotification(newShip.trackingNumber, "created");
                 renderShipments();
                 showToast("Shipment created and saved to cloud", "success");
             });
@@ -853,7 +927,7 @@ function renderShipments() {
             const ship = shipments.find(s => s.trackingNumber === tn);
             if (!ship) { showToast("Tracking number not found", "danger"); return; }
             if (!eventDesc) { showToast("Event description required", "danger"); return; }
-            const now = new Date().toLocaleString();
+            const now = new Date().toISOString();
             ship.locationHistory.push({
                 country: loc || getCurrentLocation(ship).country,
                 city: loc || getCurrentLocation(ship).city,

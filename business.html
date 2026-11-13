@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velox for Business | Corporate Solutions</title>
+    <title>Vellox for Business | Corporate Solutions</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
     <style>
@@ -44,6 +44,13 @@
         .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
         @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } .benefits { grid-template-columns: 1fr; } }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
     <!-- Top Bar -->
@@ -59,7 +66,7 @@
 
     <!-- Navigation -->
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -71,7 +78,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Vellox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
         <div class="mobile-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -86,13 +93,13 @@
 
     <!-- Hero -->
     <section class="hero">
-        <h1 data-i18n="business_title">Velox for Business</h1>
+        <h1 data-i18n="business_title">Vellox for Business</h1>
         <p data-i18n="business_sub">Unlock exclusive benefits for your company</p>
     </section>
 
     <!-- Content -->
     <div class="content">
-        <h2 style="color:var(--dhl-red); margin-bottom:30px;" data-i18n="why_choose">Why Choose Velox for Business?</h2>
+        <h2 style="color:var(--dhl-red); margin-bottom:30px;" data-i18n="why_choose">Why Choose Vellox for Business?</h2>
         <div class="benefits">
             <div class="benefit-card">
                 <h3 data-i18n="benefit_1_title">💳 Net 30 Payment Terms</h3>
@@ -116,7 +123,7 @@
     <!-- CTA Section -->
     <div class="cta">
         <h2 data-i18n="cta_title">Ready to Scale Your Operations?</h2>
-        <p data-i18n="cta_sub">Join thousands of businesses trusting Velox for their supply chain needs.</p>
+        <p data-i18n="cta_sub">Join thousands of businesses trusting Vellox for their supply chain needs.</p>
         <a href="quote.html" class="cta-btn" data-i18n="cta_btn">Get a Quote</a>
     </div>
 
@@ -137,7 +144,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Vellox Logistics - all rights reserved</div>
     </footer>
 
     <script>
@@ -162,63 +169,63 @@
         const translations = {
             en: {
                 back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
-                mobile_title:"Velox Logistics", business_title:"Velox for Business", business_sub:"Unlock exclusive benefits for your company",
-                why_choose:"Why Choose Velox for Business?",
+                mobile_title:"Vellox Logistics", business_title:"Vellox for Business", business_sub:"Unlock exclusive benefits for your company",
+                why_choose:"Why Choose Vellox for Business?",
                 benefit_1_title:"💳 Net 30 Payment Terms", benefit_1_desc:"Manage cash flow with flexible payment options tailored to your business cycle.",
                 benefit_2_title:"📉 Competitive Rates", benefit_2_desc:"Access volume-based discounts and negotiated rates across our global network.",
                 benefit_3_title:"👤 Dedicated Account Manager", benefit_3_desc:"Get a personal point of contact to streamline your shipments and solve issues quickly.",
                 benefit_4_title:"📊 Advanced Reporting", benefit_4_desc:"Gain insights into your shipping spend with detailed analytics and custom reports.",
-                cta_title:"Ready to Scale Your Operations?", cta_sub:"Join thousands of businesses trusting Velox for their supply chain needs.", cta_btn:"Get a Quote",
+                cta_title:"Ready to Scale Your Operations?", cta_sub:"Join thousands of businesses trusting Vellox for their supply chain needs.", cta_btn:"Get a Quote",
                 footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
-                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+                copyright:"&copy; 2024 Vellox Logistics - all rights reserved"
             },
             ru: {
                 back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
-                mobile_title:"Velox Logistics", business_title:"Velox для бизнеса", business_sub:"Разблокируйте эксклюзивные преимущества для вашей компании",
-                why_choose:"Почему выбирают Velox для бизнеса?",
+                mobile_title:"Vellox Logistics", business_title:"Vellox для бизнеса", business_sub:"Разблокируйте эксклюзивные преимущества для вашей компании",
+                why_choose:"Почему выбирают Vellox для бизнеса?",
                 benefit_1_title:"💳 Оплата в течение 30 дней", benefit_1_desc:"Управляйте денежным потоком с гибкими вариантами оплаты, адаптированными к вашему бизнес-циклу.",
                 benefit_2_title:"📉 Конкурентные тарифы", benefit_2_desc:"Получите доступ к скидкам на основе объема и согласованным тарифам в нашей глобальной сети.",
                 benefit_3_title:"👤 Персональный менеджер", benefit_3_desc:"Получите персонального контактное лицо для оптимизации ваших отправок и быстрого решения проблем.",
                 benefit_4_title:"📊 Расширенная отчетность", benefit_4_desc:"Получайте информацию о ваших расходах на доставку с помощью детальной аналитики и пользовательских отчетов.",
-                cta_title:"Готовы масштабировать свои операции?", cta_sub:"Присоединяйтесь к тысячам компаний, доверяющих Velox свои цепочки поставок.", cta_btn:"Получить расчет",
+                cta_title:"Готовы масштабировать свои операции?", cta_sub:"Присоединяйтесь к тысячам компаний, доверяющих Vellox свои цепочки поставок.", cta_btn:"Получить расчет",
                 footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
-                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+                copyright:"&copy; 2024 Vellox Logistics - все права защищены"
             },
             ch: {
                 back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
-                mobile_title:"Velox Logistics", business_title:"Velox 商业服务", business_sub:"为您的公司解锁专属优惠",
-                why_choose:"为什么选择 Velox 商业服务？",
+                mobile_title:"Vellox Logistics", business_title:"Vellox 商业服务", business_sub:"为您的公司解锁专属优惠",
+                why_choose:"为什么选择 Vellox 商业服务？",
                 benefit_1_title:"💳 30 天账期", benefit_1_desc:"通过根据您的业务周期定制的灵活付款选项管理现金流。",
                 benefit_2_title:"📉 有竞争力的价格", benefit_2_desc:"在我们的全球网络中享受基于数量的折扣和协商费率。",
                 benefit_3_title:"👤 专属客户经理", benefit_3_desc:"获得个人联系人以简化您的发货并快速解决问题。",
                 benefit_4_title:"📊 高级报告", benefit_4_desc:"通过详细分析和定制报告深入了解您的运输支出。",
-                cta_title:"准备好扩展您的业务？", cta_sub:"加入数千信任 Velox 满足其供应链需求的企业。", cta_btn:"获取报价",
+                cta_title:"准备好扩展您的业务？", cta_sub:"加入数千信任 Vellox 满足其供应链需求的企业。", cta_btn:"获取报价",
                 footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
-                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+                copyright:"&copy; 2024 Vellox Logistics - 保留所有权利"
             },
             de: {
                 back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
-                mobile_title:"Velox Logistics", business_title:"Velox für Unternehmen", business_sub:"Exklusive Vorteile für Ihr Unternehmen freischalten",
-                why_choose:"Warum Velox für Unternehmen wählen?",
+                mobile_title:"Vellox Logistics", business_title:"Vellox für Unternehmen", business_sub:"Exklusive Vorteile für Ihr Unternehmen freischalten",
+                why_choose:"Warum Vellox für Unternehmen wählen?",
                 benefit_1_title:"💳 30-Tage-Zahlungsziel", benefit_1_desc:"Verwalten Sie Ihren Cashflow mit flexiblen Zahlungsoptionen, die auf Ihren Geschäftszyklus zugeschnitten sind.",
                 benefit_2_title:"📉 Wettbewerbsfähige Preise", benefit_2_desc:"Zugang zu volumenbasierten Rabatten und ausgehandelten Tarifen in unserem globalen Netzwerk.",
                 benefit_3_title:"👤 Dedizierter Account Manager", benefit_3_desc:"Erhalten Sie einen persönlichen Ansprechpartner, um Ihre Sendungen zu optimieren und Probleme schnell zu lösen.",
                 benefit_4_title:"📊 Erweiterte Berichterstattung", benefit_4_desc:"Gewinnen Sie Einblicke in Ihre Versandkosten mit detaillierten Analysen und benutzerdefinierten Berichten.",
-                cta_title:"Bereit, Ihre Operationen zu skalieren?", cta_sub:"Schließen Sie sich Tausenden von Unternehmen an, die Velox für ihre Lieferketten vertrauen.", cta_btn:"Angebot anfordern",
+                cta_title:"Bereit, Ihre Operationen zu skalieren?", cta_sub:"Schließen Sie sich Tausenden von Unternehmen an, die Vellox für ihre Lieferketten vertrauen.", cta_btn:"Angebot anfordern",
                 footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
-                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+                copyright:"&copy; 2024 Vellox Logistics - Alle Rechte vorbehalten"
             },
             fr: {
                 back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
-                mobile_title:"Velox Logistics", business_title:"Velox pour les Entreprises", business_sub:"Débloquez des avantages exclusifs pour votre entreprise",
-                why_choose:"Pourquoi choisir Velox pour les entreprises ?",
+                mobile_title:"Vellox Logistics", business_title:"Vellox pour les Entreprises", business_sub:"Débloquez des avantages exclusifs pour votre entreprise",
+                why_choose:"Pourquoi choisir Vellox pour les entreprises ?",
                 benefit_1_title:"💳 Conditions de paiement Net 30", benefit_1_desc:"Gérez votre trésorerie avec des options de paiement flexibles adaptées à votre cycle commercial.",
                 benefit_2_title:"📉 Tarifs compétitifs", benefit_2_desc:"Accédez à des remises basées sur le volume et des tarifs négociés dans notre réseau mondial.",
                 benefit_3_title:"👤 Gestionnaire de compte dédié", benefit_3_desc:"Obtenez un point de contact personnel pour rationaliser vos expéditions et résoudre les problèmes rapidement.",
                 benefit_4_title:"📊 Rapports avancés", benefit_4_desc:"Obtenez des informations sur vos dépenses d'expédition avec des analyses détaillées et des rapports personnalisés.",
-                cta_title:"Prêt à développer vos opérations ?", cta_sub:"Rejoignez des milliers d'entreprises qui font confiance à Velox pour leurs besoins en chaîne d'approvisionnement.", cta_btn:"Obtenir un devis",
+                cta_title:"Prêt à développer vos opérations ?", cta_sub:"Rejoignez des milliers d'entreprises qui font confiance à Vellox pour leurs besoins en chaîne d'approvisionnement.", cta_btn:"Obtenir un devis",
                 footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
-                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+                copyright:"&copy; 2024 Vellox Logistics - Tous droits réservés"
             }
         };
     </script>

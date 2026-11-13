@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Center | Velox Logistics</title>
+    <title>Help Center | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
     <style>
@@ -49,6 +49,13 @@
         .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
         @media (max-width: 768px) { .nav-links, .btn-start { display: none; } .menu-toggle { display: block; } }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
     <!-- Top Bar -->
@@ -64,7 +71,7 @@
 
     <!-- Navigation -->
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -76,7 +83,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-header"><h3 data-i18n="mobile_title">Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-header"><h3 data-i18n="mobile_title">Vellox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
         <div class="mobile-links">
             <a href="index.html" data-i18n="nav_home">Home</a>
             <a href="tracking.html" data-i18n="nav_track">Track</a>
@@ -145,7 +152,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright" data-i18n="copyright">&copy; 2024 Velox Logistics - all rights reserved</div>
+        <div class="copyright" data-i18n="copyright">&copy; 2024 Vellox Logistics - all rights reserved</div>
     </footer>
 
     <script>
@@ -187,58 +194,58 @@
         const translations = {
             en: {
                 back_home:"Back to Home", support:"Support", nav_home:"Home", nav_track:"Track", btn_start:"Start Shipping",
-                mobile_title:"Velox Logistics", help_title:"Help Center", help_sub:"Find answers to common questions or contact us directly.",
+                mobile_title:"Vellox Logistics", help_title:"Help Center", help_sub:"Find answers to common questions or contact us directly.",
                 common_q:"Common Questions",
                 faq_1_q:"How do I track my shipment?", faq_1_a:"Enter your tracking number in the \"Track\" section on our homepage or use the link provided in your confirmation email.",
                 faq_2_q:"What are your operating hours?", faq_2_a:"Customer service is available Monday to Friday, 8:00 AM to 8:00 PM EST. Support centers in other time zones may have different hours.",
                 faq_3_q:"How long does delivery take?", faq_3_a:"Delivery times vary by service level. Express services typically arrive within 1-3 business days, while standard freight may take 5-10 business days depending on the destination.",
                 contact_title:"Contact Us", ph_name:"Your Name", ph_email:"Your Email", ph_message:"How can we help?", btn_send:"Send Message", alert_sent:"Message sent! Our team will contact you shortly.",
                 footer_quick:"Quick Links", footer_support:"Support", find_point:"Find a Service Point", help_center:"Help Center",
-                copyright:"&copy; 2024 Velox Logistics - all rights reserved"
+                copyright:"&copy; 2024 Vellox Logistics - all rights reserved"
             },
             ru: {
                 back_home:"Назад на главную", support:"Поддержка", nav_home:"Главная", nav_track:"Отслеживание", btn_start:"Начать отправку",
-                mobile_title:"Velox Logistics", help_title:"Центр помощи", help_sub:"Найдите ответы на часто задаваемые вопросы или свяжитесь с нами напрямую.",
+                mobile_title:"Vellox Logistics", help_title:"Центр помощи", help_sub:"Найдите ответы на часто задаваемые вопросы или свяжитесь с нами напрямую.",
                 common_q:"Часто задаваемые вопросы",
                 faq_1_q:"Как отследить мою посылку?", faq_1_a:"Введите номер отслеживания в разделе \"Отслеживание\" на нашей главной странице или используйте ссылку в вашем подтверждении.",
                 faq_2_q:"Какие у вас часы работы?", faq_2_a:"Служба поддержки доступна с понедельника по пятницу, с 8:00 до 20:00 по восточному времени. Центры поддержки в других часовых поясах могут иметь другое расписание.",
                 faq_3_q:"Сколько времени занимает доставка?", faq_3_a:"Сроки доставки зависят от уровня обслуживания. Экспресс-доставка обычно прибывает в течение 1-3 рабочих дней, в то время как стандартная доставка может занять 5-10 рабочих дней в зависимости от пункта назначения.",
                 contact_title:"Свяжитесь с нами", ph_name:"Ваше имя", ph_email:"Ваш Email", ph_message:"Чем мы можем помочь?", btn_send:"Отправить сообщение", alert_sent:"Сообщение отправлено! Наша команда свяжется с вами в ближайшее время.",
                 footer_quick:"Быстрые ссылки", footer_support:"Поддержка", find_point:"Найти пункт выдачи", help_center:"Помощь",
-                copyright:"&copy; 2024 Velox Logistics - все права защищены"
+                copyright:"&copy; 2024 Vellox Logistics - все права защищены"
             },
             ch: {
                 back_home:"返回首页", support:"支持", nav_home:"主页", nav_track:"追踪", btn_start:"开始发货",
-                mobile_title:"Velox Logistics", help_title:"帮助中心", help_sub:"找到常见问题的答案或直接联系我们。",
+                mobile_title:"Vellox Logistics", help_title:"帮助中心", help_sub:"找到常见问题的答案或直接联系我们。",
                 common_q:"常见问题",
                 faq_1_q:"如何追踪我的货物？", faq_1_a:"在我们的主页\"追踪\"部分输入您的追踪号码，或使用确认电子邮件中提供的链接。",
                 faq_2_q:"你们的营业时间是什么？", faq_2_a:"客户服务周一至周五上午 8:00 至晚上 8:00（美东时间）可用。其他时区的支援中心可能有不同的时间。",
                 faq_3_q:"配送需要多长时间？", faq_3_a:"配送时间因服务级别而异。快递服务通常在 1-3 个工作日内送达，而标准货运可能需要 5-10 个工作日，具体取决于目的地。",
                 contact_title:"联系我们", ph_name:"您的姓名", ph_email:"您的邮箱", ph_message:"我们能为您提供什么帮助？", btn_send:"发送消息", alert_sent:"消息已发送！我们的团队将尽快与您联系。",
                 footer_quick:"快速链接", footer_support:"支持", find_point:"查找地点", help_center:"帮助中心",
-                copyright:"&copy; 2024 Velox Logistics - 保留所有权利"
+                copyright:"&copy; 2024 Vellox Logistics - 保留所有权利"
             },
             de: {
                 back_home:"Zurück zur Startseite", support:"Support", nav_home:"Startseite", nav_track:"Verfolgung", btn_start:"Versand starten",
-                mobile_title:"Velox Logistics", help_title:"Hilfezentrum", help_sub:"Finden Sie Antworten auf häufig gestellte Fragen oder kontaktieren Sie uns direkt.",
+                mobile_title:"Vellox Logistics", help_title:"Hilfezentrum", help_sub:"Finden Sie Antworten auf häufig gestellte Fragen oder kontaktieren Sie uns direkt.",
                 common_q:"Häufig gestellte Fragen",
                 faq_1_q:"Wie verfolge ich meine Sendung?", faq_1_a:"Geben Sie Ihre Sendungsnummer im Bereich \"Verfolgung\" auf unserer Startseite ein oder verwenden Sie den Link in Ihrer Bestätigungs-E-Mail.",
                 faq_2_q:"Was sind Ihre Öffnungszeiten?", faq_2_a:"Der Kundenservice ist Montag bis Freitag von 8:00 bis 20:00 Uhr EST verfügbar. Support-Center in anderen Zeitzonen können unterschiedliche Öffnungszeiten haben.",
                 faq_3_q:"Wie lange dauert die Lieferung?", faq_3_a:"Lieferzeiten variieren je nach Service-Level. Express-Sendungen kommen in der Regel innerhalb von 1-3 Werktagen an, während Standardfracht je nach Zielort 5-10 Werktage dauern kann.",
                 contact_title:"Kontaktieren Sie uns", ph_name:"Ihr Name", ph_email:"Ihre E-Mail", ph_message:"Wie können wir helfen?", btn_send:"Nachricht senden", alert_sent:"Nachricht gesendet! Unser Team wird Sie in Kürze kontaktieren.",
                 footer_quick:"Schnellzugriff", footer_support:"Support", find_point:"Servicepunkt finden", help_center:"Hilfezentrum",
-                copyright:"&copy; 2024 Velox Logistics - Alle Rechte vorbehalten"
+                copyright:"&copy; 2024 Vellox Logistics - Alle Rechte vorbehalten"
             },
             fr: {
                 back_home:"Retour à l'accueil", support:"Support", nav_home:"Accueil", nav_track:"Suivi", btn_start:"Commencer l'expédition",
-                mobile_title:"Velox Logistics", help_title:"Centre d'aide", help_sub:"Trouvez des réponses aux questions fréquentes ou contactez-nous directement.",
+                mobile_title:"Vellox Logistics", help_title:"Centre d'aide", help_sub:"Trouvez des réponses aux questions fréquentes ou contactez-nous directement.",
                 common_q:"Questions fréquentes",
                 faq_1_q:"Comment suivre mon envoi ?", faq_1_a:"Entrez votre numéro de suivi dans la section \"Suivi\" de notre page d'accueil ou utilisez le lien fourni dans votre e-mail de confirmation.",
                 faq_2_q:"Quelles sont vos heures d'ouverture ?", faq_2_a:"Le service client est disponible du lundi au vendredi, de 8h00 à 20h00 EST. Les centres de support dans d'autres fuseaux horaires peuvent avoir des horaires différents.",
                 faq_3_q:"Combien de temps prend la livraison ?", faq_3_a:"Les délais de livraison varient selon le niveau de service. Les services express arrivent généralement dans un délai de 1 à 3 jours ouvrables, tandis que le fret standard peut prendre 5 à 10 jours ouvrables selon la destination.",
                 contact_title:"Nous contacter", ph_name:"Votre nom", ph_email:"Votre e-mail", ph_message:"Comment pouvons-nous vous aider ?", btn_send:"Envoyer un message", alert_sent:"Message envoyé ! Notre équipe vous contactera sous peu.",
                 footer_quick:"Liens Rapides", footer_support:"Support", find_point:"Trouver un point de service", help_center:"Centre d'Aide",
-                copyright:"&copy; 2024 Velox Logistics - Tous droits réservés"
+                copyright:"&copy; 2024 Vellox Logistics - Tous droits réservés"
             }
         };
     </script>

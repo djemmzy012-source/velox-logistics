@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Portal Login | Velox Logistics</title>
+    <title>Customer Portal Login | Vellox Logistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FFCC00%22/><text x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23D40000%22 font-weight=%22bold%22>V</text></svg>">
     <style>
@@ -41,6 +41,13 @@
         .footer-col h4 { color: white; text-transform: uppercase; margin-bottom: 20px; }
         .copyright { text-align: center; border-top: 1px solid #444; padding-top: 20px; font-size: 0.8rem; }
     </style>
+<style id="vellox-logo-override">
+.logo { display: flex; align-items: center; flex-shrink: 0; }
+.logo img { display: block; width: 190px; height: auto; max-height: 58px; object-fit: contain; }
+@media (max-width: 480px) {
+    .logo img { width: 155px; max-height: 48px; }
+}
+</style>
 </head>
 <body>
     <div class="top-bar">
@@ -53,7 +60,7 @@
         </div>
     </div>
     <nav class="main-nav">
-        <div class="logo" onclick="window.location.href='index.html'">Velox<span>Logistics</span></div>
+        <div class="logo" onclick="window.location.href='index.html'"><img src="./Vellox-Logistics-Logo.png" alt="Vellox Logistics"></div>
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="tracking.html">Track</a>
@@ -63,7 +70,7 @@
     </nav>
     <div class="mobile-menu-overlay" id="menuOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-header"><h3>Velox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
+        <div class="mobile-header"><h3>Vellox Logistics</h3><button class="close-btn" onclick="toggleMobileMenu()">✕</button></div>
         <div class="mobile-links">
             <a href="index.html">Home</a>
             <a href="tracking.html">Track</a>
@@ -89,7 +96,7 @@
             <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Back to Home</a></li></ul></div>
             <div class="footer-col"><h4>Support</h4><ul><li><a href="help-center.html">Help Center</a></li></ul></div>
         </div>
-        <div class="copyright">&copy; 2024 Velox Logistics</div>
+        <div class="copyright">&copy; 2024 Vellox Logistics</div>
     </footer>
     <script>
         function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); document.getElementById('menuOverlay').classList.toggle('active'); }
