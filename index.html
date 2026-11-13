@@ -401,6 +401,7 @@
         .nav-actions .btn-ship:hover { background: var(--primary-dark); transform: translateY(-2px); }
         .menu-toggle { display: none; font-size: 1.4rem; cursor: pointer; color: var(--dark); background: none; border: none; padding: 4px; transition: var(--transition); }
         .menu-toggle:hover { color: var(--primary); }
+        .mobile-only-nav-link, .mobile-quick-quote { display: none; }
 
         /* ============================================================
                HERO
@@ -658,7 +659,7 @@
             .hero-content h1 { font-size: 2.8rem; }
         }
         @media (max-width: 768px) {
-            .top-bar .container { justify-content: center; text-align: center; }
+            .top-bar { display: none; }
             .top-bar-left { justify-content: center; font-size: 0.65rem; gap: 8px; }
             .top-bar-right { justify-content: center; gap: 6px; }
             .menu-toggle { display: block; }
@@ -668,6 +669,21 @@
             .nav-links a { font-size: 0.8rem; padding: 6px 0; width: 100%; }
             .nav-links a::after { display: none; }
             .nav-actions { margin-left: auto; }
+            .nav-actions .btn-track, .nav-actions .btn-ship { display: none; }
+            .mobile-quick-quote {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                padding: 7px 10px;
+                border-radius: 5px;
+                background: var(--primary);
+                color: var(--white);
+                font-size: .68rem;
+                font-weight: 700;
+                text-decoration: none;
+                white-space: nowrap;
+            }
+            .nav-links .mobile-only-nav-link { display: block; }
             .nav-actions .btn-track, .nav-actions .btn-ship { font-size: 0.65rem; padding: 6px 12px; }
             .hero-content h1 { font-size: 2rem; }
             .hero-content p { font-size: 0.95rem; }
@@ -778,10 +794,16 @@
                 <a href="#logistics" onclick="showPage('logistics')">Logistics</a>
                 <a href="#about" onclick="showPage('about')">About</a>
                 <a href="#contact" onclick="showPage('contact')">Contact</a>
+                <a class="mobile-only-nav-link" href="tel:+15595083927"><i class="fas fa-phone-alt"></i> +1 (559) 508-3927</a>
+                <a class="mobile-only-nav-link" href="mailto:support@velloxlogistics.com"><i class="fas fa-envelope"></i> support@velloxlogistics.com</a>
+                <a class="mobile-only-nav-link" href="#" onclick="showPage('about')"><i class="fas fa-map-pin"></i> Locations</a>
+                <a class="mobile-only-nav-link" href="#tracking" onclick="openTracking(event)"><i class="fas fa-truck"></i> Track & Trace</a>
+                <a class="mobile-only-nav-link" href="#customs" onclick="showPage('contact')"><i class="fas fa-file-contract"></i> Customs Help</a>
             </nav>
             <div class="nav-actions">
                 <button class="btn-track" type="button" onclick="openTracking(event)"><i class="fas fa-search"></i> Track</button>
                 <button class="btn-ship" type="button" onclick="showPage('contact')" style="background:var(--primary); color:var(--white); box-shadow:0 4px 12px rgba(212,0,0,0.25);"><i class="fas fa-shipping-fast"></i> Ship</button>
+                <a href="#contact" onclick="showPage('contact')" class="mobile-quick-quote"><i class="fas fa-bolt"></i> Quick Quote</a>
                 <button class="menu-toggle" type="button" onclick="toggleMobileNav()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
             </div>
         </div>
