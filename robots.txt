@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /signin.html
+Disallow: /register.html
+Disallow: /portal-logins.html
+Disallow: /get-label.html
+
+Sitemap: https://velloxlogistics.com/sitemap.xml
